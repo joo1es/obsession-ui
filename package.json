@@ -2,7 +2,7 @@
   "name": "obsession-ui",
   "version": "1.0.3",
   "description": "",
-  "main": "lib/oasis-ui.js",
+  "main": "lib/obsession-ui.js",
   "style": "lib/index.css",
   "files": [
     "lib",
