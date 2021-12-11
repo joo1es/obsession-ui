@@ -1,0 +1,13 @@
+.o-space {
+    display: flex;
+    &.o-space__vertical {
+        flex-direction: column;
+    }
+    &.o-space__wrap {
+        flex-wrap: wrap;
+    }
+    .o-space-cell {
+        margin-right: var(--o-space-x-gap, 0);
+        padding-bottom: var(--o-space-y-gap, 0);
+    }
+}
