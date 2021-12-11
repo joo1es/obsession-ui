@@ -1,9 +1,8 @@
-import { withInstall } from '../utils'
-import _Space from './Space'
+import { withInstall } from '../utils';
+import _Space from './Space';
 
-const oSpace = withInstall<typeof _Space>(_Space)
+const Space = withInstall<typeof _Space>(_Space);
 
-export default oSpace
-export { oSpace }
-export { spaceProps } from './Space'
-export type { SpaceProps, SpaceItemClass, SpaceItemStyle } from './Space'
+export default Space;
+export { spaceProps } from './Space';
+export type { SpaceProps, SpaceItemClass, SpaceItemStyle } from './Space';
