@@ -4,6 +4,7 @@
   "description": "",
   "main": "lib/obsession-ui.js",
   "style": "lib/index.css",
+  "typings": "lib/index.d.ts",
   "files": [
     "lib",
     "es"
