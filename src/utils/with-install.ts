@@ -1,26 +1,31 @@
 import { App } from 'vue';
-import { camelize } from './format/string';
 
-// https://github.com/youzan/vant/issues/8302
 type EventShim = {
-    new (...args: any[]): {
-        $props: {
-        onClick?: (...args: any[]) => void;
-        };
+  new (...args: any[]): {
+    $props: {
+      onClick?: (...args: any[]) => void;
     };
+  };
 };
 
 export type WithInstall<T> = T & {
-    install(app: App): void;
+  install(app: App, alias?: string[]): void;
 } & EventShim;
 
-// using any here because tsc will generate some weird results when using generics
-export function withInstall<T>(options: any): WithInstall<T> {
-    (options as Record<string, unknown>).install = (app: App) => {
-        const { name } = options as any;
-        app.component(name, options);
-        app.component(camelize(`-${name}`), options);
-    };
+export function withInstall<T>(options: any, alias?: string[]): WithInstall<T> {
+  (options as Record<string, unknown>).install = (app: App) => {
+    const { name } = options as any;
+    app.component(name, options);
+    alias?.forEach((everyAlias) => app.component(everyAlias, options));
+  };
 
-    return options;
+  return options;
 }
+
+export const withInstallFunction = <T>(fn: T, name: string) => {
+  (fn as Record<string, unknown>).install = (app: any) => {
+    app.config.globalProperties[name] = fn;
+  };
+
+  return fn;
+};
