@@ -1,13 +1,13 @@
 {
     "name": "obsession-ui",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "description": "",
     "main": "lib/obsession-ui.js",
     "style": "lib/index.css",
     "typings": "lib/index.d.ts",
     "files": [
-      "lib",
-      "es"
+        "lib",
+        "es"
     ],
     "scripts": {
         "dev": "vant-cli dev",
@@ -41,19 +41,43 @@
         ],
         "rules": {
             "vue/attributes-order": 1,
-            "quotes": [2, "single"],
-            "semi": [2, "never"],
+            "quotes": [
+                2,
+                "single"
+            ],
+            "semi": [
+                2,
+                "never"
+            ],
             "vue/multi-word-component-names": 0,
-            "keyword-spacing": ["error", { "before": true, "after": true }],
-            "arrow-spacing": ["error", { "before": true, "after": true }],
-            "space-before-function-paren": ["error", "never"],
+            "keyword-spacing": [
+                "error",
+                {
+                    "before": true,
+                    "after": true
+                }
+            ],
+            "arrow-spacing": [
+                "error",
+                {
+                    "before": true,
+                    "after": true
+                }
+            ],
+            "space-before-function-paren": [
+                "error",
+                "never"
+            ],
             "space-before-blocks": "error",
-            "indent": ["error", 4],
+            "indent": [
+                "error",
+                4
+            ],
             "vue/script-indent": [
                 "error",
                 4,
                 {
-                  "baseIndent": 1
+                    "baseIndent": 1
                 }
             ]
         }
@@ -64,7 +88,7 @@
         ]
     },
     "prettier": {
-         "singleQuote": true
+        "singleQuote": true
     },
     "browserslist": [
         "Chrome >= 51",
