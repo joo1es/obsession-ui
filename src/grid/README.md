@@ -2,7 +2,7 @@
 
 ### 介绍
 
-每个组件都需要一个私人空间
+生活是一张大网
 
 ### 引入
 
@@ -64,38 +64,6 @@ Vue.use(GridItem);
 ```
 
 <demo-code transform>./demo/Y.vue</demo-code>
-
-### 单独设置每项的样式
-
-```html
-<o-space
-  :item-style="{
-    0: {
-        flex: 1
-    }
-}"
->
-  <div>Hello</div>
-  <div>Hello</div>
-  <div>Hello</div>
-</o-space>
-```
-
-    gap: {
-        type: [Number, Array] as PropType<number | string | [number | string, number | string]>,
-        default: 0
-    },
-    cols: {
-        type: Number,
-        default: 24
-    },
-    defaultSpan: {
-        type: Number,
-        default: 1
-    },
-    placeItems: String,
-    placeContent: String,
-    dense: Boolean
 
 ## Gird API
 
