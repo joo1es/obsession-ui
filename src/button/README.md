@@ -112,6 +112,7 @@
 | dashed | 是否虚线边框 | _boolean_ | false |
 | block | 是否为块元素 | _boolean_ | false |
 | iconPosition | 图标位置 | _'left' \| 'right'_ | left |
+| buttonType | 原生 button 的 type | _string_ | - |
 
 ### Slots
 
