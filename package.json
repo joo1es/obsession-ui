@@ -22,7 +22,6 @@
     "author": "jooies",
     "license": "MIT",
     "lint-staged": {
-        "*.md": "prettier --write",
         "*.{ts,tsx,js,vue,less,scss}": "prettier --write",
         "*.{ts,tsx,js,vue}": "eslint --fix",
         "*.{vue,css,less,scss}": "stylelint --fix"
