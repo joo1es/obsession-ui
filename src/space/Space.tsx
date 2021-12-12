@@ -5,6 +5,7 @@ import {
     computed,
     CSSProperties,
 } from 'vue'
+import { flatten } from '../utils'
 
 export interface SpaceItemStyle {
   common?: CSSProperties;
@@ -75,39 +76,42 @@ export default defineComponent({
             if (align === 'start' || align === 'end') return `flex-${align}`
             return align
         }
-        return () => (
-            <div
-                class={{
-                    'o-space': true,
-                    'o-space__vertical': props.vertical,
-                    'o-space__wrap': props.wrap,
-                }}
-                style={
-          {
-              marginBottom: parentMarginBottom.value,
-              alignItems: getAlign(props.align),
-              justifyContent: getAlign(props.justify),
-              '--o-space-x-gap': sizeMap.value[0],
-              '--o-space-y-gap': sizeMap.value[0],
-          } as CSSProperties
-                }
-            >
-                {(slots.default?.() || []).map((vNode, index) => (
-                    <div
-                        class={{
-                            'o-space-cell': true,
-                            ...props.itemClass.common,
-                            ...props.itemClass[index],
-                        }}
-                        style={{
-                            ...props.itemStyle.common,
-                            ...props.itemStyle[index],
-                        }}
-                    >
-                        {vNode}
-                    </div>
-                ))}
-            </div>
-        )
+        return () => {
+            const defaultSlots = flatten(slots.default?.() || [])
+            return (
+                <div
+                    class={{
+                        'o-space': true,
+                        'o-space__vertical': props.vertical,
+                        'o-space__wrap': props.wrap,
+                    }}
+                    style={
+            {
+                marginBottom: parentMarginBottom.value,
+                alignItems: getAlign(props.align),
+                justifyContent: getAlign(props.justify),
+                '--o-space-x-gap': sizeMap.value[0],
+                '--o-space-y-gap': sizeMap.value[0],
+            } as CSSProperties
+                    }
+                >
+                    {defaultSlots.map((vNode, index) => (
+                        <div
+                            class={{
+                                'o-space-cell': true,
+                                ...props.itemClass.common,
+                                ...props.itemClass[index],
+                            }}
+                            style={{
+                                ...props.itemStyle.common,
+                                ...props.itemStyle[index],
+                            }}
+                        >
+                            {vNode}
+                        </div>
+                    ))}
+                </div>
+            )
+        }
     },
 })
