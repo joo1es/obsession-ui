@@ -27,6 +27,19 @@ module.exports = {
                 ],
             },
             {
+                title: '基础组件',
+                items: [
+                    {
+                        path: 'icon',
+                        title: 'Icon 图标',
+                    },
+                    {
+                        path: 'button',
+                        title: 'Button 按钮',
+                    },
+                ],
+            },
+            {
                 title: '布局组件',
                 items: [
                     {

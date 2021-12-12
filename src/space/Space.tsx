@@ -1,15 +1,9 @@
 import {
     defineComponent,
     ExtractPropTypes,
-    onBeforeUpdate,
     PropType,
     computed,
     CSSProperties,
-    ref,
-    createTextVNode,
-    Fragment,
-    VNode,
-    VNodeChild,
 } from 'vue'
 
 export interface SpaceItemStyle {
@@ -59,36 +53,6 @@ const getNumberPx = (thing: string | number) => {
     return thing
 }
 
-export function flatten(
-    vNodes: VNodeChild[],
-    filterCommentNode = true,
-    result: VNode[] = []
-): VNode[] {
-    vNodes.forEach((vNode) => {
-        if (vNode === null) return
-        if (typeof vNode !== 'object') {
-            if (typeof vNode === 'string' || typeof vNode === 'number') {
-                result.push(createTextVNode(String(vNode)))
-            }
-            return
-        }
-        if (Array.isArray(vNode)) {
-            flatten(vNode, filterCommentNode, result)
-            return
-        }
-        if (vNode.type === Fragment) {
-            if (vNode.children === null) return
-            if (Array.isArray(vNode.children)) {
-                flatten(vNode.children, filterCommentNode, result)
-            }
-            // rawSlot
-        } else if (vNode.type !== Comment) {
-            result.push(vNode)
-        }
-    })
-    return result
-}
-
 export default defineComponent({
     name: 'OSpace',
     props: spaceProps,
@@ -111,13 +75,6 @@ export default defineComponent({
             if (align === 'start' || align === 'end') return `flex-${align}`
             return align
         }
-        /**
-     * 获取子元素
-     */
-        const slotsVNodes = ref(flatten(slots.default?.() || []))
-        onBeforeUpdate(() => {
-            slotsVNodes.value = flatten(slots.default?.() || [])
-        })
         return () => (
             <div
                 class={{
@@ -135,7 +92,7 @@ export default defineComponent({
           } as CSSProperties
                 }
             >
-                {slotsVNodes.value.map((vNode, index) => (
+                {(slots.default?.() || []).map((vNode, index) => (
                     <div
                         class={{
                             'o-space-cell': true,
