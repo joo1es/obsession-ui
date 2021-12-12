@@ -39,6 +39,7 @@ export const buttonProps = {
         type: String as PropType<'left' | 'right'>,
         default: 'left',
     },
+    buttonType: String,
 }
 
 export type ButtonProps = ExtractPropTypes<typeof buttonProps>;
@@ -88,6 +89,7 @@ export default defineComponent({
             },
             onClick: () => !disabled.value && emit('click'),
             onDblclick: () => !disabled.value && emit('dblclick'),
+            type: props.buttonType,
         },
         <div
             class={{
