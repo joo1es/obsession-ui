@@ -88,17 +88,6 @@ Vue.use(GridItem);
 
 ### Props
 
-    span: Number,
-    rowSpan: Number,
-    offset: {
-        type: Number,
-        default: 0
-    },
-    offsetRight: {
-        type: Number,
-        default: 0
-    }
-
 | 参数        | 说明   | 类型     | 默认值 |
 | ----------- | ------ | -------- | ------ |
 | span        | 占据列 | _number_ | -      |
