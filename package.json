@@ -38,7 +38,25 @@
         "root": true,
         "extends": [
             "@vant"
-        ]
+        ],
+        "rules": {
+            "vue/attributes-order": 1,
+            "quotes": [2, "single"],
+            "semi": [2, "never"],
+            "vue/multi-word-component-names": 0,
+            "keyword-spacing": ["error", { "before": true, "after": true }],
+            "arrow-spacing": ["error", { "before": true, "after": true }],
+            "space-before-function-paren": ["error", "never"],
+            "space-before-blocks": "error",
+            "indent": ["error", 4],
+            "vue/script-indent": [
+                "error",
+                4,
+                {
+                  "baseIndent": 1
+                }
+            ]
+        }
     },
     "stylelint": {
         "extends": [

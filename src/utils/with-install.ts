@@ -1,4 +1,4 @@
-import { App } from 'vue';
+import { App } from 'vue'
 
 type EventShim = {
   new (...args: any[]): {
@@ -13,19 +13,19 @@ export type WithInstall<T> = T & {
 } & EventShim;
 
 export function withInstall<T>(options: any, alias?: string[]): WithInstall<T> {
-  (options as Record<string, unknown>).install = (app: App) => {
-    const { name } = options as any;
-    app.component(name, options);
-    alias?.forEach((everyAlias) => app.component(everyAlias, options));
-  };
+    (options as Record<string, unknown>).install = (app: App) => {
+        const { name } = options as any
+        app.component(name, options)
+        alias?.forEach((everyAlias) => app.component(everyAlias, options))
+    }
 
-  return options;
+    return options
 }
 
 export const withInstallFunction = <T>(fn: T, name: string) => {
-  (fn as Record<string, unknown>).install = (app: any) => {
-    app.config.globalProperties[name] = fn;
-  };
+    (fn as Record<string, unknown>).install = (app: any) => {
+        app.config.globalProperties[name] = fn
+    }
 
-  return fn;
-};
+    return fn
+}

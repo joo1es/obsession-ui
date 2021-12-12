@@ -1,6 +1,6 @@
-import oSpace from './space';
-import oGrid from './grid';
-import oGridItem from './grid-item';
+import oSpace from './space'
+import oGrid from './grid'
+import oGridItem from './grid-item'
 
 declare module 'vue' {
   export interface GlobalComponents {

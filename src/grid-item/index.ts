@@ -1,8 +1,8 @@
-import { withInstall } from '../utils';
-import _GridItem from './GridItem';
+import { withInstall } from '../utils'
+import _GridItem from './GridItem'
 
-const GridItem = withInstall<typeof _GridItem>(_GridItem, ['OGi']);
+const GridItem = withInstall<typeof _GridItem>(_GridItem, ['OGi'])
 
-export default GridItem;
-export { gridItemProps } from './GridItem';
-export type { GridItemProps } from './GridItem';
+export default GridItem
+export { gridItemProps } from './GridItem'
+export type { GridItemProps } from './GridItem'
