@@ -37,6 +37,10 @@ module.exports = {
                         path: 'button',
                         title: 'Button 按钮',
                     },
+                    {
+                        path: 'collapse-transition',
+                        title: 'Transition 渐变',
+                    },
                 ],
             },
             {
@@ -49,6 +53,10 @@ module.exports = {
                     {
                         path: 'grid',
                         title: 'Grid 网格',
+                    },
+                    {
+                        path: 'collapse',
+                        title: 'Collapse 折叠面板',
                     },
                 ],
             },
