@@ -156,7 +156,7 @@ export default defineComponent({
             const references = slots.target?.()
             if (!references) {
                 console.warn(
-                    'WisdomPlus: Popover 组件没有找到 target，请确保插槽中正确放入内容'
+                    'ObsessionUi: Popover 组件没有找到 target，请确保插槽中正确放入内容'
                 )
                 return
             }

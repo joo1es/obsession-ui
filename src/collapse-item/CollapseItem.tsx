@@ -71,7 +71,7 @@ export default defineComponent({
                         if (props.disabled) return
                         if (typeof props.name === 'undefined') return
                         if (typeof collapseItems?.value === 'undefined') {
-                            console.warn('WisdomPlus: 请把 CollapseItem 放在 Collapse 内')
+                            console.warn('ObsessionUi: 请把 CollapseItem 放在 Collapse 内')
                             return
                         }
                         if (Array.isArray(collapseItems.value)) {
