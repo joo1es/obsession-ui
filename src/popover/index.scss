@@ -1,0 +1,103 @@
+.o-popover {
+  position: relative;
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  background-color: var(--o-popover-bg-color, #fff);
+  color: var(--o-popover-color, #666);
+  border-radius: 4px;
+  &.o-popover__dark {
+    --o-popover-bg-color: #000;
+    --o-popover-color: #fff;
+  }
+  &-content {
+    padding: 10px 15px;
+    z-index: 1;
+  }
+  .o-popover-arrow {
+    z-index: 0;
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    transform: rotate(45deg);
+    background-color: var(--o-popover-bg-color, #fff);
+  }
+  &.o-popover__top,
+  &.o-popover__top-start,
+  &.o-popover__top-end {
+    margin-bottom: 10px;
+    transform-origin: bottom;
+    .o-popover-arrow {
+      bottom: -3px;
+      left: calc(50% - 3px);
+    }
+  }
+  &.o-popover__top-start,
+  &.o-popover__bottom-start {
+    .o-popover-arrow {
+      left: 20%;
+    }
+  }
+  &.o-popover__top-end,
+  &.o-popover__bottom-end {
+    .o-popover-arrow {
+      left: inherit;
+      right: 20%;
+    }
+  }
+  &.o-popover__bottom,
+  &.o-popover__bottom-start,
+  &.o-popover__bottom-end {
+    transform-origin: top;
+    margin-top: 10px;
+    .o-popover-arrow {
+      top: -3px;
+      left: calc(50% - 3px);
+    }
+  }
+  &.o-popover__right,
+  &.o-popover__right-start,
+  &.o-popover__right-end {
+    transform-origin: left;
+    margin-left: 10px;
+    .o-popover-arrow {
+      left: -3px;
+      top: calc(50% - 3px);
+    }
+  }
+  &.o-popover__left,
+  &.o-popover__left-start,
+  &.o-popover__left-end {
+    transform-origin: right;
+    margin-right: 10px;
+    .o-popover-arrow {
+      right: -3px;
+      top: calc(50% - 3px);
+    }
+  }
+  &.o-popover__right-start,
+  &.o-popover__left-start {
+    .o-popover-arrow {
+      top: 20%;
+    }
+  }
+  &.o-popover__right-end,
+  &.o-popover__left-end {
+    .o-popover-arrow {
+      top: inherit;
+      bottom: 20%;
+    }
+  }
+}
+
+.popover-transition-enter-from,
+.popover-transition-leave-to {
+  transition: transform 0.2s, opacity 0.2s;
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+.popover-transition-leave-from,
+.popover-transition-enter-to {
+  transition: transform 0.2s, opacity 0.2s;
+  opacity: 1;
+}

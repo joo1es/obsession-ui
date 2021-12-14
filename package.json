@@ -81,7 +81,8 @@
                     "baseIndent": 0
                 }
             ],
-            "no-void": 0
+            "no-void": 0,
+            "no-restricted-syntax": 0
         }
     },
     "stylelint": {
@@ -97,6 +98,9 @@
         "iOS >= 10"
     ],
     "dependencies": {
-        "@vicons/utils": "^0.1.4"
+        "@css-render/vue3-ssr": "^0.15.6",
+        "@vicons/utils": "^0.1.4",
+        "@vueuse/core": "^7.3.0",
+        "vueuc": "^0.4.18"
     }
 }

@@ -6,6 +6,8 @@ import oButton from './button'
 import CollapseTransition from './collapse-transition'
 import oCollapse from './collapse'
 import oCollapseItem from './collapse-item'
+import oPopover from './popover'
+import oTooltip from './tooltip'
 
 declare module 'vue' {
   export interface GlobalComponents {
@@ -19,5 +21,7 @@ declare module 'vue' {
     CollapseTransition: typeof CollapseTransition;
     oCollapse: typeof oCollapse;
     oCollapseItem: typeof oCollapseItem;
+    oPopover: typeof oPopover;
+    oTooltip: typeof oTooltip;
   }
 }

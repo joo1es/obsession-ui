@@ -60,6 +60,19 @@ module.exports = {
                     },
                 ],
             },
+            {
+                title: '展示组件',
+                items: [
+                    {
+                        path: 'popover',
+                        title: 'Popover 气泡弹出框',
+                    },
+                    {
+                        path: 'tooltip',
+                        title: 'Tooltip 文字提示',
+                    },
+                ],
+            },
         ],
     },
 }

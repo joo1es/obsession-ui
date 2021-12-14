@@ -29,6 +29,8 @@ Vue.use(CollapseItem);
 </o-collapse>
 ```
 
+<demo-code transform>./demo/Basic.vue</demo-code>
+
 ### 受控模式
 
 ```html
