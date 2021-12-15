@@ -39,6 +39,10 @@ export default defineComponent({
             const type = typeof name
             return type === 'string' || type === 'symbol' || type === 'number'
         },
+        clickTitle: (name: CollapseSupport) => {
+            const type = typeof name
+            return type === 'string' || type === 'symbol' || type === 'number'
+        }
     },
     setup(props, { slots, emit }) {
         const collapseItems = inject<
@@ -91,6 +95,7 @@ export default defineComponent({
                */
                             updateCollapseItems?.(props.name)
                         }
+                        emit('clickTitle', props.name)
                     }}
                 >
                     <div class="o-collapse-item__title-text">

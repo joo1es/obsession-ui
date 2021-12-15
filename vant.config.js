@@ -64,6 +64,10 @@ module.exports = {
                 title: '展示组件',
                 items: [
                     {
+                        path: 'menu',
+                        title: 'Menu 菜单',
+                    },
+                    {
                         path: 'popover',
                         title: 'Popover 气泡弹出框',
                     },
