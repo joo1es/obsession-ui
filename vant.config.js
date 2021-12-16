@@ -78,6 +78,10 @@ module.exports = {
                     {
                         path: 'ellipsis',
                         title: 'Ellipsis 文本省略',
+                    },
+                    {
+                        path: 'scroll-list',
+                        title: 'Scroll List 滚动列表',
                     }
                 ],
             },
