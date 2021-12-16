@@ -8,9 +8,9 @@
 
 ```js
 import Vue from 'vue';
-import { Space } from 'obsession-ui';
+import { ScrollList } from 'obsession-ui';
 
-Vue.use(Space);
+Vue.use(ScrollList);
 ```
 
 ## 代码演示
