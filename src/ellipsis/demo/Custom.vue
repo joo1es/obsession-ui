@@ -29,6 +29,3 @@
         </o-ellipsis>
     </o-space>
 </template>
-
-<script lang="ts">
-</script>
