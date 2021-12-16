@@ -18,15 +18,7 @@ Vue.use(CollapseTransition);
 
 ## 代码演示
 
-### 基本用法
-
-```html
-<collapse-transition>
-    <div v-if="show">
-        <o-button>出现我</o-button>
-    </div>
-</collapse-transition>
-```
+#### 基本用法
 
 <demo-code transform>./demo/Basic.vue</demo-code>
 

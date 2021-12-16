@@ -17,44 +17,13 @@ Vue.use(Popover);
 
 ### 基础用法
 
-```html
-<o-popover>
-    <template #target>
-        点我看看
-    </template>
-    我是内容
-</o-popover>
-```
-
 <demo-code transform>./demo/Basic.vue</demo-code>
 
 ### 位置
 
-```html
-<o-popover placement="top-start">
-    <template #target>
-        <o-button>
-            左上
-        </o-button>
-    </template>
-    Top Start
-</o-popover>
-```
-
 <demo-code transform>./demo/Placement.vue</demo-code>
 
 ### 触发方式
-
-```html
-<o-popover placement="top" trigger="hover">
-    <template #target>
-        <o-button>
-            Hover
-        </o-button>
-    </template>
-    Hover
-</o-popover>
-```
 
 <demo-code transform>./demo/Trigger.vue</demo-code>
 

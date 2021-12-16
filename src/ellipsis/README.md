@@ -4,6 +4,15 @@
 
 有些事情你永远不必问
 
+### 引入
+
+```js
+import Vue from 'vue';
+import { Ellipsis } from 'obsession-ui';
+
+Vue.use(Ellipsis);
+```
+
 ## 代码演示
 
 #### 基础用法

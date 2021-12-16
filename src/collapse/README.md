@@ -16,45 +16,23 @@ Vue.use(CollapseItem);
 
 ## 代码演示
 
-### 基础用法
-
-```html
-<o-collapse>
-    <o-collapse-item title="面板一">
-        面板一的内容
-    </o-collapse-item>
-    <o-collapse-item title="面板二">
-        面板二的内容
-    </o-collapse-item>
-</o-collapse>
-```
+#### 基础用法
 
 <demo-code transform>./demo/Basic.vue</demo-code>
 
-### 受控模式
-
-```html
-<o-collapse v-model="active">
-    <o-collapse-item title="面板一" :name="0">
-        面板一的内容
-    </o-collapse-item>
-    <o-collapse-item title="面板二" :name="1">
-        面板二的内容
-    </o-collapse-item>
-</o-collapse>
-```
+#### 受控模式
 
 <demo-code transform>./demo/Control.vue</demo-code>
 
-### 手风琴模式
-
-只要把 `v-model` 的值设为 `number` `symbol` `string` 的任意一种，就视为手风琴模式，只能展开至多任意一项
+#### 手风琴模式
 
 <demo-code transform>./demo/Accordion.vue</demo-code>
 
 ## Collapse API
 
 ### Props
+
+只要把 `v-model` 的值设为 `number` `symbol` `string` 的任意一种，就视为手风琴模式，只能展开至多任意一项
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
