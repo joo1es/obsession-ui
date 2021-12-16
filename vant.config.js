@@ -75,6 +75,10 @@ module.exports = {
                         path: 'tooltip',
                         title: 'Tooltip 文字提示',
                     },
+                    {
+                        path: 'ellipsis',
+                        title: 'Ellipsis 文本省略',
+                    }
                 ],
             },
         ],
