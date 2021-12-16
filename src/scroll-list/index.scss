@@ -1,5 +1,6 @@
 .o-scroll-list {
     overflow: hidden;
+    position: relative;
 }
 
 .o-scroll-list__cell {
@@ -7,12 +8,10 @@
 }
 
 .o-scroll-flip-leave-to {
-    opacity: 0;
     transform: translateY(-100%);
 }
 
 .o-scroll-flip-enter-from {
-    opacity: 0;
     transform: translateY(100%);
 }
 

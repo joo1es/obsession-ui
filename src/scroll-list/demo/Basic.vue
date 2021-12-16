@@ -1,13 +1,16 @@
 <template>
-    <o-scroll-list height="43.2px">
+    <o-scroll-list height="43.2px" :duration="2000" :animation-duration="2000">
         <div>
-            23232
+            第一行
         </div>
         <div>
-            23231
+            第二行
+        </div>
+        <div>
+            第三行
+        </div>
+        <div>
+            第四行
         </div>
     </o-scroll-list>
 </template>
-
-<script lang="ts">
-</script>

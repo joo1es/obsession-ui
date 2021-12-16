@@ -26,6 +26,13 @@ export const scrollListProps = {
     animationDuration: {
         type: Number,
         default: 400
+    },
+    hoverToStop: {
+        type: Boolean,
+        default: true
+    },
+    space: {
+        type: [Number, String] as PropType<number | string>
     }
 }
 
@@ -45,7 +52,7 @@ export default defineComponent({
         }
         const slotsElements = ref(getSlotsElements())
         const popList = () => {
-            if (slotsElements.value.length === 0) return
+            if (slotsElements.value.length < 2) return
             const firstChild = slotsElements.value.shift()
             setTimeout(() => {
                 if (firstChild) slotsElements.value.push(firstChild)
@@ -75,17 +82,18 @@ export default defineComponent({
                     name: 'o-scroll-flip',
                     tag: props.tag,
                     style: {
-                        height: typeof props.height === 'number' ? `${props.height}px` : props.height
+                        height: !isNaN(Number(props.height)) ? `${props.height}px` : props.height
                     },
-                    onMouseenter: end,
-                    onMouseleave: start
+                    onMouseenter: () => props.hoverToStop && end(),
+                    onMouseleave: () => props.hoverToStop && start()
                 }, {
                     default: () => (
-                        slotsElements.value.map(element => (
+                        slotsElements.value.map((element, index) => (
                             <div class={{
                                 'o-scroll-list__cell': true
                             }} style={{
-                                '--duration': props.animationDuration / 1000 + 's'
+                                '--duration': props.animationDuration / 1000 + 's',
+                                marginBottom: index !== slotsElements.value.length - 1 ? (!isNaN(Number(props.space)) ? `${props.space}px` : props.space) : ''
                             } as StyleValue} key={element.id}>
                                 { element }
                             </div>
