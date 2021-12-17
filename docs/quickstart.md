@@ -14,44 +14,80 @@ yarn add obsession-ui
 
 #### 方式一. babel-plugin-import 自动按需引入组件
 
+##### 使用 Vite 构建的项目
+
+```bash
+# 安装 vite-plugin-style-import 插件
+# 通过 npm 安装
+npm i vite-plugin-style-import -D
+
+# 通过 yarn 安装
+yarn add vite-plugin-style-import -D
+```
+
+```js
+// 配置 vite.config.ts/js
+import styleImport from 'vite-plugin-style-import'
+export default defineConfig({
+    ...
+    plugins: [
+        styleImport({
+            libs: [
+                {
+                    libraryName: 'obsession-ui',
+                    esModule: true,
+                    resolveStyle: (name) => {
+                        return `${name}/style/index.js`
+                    }
+                }
+            ]
+        }),
+    ]
+    ...
+})
+```
+
+##### 使用 Vue-cli 构建的项目
+
 ```js
 // 在.babelrc 中添加配置
 // 注意：webpack 1 无需设置 libraryDirectory
 {
-  "plugins": [
-    ["import", {
-      "libraryName": "obsession-ui",
-      "libraryDirectory": "es",
-      "style": true
-    }]
-  ]
+    "plugins": [
+        ["import", {
+            "libraryName": "obsession-ui",
+            "libraryDirectory": "es",
+            "style": true
+        }]
+    ]
 }
 
 // 对于使用 babel7 的用户，可以在 babel.config.js 中配置
 module.exports = {
-  plugins: [
-    ['import', {
-      libraryName: 'obsession-ui',
-      libraryDirectory: 'es',
-      style: true
-    }, 'obsession-ui']
-  ]
-};
+    plugins: [
+        ['import', {
+            libraryName: 'obsession-ui',
+            libraryDirectory: 'es',
+            style: true
+        }, 'obsession-ui']
+    ]
+}
 ```
 
+配置完成后，可在代码中直接引入 Obsession 组件而无需引入 css
+
 ```js
-// 接着你可以在代码中直接引入 Obsession 组件
-import { Space } from 'obsession-ui';
+import { Space } from 'obsession-ui'
 ```
 
 #### 方式二. 导入所有组件
 
 ```js
-import Vue from 'vue';
-import Obsession from 'obsession-ui';
-import 'obsession-ui/lib/index.css';
+import Vue from 'vue'
+import Obsession from 'obsession-ui'
+import 'obsession-ui/lib/index.css'
 
-Vue.use(Obsession);
+Vue.use(Obsession)
 ```
 
 ```json

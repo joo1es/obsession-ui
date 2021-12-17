@@ -60,3 +60,4 @@ Vue.use(CollapseItem);
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
 | change      | 激活参数改变的回调       | _(name: string \| number \| symbol) => void_          | -     |
+| clickTitle | 点击标题的回调 | _(name: string \| number \| symbol) => void_ | - |
