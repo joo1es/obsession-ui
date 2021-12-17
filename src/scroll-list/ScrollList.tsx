@@ -6,7 +6,8 @@ import {
     ref,
     StyleValue,
     h,
-    onBeforeUnmount
+    onBeforeUnmount,
+    watch
 } from 'vue'
 import { flatten } from '../utils'
 
