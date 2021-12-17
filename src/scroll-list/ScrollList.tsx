@@ -72,7 +72,6 @@ export default defineComponent({
             end()
             timer.value = setInterval(popList, props.duration)
         }
-        onBeforeUnmount(end)
         watch(() => props.play, () => {
             if (props.play) {
                 start()
@@ -81,6 +80,22 @@ export default defineComponent({
             }
         }, {
             immediate: true
+        })
+        /**
+         * 解决 chrome 浏览器返回页面时动画加速的问题
+         */
+        const stopWhileHidden = () => {
+            if (!props.play) return
+            if (document.visibilityState === 'visible') {
+                start()
+            } else {
+                end()
+            }
+        }
+        window.addEventListener('visibilitychange', stopWhileHidden)
+        onBeforeUnmount(() => {
+            end()
+            window.removeEventListener('visibilitychange', stopWhileHidden)
         })
         return () => {
             const slotBackupMap = JSON.stringify(slots.default?.())
