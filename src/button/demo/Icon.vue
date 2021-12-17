@@ -1,20 +1,20 @@
 <template>
   <o-space>
-    <o-button :icon="Add"> Default </o-button>
+    <o-button :icon="TwitterOutlined"> Default </o-button>
     <o-button type="primary">
       <template #icon>
-        <AccumulationSnow />
+        <TagsTwotone />
       </template>
       Primary
     </o-button>
-    <o-button type="success" :icon="MacOption" />
-    <o-button type="warning" round :icon="Cad" icon-position="right">
+    <o-button type="success" :icon="MacCommandFilled" />
+    <o-button type="warning" round :icon="NodeExpandOutlined" icon-position="right">
       Warning
     </o-button>
-    <o-button type="danger" round :icon="MailAll" />
+    <o-button type="danger" round :icon="MailOutlined" />
   </o-space>
 </template>
 
 <script lang="ts" setup>
-import { Add, AccumulationSnow, Cad, MacOption, MailAll } from '@vicons/carbon'
+import { TwitterOutlined, MacCommandFilled, NodeExpandOutlined, MailOutlined, TagsTwotone } from '@vicons/antd'
 </script>

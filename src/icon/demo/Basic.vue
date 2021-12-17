@@ -1,9 +1,9 @@
 <template>
   <o-icon :size="30" color="#469">
-    <Add />
+    <PlusOutlined />
   </o-icon>
 </template>
 
 <script lang="ts" setup>
-import { Add } from '@vicons/carbon'
+import { PlusOutlined } from '@vicons/antd'
 </script>

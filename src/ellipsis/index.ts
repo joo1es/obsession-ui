@@ -1,7 +1,7 @@
 import { withInstall } from '../utils'
 import _Ellipsis from './Ellipsis'
 
-const Ellipsis = withInstall<typeof _Ellipsis>(
+export const Ellipsis = withInstall<typeof _Ellipsis>(
     _Ellipsis
 )
 

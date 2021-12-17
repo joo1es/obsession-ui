@@ -1,7 +1,7 @@
 import { withInstall } from '../utils'
 import _Popover from './Popover'
 
-const Popover = withInstall<typeof _Popover>(_Popover)
+export const Popover = withInstall<typeof _Popover>(_Popover)
 
 export default Popover
 export { popoverProps, popoverEmits } from './Popover'

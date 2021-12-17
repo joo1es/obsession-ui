@@ -1,7 +1,7 @@
 import { withInstall } from '../utils'
 import _CollapseTransition from './CollapseTransition'
 
-const CollapseTransition = withInstall<typeof _CollapseTransition>(
+export const CollapseTransition = withInstall<typeof _CollapseTransition>(
     _CollapseTransition
 )
 

@@ -17,10 +17,6 @@ Vue.use(Icon)
 
 ### 基础用法
 
-```js
-import { Add } from '@vicons/carbon'
-```
-
 ```html
 <o-icon :size="30">
     <Add />

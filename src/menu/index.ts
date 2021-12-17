@@ -1,7 +1,7 @@
 import { withInstall } from '../utils'
 import _Menu from './Menu'
 
-const Menu = withInstall<typeof _Menu>(_Menu)
+export const Menu = withInstall<typeof _Menu>(_Menu)
 
 export default Menu
 export type { MenuList, MenuRecord } from './typings'
