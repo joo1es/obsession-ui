@@ -7,6 +7,7 @@ module.exports = {
         site: {
             publicPath: '/obsession-ui/',
         },
+        namedExport: true
     },
     site: {
         title: 'obsession-ui',
