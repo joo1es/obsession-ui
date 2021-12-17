@@ -37,11 +37,11 @@ export const spaceProps = {
     },
     itemStyle: {
         type: Object as PropType<SpaceItemStyle>,
-        default: {},
+        default: () => ({}),
     },
     itemClass: {
         type: Object as PropType<SpaceItemClass>,
-        default: {},
+        default: () => ({}),
     },
 }
 
