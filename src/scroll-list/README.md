@@ -33,6 +33,7 @@ Vue.use(ScrollList);
 | animationDuration  | 滚动的动画时长 `ms`       | _number_                                                           | 400  |
 | hoverToStop      | 鼠标放置在上面时是否停止动画       | _boolean_                                                           | true   |
 | space | 每行间距     | _number \| string_                                                    | 0     |
+| play | 是否播放     | _boolean_                                                    | true     |
 
 ### Slots
 
