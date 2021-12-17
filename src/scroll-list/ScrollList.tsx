@@ -33,6 +33,10 @@ export const scrollListProps = {
     },
     space: {
         type: [Number, String] as PropType<number | string>
+    },
+    play: {
+        type: Boolean,
+        default: true
     }
 }
 
@@ -54,9 +58,10 @@ export default defineComponent({
         const popList = () => {
             if (slotsElements.value.length < 2) return
             const firstChild = slotsElements.value.shift()
-            setTimeout(() => {
-                if (firstChild) slotsElements.value.push(firstChild)
-            }, props.animationDuration)
+            if (firstChild) {
+                firstChild.id = Symbol('id')
+                slotsElements.value.push(firstChild)
+            }
         }
         const timer = ref<null | ReturnType<typeof setInterval>>(null)
         const end = () => {
@@ -66,8 +71,16 @@ export default defineComponent({
             end()
             timer.value = setInterval(popList, props.duration)
         }
-        start()
         onBeforeUnmount(end)
+        watch(() => props.play, () => {
+            if (props.play) {
+                start()
+            } else {
+                end()
+            }
+        }, {
+            immediate: true
+        })
         return () => {
             const slotBackupMap = JSON.stringify(slots.default?.())
             if (slotBackupMap !== slotBackup) {
@@ -84,8 +97,8 @@ export default defineComponent({
                     style: {
                         height: !isNaN(Number(props.height)) ? `${props.height}px` : props.height
                     },
-                    onMouseenter: () => props.hoverToStop && end(),
-                    onMouseleave: () => props.hoverToStop && start()
+                    onMouseenter: () => props.play && props.hoverToStop && end(),
+                    onMouseleave: () => props.play && props.hoverToStop && start()
                 }, {
                     default: () => (
                         slotsElements.value.map((element, index) => (
