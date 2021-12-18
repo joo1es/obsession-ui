@@ -19,7 +19,7 @@ Vue.use(ScrollList);
 
 <demo-code transform>./demo/Basic.vue</demo-code>
 
-#### 反向（以底部为基准）
+#### 反向（以最后一个元素为基准）
 
 <demo-code transform>./demo/Reverse.vue</demo-code>
 
@@ -38,7 +38,8 @@ Vue.use(ScrollList);
 | hoverToStop      | 鼠标放置在上面时是否停止动画       | _boolean_                                                           | true   |
 | space | 每行间距     | _number \| string_                                                    | 0     |
 | play | 是否播放     | _boolean_                                                    | true     |
-| reverse | 反向播放，会以底部为基准     | _boolean_                                                    | true     |
+| base | 播放时以哪个元素为基准 | _'first' \| 'last'_ | 'first' |
+| reverse | 反向播放     | _boolean_                                                    | true     |
 | autoUpdate | 是否自动更新元素。设置为 `true` 时，元素发生任意变化就会重置元素位置。设置为 `false` 时，可主动调用 `update` 方法更新元素 | _boolean_ | true |
 
 ### Expose

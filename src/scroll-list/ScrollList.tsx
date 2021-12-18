@@ -46,6 +46,10 @@ export const scrollListProps = {
     autoUpdate: {
         type: Boolean,
         default: true
+    },
+    base: {
+        type: String as PropType<'first' | 'last'>,
+        default: 'first'
     }
 }
 
@@ -56,14 +60,30 @@ export default defineComponent({
     props: scrollListProps,
     setup(props, { slots, expose }) {
         let slotBackup = JSON.stringify(slots.default?.())
+        /**
+         * update elements
+         */
         const getSlotsElements = () => {
             const elements = slots.default?.() || []
-            return flatten(elements).map(element => ({
+            const flattenElements = flatten(elements).map(element => ({
                 ...element,
                 id: Symbol('id')
             }))
+            if (
+                (props.base === 'first' && props.reverse) || 
+                (props.base === 'last' && !props.reverse)
+            ) {
+                flattenElements.reverse()
+            }
+            return flattenElements
         }
         const slotsElements = ref(getSlotsElements())
+        const update = () => {
+            slotsElements.value = getSlotsElements()
+        }
+        watch([() => props.base, () => props.reverse], () => {
+            if (props.autoUpdate) update()
+        })
         const scrollListRef = ref<{ $el: HTMLDivElement } | null>(null)
         const popList = () => {
             if (!props.play) return
@@ -111,16 +131,14 @@ export default defineComponent({
             end()
             window.removeEventListener('visibilitychange', stopWhileHidden)
         })
-        expose({update: () => {
-            slotsElements.value = getSlotsElements()
-        }})
+        expose({ update })
         return () => {
             if (props.autoUpdate) {
                 const slotBackupMap = JSON.stringify(slots.default?.())
                 if (slotBackupMap !== slotBackup) {
                     end()
                     slotBackup = slotBackupMap
-                    slotsElements.value = getSlotsElements()
+                    update()
                     start()
                 }
             }
