@@ -27,7 +27,7 @@ Vue.use(ScrollList);
 
 ### Props
 
-所有的滚动，在元素 >= 2 的情况下才有效。
+所有的滚动，在元素 >= 2 且内部元素高度高于父级元素的情况下才有效。
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
@@ -38,7 +38,14 @@ Vue.use(ScrollList);
 | hoverToStop      | 鼠标放置在上面时是否停止动画       | _boolean_                                                           | true   |
 | space | 每行间距     | _number \| string_                                                    | 0     |
 | play | 是否播放     | _boolean_                                                    | true     |
-| reverse | 反向播放     | _boolean_                                                    | true     |
+| reverse | 反向播放，会以底部为基准     | _boolean_                                                    | true     |
+| autoUpdate | 是否自动更新元素。设置为 `true` 时，元素发生任意变化就会重置元素位置。设置为 `false` 时，可主动调用 `update` 方法更新元素 | _boolean_ | true |
+
+### Expose
+
+| 方法名 | 说明 | 类型 |
+| -- | -- | -- |
+| update | 主动更新元素 | _() => void_ |
 
 ### Slots
 

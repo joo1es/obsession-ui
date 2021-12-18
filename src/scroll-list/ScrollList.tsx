@@ -42,6 +42,10 @@ export const scrollListProps = {
     reverse: {
         type: Boolean,
         default: false
+    },
+    autoUpdate: {
+        type: Boolean,
+        default: true
     }
 }
 
@@ -50,7 +54,7 @@ export type ScrollListProps = ExtractPropTypes<typeof scrollListProps>
 export default defineComponent({
     name: 'OScrollList',
     props: scrollListProps,
-    setup(props, { slots }) {
+    setup(props, { slots, expose }) {
         let slotBackup = JSON.stringify(slots.default?.())
         const getSlotsElements = () => {
             const elements = slots.default?.() || []
@@ -107,13 +111,18 @@ export default defineComponent({
             end()
             window.removeEventListener('visibilitychange', stopWhileHidden)
         })
+        expose({update: () => {
+            slotsElements.value = getSlotsElements()
+        }})
         return () => {
-            const slotBackupMap = JSON.stringify(slots.default?.())
-            if (slotBackupMap !== slotBackup) {
-                end()
-                slotBackup = slotBackupMap
-                slotsElements.value = getSlotsElements()
-                start()
+            if (props.autoUpdate) {
+                const slotBackupMap = JSON.stringify(slots.default?.())
+                if (slotBackupMap !== slotBackup) {
+                    end()
+                    slotBackup = slotBackupMap
+                    slotsElements.value = getSlotsElements()
+                    start()
+                }
             }
             return (
                 h(TransitionGroup, {
@@ -136,7 +145,7 @@ export default defineComponent({
                                 'o-scroll-list__cell': true
                             }} style={{
                                 '--duration': props.animationDuration / 1000 + 's',
-                                marginBottom: index !== slotsElements.value.length - 1 ? (!isNaN(Number(props.space)) ? `${props.space}px` : props.space) : ''
+                                paddingBottom: index !== slotsElements.value.length - 1 ? (!isNaN(Number(props.space)) ? `${props.space}px` : props.space) : ''
                             } as StyleValue} key={element.id}>
                                 { element }
                             </div>
