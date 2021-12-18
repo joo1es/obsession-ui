@@ -83,7 +83,7 @@ export default defineComponent({
                     class={{
                         'o-space': true,
                         'o-space__vertical': props.vertical,
-                        'o-space__wrap': props.wrap,
+                        'o-space__wrap': !props.vertical && props.wrap,
                     }}
                     style={
             {

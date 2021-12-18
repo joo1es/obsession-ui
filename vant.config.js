@@ -83,6 +83,10 @@ module.exports = {
                     {
                         path: 'scroll-list',
                         title: 'Scroll List 滚动列表',
+                    },
+                    {
+                        path: 'statistic',
+                        title: 'Statistic 统计数据',
                     }
                 ],
             },

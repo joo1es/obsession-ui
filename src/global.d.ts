@@ -11,6 +11,7 @@ import oTooltip from './tooltip'
 import oMenu from './menu'
 import oEllipsis from './ellipsis'
 import oScrollList from './scroll-list'
+import oStatistic from './statistic'
 
 declare module 'vue' {
   export interface GlobalComponents {
@@ -29,5 +30,6 @@ declare module 'vue' {
     oMenu: typeof oMenu;
     oEllipsis: typeof oEllipsis;
     oScrollList: typeof oScrollList;
+    oStatistic: typeof oStatistic;
   }
 }

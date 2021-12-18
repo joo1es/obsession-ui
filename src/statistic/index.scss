@@ -1,0 +1,40 @@
+.o-statistic {
+    display: flex;
+    align-items: center;
+    &__label {
+        flex: 1;
+        font-size: 14px;
+        color: #999;
+        display: flex;
+        align-items: center;
+    }
+    &__value {
+        font-size: 18px;
+        flex: 1;
+        justify-content: flex-end;
+        align-items: flex-end;
+        display: flex;
+        &:only-child {
+            justify-content: center;
+        }
+    }
+    &.o-statistic__vertical {
+        align-items: flex-start;
+        flex-direction: column;
+        .o-statistic__value:not(:only-child) {
+            justify-content: flex-start;
+        }
+    }
+    &__prefix,
+    &__suffix {
+        font-size: 12px;
+    }
+    &.o-statistic__reverse {
+        .o-statistic__label {
+            justify-content: flex-end;
+        }
+        .o-statistic__value:not(:only-child) {
+            justify-content: flex-start;
+        }
+    }
+}
