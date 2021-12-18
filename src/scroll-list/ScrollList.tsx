@@ -60,8 +60,13 @@ export default defineComponent({
             }))
         }
         const slotsElements = ref(getSlotsElements())
+        const scrollListRef = ref<{ $el: HTMLDivElement } | null>(null)
         const popList = () => {
+            if (!props.play) return
             if (slotsElements.value.length < 2) return
+            if (scrollListRef.value) {
+                if (scrollListRef.value.$el.scrollHeight <= scrollListRef.value.$el.offsetHeight) return
+            }
             const firstChild = slotsElements.value.shift()
             if (firstChild) {
                 firstChild.id = Symbol('id')
@@ -96,6 +101,7 @@ export default defineComponent({
                 end()
             }
         }
+        
         window.addEventListener('visibilitychange', stopWhileHidden)
         onBeforeUnmount(() => {
             end()
@@ -120,6 +126,7 @@ export default defineComponent({
                     style: {
                         height: !isNaN(Number(props.height)) ? `${props.height}px` : props.height
                     },
+                    ref: scrollListRef,
                     onMouseenter: () => props.play && props.hoverToStop && end(),
                     onMouseleave: () => props.play && props.hoverToStop && start()
                 }, {
