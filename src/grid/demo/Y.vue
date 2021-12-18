@@ -12,7 +12,7 @@
 <style lang="scss" scoped>
 :deep(.o-grid-item) {
   color: #fff;
-  background-color: #469;
+  background-color: #f5f5f5;
   height: 30px;
   border-radius: 5px;
   &.auto {
