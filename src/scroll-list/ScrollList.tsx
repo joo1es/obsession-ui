@@ -38,6 +38,10 @@ export const scrollListProps = {
     play: {
         type: Boolean,
         default: true
+    },
+    reverse: {
+        type: Boolean,
+        default: false
     }
 }
 
@@ -107,8 +111,11 @@ export default defineComponent({
             }
             return (
                 h(TransitionGroup, {
-                    class: 'o-scroll-list',
-                    name: 'o-scroll-flip',
+                    class: {
+                        'o-scroll-list': true,
+                        'o-scroll-list-reverse': props.reverse
+                    },
+                    name: props.reverse ? 'o-scroll-flip-reverse' : 'o-scroll-flip',
                     tag: props.tag,
                     style: {
                         height: !isNaN(Number(props.height)) ? `${props.height}px` : props.height

@@ -1,20 +1,27 @@
 .o-scroll-list {
     overflow: hidden;
     position: relative;
+    &.o-scroll-list-reverse {
+        display: flex;
+        flex-direction: column-reverse;
+    }
 }
 
 .o-scroll-list__cell {
     transition: all var(--duration, 2s) ease;
 }
 
-.o-scroll-flip-leave-to {
+.o-scroll-flip-leave-to,
+.o-scroll-flip-reverse-enter-from {
     transform: translateY(-100%);
 }
 
-.o-scroll-flip-enter-from {
+.o-scroll-flip-enter-from,
+.o-scroll-flip-reverse-leave-to {
     transform: translateY(100%);
 }
 
-.o-scroll-flip-leave-active {
+.o-scroll-flip-leave-active,
+.o-scroll-flip-reverse-leave-active {
     position: absolute;
 }

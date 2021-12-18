@@ -19,6 +19,10 @@ Vue.use(ScrollList);
 
 <demo-code transform>./demo/Basic.vue</demo-code>
 
+#### 反向（以底部为基准）
+
+<demo-code transform>./demo/Reverse.vue</demo-code>
+
 ## API
 
 ### Props
@@ -34,6 +38,7 @@ Vue.use(ScrollList);
 | hoverToStop      | 鼠标放置在上面时是否停止动画       | _boolean_                                                           | true   |
 | space | 每行间距     | _number \| string_                                                    | 0     |
 | play | 是否播放     | _boolean_                                                    | true     |
+| reverse | 反向播放     | _boolean_                                                    | true     |
 
 ### Slots
 
