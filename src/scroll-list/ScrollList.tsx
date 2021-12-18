@@ -69,10 +69,7 @@ export default defineComponent({
                 ...element,
                 id: Symbol('id')
             }))
-            if (
-                (props.base === 'first' && props.reverse) || 
-                (props.base === 'last' && !props.reverse)
-            ) {
+            if (props.base === 'last') {
                 flattenElements.reverse()
             }
             return flattenElements
