@@ -51,7 +51,7 @@ export default defineComponent({
     name: 'OMenu',
     props: menuProps,
     emits: menuEmits,
-    setup(props, { emit, slots }) {
+    setup(props, { emit, slots, attrs }) {
         provide('click', (record: MenuRecord) => {
             emit('click', record)
         })
@@ -94,6 +94,7 @@ export default defineComponent({
         provide('trigger', computed(() => props.trigger))
         provide('vertical', computed(() => props.vertical))
         provide('showArrow', computed(() => props.showArrow))
+        provide('menuStyle', computed(() => attrs.style))
         return () => {
             slotsRef.value = slots
             return (

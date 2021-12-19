@@ -8,6 +8,7 @@ import {
     ref,
     computed,
     createTextVNode,
+    CSSProperties
 } from 'vue'
 import { VBinder, VTarget, VFollower } from 'vueuc'
 
@@ -73,6 +74,10 @@ export const popoverProps = {
     },
     popoverClass: {
         type: [String, Object] as PropType<string | Record<string, boolean>>,
+        default: '',
+    },
+    popoverStyle: {
+        type: Object as PropType<CSSProperties>,
         default: '',
     },
     offset: {
@@ -268,6 +273,7 @@ export default defineComponent({
                                         transform: props.offset
                                             ? `translateX(${props.offset[0]}px) translateY(${props.offset[1]}px)`
                                             : '',
+                                        ...props.popoverStyle
                                     }}
                                 >
                                     {props.arrow ? <div class="o-popover-arrow" /> : null}

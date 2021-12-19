@@ -1,4 +1,4 @@
-import { defineComponent, PropType, Component, inject, Ref, computed, watch, ComputedRef, ref, provide, h } from 'vue'
+import { defineComponent, PropType, Component, inject, Ref, computed, watch, ComputedRef, ref, provide, h, CSSProperties } from 'vue'
 import { MenuList, MenuRecord } from './typings'
 import MenuItem from './MenuItem'
 import CollapseItem from '../collapse-item'
@@ -17,7 +17,7 @@ export default defineComponent({
         },
         title: String,
         icon: {
-            type: Object as PropType<Component>,
+            type: [Object, String] as PropType<Component | string>,
             default: undefined
         },
         children: {
@@ -25,7 +25,11 @@ export default defineComponent({
             default: () => []
         },
         isChild: Boolean,
-        disabled: Boolean
+        disabled: Boolean,
+        info: {
+            type: Object as PropType<Record<string, any>>,
+            default: () => ({})
+        }
     },
     setup(props, { slots }) {
         const clickMethod = inject<(record: MenuRecord) => void>('click')
@@ -79,23 +83,28 @@ export default defineComponent({
         })
         const trigger = inject<ComputedRef<'click' | 'hover'>>('trigger')
         const arrow = inject<ComputedRef<boolean>>('showArrow')
+        const menuStyle = inject<ComputedRef<CSSProperties>>('menuStyle')
         return () => {
             const Title = (
                 <>
                     {
                         props.icon ? (
                             <div class="o-menu-item__icon">
-                                <Icon v-slots={{
-                                    default: () => h(props.icon as any)
+                                <Icon name={typeof props.icon === 'string' ? props.icon : undefined} v-slots={{
+                                    default: () => typeof props.icon !== 'string' ? h(props.icon as any) : ''
                                 }} />
                             </div>
                         ) : null
                     }
-                    <div class="o-menu-item__text">
-                        {
-                            parentSlots?.value?.title?.(props) || props.title
-                        }
-                    </div>
+                    {
+                        !props.isChild && props.icon && collapse?.value && vertical?.value ? null : (
+                            <div class="o-menu-item__text">
+                                {
+                                    parentSlots?.value?.title?.(props) || props.title
+                                }
+                            </div>
+                        )
+                    }
                 </>
             )
             const TitleBox = (needClick = true, isActive = false, showArrow = false) => {
@@ -126,7 +135,7 @@ export default defineComponent({
                     </div>
                 )
                 return vertical?.value && collapse?.value && needClick && !props.isChild ? (
-                    <Tooltip trigger={trigger?.value || 'hover'} placement={'right'} v-slots={{
+                    <Tooltip trigger={trigger?.value || 'hover'} placement={'right'} popoverClass={'o-menu-tooltip'} v-slots={{
                         title: () => parentSlots?.value?.title?.(props) || props.title,
                         default: () => TitleRaw
                     }} />
@@ -147,6 +156,7 @@ export default defineComponent({
                                     v-model={popoverShow.value}
                                     trigger={trigger?.value || 'hover'}
                                     popoverClass={'o-menu-popover'}
+                                    popoverStyle={menuStyle?.value}
                                 >
                                     { props.children?.map(item => (
                                         <MenuItem {...item} isChild={true} />

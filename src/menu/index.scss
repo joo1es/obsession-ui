@@ -1,7 +1,19 @@
+:root {
+    --o-menu-padding-top-bottom: 15px;
+    --o-menu-padding-left-right: 15px;
+    --o-menu-font-size: 15px;
+    --o-menu-max-width: 800px;
+    --o-menu-item-min-width: 200px;
+    --o-menu-active-color: #2080f0;
+    --o-menu-arrow-color: #909399;
+    --o-menu-hover-color: #ecf5ff;
+}
 .o-menu {
-    max-width: 400px;
+    max-width: var(--o-menu-max-width);
     transition: max-width .2s;
     overflow: hidden;
+    font-size: var(--o-menu-font-size);
+    line-height: 1em;
     &.o-menu__row {
         max-width: 100%;
         overflow: auto;
@@ -10,19 +22,11 @@
         }
     }
     &.o-menu__collapse {
-        max-width: 36px;
+        max-width: calc(1em + var(--o-menu-padding-left-right) * 2);
     }
     .o-collapse-item {
         &.o-menu-item__active > .o-collapse-item__title {
-            color: #2080f0;
-        }
-    }
-    .o-collapse-item__title {
-        white-space: nowrap;
-        cursor: pointer;
-        border: 0;
-        &:not(.o-menu-item__diabeld):hover {
-            background-color: #fcfcfc;
+            color: var(--o-menu-active-color);
         }
     }
     .o-collapse-item__content {
@@ -48,26 +52,35 @@
         white-space: nowrap;
         overflow: hidden;
         width: 100%;
+        transition: .2s;
+    }
+    .o-collapse-item__title-icon {
+        font-size: 12px;
+        color: var(--o-menu-arrow-color);
     }
     &__arrow {
         position: absolute;
-        right: 10px;
+        right: var(--o-menu-padding-left-right);
         top: 0;
         height: 100%;
         display: flex;
         align-items: center;
+        font-size: 12px;
+        color: var(--o-menu-arrow-color);
     }
-    &-title {
+    &-title,
+    .o-collapse-item__title {
         position: relative;
         white-space: nowrap;
-        padding: 10px;
+        padding: var(--o-menu-padding-top-bottom) var(--o-menu-padding-left-right);
         cursor: pointer;
-        transition: color .2s;
+        transition: color .2s, background-color .2s;
+        border: 0;
         &:not(.o-menu-item__diabeld):hover {
-            background-color: #fcfcfc;
+            background-color: var(--o-menu-hover-color);
         }
         &.o-menu-item__active {
-            color: #2080f0;
+            color: var(--o-menu-active-color);
         }
     }
     &__diabled {
@@ -75,12 +88,16 @@
         cursor: not-allowed;
     }
 }
+.o-menu-tootip {
+    font-size: var(--o-menu-font-size);
+}
 .o-menu-popover {
     > .o-popover-content {
+        font-size: var(--o-menu-font-size);
         padding: 0;
         overflow: hidden;
         > .o-menu-item {
-            width: 200px;
+            min-width: var(--o-menu-item-min-width);
         }
     }
 }

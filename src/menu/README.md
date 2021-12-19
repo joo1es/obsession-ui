@@ -60,13 +60,14 @@ Vue.use(Popover);
 
 ### MenuRecord
 
-| 名称 | 类型 | 是否可选 |
-| --- | --- | --- |
-| index | string \| number \| symbol | 否 |
-| title | string | 是 |
-| icon | Component | 是 |
-| disabled | boolean | 是 |
-| children | MenuRecord[] | 是 |
+| 名称 | 说明 | 类型 | 是否可选 |
+| --- | --- | --- | --- |
+| index | 唯一标识符 | _string \| number \| symbol_ | 否 |
+| title | 标题 | _string_ | 是 |
+| icon | 图标 | _Component_ | 是 |
+| disabled | 是否禁用 | _boolean_ | 是 |
+| info | 任何你想携带的信息 | _Record<string, any>_ | 是 |
+| children | 子菜单 | _MenuList_ | 是 |
 
 ### MenuList
 
