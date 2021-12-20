@@ -19,7 +19,7 @@ const tooltipPropsOverride = {
     title: {
         type: String,
         default: '',
-    },
+    }
 }
 
 export const tooltipProps = {

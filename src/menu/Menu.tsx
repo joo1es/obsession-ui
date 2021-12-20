@@ -52,9 +52,7 @@ export default defineComponent({
     props: menuProps,
     emits: menuEmits,
     setup(props, { emit, slots, attrs }) {
-        provide('click', (record: MenuRecord) => {
-            return props.click?.(record)
-        })
+        provide('click', (record: MenuRecord) => props.click?.(record))
         const activeRef = ref<string | null>(null)
         const active = typeof props.modelValue === 'undefined' ? activeRef : useVModel(props, 'modelValue', emit)
         provide('active', active)
