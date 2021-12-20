@@ -8,9 +8,9 @@
 
 ```js
 import Vue from 'vue';
-import { Popover } from 'obsession-ui';
+import { Menu } from 'obsession-ui';
 
-Vue.use(Popover);
+Vue.use(Menu);
 ```
 
 ## 代码演示
