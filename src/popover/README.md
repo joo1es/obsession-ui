@@ -53,7 +53,7 @@ Vue.use(Popover);
 | transition | 过渡动画 | _string_ | `popover-transition` |
 | closeOnClickOutside | 点击外部是否关闭 popover | _boolean_ | true |
 | popoverClass | Popover 元素的 class | _string \| Record<string, boolean>_ | - |
-| popoverStyle | Popover 元素的 style | _CSSProperties_ | - |
+| popoverStyle | Popover 元素的 style | _string \| CSSProperties_ | - |
 | offset | 偏移，`[x, y]` | _number[]_ | - |
 
 ### Methods
