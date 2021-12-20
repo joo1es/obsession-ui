@@ -8,6 +8,7 @@
     --o-menu-arrow-color: #909399;
     --o-menu-hover-color: #ecf5ff;
     --o-menu-indent: 20px;
+    --o-menu-color: #333;
 }
 .o-menu {
     max-width: var(--o-menu-max-width);
@@ -36,6 +37,7 @@
     }
 }
 .o-menu-item {
+    color: var(--o-menu-color);
     &__icon {
         width: 1em;
         display: inline-flex;
