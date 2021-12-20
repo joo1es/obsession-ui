@@ -77,7 +77,7 @@ export const popoverProps = {
         default: '',
     },
     popoverStyle: {
-        type: Object as PropType<CSSProperties>,
+        type: [Object, String] as PropType<CSSProperties | string>,
         default: '',
     },
     offset: {
@@ -267,14 +267,10 @@ export default defineComponent({
                                         if (props.trigger !== 'hover') return
                                         handleMouseLeave()
                                     }}
-                                    style={{
-                                        width:
-                      typeof props.width === 'number' ? `${props.width}px` : '',
-                                        transform: props.offset
-                                            ? `translateX(${props.offset[0]}px) translateY(${props.offset[1]}px)`
-                                            : '',
-                                        ...props.popoverStyle
-                                    }}
+                                    {...mergeProps({
+                                        width: typeof props.width === 'number' ? `${props.width}px`: '',
+                                        transform: props.offset ? `translateX(${props.offset[0]}px) translateY(${props.offset[1]}px)` : '',
+                                    }, { style: props.popoverStyle })}
                                 >
                                     {props.arrow ? <div class="o-popover-arrow" /> : null}
                                     <div class="o-popover-content">{slots.default?.()}</div>
