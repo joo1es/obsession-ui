@@ -38,7 +38,7 @@ export const menuProps = {
         type: String,
         default: '400px'
     },
-    click: Function as PropType<(record: MenuRecord) => boolean | void>
+    click: Function as PropType<(record?: MenuRecord) => boolean | void>
 }
 export type MenuProps = ExtractPropTypes<typeof menuProps>
 
