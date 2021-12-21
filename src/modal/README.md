@@ -36,6 +36,7 @@ Vue.use(Modal)
 | showClose      | 是否显示关闭图标       | _boolean_                                                           | true   |
 | title | 标题     | _string_                                                    | -     |
 | border | 是否显示 title 和 footer 的边框       | _boolean_                                                    | true     |
+| doNotCloseMe | 组件是否受全局 closeAll 方法影响 | _boolean_ | false |
 
 ### Methods
 

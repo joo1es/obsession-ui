@@ -32,6 +32,10 @@ export const modalProps = {
     border: {
         type: Boolean,
         default: true
+    },
+    doNotCloseMe: {
+        type: Boolean,
+        default: false
     }
 }
 
@@ -91,7 +95,7 @@ export default defineComponent({
             immediate: true
         })
         watch(closeAll, () => {
-            if (closeAll.value) {
+            if (closeAll.value && !props.doNotCloseMe) {
                 show.value = false
             }
         })
