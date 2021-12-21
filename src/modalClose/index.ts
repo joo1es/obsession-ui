@@ -1,1 +1,0 @@
-export { closeAllModals } from '../modal/utils'

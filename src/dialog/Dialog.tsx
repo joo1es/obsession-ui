@@ -1,4 +1,4 @@
-import { ref, createApp, VNode, App } from 'vue'
+import { ref, createApp, VNode, App, defineComponent } from 'vue'
 
 import Modal, { ModalProps } from '../modal'
 import Button, { ButtonProps } from '../button'
@@ -21,7 +21,7 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
     return new Promise<void>((resolve, reject) => {
         const newDiv = document.createElement('div')
         document.body.appendChild(newDiv)
-        const app = createApp({
+        const app = createApp(defineComponent({
             setup() {
                 const show = ref(true)
                 return () => (
@@ -57,7 +57,7 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
                     }}></Modal>
                 )
             }
-        })
+        }))
         app.mount(newDiv)
     })
 }
