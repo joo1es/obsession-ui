@@ -8,7 +8,7 @@ import { closeAll } from './utils'
 
 export const modalProps = {
     overlay: {
-        type: Object as PropType<Partial<OverlayProps>>,
+        type: Object as PropType<Partial<OverlayProps> & Record<string, any>>,
         default: () => ({})
     },
     modelValue: {

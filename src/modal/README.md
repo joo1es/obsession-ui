@@ -29,7 +29,7 @@ Vue.use(Modal)
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
-| overlay      | Overlay 组件的 Props       | _Partial\<OverlayProps\>_          | {}     |
+| overlay      | Overlay 组件的 Props       | _Partial\<OverlayProps\> & Record\<string, any\>_          | {}     |
 | modelValue `v-model`     | 是否显示模态框   | _boolean_           | -      |
 | transitionName   | 过渡类名 | _string_ | _o-modal-fade_      |
 | width  | 模态框的宽度，不填则为自适应       | _string \| number_                                                           | -  |

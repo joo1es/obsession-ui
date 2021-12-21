@@ -12,12 +12,12 @@ export interface DialogOptions {
     showFooter?: boolean,
     showCancel?: boolean,
     showConfirm?: boolean,
-    spaceProps?: Partial<SpaceProps>,
-    cancelProps?: Partial<ButtonProps>,
-    confirmProps?: Partial<ButtonProps>
+    spaceProps?: Partial<SpaceProps> & Record<string, any>,
+    cancelProps?: Partial<ButtonProps> & Record<string, any>,
+    confirmProps?: Partial<ButtonProps> & Record<string, any>
 }
 
-const openDialog = function Dialog(options?: DialogOptions, props?: Partial<ModalProps>) {
+const openDialog = function Dialog(options?: DialogOptions, props?: Partial<ModalProps> & Record<string, any>) {
     return new Promise<void>((resolve, reject) => {
         const newDiv = document.createElement('div')
         document.body.appendChild(newDiv)

@@ -10,7 +10,7 @@ export const ellipsisProps = {
         type: Boolean
     },
     tooltip: {
-        type: Object as PropType<Partial<TooltipProps>>,
+        type: Object as PropType<Partial<TooltipProps> & Record<string, any>>,
         default: () => ({})
     },
     line: {
