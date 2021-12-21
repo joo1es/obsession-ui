@@ -28,6 +28,7 @@ yarn add vite-plugin-style-import -D
 ```js
 // 配置 vite.config.ts/js
 import styleImport from 'vite-plugin-style-import'
+import autoImportIgnore from 'obsession-ui/lib/autoImportIgnore'
 export default defineConfig({
     ...
     plugins: [
@@ -37,6 +38,7 @@ export default defineConfig({
                     libraryName: 'obsession-ui',
                     esModule: true,
                     resolveStyle: (name) => {
+                        if (autoImportIgnore.includes(name)) return
                         return `${name}/style/index.js`
                     }
                 }
