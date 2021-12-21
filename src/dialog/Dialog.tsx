@@ -1,4 +1,4 @@
-import { ref, createApp, VNode, App, defineComponent } from 'vue'
+import { ref, createApp, VNode, App, defineComponent, nextTick } from 'vue'
 
 import Modal, { ModalProps } from '../modal'
 import Button, { ButtonProps } from '../button'
@@ -23,7 +23,10 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
         document.body.appendChild(newDiv)
         const app = createApp(defineComponent({
             setup() {
-                const show = ref(true)
+                const show = ref(false)
+                nextTick(() => {
+                    show.value = true
+                })
                 return () => (
                     <Modal width={300} { ...props } v-model={show.value} v-slots={{
                         title: () => options?.title || '提示',
