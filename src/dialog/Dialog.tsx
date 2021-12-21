@@ -1,6 +1,6 @@
-import { ref, createApp, VNode } from 'vue'
+import { ref, createApp, VNode, App } from 'vue'
 
-import Modal, { ModalProps } from './Modal'
+import Modal, { ModalProps } from '../modal'
 import Button, { ButtonProps } from '../button'
 import Space, { SpaceProps } from '../space'
 
@@ -17,7 +17,7 @@ export interface DialogOptions {
     confirmProps?: Partial<ButtonProps>
 }
 
-export default function Dialog(options?: DialogOptions, props?: Partial<ModalProps>) {
+const openDialog = function Dialog(options?: DialogOptions, props?: Partial<ModalProps>) {
     return new Promise<void>((resolve, reject) => {
         const newDiv = document.createElement('div')
         document.body.appendChild(newDiv)
@@ -61,3 +61,9 @@ export default function Dialog(options?: DialogOptions, props?: Partial<ModalPro
         app.mount(newDiv)
     })
 }
+
+openDialog.install = (app: App<Element>) => {
+    app.config.globalProperties.$dialog = openDialog
+}
+
+export default openDialog

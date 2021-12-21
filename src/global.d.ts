@@ -14,26 +14,30 @@ import oScrollList from './scroll-list'
 import oStatistic from './statistic'
 import oOverlay from './overlay'
 import oModal from './modal'
+import $dialog from './dialog'
 
 declare module 'vue' {
-  export interface GlobalComponents {
-    oSpace: typeof oSpace;
-    oGird: typeof oGrid;
-    oG: typeof oGrid;
-    oGridItem: typeof oGridItem;
-    oGi: typeof oGridItem;
-    oIcon: typeof oIcon;
-    oButton: typeof oButton;
-    CollapseTransition: typeof CollapseTransition;
-    oCollapse: typeof oCollapse;
-    oCollapseItem: typeof oCollapseItem;
-    oPopover: typeof oPopover;
-    oTooltip: typeof oTooltip;
-    oMenu: typeof oMenu;
-    oEllipsis: typeof oEllipsis;
-    oScrollList: typeof oScrollList;
-    oStatistic: typeof oStatistic;
-    oOverlay: typeof oOverlay;
-    oModal: typeof oModal;
-  }
+    export interface GlobalComponents {
+        oSpace: typeof oSpace;
+        oGird: typeof oGrid;
+        oG: typeof oGrid;
+        oGridItem: typeof oGridItem;
+        oGi: typeof oGridItem;
+        oIcon: typeof oIcon;
+        oButton: typeof oButton;
+        CollapseTransition: typeof CollapseTransition;
+        oCollapse: typeof oCollapse;
+        oCollapseItem: typeof oCollapseItem;
+        oPopover: typeof oPopover;
+        oTooltip: typeof oTooltip;
+        oMenu: typeof oMenu;
+        oEllipsis: typeof oEllipsis;
+        oScrollList: typeof oScrollList;
+        oStatistic: typeof oStatistic;
+        oOverlay: typeof oOverlay;
+        oModal: typeof oModal;
+    }
+    interface Vue {
+        $dialog: typeof $dialog
+    }
 }
