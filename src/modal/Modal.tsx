@@ -44,7 +44,9 @@ export default defineComponent({
     emits: {
         'update:modelValue': (value: boolean) => typeof value === 'boolean',
         open: null,
-        close: null
+        close: null,
+        afterClose: null,
+        afterOpen: null
     },
     setup(props, { emit, attrs, slots }) {
         const showRef = ref(false)
@@ -71,11 +73,8 @@ export default defineComponent({
                 showOverlay.value = show.value
                 nextTick(() => {
                     showBox.value = show.value
-                    if (!neverMeet) {
-                        emit('open')
-                    } else {
-                        neverMeet = false
-                    }
+                    emit('open')
+                    neverMeet = false
                 })
             } else {
                 showBox.value = show.value
@@ -98,7 +97,7 @@ export default defineComponent({
         })
         return () => (
             <Overlay {...props.overlay} modelValue={showOverlay.value} onUpdate:modelValue={(value) => { show.value = value }} class="o-modal__overlay">
-                <Transition name={props.transitionName}>
+                <Transition name={props.transitionName} onAfterLeave={() => emit('afterClose')} onAfterEnter={() => emit('afterOpen')}>
                     {
                         showBox.value ? (
                             <div class={{

@@ -55,11 +55,9 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
                                 }
                             </Space>
                         ) : null
-                    }} onClose={() => {
+                    }} onAfterClose={() => {
                         document.body.removeChild(newDiv)
-                        setTimeout(() => {
-                            app.unmount()
-                        }, 500)
+                        app.unmount()
                     }}></Modal>
                 )
             }
