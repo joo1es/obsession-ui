@@ -42,7 +42,9 @@ export default defineComponent({
     inheritAttrs: false,
     props: modalProps,
     emits: {
-        'update:modelValue': (value: boolean) => typeof value === 'boolean'
+        'update:modelValue': (value: boolean) => typeof value === 'boolean',
+        open: null,
+        close: null
     },
     setup(props, { emit, attrs, slots }) {
         const showRef = ref(false)
@@ -68,11 +70,13 @@ export default defineComponent({
                 showOverlay.value = show.value
                 nextTick(() => {
                     showBox.value = show.value
+                    emit('open')
                 })
             } else {
                 showBox.value = show.value
                 nextTick(() => {
                     showOverlay.value = show.value
+                    emit('close')
                 })
             }
         }, {
