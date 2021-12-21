@@ -65,18 +65,27 @@ export default defineComponent({
         })
         const showOverlay = ref(false)
         const showBox = ref(false)
+        let neverMeet = true
         watch(show, () => {
             if (show.value) {
                 showOverlay.value = show.value
                 nextTick(() => {
                     showBox.value = show.value
-                    emit('open')
+                    if (!neverMeet) {
+                        emit('open')
+                    } else {
+                        neverMeet = false
+                    }
                 })
             } else {
                 showBox.value = show.value
                 nextTick(() => {
                     showOverlay.value = show.value
-                    emit('close')
+                    if (!neverMeet) {
+                        emit('close')
+                    } else {
+                        neverMeet = false
+                    }
                 })
             }
         }, {

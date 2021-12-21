@@ -1,4 +1,4 @@
-import { ref, createApp, VNode, App, defineComponent, nextTick } from 'vue'
+import { ref, createApp, VNode, App, defineComponent, onMounted } from 'vue'
 
 import Modal, { ModalProps } from '../modal'
 import Button, { ButtonProps } from '../button'
@@ -24,7 +24,7 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
         const app = createApp(defineComponent({
             setup() {
                 const show = ref(false)
-                nextTick(() => {
+                onMounted(() => {
                     show.value = true
                 })
                 return () => (
@@ -56,8 +56,10 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
                             </Space>
                         ) : null
                     }} onClose={() => {
-                        app.unmount()
                         document.body.removeChild(newDiv)
+                        setTimeout(() => {
+                            app.unmount()
+                        }, 500)
                     }}></Modal>
                 )
             }
