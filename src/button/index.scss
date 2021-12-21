@@ -1,10 +1,18 @@
+:root {
+    --o-button-color: '#333';
+    --o-button-main-color: '#f5f5f5';
+    --o-button-main-color: '#f5f5f5';
+    --o-button-padding-top-bottom: 8px;
+    --o-button-padding-left-right: 16px;
+    --o-button-font-size: 13px;
+}
 .o-button {
-    --o-button-color: var(--o-button-color, '#333');
-    --o-button-main-color: var(--o-button-main-color, '#f5f5f5');
-    --o-button-border-color: var(--o-button-main-color, '#f5f5f5');
-    --o-button-padding-top-bottom: var(--o-button-padding-top-bottom, 8px);
-    --o-button-padding-left-right: var(--o-button-padding-left-right, 16px);
-    --o-button-font-size: var(--o-button-font-size, 14px);
+    --o-button-color: var(--o-button-color);
+    --o-button-main-color: var(--o-button-main-color);
+    --o-button-border-color: var(--o-button-main-color);
+    --o-button-padding-top-bottom: var(--o-button-padding-top-bottom);
+    --o-button-padding-left-right: var(--o-button-padding-left-right);
+    --o-button-font-size: var(--o-button-font-size);
 
     appearance: none;
     color: var(--o-button-color);

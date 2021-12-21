@@ -87,6 +87,14 @@ module.exports = {
                     {
                         path: 'statistic',
                         title: 'Statistic 统计数据',
+                    },
+                    {
+                        path: 'overlay',
+                        title: 'Overlay 遮罩',
+                    },
+                    {
+                        path: 'modal',
+                        title: 'Modal 模态框',
                     }
                 ],
             },

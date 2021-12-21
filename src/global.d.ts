@@ -12,6 +12,8 @@ import oMenu from './menu'
 import oEllipsis from './ellipsis'
 import oScrollList from './scroll-list'
 import oStatistic from './statistic'
+import oOverlay from './overlay'
+import oModal from './modal'
 
 declare module 'vue' {
   export interface GlobalComponents {
@@ -31,5 +33,7 @@ declare module 'vue' {
     oEllipsis: typeof oEllipsis;
     oScrollList: typeof oScrollList;
     oStatistic: typeof oStatistic;
+    oOverlay: typeof oOverlay;
+    oModal: typeof oModal;
   }
 }
