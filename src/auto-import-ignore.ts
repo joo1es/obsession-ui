@@ -1,0 +1,1 @@
+export default [ 'close-all-modals', 'modal-props' ]

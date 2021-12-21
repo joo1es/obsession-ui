@@ -25,7 +25,7 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
             setup() {
                 const show = ref(true)
                 return () => (
-                    <Modal { ...props } v-model={show.value} v-slots={{
+                    <Modal width={300} { ...props } v-model={show.value} v-slots={{
                         title: () => options?.title || '提示',
                         default: () => options?.content,
                         footer: () => options?.showFooter !== false ? (
