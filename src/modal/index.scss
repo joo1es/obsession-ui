@@ -113,7 +113,7 @@
 
 .o-modal-fade-enter-from,
 .o-modal-fade-leave-to {
-    transform: scale(0);
+    transform: scale(1.1) !important;
     opacity: 0;
 }
 
