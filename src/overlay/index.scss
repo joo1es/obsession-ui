@@ -14,3 +14,7 @@
 .o-overlay-fade-leave-to {
     opacity: 0;
 }
+
+.o-prevent-scroll {
+    overflow: hidden !important;
+}

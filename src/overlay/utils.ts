@@ -4,9 +4,9 @@ const lockBodyScrollList = reactive(new Set<symbol>())
 
 watch(lockBodyScrollList, () => {
     if (lockBodyScrollList.size > 0) {
-        document.body.style.overflow = 'hidden'
+        document.body.classList.add('o-prevent-scroll')
     } else {
-        document.body.style.overflow = ''
+        document.body.classList.remove('o-prevent-scroll')
     }
 })
 
