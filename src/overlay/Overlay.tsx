@@ -1,4 +1,6 @@
-import { defineComponent, ExtractPropTypes, PropType, watch, ref, Teleport, RendererElement, Transition, provide, inject } from 'vue'
+import { defineComponent, ExtractPropTypes, PropType, watch, ref, Teleport, RendererElement, Transition } from 'vue'
+
+import { lockBodyScrollList } from './utils'
 
 export const overlayProps = {
     modelValue: {
@@ -56,6 +58,7 @@ export default defineComponent({
         'update:modelValue': (value: boolean) => typeof value === 'boolean'
     },
     setup(props, { slots, emit, attrs }) {
+        const overlaySymbol = Symbol('overlay')
         const zIndex = ref(1)
         const getZIndex = () => {
             if (props.modelValue && typeof props.zIndex === 'undefined') zIndex.value = getMaxZIndex()
@@ -63,18 +66,27 @@ export default defineComponent({
         /**
          * 处理 overlay 嵌套
          */
-        provide('o-overlay', true)
-        const isSubWpOverlay = inject<boolean>('o-overlay', false)
+        // provide('o-overlay', true)
+        // const isSubWpOverlay = inject<boolean>('o-overlay', false)
         watch(() => props.modelValue, () => {
             getZIndex()
-            if (!props.preventScroll || isSubWpOverlay) return
+            if (!props.preventScroll) return
             if (props.modelValue) {
-                document.body.style.overflowY = 'hidden'
+                lockBodyScrollList.add(overlaySymbol)
             } else {
-                document.body.style.overflowY = ''
+                lockBodyScrollList.delete(overlaySymbol)
             }
         }, {
             immediate: true
+        })
+        watch(() => props.preventScroll, () => {
+            if (props.modelValue) {
+                if (props.preventScroll) {
+                    lockBodyScrollList.add(overlaySymbol)
+                } else {
+                    lockBodyScrollList.delete(overlaySymbol)
+                }
+            }
         })
         return () => (
             <Teleport to={props.to}>
