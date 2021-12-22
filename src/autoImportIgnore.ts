@@ -8,6 +8,7 @@ export default [
     'collapse-props',
     'collapse-item-props',
     'popover-props',
+    'pop-confirm-props',
     'tooltip-props',
     'menu-props',
     'ellipsis-props',

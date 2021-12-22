@@ -1,4 +1,4 @@
-import { defineComponent, ExtractPropTypes, PropType, computed, ref, Transition, watch, nextTick } from 'vue'
+import { defineComponent, ExtractPropTypes, PropType, computed, ref, Transition, watch, nextTick, CSSProperties } from 'vue'
 
 import Overlay, { OverlayProps } from '../overlay'
 import Icon from '../icon'
@@ -17,7 +17,7 @@ export const modalProps = {
     },
     transitionName: {
         type: String,
-        default: 'o-modal-fade'
+        default: undefined
     },
     width: {
         type: [String, Number] as PropType<string | number>
@@ -36,6 +36,18 @@ export const modalProps = {
     doNotCloseMe: {
         type: Boolean,
         default: false
+    },
+    borderRadius: {
+        type: [Boolean, Number],
+        default: true
+    },
+    type: {
+        type: String as PropType<'dialog' | 'drawer'>,
+        default: 'dialog'
+    },
+    from: {
+        type: String as PropType<'top' | 'bottom' | 'left' | 'right'>,
+        default: 'bottom'
     }
 }
 
@@ -100,17 +112,23 @@ export default defineComponent({
             }
         })
         return () => (
-            <Overlay {...props.overlay} modelValue={showOverlay.value} onUpdate:modelValue={(value) => { show.value = value }} class="o-modal__overlay">
-                <Transition name={props.transitionName} onAfterLeave={() => emit('afterClose')} onAfterEnter={() => emit('afterOpen')}>
+            <Overlay {...props.overlay} modelValue={showOverlay.value} onUpdate:modelValue={(value) => { show.value = value }} class={{
+                'o-modal__overlay': true,
+                [`o-modal__overlay-${props.from}`]: props.type === 'drawer'
+            }}>
+                <Transition name={props.transitionName || (props.type === 'drawer' ? `o-modal-${props.from}` : 'o-modal-fade' )} onAfterLeave={() => emit('afterClose')} onAfterEnter={() => emit('afterOpen')}>
                     {
                         showBox.value ? (
                             <div class={{
                                 'o-modal': true,
-                                'o-modal__no-border': !props.border
+                                'o-modal__no-border': !props.border,
+                                'o-modal__drawer': props.type === 'drawer',
+                                [`o-modal__drawer-${props.from}`]: props.type === 'drawer'
                             }} style={{
                                 display: !showBox.value ? 'none' : '',
-                                width: typeof props.width === 'string' ? props.width : `${props.width}px`
-                            }} onClick={e => e.stopPropagation()} {...attrs}>
+                                width: typeof props.width === 'string' ? props.width : `${props.width}px`,
+                                '--o-modal-border-radius': props.borderRadius === true ? '4px' : props.borderRadius === false ? 0 : props.borderRadius
+                            } as CSSProperties} onClick={e => e.stopPropagation()} {...attrs}>
                                 {
                                     slots.title || props.title || props.showClose ? (
                                         <div class="o-modal__header">

@@ -1,0 +1,15 @@
+:root {
+    --o-pop-confirm-font-size: 14px;
+}
+
+.o-pop-confirm {
+    font-size: var(--o-pop-confirm-font-size);
+    &__content {
+        padding: 10px 0;
+        color: #666;
+    }
+    &__title {
+        font-weight: bold;
+        color: #333;
+    }
+}

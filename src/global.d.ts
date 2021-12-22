@@ -14,6 +14,7 @@ import oScrollList from './scroll-list'
 import oStatistic from './statistic'
 import oOverlay from './overlay'
 import oModal from './modal'
+import oPopConfirm from './pop-confirm'
 import $dialog from './dialog'
 
 declare module 'vue' {
@@ -36,6 +37,7 @@ declare module 'vue' {
         oStatistic: typeof oStatistic;
         oOverlay: typeof oOverlay;
         oModal: typeof oModal;
+        oPopConfirm: typeof oPopConfirm;
     }
     interface Vue {
         $dialog: typeof $dialog

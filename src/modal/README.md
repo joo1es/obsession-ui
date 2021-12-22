@@ -23,6 +23,10 @@ Vue.use(Modal)
 
 <demo-code transform>./demo/Fluent.vue</demo-code>
 
+#### 抽屉模式
+
+<demo-code transform>./demo/Drawer.vue</demo-code>
+
 ## API
 
 ### Props
@@ -36,7 +40,10 @@ Vue.use(Modal)
 | showClose      | 是否显示关闭图标       | _boolean_                                                           | true   |
 | title | 标题     | _string_                                                    | -     |
 | border | 是否显示 title 和 footer 的边框       | _boolean_                                                    | true     |
-| doNotCloseMe | 组件是否受全局 closeAll 方法影响 | _boolean_ | false |
+| borderRadius | 是否圆角或设置圆角的大小 | _boolean \| string_ | true |
+| doNotCloseMe | 组件是否不受全局 closeAll 方法影响 | _boolean_ | false |
+| type | 类型，可选对话框或抽屉 | _'dialog' \| 'drawer'_ | `dialog` |
+| from | 如果类型为抽屉，从哪边呼出 | _'left' \| 'right' \| 'top' \| 'bottom'_ | `bottom` |
 
 ### Methods
 

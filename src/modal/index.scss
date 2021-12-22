@@ -1,11 +1,44 @@
+:root {
+    --o-modal-duration: .3s;
+}
 .o-modal {
+    min-width: 0;
+    min-height: 0;
     max-height: 100%;
     background-color: #fff;
-    border-radius: 4px;
+    border-radius: var(--o-modal-border-radius);
     overflow: auto;
     font-size: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, .12), 0 0 6px rgba(0, 0, 0, .04);
-    color: #666;
+    transition: var(--o-modal-duration);
+    &__drawer {
+        border-radius: 0;
+        &-left {
+            border-top-right-radius: var(--o-modal-border-radius);
+            border-bottom-right-radius: var(--o-modal-border-radius);
+        }
+        &-right {
+            border-top-left-radius: var(--o-modal-border-radius);
+            border-bottom-left-radius: var(--o-modal-border-radius);
+        }
+        &-left,
+        &-right {
+            min-height: 100%;
+            max-height: 100%;
+        }
+        &-top {
+            border-bottom-left-radius: var(--o-modal-border-radius);
+            border-bottom-right-radius: var(--o-modal-border-radius);
+        }
+        &-bottom {
+            border-top-left-radius: var(--o-modal-border-radius);
+            border-top-right-radius: var(--o-modal-border-radius);
+        }
+        &-top,
+        &-bottom {
+            min-width: 100%;
+            max-width: 100%;
+        }
+    }
     .o-modal__header {
         display: flex;
         padding: 15px 20px;
@@ -43,15 +76,59 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    &-top {
+        align-items: flex-start;
+    }
+    &-bottom {
+        align-items: flex-end;
+    }
+    &-left {
+        justify-content: flex-start;
+    }
+    &-right {
+        justify-content: flex-end;
+    }
 }
 
 .o-modal-fade-enter-active,
-.o-modal-fade-leave-active {
-    transition: 0.3s;
+.o-modal-fade-leave-active,
+.o-modal-left-enter-active,
+.o-modal-left-leave-active,
+.o-modal-right-enter-active,
+.o-modal-right-leave-active,
+.o-modal-top-enter-active,
+.o-modal-top-leave-active,
+.o-modal-bottom-enter-active,
+.o-modal-bottom-leave-active {
+    transition: var(--o-modal-duration);
 }
 
 .o-modal-fade-enter-from,
 .o-modal-fade-leave-to {
     transform: scale(0);
+    opacity: 0;
+}
+
+.o-modal-left-enter-from,
+.o-modal-left-leave-to {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+.o-modal-right-enter-from,
+.o-modal-right-leave-to {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.o-modal-top-enter-from,
+.o-modal-top-leave-to {
+    transform: translateY(-100%);
+    opacity: 0;
+}
+
+.o-modal-bottom-enter-from,
+.o-modal-bottom-leave-to {
+    transform: translateY(100%);
     opacity: 0;
 }

@@ -73,6 +73,10 @@ module.exports = {
                         title: 'Popover 气泡弹出框',
                     },
                     {
+                        path: 'pop-confirm',
+                        title: 'PopConfirm 气泡弹出框',
+                    },
+                    {
                         path: 'tooltip',
                         title: 'Tooltip 文字提示',
                     },
@@ -82,7 +86,7 @@ module.exports = {
                     },
                     {
                         path: 'scroll-list',
-                        title: 'Scroll List 滚动列表',
+                        title: 'ScrollList 滚动列表',
                     },
                     {
                         path: 'statistic',
