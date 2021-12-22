@@ -10,6 +10,7 @@
     overflow: auto;
     font-size: 15px;
     transition: var(--o-modal-duration);
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     &__drawer {
         border-radius: 0;
         &-left {
@@ -76,6 +77,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    &-hidden {
+        background: transparent !important;
+        pointer-events: none;
+        > .o-modal {
+            pointer-events: all;
+        }
+    }
     &-top {
         align-items: flex-start;
     }

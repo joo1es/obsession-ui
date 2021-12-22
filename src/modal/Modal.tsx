@@ -3,13 +3,18 @@ import { defineComponent, ExtractPropTypes, PropType, computed, ref, Transition,
 import Overlay, { OverlayProps } from '../overlay'
 import Icon from '../icon'
 import { CloseOutlined } from '@vicons/antd'
+import { onClickOutside } from '@vueuse/core'
 
 import { closeAll } from './utils'
 
 export const modalProps = {
     overlay: {
-        type: Object as PropType<Partial<OverlayProps> & Record<string, any>>,
+        type: Object as PropType<(Partial<OverlayProps> & Record<string, any>)>,
         default: () => ({})
+    },
+    noOverlay: {
+        type: Boolean,
+        default: false
     },
     modelValue: {
         type: Boolean,
@@ -111,10 +116,17 @@ export default defineComponent({
                 show.value = false
             }
         })
+        const modalRef = ref<HTMLDivElement | null>(null)
+        onClickOutside(modalRef, () => {
+            if (props.noOverlay) {
+                show.value = false
+            }
+        })
         return () => (
             <Overlay {...props.overlay} modelValue={showOverlay.value} onUpdate:modelValue={(value) => { show.value = value }} class={{
                 'o-modal__overlay': true,
-                [`o-modal__overlay-${props.from}`]: props.type === 'drawer'
+                [`o-modal__overlay-${props.from}`]: props.type === 'drawer',
+                'o-modal__overlay-hidden': props.noOverlay
             }}>
                 <Transition name={props.transitionName || (props.type === 'drawer' ? `o-modal-${props.from}` : 'o-modal-fade' )} onAfterLeave={() => emit('afterClose')} onAfterEnter={() => emit('afterOpen')}>
                     {
@@ -128,7 +140,7 @@ export default defineComponent({
                                 display: !showBox.value ? 'none' : '',
                                 width: typeof props.width === 'string' ? props.width : `${props.width}px`,
                                 '--o-modal-border-radius': props.borderRadius === true ? '4px' : props.borderRadius === false ? 0 : props.borderRadius
-                            } as CSSProperties} onClick={e => e.stopPropagation()} {...attrs}>
+                            } as CSSProperties} onClick={e => e.stopPropagation()} ref={modalRef} {...attrs}>
                                 {
                                     slots.title || props.title || props.showClose ? (
                                         <div class="o-modal__header">
