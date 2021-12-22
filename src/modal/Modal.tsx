@@ -27,6 +27,9 @@ export const modalProps = {
     width: {
         type: [String, Number] as PropType<string | number>
     },
+    height: {
+        type: [String, Number] as PropType<string | number>
+    },
     showClose: {
         type: Boolean,
         default: true
@@ -139,6 +142,7 @@ export default defineComponent({
                             }} style={{
                                 display: !showBox.value ? 'none' : '',
                                 width: typeof props.width === 'string' ? props.width : `${props.width}px`,
+                                height: typeof props.height === 'string' ? props.height : `${props.height}px`,
                                 '--o-modal-border-radius': props.borderRadius === true ? '4px' : props.borderRadius === false ? 0 : props.borderRadius
                             } as CSSProperties} onClick={e => e.stopPropagation()} ref={modalRef} {...attrs}>
                                 {
