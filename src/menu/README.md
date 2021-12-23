@@ -67,6 +67,7 @@ Vue.use(Menu);
 | icon | 图标 | _Component_ | 是 |
 | disabled | 是否禁用 | _boolean_ | 是 |
 | info | 任何你想携带的信息 | _Record<string, any>_ | 是 |
+| groupName | 分组名称 | _string_ | 是 |
 | children | 子菜单 | _MenuList_ | 是 |
 
 ### MenuList
