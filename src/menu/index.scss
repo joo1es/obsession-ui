@@ -111,6 +111,11 @@
         font-size: 12px;
         color: var(--o-menu-arrow-color);
     }
+    &-title {
+        &.o-menu-item__with-arrow {
+            padding-right: calc(var(--o-menu-padding-left-right) + 17px);
+        }
+    }
     &-title,
     .o-collapse-item__title {
         position: relative;

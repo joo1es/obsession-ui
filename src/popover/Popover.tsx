@@ -147,6 +147,7 @@ export default defineComponent({
             show.value = true
         }
         const handleMouseLeave = () => {
+            if (mouseMoveing.value) clearTimeout(mouseMoveing.value)
             mouseMoveing.value = setTimeout(() => {
                 show.value = false
             }, props.duration)
@@ -242,7 +243,7 @@ export default defineComponent({
                                         handleMouseEnter()
                                     }}
                                     onMouseleave={() => {
-                                        if (props.trigger !== 'hover') return
+                                        if (props.trigger !== 'hover' || leaving.value) return
                                         handleMouseLeave()
                                     }}
                                     style={{

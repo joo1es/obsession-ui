@@ -1,0 +1,61 @@
+:root {
+    --o-dropdown-color: #666;
+    --o-dropdown-min-width: 100px;
+    --o-dropdown-font-size: 15px;
+    --o-dropdown-group-font-size: 15px;
+    --o-dropdown-padding-top-bottom: 8px;
+    --o-dropdown-padding-left-right: 15px;
+    --o-dropdown-icon-right: 5px;
+    --o-dropdown-arrow-size: 13px;
+    --o-dropdown-arrow-color: #333;
+    --o-dropdown-divided-color: #f5f5f5;
+    --o-dropdown-hover-background: #f5f5f5;
+    --o-dropdown-popover-content-padding: 4px;
+}
+
+.o-dropdown-popover {
+    color: var(--o-dropdown-color);
+    .o-dropdown-group {
+        font-size: var(--o-dropdown-group-font-size);
+        padding: var(--o-dropdown-padding-top-bottom) var(--o-dropdown-padding-left-right);
+        color: #999;
+    }
+    .o-dropdown-item {
+        font-size: var(--o-dropdown-font-size);
+        padding: var(--o-dropdown-padding-top-bottom) var(--o-dropdown-padding-left-right);
+        min-width: var(--o-dropdown-min-width);
+        cursor: pointer;
+        position: relative;
+        display: flex;
+        align-items: center;
+        &__icon {
+            margin-right: var(--o-dropdown-icon-right);
+        }
+        &.o-dropdown-item__with-arrow {
+            padding-right: calc(var(--o-dropdown-arrow-size) + var(--o-dropdown-padding-left-right) + 5px);
+        }
+        &__arrow {
+            position: absolute;
+            color: var(--o-dropdown-arrow-color);
+            right: var(--o-dropdown-padding-left-right);
+            top: 0;
+            font-size: var(--o-dropdown-arrow-size);
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        &__disabled {
+            opacity: .6;
+            cursor: not-allowed;
+        }
+        &__divided {
+            border-top: .5px solid var(--o-dropdown-divided-color);
+        }
+        &:not(.o-dropdown-item__disabled):hover {
+            background: var(--o-dropdown-hover-background);
+        }
+    }
+    .o-popover-content {
+        padding: var(--o-dropdown-popover-content-padding) 0;
+    }
+}

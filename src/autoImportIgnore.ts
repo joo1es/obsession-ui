@@ -15,6 +15,7 @@ export default [
     'scroll-list-props',
     'statistic-props',
     'overlay-props',
+    'dropdown-props',
     'close-all-modals',
     'modal-props'
 ]

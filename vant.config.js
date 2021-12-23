@@ -69,6 +69,10 @@ module.exports = {
                         title: 'Menu 菜单',
                     },
                     {
+                        path: 'dropdown',
+                        title: 'Dropdown 下拉菜单',
+                    },
+                    {
                         path: 'popover',
                         title: 'Popover 气泡弹出框',
                     },

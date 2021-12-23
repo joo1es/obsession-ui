@@ -113,7 +113,8 @@ export default defineComponent({
                         class={{
                             'o-menu-item-title': true,
                             'o-menu-item__active': isActive || active?.value === props.index,
-                            'o-menu-item__diabled': props.disabled
+                            'o-menu-item__diabled': props.disabled,
+                            'o-menu-item__with-arrow': showArrow && arrow?.value
                         }}
                         onClick={() => {
                             if (props.disabled || !needClick) return
