@@ -201,6 +201,7 @@ export default defineComponent({
             }
             return props.popoverClass
         })
+        const leaving = ref(false)
         return () => (
             <VBinder>
                 <VTarget>{getReferenceNode()}</VTarget>
@@ -223,8 +224,12 @@ export default defineComponent({
                         onEnter={() => {
                             followerEnabled.value = true
                         }}
-                        onAfterLeave={() => {
+                        onLeave={() => {
+                            leaving.value = true
+                        }}
+                        onAfterLeave = {() => {
                             followerEnabled.value = false
+                            leaving.value = false
                         }}
                     >
                         {show.value ? (
@@ -233,7 +238,7 @@ export default defineComponent({
                                     class={popoverClassRef}
                                     ref={popoverRef}
                                     onMouseenter={() => {
-                                        if (props.trigger !== 'hover') return
+                                        if (props.trigger !== 'hover' || leaving.value) return
                                         handleMouseEnter()
                                     }}
                                     onMouseleave={() => {
@@ -260,7 +265,7 @@ export default defineComponent({
                                     }}
                                     ref={popoverRef}
                                     onMouseenter={() => {
-                                        if (props.trigger !== 'hover') return
+                                        if (props.trigger !== 'hover' || leaving.value) return
                                         handleMouseEnter()
                                     }}
                                     onMouseleave={() => {
