@@ -69,10 +69,6 @@
                 "never"
             ],
             "space-before-blocks": "error",
-            "indent": [
-                "error",
-                4
-            ],
             "vue/script-indent": [
                 "error",
                 4,
@@ -100,7 +96,7 @@
         "@css-render/vue3-ssr": "^0.15.6",
         "@vicons/antd": "^0.11.0",
         "@vicons/utils": "^0.1.4",
-        "@vueuse/core": "^7.3.0",
+        "@vueuse/core": "^7.4.0",
         "vueuc": "^0.4.18"
     }
 }
