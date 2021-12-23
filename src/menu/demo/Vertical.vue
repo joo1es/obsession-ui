@@ -16,7 +16,8 @@ const menuList = [
             {
                 title: '菜单一-1',
                 index: '3',
-                icon: HomeTwotone
+                icon: HomeTwotone,
+                groupName: '分组一'
             }
         ]
     },

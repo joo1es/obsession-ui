@@ -72,3 +72,21 @@ Vue.use(Menu);
 ### MenuList
 
 _MenuRecord[]_
+
+## 定制
+
+### 全局 CSS 变量
+
+| 变量名 | 默认值 | 说明 |
+| ---- | ---- | ---- |
+| --o-menu-color | #333 | 字体颜色 |
+| --o-menu-max-width | 800px | 纵向菜单最大宽度 |
+|    --o-menu-font-size | 15px | 字体大小 |
+|    --o-menu-group-font-size | 14px | 分组标题字体大小 |
+|    --o-menu-padding-top-bottom | 15px | 单项上下内边距 |
+|    --o-menu-padding-left-right | 15px | 单项左右内边距 |
+|    --o-menu-indent | 20px | 单次缩进 |
+|    --o-menu-item-min-width | 200px | 菜单最小宽度 |
+|    --o-menu-active-color | #2080f0 | 激活颜色 |
+|    --o-menu-arrow-color | #909399 | 箭头颜色 |
+|    --o-menu-hover-color | #eeeeee60 | Hover 背景 |

@@ -9,6 +9,7 @@
     --o-menu-hover-color: #eeeeee60;
     --o-menu-indent: 20px;
     --o-menu-color: #333;
+    --o-menu-group-font-size: 14px;
 }
 .o-menu {
     max-width: var(--o-menu-max-width);
@@ -78,6 +79,10 @@
 }
 .o-menu-item {
     color: var(--o-menu-color);
+    &-group {
+        padding: var(--o-menu-padding-top-bottom) var(--o-menu-padding-left-right);
+        font-size: var(--o-menu-group-font-size);
+    }
     &__icon {
         width: 1em;
         display: inline-flex;

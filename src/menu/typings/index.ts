@@ -7,6 +7,7 @@ export type MenuRecord = {
     icon?: Component | string,
     disabled?: boolean,
     children?: MenuRecord[],
-    info?: Record<string, any>
+    info?: Record<string, any>,
+    groupName?: string
 }
 export type MenuList = MenuRecord[]

@@ -29,7 +29,8 @@ export default defineComponent({
         info: {
             type: Object as PropType<Record<string, any>>,
             default: () => ({})
-        }
+        },
+        groupName: String
     },
     setup(props, { slots }) {
         const clickMethod = inject<(record: MenuRecord) => void>('click')
@@ -143,48 +144,57 @@ export default defineComponent({
                 ) : TitleRaw
             }
             return (
-                <div class="o-menu-item">
+                <>
                     {
-                        props.children?.length > 0 ? (
-                            collapse?.value || !vertical?.value ? (
-                                <Popover
-                                    v-slots={{
-                                        target: () => TitleBox(false, collapseActive.value, props.isChild)
-                                    }}
-                                    placement={vertical?.value || props.isChild ? 'right' : 'bottom-start'}
-                                    to={props.isChild ? false : undefined}
-                                    arrow={false}
-                                    v-model={popoverShow.value}
-                                    trigger={trigger?.value || 'hover'}
-                                    popoverClass={'o-menu-popover'}
-                                    popoverStyle={menuStyle?.value}
-                                >
-                                    { props.children?.map(item => (
-                                        <MenuItem {...item} isChild={true} />
-                                    )) || '' }
-                                </Popover>
-                            ) : (
-                                <CollapseItem
-                                    name={props.index}
-                                    class={{
-                                        'o-menu-item__active': collapseActive.value || active?.value === props.index,
-                                        'o-menu-item__diabled': props.disabled
-                                    }}
-                                    onClickTitle={() => clickMethod?.(props)}
-                                    v-slots={{
-                                        title: () => Title
-                                    }}
-                                    disabled={props.disabled}
-                                    showArrow={arrow?.value}
-                                >
-                                    { props.children?.map(item => (
-                                        <MenuItem {...item} isChild={true} />
-                                    )) }
-                                </CollapseItem>
-                            )
-                        ) : TitleBox()
+                        props.groupName && ( vertical?.value || props.isChild ) ? (
+                            <div class="o-menu-item-group">
+                                { props.groupName }
+                            </div>
+                        ) : null
                     }
-                </div>
+                    <div class="o-menu-item">
+                        {
+                            props.children?.length > 0 ? (
+                                collapse?.value || !vertical?.value ? (
+                                    <Popover
+                                        v-slots={{
+                                            target: () => TitleBox(false, collapseActive.value, props.isChild)
+                                        }}
+                                        placement={vertical?.value || props.isChild ? 'right' : 'bottom-start'}
+                                        to={props.isChild ? false : undefined}
+                                        arrow={false}
+                                        v-model={popoverShow.value}
+                                        trigger={trigger?.value || 'hover'}
+                                        popoverClass={'o-menu-popover'}
+                                        popoverStyle={menuStyle?.value}
+                                    >
+                                        { props.children?.map(item => (
+                                            <MenuItem {...item} isChild={true} />
+                                        )) || '' }
+                                    </Popover>
+                                ) : (
+                                    <CollapseItem
+                                        name={props.index}
+                                        class={{
+                                            'o-menu-item__active': collapseActive.value || active?.value === props.index,
+                                            'o-menu-item__diabled': props.disabled
+                                        }}
+                                        onClickTitle={() => clickMethod?.(props)}
+                                        v-slots={{
+                                            title: () => Title
+                                        }}
+                                        disabled={props.disabled}
+                                        showArrow={arrow?.value}
+                                    >
+                                        { props.children?.map(item => (
+                                            <MenuItem {...item} isChild={true} />
+                                        )) }
+                                    </CollapseItem>
+                                )
+                            ) : TitleBox()
+                        }
+                    </div>
+                </>
             )
         }
     }
