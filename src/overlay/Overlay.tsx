@@ -1,4 +1,4 @@
-import { defineComponent, ExtractPropTypes, PropType, watch, ref, Teleport, RendererElement, Transition } from 'vue'
+import { defineComponent, ExtractPropTypes, PropType, watch, ref, Teleport, RendererElement, Transition, computed, ComputedRef } from 'vue'
 
 import { lockBodyScrollList } from './utils'
 
@@ -66,8 +66,15 @@ export default defineComponent({
         /**
          * 处理 overlay 嵌套
          */
-        // provide('o-overlay', true)
-        // const isSubWpOverlay = inject<boolean>('o-overlay', false)
+        provide('o-overlay', computed(() => props.modelValue))
+        const parentOverlayShow = inject<ComputedRef<boolean>>('o-overlay', false)
+        if (parentOverlayShow) {
+            watch(parentOverlayShow, () => {
+                if (!parentOverlayShow.value) {
+                    emit('update:modelValue', false)
+                }
+            })
+        }
         watch(() => props.modelValue, () => {
             getZIndex()
             if (!props.preventScroll) return
