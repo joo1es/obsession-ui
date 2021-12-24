@@ -1,4 +1,4 @@
-import { defineComponent, ExtractPropTypes, PropType, watch, ref, Teleport, RendererElement, Transition, computed, ComputedRef } from 'vue'
+import { defineComponent, ExtractPropTypes, PropType, watch, ref, Teleport, RendererElement, Transition, computed, ComputedRef, onBeforeUnmount } from 'vue'
 
 import { lockBodyScrollList } from './utils'
 
@@ -94,6 +94,9 @@ export default defineComponent({
                     lockBodyScrollList.delete(overlaySymbol)
                 }
             }
+        })
+        onBeforeUnmount(() => {
+            lockBodyScrollList.delete(overlaySymbol)
         })
         return () => (
             <Teleport to={props.to}>
