@@ -16,7 +16,7 @@
                 <o-modal v-model="show2" width="300px" :show-close="false" no-overlay>
                     确认要确认吗？
                     <template #footer>
-                        <o-button type="danger" block @click="show2 = false; show = !show">
+                        <o-button type="danger" block @click="show = false">
                             确认
                         </o-button>
                     </template>

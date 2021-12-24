@@ -3,15 +3,15 @@
     <template #target>
       <o-button> 点我 </o-button>
     </template>
-    <o-popover :to="false">
+    <o-popover>
       <template #target>
         <o-button> 点我 </o-button>
       </template>
-      <o-popover :to="false">
+      <o-popover>
         <template #target>
           <o-button> 点我 </o-button>
         </template>
-        <o-popover :to="false">
+        <o-popover>
           <template #target>
             <o-button> 点我 </o-button>
           </template>

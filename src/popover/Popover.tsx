@@ -8,7 +8,9 @@ import {
     ref,
     computed,
     createTextVNode,
-    CSSProperties
+    CSSProperties,
+    provide,
+    inject
 } from 'vue'
 import { VBinder, VTarget, VFollower } from 'vueuc'
 
@@ -203,6 +205,12 @@ export default defineComponent({
             return props.popoverClass
         })
         const leaving = ref(false)
+        provide('o-popover', true)
+        const subPopover = inject<boolean>('o-popover', false)
+        const toComputedRef = computed(() => {
+            if (subPopover) return false
+            return props.to
+        })
         return () => (
             <VBinder>
                 <VTarget>{getReferenceNode()}</VTarget>
@@ -211,14 +219,14 @@ export default defineComponent({
                     placement={props.placement}
                     zIndex={props.zIndex}
                     enabled={followerEnabled.value}
-                    to={props.to === false ? undefined : props.to}
+                    to={toComputedRef.value === false ? undefined : toComputedRef.value}
                     width={
                         props.width === 'trigger' || props.width === 'target'
                             ? 'target'
                             : undefined
                     }
                     flip={props.flip}
-                    teleportDisabled={props.to === false}
+                    teleportDisabled={toComputedRef.value === false}
                 >
                     <Transition
                         name={props.transition}

@@ -29,7 +29,7 @@ Vue.use(Popover);
 
 ### 嵌套
 
-嵌套时请将子元素的 `to` 属性设为 `false`
+嵌套时会将子Popover的 `to` 属性设为 `false`
 
 <demo-code transform>./demo/Nested.vue</demo-code>
 
