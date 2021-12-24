@@ -25,7 +25,7 @@
     transition: .3s;
     cursor: pointer;
     outline: 0;
-    &:not(.o-button__disabled):hover {
+    &.o-button__hover:not(.o-button__disabled):hover {
         background-color: var(--o-button-main-color--hover, #ccc);
     }
     &:not(.o-button__disabled):active {
@@ -47,7 +47,7 @@
             --o-button-main-color: #333 !important;
             --o-button-main-color--active: #111 !important;
         }
-        &:not(.o-button__disabled):hover {
+        &.o-button__hover:not(.o-button__disabled):hover {
             color: var(--o-button-color);
             background-color: var(--o-button-main-color);
         }

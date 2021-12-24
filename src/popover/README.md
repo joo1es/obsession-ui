@@ -15,21 +15,19 @@ Vue.use(Popover);
 
 ## 代码演示
 
-### 基础用法
+#### 基础用法
 
 <demo-code transform>./demo/Basic.vue</demo-code>
 
-### 位置
+#### 位置
 
 <demo-code transform>./demo/Placement.vue</demo-code>
 
-### 触发方式
+#### 触发方式
 
 <demo-code transform>./demo/Trigger.vue</demo-code>
 
-### 嵌套
-
-嵌套时会将子Popover的 `to` 属性设为 `false`
+#### 嵌套
 
 <demo-code transform>./demo/Nested.vue</demo-code>
 

@@ -40,6 +40,10 @@ export const buttonProps = {
         default: 'left',
     },
     buttonType: String,
+    hover: {
+        type: Boolean,
+        default: true
+    }
 }
 
 export type ButtonProps = ExtractPropTypes<typeof buttonProps>;
@@ -67,43 +71,44 @@ export default defineComponent({
                 )
             ) : null
             return h(
-        props.tag as any,
-        {
-            class: {
-                'o-button': true,
-                'o-button__disabled': disabled.value,
-                'o-button__ghost': props.ghost,
-                'o-button__round': props.round,
-                'o-button__round--onlyicon': !defaultSlot,
-                'o-button__dashed': props.dashed,
-                'o-button__block': props.block,
-                [`o-button__${props.type}`]: true,
-            },
-            style: {
-                ...(typeof props.type === 'string'
-                    ? buttonTypes?.[props.type] || buttonTypes.default
-                    : props.type),
-                ...(typeof props.size === 'string'
-                    ? buttonSize?.[props.size] || buttonSize.default
-                    : props.size),
-            },
-            onClick: () => !disabled.value && emit('click'),
-            onDblclick: () => !disabled.value && emit('dblclick'),
-            type: props.buttonType,
-        },
-        <div
-            class={{
-                'o-button__text': true,
-                'o-button__text--margin-left': props.iconPosition === 'right',
-                'o-button__text--no-margin': !defaultSlot,
-            }}
-        >
-            <>
-                {props.iconPosition === 'left' ? Icon : null}
-                {defaultSlot}
-                {props.iconPosition === 'right' ? Icon : null}
-            </>
-        </div>
+                props.tag as any,
+                {
+                    class: {
+                        'o-button': true,
+                        'o-button__disabled': disabled.value,
+                        'o-button__ghost': props.ghost,
+                        'o-button__round': props.round,
+                        'o-button__round--onlyicon': !defaultSlot,
+                        'o-button__dashed': props.dashed,
+                        'o-button__block': props.block,
+                        'o-button__hover': props.hover,
+                        [`o-button__${props.type}`]: true,
+                    },
+                    style: {
+                        ...(typeof props.type === 'string'
+                            ? buttonTypes?.[props.type] || buttonTypes.default
+                            : props.type),
+                        ...(typeof props.size === 'string'
+                            ? buttonSize?.[props.size] || buttonSize.default
+                            : props.size),
+                    },
+                    onClick: () => !disabled.value && emit('click'),
+                    onDblclick: () => !disabled.value && emit('dblclick'),
+                    type: props.buttonType,
+                },
+                <div
+                    class={{
+                        'o-button__text': true,
+                        'o-button__text--margin-left': props.iconPosition === 'right',
+                        'o-button__text--no-margin': !defaultSlot,
+                    }}
+                >
+                    <>
+                        {props.iconPosition === 'left' ? Icon : null}
+                        {defaultSlot}
+                        {props.iconPosition === 'right' ? Icon : null}
+                    </>
+                </div>
             )
         }
     },
