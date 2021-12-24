@@ -1,4 +1,4 @@
-import { defineComponent, ExtractPropTypes, PropType, watch, ref, Teleport, RendererElement, Transition, computed, ComputedRef, onBeforeUnmount } from 'vue'
+import { defineComponent, ExtractPropTypes, PropType, watch, ref, Teleport, RendererElement, Transition, computed, ComputedRef, onBeforeUnmount, provide, inject } from 'vue'
 
 import { lockBodyScrollList } from './utils'
 
@@ -67,7 +67,7 @@ export default defineComponent({
          * 处理 overlay 嵌套
          */
         provide('o-overlay', computed(() => props.modelValue))
-        const parentOverlayShow = inject<ComputedRef<boolean>>('o-overlay', false)
+        const parentOverlayShow = inject<ComputedRef<boolean> | false>('o-overlay', false)
         if (parentOverlayShow) {
             watch(parentOverlayShow, () => {
                 if (!parentOverlayShow.value) {
@@ -108,9 +108,8 @@ export default defineComponent({
                                     position: props.position,
                                     zIndex: typeof props.zIndex === 'undefined' ? zIndex.value : props.zIndex,
                                     background: props.background,
-                                    backdropFilter: props.blur ? `blur(${typeof props.blur === 'boolean' ? '10px' : props.blur})` : '',
-                                    display: props.useVShow && !props.modelValue ? 'none' : ''
-                                }} onClick={() => props.clickToClose && emit('update:modelValue', false)} {...attrs}>
+                                    backdropFilter: props.blur ? `blur(${typeof props.blur === 'boolean' ? '10px' : props.blur})` : ''
+                                }} onClick={() => props.clickToClose && emit('update:modelValue', false)} v-show={props.useVShow ? props.modelValue : true} {...attrs}>
                                     { slots.default?.() }
                                 </div>
                             </>

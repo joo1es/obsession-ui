@@ -140,11 +140,10 @@ export default defineComponent({
                                 'o-modal__drawer': props.type === 'drawer',
                                 [`o-modal__drawer-${props.from}`]: props.type === 'drawer'
                             }} style={{
-                                display: !showBox.value ? 'none' : '',
                                 width: typeof props.width === 'string' ? props.width : `${props.width}px`,
                                 height: typeof props.height === 'string' ? props.height : `${props.height}px`,
                                 '--o-modal-border-radius': props.borderRadius === true ? '4px' : props.borderRadius === false ? 0 : props.borderRadius
-                            } as CSSProperties} onClick={e => e.stopPropagation()} ref={modalRef} {...attrs}>
+                            } as CSSProperties} onClick={e => e.stopPropagation()} ref={modalRef} v-show={props.overlay.useVShow ? showBox.value : true} {...attrs}>
                                 {
                                     slots.title || props.title || props.showClose ? (
                                         <div class="o-modal__header">

@@ -1,7 +1,8 @@
 <template>
     <o-modal v-model="show" width="400px" title="对话框" :overlay="{
         background: 'rgba(225, 225, 225, 0.376)',
-        blur: true
+        blur: true,
+        useVShow: true
     }">
         这里是内容
         <template #footer>
