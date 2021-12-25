@@ -29,39 +29,47 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
                     show.value = true
                 })
                 return () => (
-                    <Modal width={300} { ...props } v-model={show.value} v-slots={{
-                        title: () => options?.title || '提示',
-                        default: () => options?.content,
-                        footer: () => options?.footer?.(() => {
-                            show.value = false
-                        }) || (options?.showFooter !== false ? (
-                            <Space justify="end" { ...options?.spaceProps }>
-                                {
-                                    options?.showCancel !== false ? (
-                                        <Button onClick={() => {
-                                            show.value = false
-                                            reject()
-                                        }}>
-                                            { options?.cancelText || '取消' }
-                                        </Button>
-                                    ) : null
-                                }
-                                {
-                                    options?.showConfirm !== false ? (
-                                        <Button type="primary" onClick={() => {
-                                            show.value = false
-                                            resolve()
-                                        }} {...options?.cancelProps}>
-                                            { options?.confirmText || '确定' }
-                                        </Button>
-                                    ) : null
-                                }
-                            </Space>
-                        ) : null)
-                    }} onAfterClose={() => {
-                        document.body.removeChild(newDiv)
-                        app.unmount()
-                    }}></Modal>
+                    <Modal
+                        width={300}
+                        { ...props }
+                        v-model={show.value}
+                        v-slots={{
+                            title: () => options?.title || '提示',
+                            default: () => options?.content,
+                            footer: () => options?.footer?.(() => {
+                                show.value = false
+                            }) || (options?.showFooter !== false ? (
+                                <Space justify="end" { ...options?.spaceProps }>
+                                    {
+                                        options?.showCancel !== false ? (
+                                            <Button onClick={() => {
+                                                show.value = false
+                                            }}>
+                                                { options?.cancelText || '取消' }
+                                            </Button>
+                                        ) : null
+                                    }
+                                    {
+                                        options?.showConfirm !== false ? (
+                                            <Button type="primary" onClick={() => {
+                                                show.value = false
+                                                resolve()
+                                            }} {...options?.cancelProps}>
+                                                { options?.confirmText || '确定' }
+                                            </Button>
+                                        ) : null
+                                    }
+                                </Space>
+                            ) : null)
+                        }}
+                        onClose={() => {
+                            reject()
+                        }}
+                        onAfterClose={() => {
+                            document.body.removeChild(newDiv)
+                            app.unmount()
+                        }}
+                    />
                 )
             }
         }))
