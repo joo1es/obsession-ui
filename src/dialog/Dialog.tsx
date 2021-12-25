@@ -1,4 +1,4 @@
-import { ref, createApp, VNode, App, defineComponent, onMounted } from 'vue'
+import { ref, createApp, VNode, App, defineComponent } from 'vue'
 
 import Modal, { ModalProps } from '../modal'
 import Button, { ButtonProps } from '../button'
@@ -24,10 +24,7 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
         document.body.appendChild(newDiv)
         const app = createApp(defineComponent({
             setup() {
-                const show = ref(false)
-                onMounted(() => {
-                    show.value = true
-                })
+                const show = ref(true)
                 return () => (
                     <Modal
                         width={300}

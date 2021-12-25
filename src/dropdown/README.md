@@ -43,6 +43,13 @@ Vue.use(Dropdown)
 | title | 标题 | ...DropdownRecord |
 | group | 分组 | ...DropdownRecord |
 
+### Methods
+
+| 参数      | 说明           | 类型                                                                | 默认值 |
+| --------- | -------------- | ------------------------------------------------------------------- | ------ |
+| update:modelValue      | 修改是否显示菜单       | _(value: boolean) => void_          | -     |
+| click | 每项点击事件 | _(record: DropdownRecord) => void_
+
 ## 类型
 
 ### DropdownRecord
@@ -55,7 +62,7 @@ Vue.use(Dropdown)
 | disabled | 是否禁用 | _boolean_ | 是 |
 | divided | 是否在菜单前插入分割线 | _boolean_ | 是 |
 | groupName | 分组名称 | _string_ | 是 |
-| click | 点击事件，返回 true 会阻止事件传递到父级 | _(record?: DropdownRecord) => void_ | 是 |
+| click | 点击事件，返回 true 会阻止事件传递到父级 | _(record: DropdownRecord) => void_ | 是 |
 | children | 子菜单 | _DropdownRecord[]_ | 是 |
 
 ## 定制

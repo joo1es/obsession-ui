@@ -3,7 +3,7 @@ import { defineComponent, ExtractPropTypes, PropType, computed, ref, Transition,
 import Overlay, { OverlayProps } from '../overlay'
 import Icon from '../icon'
 import { CloseOutlined } from '@vicons/antd'
-import { onClickOutside, useFocus } from '@vueuse/core'
+import { onClickOutside } from '@vueuse/core'
 
 import { closeAll } from './utils'
 
@@ -73,6 +73,7 @@ export default defineComponent({
         afterOpen: null
     },
     setup(props, { emit, attrs, slots }) {
+        const modalRef = ref<HTMLDivElement | null>(null)
         const showRef = ref(false)
         const show = computed<boolean>({
             get: () => {
@@ -119,15 +120,10 @@ export default defineComponent({
                 show.value = false
             }
         })
-        const modalRef = ref<HTMLDivElement | null>(null)
         onClickOutside(modalRef, () => {
             if (props.noOverlay) {
                 show.value = false
             }
-        })
-        useFocus({
-            target: modalRef,
-            initialValue: true
         })
         return () => (
             <Overlay {...props.overlay} modelValue={showOverlay.value} onUpdate:modelValue={(value) => { show.value = value }} class={{
@@ -135,7 +131,10 @@ export default defineComponent({
                 [`o-modal__overlay-${props.from}`]: props.type === 'drawer',
                 'o-modal__overlay-hidden': props.noOverlay
             }}>
-                <Transition name={props.transitionName || (props.type === 'drawer' ? `o-modal-${props.from}` : 'o-modal-fade' )} onAfterLeave={() => emit('afterClose')} onAfterEnter={() => emit('afterOpen')}>
+                <Transition name={props.transitionName || (props.type === 'drawer' ? `o-modal-${props.from}` : 'o-modal-fade')} onAfterLeave={() => emit('afterClose')} onAfterEnter={() => {
+                    modalRef.value?.focus()
+                    emit('afterOpen')
+                }} appear={true}>
                     {
                         showBox.value ? (
                             <div

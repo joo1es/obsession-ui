@@ -1,0 +1,71 @@
+.o-action-sheet {
+    font-size: var(--o-action-sheet-font-size, 16px);
+    .o-action-sheet__cell {
+        &.o-action-sheet--description {
+            padding: 15px var(--o-action-sheet-padding-left-right, 20px);
+            color: #aaa;
+            font-size: 14px;
+            text-align: center;
+            line-height: 16px;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        &.o-action-sheet--cancel {
+            padding: var(--o-action-sheet-padding-top-bottom, 10px) var(--o-action-sheet-padding-left-right, 20px);
+        }
+        .o-action-sheet--content {
+            padding: 0 var(--o-action-sheet-padding-left-right, 20px);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            .o-action-sheet--icon {
+                font-size: var(--o-action-sheet-icon-size, 20px);
+                color: #666;
+                margin-right: 10px;
+                display: flex;
+                align-items: center;
+            }
+            .o-action-sheet--text {
+                padding: var(--o-action-sheet-padding-top-bottom, 10px) 0;
+                flex: 1;
+                overflow: hidden;
+                border-bottom: 1px solid #f5f5f5;
+            }
+            .o-action-sheet--title {
+                color: #000;
+            }
+            .o-action-sheet--description {
+                color: #999;
+                font-size: 13px;
+            }
+        }
+        &.o-action-sheet__cell--disabled {
+            opacity: .6;
+            .o-action-sheet--content {
+                cursor: not-allowed;
+            }
+        }
+        &:not(.o-action-sheet__cell--disabled) {
+            .o-action-sheet--content:active {
+                background-color: #f5f5f5;
+            }
+        }
+    }
+    .o-action-sheet--hander {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+        &::after {
+            content: '';
+            width: 40px;
+            height: 5px;
+            background-color: #ccc;
+            border-radius: 5px;
+        }
+    }
+}
+
+.o-modal-action-sheet {
+    .o-modal__content {
+        padding: 0;
+    }
+}

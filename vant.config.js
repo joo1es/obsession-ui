@@ -77,6 +77,10 @@ module.exports = {
                         title: 'Dropdown 下拉菜单',
                     },
                     {
+                        path: 'action-sheet',
+                        title: 'ActionSheet 动作菜单',
+                    },
+                    {
                         path: 'popover',
                         title: 'Popover 气泡弹出框',
                     },

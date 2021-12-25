@@ -27,7 +27,7 @@ export default defineComponent({
             type: [String, Symbol, Number] as PropType<string | symbol | number>
         },
         title: String,
-        click: Function as PropType<(record?: DropdownRecord) => void>,
+        click: Function as PropType<(record: DropdownRecord) => void>,
         groupName: String,
         disabled: Boolean,
         divided: Boolean,
