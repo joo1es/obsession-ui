@@ -55,7 +55,11 @@ export default defineComponent({
     props: actionSheetProps,
     emits: {
         'update:modelValue': (value: boolean) => typeof value === 'boolean',
-        'click': null
+        'click': (record?: ActionSheetRecord, done?: () => void) => {
+            void record
+            void done
+            return true
+        }
     },
     setup(props, { attrs, emit, slots }) {
         const showRef = ref(false)
@@ -117,9 +121,6 @@ export default defineComponent({
                     marginTop: isTop ? '' : '-10px',
                     marginBottom: isTop ? '-10px' : ''
                 }}
-                onTouchstart={handleTouchStart}
-                onTouchmove={handleTouchMove}
-                onTouchend={handleTouchEnd}
             />
         )
         return () => (
@@ -130,7 +131,7 @@ export default defineComponent({
                 <div class="o-action-sheet" ref={actionSheetRef} style={{
                     transform: ( props.from === 'bottom' ? deltaY.value < 0 : deltaY.value > 0 ) ? `translateY(${deltaY.value}px)` : '',
                     transition: transitionDuration.value
-                }} { ...attrs }>
+                }} { ...attrs } onTouchstart={handleTouchStart} onTouchmove={handleTouchMove} onTouchend={handleTouchEnd}>
                     {
                         modalPropsMap.value.from === 'bottom' && props.handler && handlerRender()
                     }
