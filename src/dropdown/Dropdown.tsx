@@ -62,13 +62,23 @@ export default defineComponent({
         })
         provide('o-dropdown-parent-slot', slots)
         provide('o-dropdown-show-arrow', computed(() => props.showArrow))
+        const classComputedRef = computed(() => {
+            if (!props.popover.popoverClass) return 'o-dropdown-popover'
+            if (typeof props.popover.popoverClass === 'string') {
+                return `o-dropdown-popover ${props.popover.popoverClass}`
+            } 
+            return {
+                'o-dropdown-popover': true,
+                ...props.popover.popoverClass
+            }
+        })
         return () => (
             <Popover
                 arrow={false}
                 placement="bottom"
                 trigger="hover"
                 { ...props.popover }
-                popoverClass="o-dropdown-popover"
+                popoverClass={classComputedRef.value}
                 v-model={show.value}
                 v-slots={{
                     target: () => (

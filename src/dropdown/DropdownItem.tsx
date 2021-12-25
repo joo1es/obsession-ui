@@ -71,6 +71,16 @@ export default defineComponent({
                     }
                 </div>
             )
+            const classComputedRef = computed(() => {
+                if (!popoverProps?.value?.popoverClass) return 'o-dropdown-popover'
+                if (typeof popoverProps.value.popoverClass === 'string') {
+                    return `o-dropdown-popover ${popoverProps.value.popoverClass}`
+                } 
+                return {
+                    'o-dropdown-popover': true,
+                    ...popoverProps.value.popoverClass
+                }
+            })
             return (
                 <>
                     {
@@ -87,9 +97,9 @@ export default defineComponent({
                         props.children && props.children.length > 0 ? (
                             <PopoverMap
                                 arrow={false}
-                                popoverClass="o-dropdown-popover"
                                 trigger="hover"
                                 { ...popoverProps?.value }
+                                popoverClass={classComputedRef.value}
                                 to={false}
                                 modelValue={popoverShow.value}
                                 onUpdate:modelValue={(value: boolean) => {
