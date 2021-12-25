@@ -55,7 +55,7 @@ export default defineComponent({
     props: actionSheetProps,
     emits: {
         'update:modelValue': (value: boolean) => typeof value === 'boolean',
-        'click': (record?: ActionSheetRecord, done?: () => void) => {
+        'click': (record: ActionSheetRecord, done: () => void) => {
             void record
             void done
             return true
