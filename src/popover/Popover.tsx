@@ -17,6 +17,8 @@ import { VBinder, VTarget, VFollower } from 'vueuc'
 import type { ExtractPropTypes } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 
+import { getMaxZIndex } from '../utils'
+
 export type PopoverTrigger = 'click' | 'hover' | 'focus' | 'none';
 export type PopoverPlacement =
   | 'top-start'
@@ -107,6 +109,7 @@ export default defineComponent({
      * 非受控模式
      */
         const popoverShow = ref(false)
+        const zIndex = ref(0)
         const show = computed<boolean>({
             get() {
                 if (typeof props.modelValue === 'undefined') {
@@ -115,6 +118,9 @@ export default defineComponent({
                 return props.modelValue
             },
             set(value) {
+                if (value && !props.zIndex) {
+                    zIndex.value = getMaxZIndex()
+                }
                 if (typeof props.modelValue === 'undefined') {
                     popoverShow.value = value
                 } else {
@@ -211,13 +217,14 @@ export default defineComponent({
             if (subPopover) return false
             return props.to
         })
+        const zIndexRef = computed(() => props.zIndex || zIndex.value)
         return () => (
             <VBinder>
                 <VTarget>{getReferenceNode()}</VTarget>
                 <VFollower
                     show
                     placement={props.placement}
-                    zIndex={props.zIndex}
+                    zIndex={zIndexRef.value}
                     enabled={followerEnabled.value}
                     to={toComputedRef.value === false ? undefined : toComputedRef.value}
                     width={
