@@ -44,7 +44,7 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
                                         options?.showCancel !== false ? (
                                             <Button onClick={() => {
                                                 show.value = false
-                                            }}>
+                                            }} {...options?.cancelProps}>
                                                 { options?.cancelText || '取消' }
                                             </Button>
                                         ) : null
@@ -54,7 +54,7 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
                                             <Button type="primary" onClick={() => {
                                                 show.value = false
                                                 resolve()
-                                            }} {...options?.cancelProps}>
+                                            }} {...options?.confirmProps}>
                                                 { options?.confirmText || '确定' }
                                             </Button>
                                         ) : null
