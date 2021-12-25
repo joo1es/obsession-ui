@@ -1,3 +1,4 @@
+@import '../style/var.scss';
 :root {
     --o-button-color: '#333';
     --o-button-main-color: '#f5f5f5';
@@ -30,7 +31,7 @@
         background-color: var(--o-button-main-color--hover, #ccc);
     }
     &:not(.o-button__disabled):active {
-        background-color: var(--o-button-main-color--active, #ddd);
+        background-color: var(--o-button-main-color--active, #ddd) !important;
     }
     &.o-button__block {
         display: block;
@@ -53,8 +54,8 @@
             background-color: var(--o-button-main-color);
         }
         &:not(.o-button__disabled):active {
-            color: var(--o-button-color);
-            background-color: var(--o-button-main-color--active, #ddd);
+            color: var(--o-button-color) !important;
+            background-color: var(--o-button-main-color--active, #ddd) !important;
         }
     }
     &.o-button__round {
