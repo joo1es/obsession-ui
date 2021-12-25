@@ -3,7 +3,7 @@ import { defineComponent, ExtractPropTypes, PropType, computed, ref, Transition,
 import Overlay, { OverlayProps } from '../overlay'
 import Icon from '../icon'
 import { CloseOutlined } from '@vicons/antd'
-import { onClickOutside } from '@vueuse/core'
+import { onClickOutside, useFocus } from '@vueuse/core'
 
 import { closeAll } from './utils'
 
@@ -125,6 +125,10 @@ export default defineComponent({
                 show.value = false
             }
         })
+        useFocus({
+            target: modalRef,
+            initialValue: true
+        })
         return () => (
             <Overlay {...props.overlay} modelValue={showOverlay.value} onUpdate:modelValue={(value) => { show.value = value }} class={{
                 'o-modal__overlay': true,
@@ -134,16 +138,24 @@ export default defineComponent({
                 <Transition name={props.transitionName || (props.type === 'drawer' ? `o-modal-${props.from}` : 'o-modal-fade' )} onAfterLeave={() => emit('afterClose')} onAfterEnter={() => emit('afterOpen')}>
                     {
                         showBox.value ? (
-                            <div class={{
-                                'o-modal': true,
-                                'o-modal__no-border': !props.border,
-                                'o-modal__drawer': props.type === 'drawer',
-                                [`o-modal__drawer-${props.from}`]: props.type === 'drawer'
-                            }} style={{
-                                width: typeof props.width === 'string' ? props.width : `${props.width}px`,
-                                height: typeof props.height === 'string' ? props.height : `${props.height}px`,
-                                '--o-modal-border-radius': props.borderRadius === true ? '4px' : props.borderRadius === false ? 0 : props.borderRadius
-                            } as CSSProperties} onClick={e => e.stopPropagation()} ref={modalRef} v-show={props.overlay.useVShow ? showBox.value : true} {...attrs}>
+                            <div
+                                class={{
+                                    'o-modal': true,
+                                    'o-modal__no-border': !props.border,
+                                    'o-modal__drawer': props.type === 'drawer',
+                                    [`o-modal__drawer-${props.from}`]: props.type === 'drawer'
+                                }}
+                                style={{
+                                    width: typeof props.width === 'string' ? props.width : `${props.width}px`,
+                                    height: typeof props.height === 'string' ? props.height : `${props.height}px`,
+                                    '--o-modal-border-radius': props.borderRadius === true ? '4px' : props.borderRadius === false ? 0 : props.borderRadius
+                                } as CSSProperties}
+                                onClick={e => e.stopPropagation()}
+                                ref={modalRef}
+                                v-show={props.overlay.useVShow ? showBox.value : true}
+                                tabindex="-1"
+                                {...attrs}
+                            >
                                 {
                                     slots.title || props.title || props.showClose ? (
                                         <div class="o-modal__header">
