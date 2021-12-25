@@ -90,12 +90,14 @@ export default defineComponent({
         const transitionDuration = ref('')
         const actionSheetRef = ref<null | HTMLDivElement>(null)
         const handleTouchStart = (e: TouchEvent) => {
+            if (!props.handler) return
             if (props.from !== 'bottom' && props.from !== 'top') return
             if (!e.touches) return
             transitionDuration.value = 'none'
             startY.value = e.touches[0].pageY
         }
         const handleTouchMove = (e: TouchEvent) => {
+            if (!props.handler) return
             if (props.from !== 'bottom' && props.from !== 'top') return
             if (!e.touches) return
             deltaY.value = e.touches[0].pageY - startY.value
@@ -104,6 +106,7 @@ export default defineComponent({
             } else if (deltaY.value > 40) deltaY.value = 40
         }
         const handleTouchEnd = () => {
+            if (!props.handler) return
             if (props.from !== 'bottom' && props.from !== 'top') return
             transitionDuration.value = '.3s'
             if (actionSheetRef.value) {
