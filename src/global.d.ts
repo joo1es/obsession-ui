@@ -17,6 +17,7 @@ import oModal from './modal'
 import oPopConfirm from './pop-confirm'
 import oDropdown from './dropdown'
 import $dialog from './dialog'
+import $toast from './toast'
 
 declare module 'vue' {
     export interface GlobalComponents {
@@ -42,6 +43,7 @@ declare module 'vue' {
         oDropdown: typeof oDropdown;
     }
     interface Vue {
-        $dialog: typeof $dialog
+        $dialog: typeof $dialog,
+        $toast: typeof $toast
     }
 }

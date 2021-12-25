@@ -42,6 +42,10 @@ module.exports = {
                         path: 'collapse-transition',
                         title: 'Transition 渐变',
                     },
+                    {
+                        path: 'toast',
+                        title: 'Toast 吐司提示',
+                    },
                 ],
             },
             {

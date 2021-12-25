@@ -1,6 +1,7 @@
 import { defineComponent, ExtractPropTypes, PropType, watch, ref, Teleport, RendererElement, Transition, computed, ComputedRef, onBeforeUnmount, provide, inject } from 'vue'
 
 import { lockBodyScrollList } from './utils'
+import { getMaxZIndex } from '../utils'
 
 export const overlayProps = {
     modelValue: {
@@ -43,12 +44,6 @@ export const overlayProps = {
 }
 
 export type OverlayProps =  ExtractPropTypes<typeof overlayProps>
-
-const getMaxZIndex = () => {
-    const elements = Array.from(document.querySelectorAll('*'))
-    const arr = elements.map(e => +window.getComputedStyle(e).zIndex || 0)
-    return arr.length ? Math.max(...arr) + 1 : 1
-}
 
 export default defineComponent({
     name: 'OOverlay',
