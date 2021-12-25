@@ -10,7 +10,8 @@ import {
     createTextVNode,
     CSSProperties,
     provide,
-    inject
+    inject,
+    watch
 } from 'vue'
 import { VBinder, VTarget, VFollower } from 'vueuc'
 
@@ -118,15 +119,17 @@ export default defineComponent({
                 return props.modelValue
             },
             set(value) {
-                if (value && !props.zIndex) {
-                    zIndex.value = getMaxZIndex()
-                }
                 if (typeof props.modelValue === 'undefined') {
                     popoverShow.value = value
                 } else {
                     emit('update:modelValue', value)
                 }
             },
+        })
+        watch(show, () => {
+            if (show.value && !props.zIndex) {
+                zIndex.value = getMaxZIndex()
+            }
         })
         /**
      * 点击外部自动关闭自身
