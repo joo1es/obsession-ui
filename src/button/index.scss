@@ -25,6 +25,7 @@
     padding: var(--o-button-padding-top-bottom) var(--o-button-padding-left-right);
     border-radius: 2px;
     transition: .3s;
+    height: calc(var(--o-button-padding-top-bottom) * 2 + var(--o-button-font-size) * 1.2);
     cursor: pointer;
     outline: 0;
     &.o-button__hover:not(.o-button__disabled):hover {

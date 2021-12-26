@@ -18,5 +18,6 @@ export default [
     'dropdown-props',
     'close-all-modals',
     'action-sheet-props',
+    'button-group-props',
     'modal-props'
 ]

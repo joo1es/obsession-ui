@@ -1,0 +1,38 @@
+.o-button-group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    .o-button:not(:first-child):not(:last-child) {
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+    }
+    .o-button:first-child {
+        border-right: 0;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+    .o-button:last-child {
+        border-left: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+    .o-button:not(:first-child) {
+        position: relative;
+        &::before {
+            content: '';
+            opacity: .5;
+            position: absolute;
+            left: 0;
+            height: 12px;
+            top: calc(50% - 6px);
+            width: 1px;
+            background-color: var(--o-button-color);
+        }
+        &.o-button__ghost {
+            &::before {
+                background-color: var(--o-button-main-color);
+            }
+        }
+    }
+}

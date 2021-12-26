@@ -16,94 +16,29 @@ app.use(Button)
 
 ## 代码演示
 
-### 基础用法
-
-```html
-<o-button>Default</o-button>
-<o-button type="primary">Primary</o-button>
-<o-button type="success">Success</o-button>
-<o-button type="warning">Warning</o-button>
-<o-button type="danger">Danger</o-button>
-```
+#### 基础用法
 
 <demo-code transform>./demo/Basic.vue</demo-code>
 
-### 禁用
-
-```html
-<o-button disabled>Default</o-button>
-<o-button type="primary" disabled>Primary</o-button>
-<o-button type="success" disabled>Success</o-button>
-<o-button type="warning" disabled>Warning</o-button>
-<o-button type="danger" disabled>Danger</o-button>
-```
+#### 禁用
 
 <demo-code transform>./demo/Disabled.vue</demo-code>
 
-### 图标
-
-```html
-<o-space>
-    <o-button :icon="Add">
-        Default
-    </o-button>
-    <o-button type="primary">
-        <template #icon>
-            <AccumulationSnow />
-        </template>
-        Primary
-    </o-button>
-    <o-button type="success" :icon="MacOption" />
-    <o-button type="warning" round :icon="Cad">
-        Warning
-    </o-button>
-    <o-button type="danger" round :icon="MailAll" />
-</o-space>
-```
+#### 图标
 
 <demo-code transform>./demo/Icon.vue</demo-code>
 
-### 尺寸
-
-```html
-<o-space align="end">
-    <o-button type="primary" size="large">
-        Large
-    </o-button>
-    <o-button>
-        Default
-    </o-button>
-    <o-button type="success" size="small">
-        Small
-    </o-button>
-    <o-button type="warning" size="mini">
-        Mini
-    </o-button>
-</o-space>
-```
+#### 尺寸
 
 <demo-code transform>./demo/Size.vue</demo-code>
 
-### Loading
-
-```html
-<o-space align="end">
-    <o-button type="primary" size="large">
-        Large
-    </o-button>
-    <o-button>
-        Default
-    </o-button>
-    <o-button type="success" size="small">
-        Small
-    </o-button>
-    <o-button type="warning" size="mini">
-        Mini
-    </o-button>
-</o-space>
-```
+#### Loading
 
 <demo-code transform>./demo/Loading.vue</demo-code>
+
+#### 按钮组
+
+<demo-code transform>./demo/ButtonGroup.vue</demo-code>
 
 ## API
 

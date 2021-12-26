@@ -17,6 +17,7 @@ import oModal from './modal'
 import oPopConfirm from './pop-confirm'
 import oDropdown from './dropdown'
 import oActionSheet from './action-sheet'
+import oButtonGroup from './button-group'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -43,6 +44,7 @@ declare module 'vue' {
         oPopConfirm: typeof oPopConfirm;
         oDropdown: typeof oDropdown;
         oActionSheet: typeof oActionSheet;
+        oButtonGroup: typeof oButtonGroup;
     }
     interface Vue {
         $dialog: typeof $dialog,
