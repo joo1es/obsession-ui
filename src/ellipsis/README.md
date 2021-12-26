@@ -7,10 +7,11 @@
 ### 引入
 
 ```js
-import Vue from 'vue';
-import { Ellipsis } from 'obsession-ui';
+import { createApp } from 'vue'
+import { Ellipsis } from 'obsession-ui'
 
-Vue.use(Ellipsis);
+const app = createApp()
+app.use(Ellipsis)
 ```
 
 ## 代码演示

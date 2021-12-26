@@ -4,6 +4,16 @@
 
 能点的
 
+### 引入
+
+```js
+import { createApp } from 'vue'
+import { Button } from 'obsession-ui'
+
+const app = createApp()
+app.use(Button)
+```
+
 ## 代码演示
 
 ### 基础用法

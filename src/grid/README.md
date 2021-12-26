@@ -7,11 +7,12 @@
 ### 引入
 
 ```js
-import Vue from 'vue';
-import { Gird, GridItem } from 'obsession-ui';
+import { createApp } from 'vue'
+import { Gird, GridItem } from 'obsession-ui'
 
-Vue.use(Gird);
-Vue.use(GridItem);
+const app = createApp()
+app.use(Gird)
+app.use(GridItem)
 ```
 
 ## 代码演示

@@ -4,10 +4,21 @@
 
 长的像面包就叫面包了
 
-### 引入
+### 全局引入
 
 ```js
-import Vue from 'vue'
+import { createApp } from 'vue'
+import { Toast } from 'obsession-ui'
+
+const app = createApp()
+app.use(Toast)
+
+// this.$toast
+```
+
+### 组件内引入
+
+```js
 import { Toast } from 'obsession-ui'
 
 Toast({

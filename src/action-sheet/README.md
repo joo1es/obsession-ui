@@ -4,6 +4,16 @@
 
 这是一个几乎只在手机端才会用到的组件，但我们支持了PC端
 
+### 引入
+
+```js
+import { createApp } from 'vue'
+import { ActionSheet } from 'obsession-ui'
+
+const app = createApp()
+app.use(ActionSheet)
+```
+
 ## 代码演示
 
 #### 基础用法

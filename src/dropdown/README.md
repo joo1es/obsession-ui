@@ -7,10 +7,11 @@
 ### 引入
 
 ```js
-import Vue from 'vue'
+import { createApp } from 'vue'
 import { Dropdown } from 'obsession-ui'
 
-Vue.use(Dropdown)
+const app = createApp()
+app.use(Dropdown)
 ```
 
 ## 代码演示

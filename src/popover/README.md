@@ -7,10 +7,11 @@
 ### 引入
 
 ```js
-import Vue from 'vue';
-import { Popover } from 'obsession-ui';
+import { createApp } from 'vue'
+import { Popover } from 'obsession-ui'
 
-Vue.use(Popover);
+const app = createApp()
+app.use(Popover)
 ```
 
 ## 代码演示

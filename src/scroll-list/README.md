@@ -7,10 +7,11 @@
 ### 引入
 
 ```js
-import Vue from 'vue';
-import { ScrollList } from 'obsession-ui';
+import { createApp } from 'vue'
+import { ScrollList } from 'obsession-ui'
 
-Vue.use(ScrollList);
+const app = createApp()
+app.use(ScrollList)
 ```
 
 ## 代码演示

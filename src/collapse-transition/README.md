@@ -10,10 +10,11 @@
 ### 引入
 
 ```js
-import Vue from 'vue';
-import { CollapseTransition } from 'obsession-ui';
+import { createApp } from 'vue'
+import { CollapseTransition } from 'obsession-ui'
 
-Vue.use(CollapseTransition);
+const app = createApp()
+app.use(CollapseTransition)
 ```
 
 ## 代码演示
