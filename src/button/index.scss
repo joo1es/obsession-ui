@@ -27,8 +27,9 @@
     height: calc(var(--o-button-padding-top-bottom) * 2 + var(--o-button-font-size) * 1.3);
     cursor: pointer;
     outline: 0;
-    display: flex;
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     &.o-button__hover:not(.o-button__disabled):hover {
         background-color: var(--o-button-main-color--hover, #ccc);
     }
