@@ -47,6 +47,7 @@ Vue.use(Modal)
 | doNotCloseMe | 组件是否不受全局 closeAll 方法影响 | _boolean_ | false |
 | type | 类型，可选对话框或抽屉 | _'dialog' \| 'drawer'_ | `dialog` |
 | from | 如果类型为抽屉，从哪边呼出 | _'left' \| 'right' \| 'top' \| 'bottom'_ | `bottom` |
+| handler | 是否可以通过手势关闭，只在有 touch 事件的设备上有效 | _boolean_ | false | 
 
 ### Methods
 

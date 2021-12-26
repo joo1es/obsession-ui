@@ -1,4 +1,4 @@
-import { defineComponent, computed, PropType, ExtractPropTypes, Component, h, VNode, ref, nextTick } from 'vue'
+import { defineComponent, computed, PropType, ExtractPropTypes, Component, h, VNode, ref } from 'vue'
 import Modal, { modalProps } from '../modal'
 import Button from '../button'
 import Icon from '../icon'
@@ -22,6 +22,10 @@ export const actionSheetProps = {
         type: Boolean,
         default: true
     },
+    cancelText: {
+        type: [String, Object] as PropType<string | VNode>,
+        default: '取消'
+    },
     description: {
         type: [String, Object] as PropType<string | VNode>
     },
@@ -32,10 +36,6 @@ export const actionSheetProps = {
     showClose: {
         type: Boolean,
         default: false
-    },
-    from: {
-        type: String as PropType<'top' | 'bottom' | 'left' | 'right'>,
-        default: 'bottom'
     },
     width: {
         type: [String, Number],
@@ -82,44 +82,13 @@ export default defineComponent({
             const propsBackup: Partial<ActionSheetProps> = { ...props }
             delete propsBackup.list
             delete propsBackup.showCancel
-            delete propsBackup.handler
+            delete propsBackup.cancelText
+            delete propsBackup.description
             return propsBackup
         })
-        const startY = ref(0)
-        const deltaY = ref(0)
-        const transitionDuration = ref('')
+        // const deltaY = ref(0)
+        // const transitionDuration = ref('')
         const actionSheetRef = ref<null | HTMLDivElement>(null)
-        const handleTouchStart = (e: TouchEvent) => {
-            if (!props.handler) return
-            if (props.from !== 'bottom' && props.from !== 'top') return
-            if (!e.touches) return
-            transitionDuration.value = 'none'
-            startY.value = e.touches[0].pageY
-        }
-        const handleTouchMove = (e: TouchEvent) => {
-            if (!props.handler) return
-            if (props.from !== 'bottom' && props.from !== 'top') return
-            if (!e.touches) return
-            deltaY.value = e.touches[0].pageY - startY.value
-            if (props.from === 'bottom') {
-                if (deltaY.value < -40) deltaY.value = -40
-            } else if (deltaY.value > 40) deltaY.value = 40
-        }
-        const handleTouchEnd = () => {
-            if (!props.handler) return
-            if (props.from !== 'bottom' && props.from !== 'top') return
-            transitionDuration.value = '.3s'
-            if (actionSheetRef.value) {
-                if (Math.abs(deltaY.value) > actionSheetRef.value?.clientHeight / 2) {
-                    deltaY.value = 0
-                    nextTick(() => {
-                        show.value = false
-                    })
-                    return
-                }
-            }
-            deltaY.value = 0
-        }
         const handlerRender = (isTop = true) => (
             <div
                 class="o-action-sheet--hander"
@@ -129,15 +98,10 @@ export default defineComponent({
                 }}
             />
         )
+        // transform: ( props.from === 'bottom' ? deltaY.value < 0 : deltaY.value > 0 ) ? `translateY(${deltaY.value}px)` : '',
         return () => (
-            <Modal class="o-modal-action-sheet" style={{
-                transform: ( props.from === 'bottom' ? deltaY.value > 0 : deltaY.value < 0 ) ? `translateY(${deltaY.value}px)` : '',
-                transition: transitionDuration.value
-            }} { ...modalPropsMap.value } v-model={show.value}>
-                <div class="o-action-sheet" ref={actionSheetRef} style={{
-                    transform: ( props.from === 'bottom' ? deltaY.value < 0 : deltaY.value > 0 ) ? `translateY(${deltaY.value}px)` : '',
-                    transition: transitionDuration.value
-                }} { ...attrs } onTouchstart={handleTouchStart} onTouchmove={handleTouchMove} onTouchend={handleTouchEnd}>
+            <Modal class="o-modal-action-sheet" { ...modalPropsMap.value } v-model={show.value}>
+                <div class="o-action-sheet" ref={actionSheetRef} { ...attrs }>
                     {
                         modalPropsMap.value.from === 'bottom' && props.handler && handlerRender()
                     }
@@ -196,7 +160,7 @@ export default defineComponent({
                                     slots.cancel?.() || (
                                         <Button size="large" block round onClick={() => {
                                             show.value = false
-                                        }} hover={false}>取消</Button>
+                                        }} hover={false}>{ props.cancelText }</Button>
                                     )
                                 }
                             </div>

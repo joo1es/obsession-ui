@@ -56,7 +56,8 @@ export const modalProps = {
     from: {
         type: String as PropType<'top' | 'bottom' | 'left' | 'right'>,
         default: 'bottom'
-    }
+    },
+    handler: Boolean
 }
 
 export type ModalProps = ExtractPropTypes<typeof modalProps>
@@ -125,6 +126,71 @@ export default defineComponent({
                 show.value = false
             }
         })
+        /**
+         * 手势关闭
+         */
+        const startX = ref(0)
+        const startY = ref(0)
+        const deltaX = ref(0)
+        const deltaY = ref(0)
+        const transitionDuration = ref('')
+        const needTouchEvent = computed(() => props.handler)
+        const handleTouchStart = (e: TouchEvent) => {
+            if (!needTouchEvent.value) return
+            transitionDuration.value = 'none'
+            startX.value = e.touches[0].pageX
+            startY.value = e.touches[0].pageY
+        }
+        const handleTouchMove = (e: TouchEvent) => {
+            if (!needTouchEvent.value) return
+            deltaX.value = e.touches[0].pageX - startX.value
+            deltaY.value = e.touches[0].pageY - startY.value
+            /**
+             * 往上拖的逻辑暂时取消
+             */
+            // if (props.from === 'left') {
+            //     if (deltaX.value < -40) deltaX.value = -40
+            // } else if (deltaX.value > 40) deltaX.value = 40
+            // if (props.from === 'bottom') {
+            //     if (deltaY.value < -40) deltaY.value = -40
+            // } else if (deltaY.value > 40) deltaY.value = 40
+        }
+        const clear = (close = false) => {
+            deltaX.value = 0
+            deltaY.value = 0
+            if (close) {
+                nextTick(() => {
+                    show.value = false
+                })
+            }
+        }
+        const handleTouchEnd = () => {
+            if (!needTouchEvent.value) return
+            transitionDuration.value = '.3s'
+            if (modalRef.value) {
+                if (props.from === 'bottom' || props.from === 'top') {
+                    if (Math.abs(deltaY.value) > modalRef.value?.clientHeight / 2) {
+                        return clear(true)
+                    }
+                }
+                if (Math.abs(deltaX.value) > modalRef.value?.clientWidth / 2) {
+                    return clear(true)
+                }
+            }
+            clear()
+        }
+        const modalTransform = computed(() => {
+            switch (props.from) {
+                case 'bottom':
+                    return deltaY.value > 0 ? `translateY(${deltaY.value}px)` : ''
+                case 'top':
+                    return deltaY.value < 0 ? `translateY(${deltaY.value}px)` : ''
+                case 'left':
+                    return deltaX.value < 0 ? `translateX(${deltaX.value}px)` : ''
+                case 'right':
+                    return deltaX.value > 0 ? `translateX(${deltaX.value}px)` : ''
+            }
+        })
         return () => (
             <Overlay {...props.overlay} modelValue={showOverlay.value} onUpdate:modelValue={(value) => { show.value = value }} class={{
                 'o-modal__overlay': true,
@@ -147,12 +213,17 @@ export default defineComponent({
                                 style={{
                                     width: typeof props.width === 'string' ? props.width : `${props.width}px`,
                                     height: typeof props.height === 'string' ? props.height : `${props.height}px`,
+                                    transform: modalTransform.value,
+                                    transition: transitionDuration.value,
                                     '--o-modal-border-radius': props.borderRadius === true ? '4px' : props.borderRadius === false ? 0 : props.borderRadius
                                 } as CSSProperties}
                                 onClick={e => e.stopPropagation()}
                                 ref={modalRef}
                                 v-show={props.overlay.useVShow ? showBox.value : true}
                                 tabindex="-1"
+                                onTouchstart={handleTouchStart}
+                                onTouchmove={handleTouchMove}
+                                onTouchend={handleTouchEnd}
                                 {...attrs}
                             >
                                 {

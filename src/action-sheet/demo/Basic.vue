@@ -6,6 +6,7 @@
     <o-action-sheet
         v-model="show"
         description="这是一段描述"
+        from="bottom"
         :list="[
             {
                 title: '收藏',
