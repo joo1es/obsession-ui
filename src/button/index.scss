@@ -37,7 +37,7 @@
         background-color: var(--o-button-main-color--active, #ddd) !important;
     }
     &.o-button__block {
-        display: block;
+        display: flex;
         width: 100%;
     }
     &.o-button__dashed {
