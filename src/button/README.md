@@ -8,10 +8,11 @@
 
 ```js
 import { createApp } from 'vue'
-import { Button } from 'obsession-ui'
+import { Button, ButtonGroup } from 'obsession-ui'
 
 const app = createApp()
 app.use(Button)
+app.use(ButtonGroup)
 ```
 
 ## 代码演示
