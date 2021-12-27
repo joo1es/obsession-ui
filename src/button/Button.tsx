@@ -75,10 +75,10 @@ export default defineComponent({
                 {
                     class: {
                         'o-button': true,
+                        'o-button--onlyicon': !defaultSlot,
                         'o-button__disabled': disabled.value,
                         'o-button__ghost': props.ghost,
                         'o-button__round': props.round,
-                        'o-button__round--onlyicon': !defaultSlot,
                         'o-button__dashed': props.dashed,
                         'o-button__block': props.block,
                         'o-button__hover': props.hover,
