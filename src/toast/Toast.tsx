@@ -35,6 +35,7 @@ const Toast = (options: ToastOptions) => {
                     }}>
                         <Transition name={options.transition || 'o-toast-fade'} appear onAfterLeave={() => {
                             app.unmount()
+                            document.body.removeChild(newDiv)
                         }}>
                             <div style={options.style} class={{
                                 'o-toast-message': true,
