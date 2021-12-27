@@ -46,7 +46,7 @@ export const modalProps = {
         default: false
     },
     borderRadius: {
-        type: [Boolean, Number],
+        type: [Boolean, Number, String],
         default: true
     },
     type: {
@@ -191,6 +191,15 @@ export default defineComponent({
                     return deltaX.value > 0 ? `translateX(${deltaX.value}px)` : ''
             }
         })
+        const modalBorderRadius = computed(() => {
+            if (typeof props.borderRadius === 'boolean') {
+                return props.borderRadius ? '4px' : ''
+            } 
+            if (!isNaN(Number(props.borderRadius))) {
+                return `${props.borderRadius}px`
+            } 
+            return props.borderRadius
+        })
         return () => (
             <Overlay {...props.overlay} modelValue={showOverlay.value} onUpdate:modelValue={(value) => { show.value = value }} class={{
                 'o-modal__overlay': true,
@@ -215,7 +224,7 @@ export default defineComponent({
                                     height: typeof props.height === 'string' ? props.height : `${props.height}px`,
                                     transform: modalTransform.value,
                                     transition: transitionDuration.value,
-                                    '--o-modal-border-radius': props.borderRadius === true ? '4px' : props.borderRadius === false ? 0 : props.borderRadius
+                                    '--o-modal-border-radius': modalBorderRadius.value
                                 } as CSSProperties}
                                 onClick={e => e.stopPropagation()}
                                 ref={modalRef}
