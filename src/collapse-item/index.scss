@@ -12,8 +12,9 @@
         &-icon {
             color: #999;
             transition: transform 0.2s;
+            margin-left: 5px;
             &.active {
-            transform: rotate(180deg);
+                transform: rotate(180deg);
             }
         }
     }
