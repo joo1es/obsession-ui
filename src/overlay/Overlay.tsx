@@ -95,7 +95,7 @@ export default defineComponent({
         })
         return () => (
             <Teleport to={props.to || null} disabled={!props.to}>
-                <Transition name={props.transitionName}>
+                <Transition name={props.transitionName} appear={true}>
                     {
                         !props.useVShow && !props.modelValue ? null : (
                             <>

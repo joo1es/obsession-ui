@@ -28,6 +28,10 @@ app.use(Modal)
 
 <demo-code transform>./demo/Drawer.vue</demo-code>
 
+#### 函数调用
+
+<demo-code transform>./demo/Function.vue</demo-code>
+
 ## API
 
 ### Props
