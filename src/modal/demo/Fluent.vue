@@ -10,17 +10,22 @@
                 <o-button @click="show = !show">
                     取消
                 </o-button>
-                <o-button type="primary" @click="show2 = !show2">
-                    确认
-                </o-button>
-                <o-modal v-model="show2" width="300px" :show-close="false" no-overlay>
+                <o-popover>
+                    32323
+                    <template #target>
+                        <o-button type="primary" @click="show2 = !show2">
+                            确认
+                        </o-button>
+                    </template>
+                </o-popover>
+                <!-- <o-modal v-model="show2" width="300px" :show-close="false" no-overlay>
                     确认要确认吗？
                     <template #footer>
                         <o-button type="danger" block @click="show = false">
                             确认
                         </o-button>
                     </template>
-                </o-modal>
+                </o-modal> -->
             </o-space>
         </template>
     </o-modal>

@@ -15,6 +15,8 @@ import {
 } from 'vue'
 import { VBinder, VTarget, VFollower } from 'vueuc'
 
+import { zindexable } from 'vdirs'
+
 import type { ExtractPropTypes } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 
@@ -99,6 +101,11 @@ export const popoverEmits = {
 export type PopoverEmits = typeof popoverEmits;
 
 const textVNodeType = createTextVNode('').type
+
+/**
+ * Do this to avoid f*ing warn
+ */
+zindexable.unmounted = () => {}
 
 export default defineComponent({
     name: 'OPopover',
@@ -225,7 +232,7 @@ export default defineComponent({
             <VBinder>
                 <VTarget>{getReferenceNode()}</VTarget>
                 <VFollower
-                    show
+                    show={true}
                     placement={props.placement}
                     zIndex={zIndexRef.value}
                     enabled={followerEnabled.value}
