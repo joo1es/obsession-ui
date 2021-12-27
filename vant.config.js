@@ -111,6 +111,10 @@ module.exports = {
                     {
                         path: 'modal',
                         title: 'Modal 模态框',
+                    },
+                    {
+                        path: 'badge',
+                        title: 'Badge 徽章',
                     }
                 ],
             },

@@ -1,0 +1,30 @@
+:root {
+    --o-badge-size: 10px;
+    --o-badge-font-size: 13px;
+    --o-badge-color: #fff;
+}
+
+.o-badge {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    > .o-badge-value {
+        position: absolute;
+        top: calc(0px - var(--o-badge-size) / 2);
+        right: calc(0px - var(--o-badge-size) / 2);
+    }
+}
+
+.o-badge-value {
+    display: inline-block;
+    border-radius: var(--o-badge-size);
+    font-size: var(--o-badge-font-size);
+    color: var(--o-badge-color);
+    padding: 0 calc(var(--o-badge-size) / 2);
+    vertical-align: middle;
+    &.o-badge__dot {
+        height: var(--o-badge-size);
+        width: var(--o-badge-size);
+        box-sizing: border-box;
+    }
+}
