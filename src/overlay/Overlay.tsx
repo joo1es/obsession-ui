@@ -22,7 +22,7 @@ export const overlayProps = {
     },
     zIndex: Number,
     to: {
-        type: [String, Object] as PropType<string | RendererElement | null>,
+        type: [String, Object, Boolean] as PropType<string | RendererElement | false>,
         default: 'body'
     },
     clickToClose: {
@@ -73,7 +73,7 @@ export default defineComponent({
         watch(() => props.modelValue, () => {
             getZIndex()
             if (!props.preventScroll) return
-            if (props.modelValue) {
+            if (props.modelValue && props.to) {
                 lockBodyScrollList.add(overlaySymbol)
             } else {
                 lockBodyScrollList.delete(overlaySymbol)
@@ -82,7 +82,7 @@ export default defineComponent({
             immediate: true
         })
         watch(() => props.preventScroll, () => {
-            if (props.modelValue) {
+            if (props.modelValue && props.to) {
                 if (props.preventScroll) {
                     lockBodyScrollList.add(overlaySymbol)
                 } else {
@@ -94,7 +94,7 @@ export default defineComponent({
             lockBodyScrollList.delete(overlaySymbol)
         })
         return () => (
-            <Teleport to={props.to}>
+            <Teleport to={props.to || null} disabled={!props.to}>
                 <Transition name={props.transitionName}>
                     {
                         !props.useVShow && !props.modelValue ? null : (
