@@ -101,12 +101,12 @@ export default defineComponent({
                 if (props.beforePush) {
                     const newText = props.beforePush(text)
                     if (typeof newText === 'string') {
-                        if (newText) value.value.push(newText)
+                        if (newText) value.value = [...value.value, newText]
                     } else {
-                        value.value.push(text)
+                        value.value = [...value.value, text]
                     }
                 } else {
-                    value.value.push(text)
+                    value.value = [...value.value, text]
                 }
                 
             }
