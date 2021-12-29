@@ -279,7 +279,6 @@ export default defineComponent({
                                     class={{
                                         'o-popover': true,
                                         'o-popover__dark': props.dark,
-                                        [`o-popover__${props.placement}`]: true,
                                         ...popoverClassRef.value,
                                     }}
                                     ref={popoverRef}

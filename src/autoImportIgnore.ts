@@ -19,5 +19,8 @@ export default [
     'close-all-modals',
     'action-sheet-props',
     'button-group-props',
-    'modal-props'
+    'modal-props',
+    'badge-props',
+    'tag-props',
+    'tag-input-props'
 ]

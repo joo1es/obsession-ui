@@ -1,9 +1,9 @@
 <template>
   <o-icon :size="30" color="#469">
-    <PlusOutlined />
+    <PulseSharp />
   </o-icon>
 </template>
 
 <script lang="ts" setup>
-import { PlusOutlined } from '@vicons/antd'
+import { PulseSharp } from '@vicons/ionicons5'
 </script>

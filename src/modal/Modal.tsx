@@ -2,7 +2,7 @@ import { defineComponent, ExtractPropTypes, PropType, computed, ref, Transition,
 
 import Overlay, { OverlayProps } from '../overlay'
 import Icon from '../icon'
-import { CloseOutlined } from '@vicons/antd'
+import { Close } from '@vicons/ionicons5'
 import { onClickOutside } from '@vueuse/core'
 
 import { closeAll } from './utils'
@@ -244,7 +244,7 @@ export default defineComponent({
                                             {
                                                 props.showClose ? <span class="o-modal__icon" onClick={() => {
                                                     show.value = false
-                                                }}><Icon><CloseOutlined/></Icon></span> : null
+                                                }}><Icon><Close/></Icon></span> : null
                                             }
                                         </div>
                                     ) : null

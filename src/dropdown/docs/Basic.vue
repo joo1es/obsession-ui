@@ -8,12 +8,12 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { HomeFilled } from '@vicons/antd'
+import { HomeOutline } from '@vicons/ionicons5'
 
 const list = [
     {
         index: 1,
-        icon: HomeFilled,
+        icon: HomeOutline,
         title: '注销'
     },
     {

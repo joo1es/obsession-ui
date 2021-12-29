@@ -1,0 +1,51 @@
+:root {
+    --o-tag-bg-color: #f5f5f5;
+    --o-tag-color: #333;
+    --o-tag-font-size: 13px;
+    --o-tag-padding-top-bottom: 4px;
+    --o-tag-padding-left-right: 8px;
+}
+
+.o-tag {
+    color: var(--o-tag-color);
+    background-color: var(--o-tag-bg-color);
+    display: inline-flex;
+    font-size: var(--o-tag-font-size);
+    padding: var(--o-tag-padding-top-bottom) var(--o-tag-padding-left-right);
+    align-items: center;
+    line-height: 1;
+    &--icon {
+        margin-right: 4px;
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+    }
+    &--close {
+        margin-left: 4px;
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        padding: 1px;
+        transition: .2s;
+        border-radius: 50%;
+        &:hover {
+            color: var(--o-tag-bg-color);
+            background-color: var(--o-tag-color);
+        }
+    }
+    &-small {
+        --o-tag-font-size: 12px;
+        --o-tag-padding-top-bottom: 3px;
+        --o-tag-padding-left-right: 6px;
+    }
+    &-medium {
+        --o-tag-font-size: 14px;
+        --o-tag-padding-top-bottom: 5px;
+        --o-tag-padding-left-right: 10px;
+    }
+    &-large {
+        --o-tag-font-size: 16px;
+        --o-tag-padding-top-bottom: 8px;
+        --o-tag-padding-left-right: 16px;
+    }
+}

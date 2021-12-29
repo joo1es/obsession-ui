@@ -6,7 +6,7 @@
     <o-button
       type="primary"
       :loading="loading"
-      :icon="DribbbleCircleFilled"
+      :icon="Desktop"
       @click="handleClick"
     />
   </o-space>
@@ -14,7 +14,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { DribbbleCircleFilled } from '@vicons/antd'
+import { Desktop } from '@vicons/ionicons5'
 
 const loading = ref(false)
 const handleClick = () => {

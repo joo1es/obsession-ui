@@ -4,19 +4,19 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { HomeTwotone } from '@vicons/antd'
+import { HomeOutline } from '@vicons/ionicons5'
 
 const menuActive = ref('3')
 const menuList = [
     {
         title: '菜单一',
         index: '1',
-        icon: HomeTwotone,
+        icon: HomeOutline,
         children: [
             {
                 title: '菜单一-1',
                 index: '3',
-                icon: HomeTwotone,
+                icon: HomeOutline,
                 groupName: '分组一'
             }
         ]

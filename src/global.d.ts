@@ -19,6 +19,8 @@ import oDropdown from './dropdown'
 import oActionSheet from './action-sheet'
 import oButtonGroup from './button-group'
 import oBadge from './badge'
+import oTag from './tag'
+import oTagInput from './tag-input'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -47,6 +49,8 @@ declare module 'vue' {
         oActionSheet: typeof oActionSheet;
         oButtonGroup: typeof oButtonGroup;
         oBadge: typeof oBadge;
+        oTag: typeof oTag;
+        oTagInput: typeof oTagInput;
     }
     interface Vue {
         $dialog: typeof $dialog,

@@ -66,8 +66,21 @@ module.exports = {
                 ],
             },
             {
+                title: '输入组件',
+                items: [
+                    {
+                        path: 'tag-input',
+                        title: 'TagInput 标签输入'
+                    }
+                ]
+            },
+            {
                 title: '展示组件',
                 items: [
+                    {
+                        path: 'tag',
+                        title: 'Tag 标签',
+                    },
                     {
                         path: 'menu',
                         title: 'Menu 菜单',

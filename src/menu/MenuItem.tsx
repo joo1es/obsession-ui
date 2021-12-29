@@ -6,7 +6,7 @@ import type { CollapseSupport } from '../collapse'
 import Popover from '../popover'
 import Tooltip from '../tooltip'
 import Icon from '../icon'
-import { RightOutlined } from '@vicons/antd'
+import { ChevronForwardOutline } from '@vicons/ionicons5'
 
 export default defineComponent({
     name: 'OMenuItem',
@@ -129,7 +129,7 @@ export default defineComponent({
                             showArrow && arrow?.value ? (
                                 <div class='o-menu-item__arrow'>
                                     <Icon>
-                                        { () => h(RightOutlined) }
+                                        { () => h(ChevronForwardOutline) }
                                     </Icon>
                                 </div>
                             ) : null

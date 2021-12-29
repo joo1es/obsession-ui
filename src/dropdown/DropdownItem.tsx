@@ -16,7 +16,7 @@ import Popover, { PopoverProps, PopoverPlacement } from '../popover'
 
 import DropdownItem from './DropdownItem'
 
-import { RightOutlined } from '@vicons/antd'
+import { ChevronForwardOutline } from '@vicons/ionicons5'
 
 const PopoverMap = Popover
 
@@ -66,7 +66,7 @@ export default defineComponent({
                     { slots.title?.() || props.title }
                     {
                         showArrow?.value && props.children && props.children.length > 0 ? (
-                            <Icon class="o-dropdown-item__arrow"><RightOutlined /></Icon>
+                            <Icon class="o-dropdown-item__arrow"><ChevronForwardOutline /></Icon>
                         ) : null
                     }
                 </div>

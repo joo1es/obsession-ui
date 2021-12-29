@@ -10,12 +10,12 @@
         :list="[
             {
                 title: '收藏',
-                icon: StarOutlined
+                icon: StarOutline
             },
             {
                 title: '设为特别关注',
                 description: '首页优先显示 TA 的内容',
-                icon: PullRequestOutlined,
+                icon: SparklesOutline,
                 click: (record, done) => done()
             }
         ]"
@@ -28,20 +28,20 @@
         :list="[
             {
                 title: '收藏',
-                icon: StarOutlined,
+                icon: StarOutline,
                 disabled: true
             },
             {
                 title: '设为特别关注',
                 description: '首页优先显示 TA 的内容',
-                icon: PullRequestOutlined
+                icon: SparklesOutline
             }
         ]"
     />
 </template>
 
 <script lang="ts" setup>
-import { StarOutlined, PullRequestOutlined } from '@vicons/antd'
+import { StarOutline, SparklesOutline } from '@vicons/ionicons5'
 import { ref } from 'vue'
 
 const show = ref(false)

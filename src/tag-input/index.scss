@@ -1,0 +1,97 @@
+@import '../style/var.scss';
+
+:root {
+    --o-taginput-font-size: 14px;
+    --o-taginput-padding-left-right: 10px;
+    --o-taginput-padding-top-bottom: 5px;
+    --o-taginput-line-height: 28px;
+}
+
+.o-taginput {
+    padding: var(--o-taginput-padding-top-bottom) var(--o-taginput-padding-left-right);
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    transition: border .2s;
+    cursor: text;
+    font-size: var(--o-taginput-font-size);
+    display: flex;
+    outline: none;
+    &.o-taginput-disabled {
+        opacity: .6;
+        cursor: not-allowed;
+    }
+    &__content {
+        flex: 1;
+        overflow: hidden;
+        .o-taginput__tag {
+            &.active .o-tag {
+                color: var(--o-tag-bg-color);
+                background-color: var(--o-tag-color);
+            }
+        }
+    }
+    &__clear {
+        display: flex;
+        align-items: center;
+        &-icon {
+            margin-left: 4px;
+            font-size: 12px;
+            padding: 1px;
+            transition: .2s;
+            border-radius: 50%;
+            height: 16px;
+            width: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: default;
+            &:hover {
+                color: var(--o-tag-bg-color);
+                background-color: var(--o-tag-color);
+            }
+        }
+    }
+    .o-tag {
+        cursor: default;
+    }
+    .o-space-item:last-child {
+        display: flex;
+        align-items: center;
+    }
+    .o-taginput__content-input {
+        outline: none;
+        position: relative;
+        line-height: var(--o-taginput-line-height);
+        word-break: normal;
+        word-wrap: break-word;
+        display: block;
+        &.blank::before {
+            content: var(--o-taginput-placehoder, '请输入');
+            color: #ccc;
+        }
+    }
+    &:not(.o-taginput-disabled):hover {
+        border-color: #ccc;
+    }
+    &:not(.o-taginput-disabled).focus {
+        border-color: var(--primary-color);
+    }
+    &-small {
+        --o-taginput-font-size: 13px;
+        --o-taginput-padding-top-bottom: 4px;
+        --o-taginput-padding-left-right: 10px;
+        --o-taginput-line-height: 25px;
+    }
+    &-medium {
+        --o-taginput-font-size: 15px;
+        --o-taginput-padding-top-bottom: 6px;
+        --o-taginput-padding-left-right: 10px;
+        --o-taginput-line-height: 30px;
+    }
+    &-large {
+        --o-taginput-font-size: 16px;
+        --o-taginput-padding-top-bottom: 6px;
+        --o-taginput-padding-left-right: 10px;
+        --o-taginput-line-height: 38px;
+    }
+}

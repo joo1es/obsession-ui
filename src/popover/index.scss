@@ -22,73 +22,79 @@
     transform: rotate(45deg);
     background-color: var(--o-popover-bg-color, #fff);
   }
-  &.o-popover__top,
-  &.o-popover__top-start,
-  &.o-popover__top-end {
+}
+
+[v-placement="top"] > .o-popover,
+[v-placement="top-start"] > .o-popover
+[v-placement="top-end"] > .o-popover {
     margin-bottom: 10px;
     transform-origin: bottom;
-    .o-popover-arrow {
-      bottom: -3px;
-      left: calc(50% - 3px);
+    > .o-popover-arrow {
+        bottom: -3px;
+        left: calc(50% - 3px);
     }
-  }
-  &.o-popover__top-start,
-  &.o-popover__bottom-start {
-    .o-popover-arrow {
-      left: 20%;
+}
+
+[v-placement="top-start"] > .o-popover,
+[v-placement="bottom-start"] > .o-popover{
+    > .o-popover-arrow {
+        left: 20%;
     }
-  }
-  &.o-popover__top-end,
-  &.o-popover__bottom-end {
-    .o-popover-arrow {
-      left: inherit;
-      right: 20%;
+}
+
+[v-placement="top-end"] > .o-popover,
+[v-placement="bottom-end"] > .o-popover{
+    > .o-popover-arrow {
+        left: inherit;
+        right: 20%;
     }
-  }
-  &.o-popover__bottom,
-  &.o-popover__bottom-start,
-  &.o-popover__bottom-end {
+}
+
+[v-placement="bottom"] > .o-popover,
+[v-placement="bottom-start"] > .o-popover,
+[v-placement="bottom-end"] > .o-popover {
     transform-origin: top;
     margin-top: 10px;
-    .o-popover-arrow {
-      top: -3px;
-      left: calc(50% - 3px);
+    > .o-popover-arrow {
+        top: -3px;
+        left: calc(50% - 3px);
     }
-  }
-  &.o-popover__right,
-  &.o-popover__right-start,
-  &.o-popover__right-end {
+}
+[v-placement="right"] > .o-popover,
+[v-placement="right-start"] > .o-popover,
+[v-placement="right-end"] > .o-popover {
     transform-origin: left;
     margin-left: 10px;
-    .o-popover-arrow {
-      left: -3px;
-      top: calc(50% - 3px);
+    > .o-popover-arrow {
+        left: -3px;
+        top: calc(50% - 3px);
     }
-  }
-  &.o-popover__left,
-  &.o-popover__left-start,
-  &.o-popover__left-end {
+}
+[v-placement="left"] > .o-popover,
+[v-placement="left-start"] > .o-popover,
+[v-placement="left-end"] > .o-popover {
     transform-origin: right;
     margin-right: 10px;
-    .o-popover-arrow {
-      right: -3px;
-      top: calc(50% - 3px);
+    > .o-popover-arrow {
+        right: -3px;
+        top: calc(50% - 3px);
     }
-  }
-  &.o-popover__right-start,
-  &.o-popover__left-start {
-    .o-popover-arrow {
-      top: 20%;
-    }
-  }
-  &.o-popover__right-end,
-  &.o-popover__left-end {
-    .o-popover-arrow {
-      top: inherit;
-      bottom: 20%;
-    }
-  }
 }
+[v-placement="right-start"] > .o-popover,
+[v-placement="left-start"] > .o-popover {
+    .o-popover-arrow {
+        top: 20%;
+    }
+}
+
+[v-placement="right-end"] > .o-popover,
+[v-placement="left-end"] > .o-popover {
+    .o-popover-arrow {
+        top: inherit;
+        bottom: 20%;
+    }
+}
+
 
 .popover-transition-enter-from,
 .popover-transition-leave-to {

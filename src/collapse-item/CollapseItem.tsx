@@ -11,7 +11,7 @@ import type { CollapseSupport } from '../collapse'
 
 import CollapseTransition from '../collapse-transition'
 import Icon from '../icon'
-import { DownOutlined } from '@vicons/antd'
+import { ChevronDownOutline } from '@vicons/ionicons5'
 
 export const collapseItemProps = {
     title: {
@@ -108,7 +108,7 @@ export default defineComponent({
                                 active: showItem.value,
                             }}
                         >
-                            <DownOutlined />
+                            <ChevronDownOutline />
                         </Icon>
                     ) : null}
                 </div>

@@ -91,7 +91,7 @@ export default defineComponent({
                 alignItems: getAlign(props.align),
                 justifyContent: getAlign(props.justify),
                 '--o-space-x-gap': sizeMap.value[0],
-                '--o-space-y-gap': sizeMap.value[0],
+                '--o-space-y-gap': sizeMap.value[1],
             } as CSSProperties
                     }
                 >
