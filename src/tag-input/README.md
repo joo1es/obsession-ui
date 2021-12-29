@@ -16,23 +16,23 @@ app.use(TagInput)
 
 ## 代码演示
 
-### 基础用法
+#### 基础用法
 
 <demo-code transform>./demo/Basic.vue</demo-code>
 
-### 尺寸
+#### 尺寸
 
 <demo-code transform>./demo/Size.vue</demo-code>
 
-### 显示最大值及限制
+#### 显示最大值及限制
 
 <demo-code transform>./demo/Limit.vue</demo-code>
 
-### 自定义标签
+#### 自定义标签
 
 <demo-code transform>./demo/Custom.vue</demo-code>
 
-### 只读和禁用
+#### 只读和禁用
 
 <demo-code transform>./demo/Readonly.vue</demo-code>
 
