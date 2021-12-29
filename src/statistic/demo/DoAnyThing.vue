@@ -11,7 +11,7 @@
         >
             <template #label>
                 <o-icon>
-                    <PaperClipOutlined />
+                    <PaperPlaneOutline />
                 </o-icon>
                 全国人口
             </template>
@@ -19,13 +19,13 @@
         <o-statistic vertical align="center" :label-style="{ color: 'red', fontSize: '18px' }">
             <template #label>
                 <o-icon>
-                    <DeliveredProcedureOutlined />
+                    <DesktopOutline />
                 </o-icon>
                 世界主要国家和地区
             </template>
             190
             <template #suffix>
-                <o-icon color="red"><UpOutlined/></o-icon> 多个
+                <o-icon color="red"><ArrowUp/></o-icon> 多个
             </template>
         </o-statistic>
         <o-statistic vertical align="end" reverse style="background-color: #f5f5f5; padding: 5px 15px 10px 15px;" value-style="color: green">
@@ -41,5 +41,5 @@
 </template>
 
 <script lang="ts" setup>
-import { PaperClipOutlined, DeliveredProcedureOutlined, UpOutlined } from '@vicons/antd'
+import { PaperPlaneOutline, DesktopOutline, ArrowUp } from '@vicons/ionicons5'
 </script>
