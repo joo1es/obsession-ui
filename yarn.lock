@@ -2080,11 +2080,6 @@
   resolved "https://registry.npmjs.org/@vant/touch-emulator/-/touch-emulator-1.3.2.tgz"
   integrity sha512-Om6e8kCAnmk/q8byngKreff7Hyn6XxwOGr8yedP3y3LEVoE+iyj8/+Mn+AYvGEQ00GK0MlgAfyaV4emXAYj1Hw==
 
-"@vicons/antd@^0.11.0":
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/@vicons/antd/-/antd-0.11.0.tgz#3d28952d028aed712dca61cb81dbdb11454c5542"
-  integrity sha512-XRkUMJzfjr3Q5S6xbAg4ALI90DIGNhZdbVW6SejFi6EgxB5bts3YMMcM4HbF77vdQX5bhxgju3Hd3uP97OgvAQ==
-
 "@vicons/ionicons5@^0.11.0":
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/@vicons/ionicons5/-/ionicons5-0.11.0.tgz#54185bfa572a09df70094db1954f28bfbf1363ed"
