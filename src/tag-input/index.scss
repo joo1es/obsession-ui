@@ -63,7 +63,7 @@
         word-wrap: break-word;
         display: block;
         &.blank::after {
-            content: var(--o-taginput-placehoder, '请输入');
+            content: var(--o-taginput-placehoder, ' ');
             color: #ccc;
         }
     }
