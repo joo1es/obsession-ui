@@ -7,6 +7,7 @@ import Space, { SpaceProps } from '../space'
 import { Close } from '@vicons/ionicons5'
 
 import { useFocus } from '@vueuse/core'
+import { useAutoControl } from '../utils'
 
 export const tagInputProps = {
     modelValue: {
@@ -59,18 +60,9 @@ export default defineComponent({
     },
     setup(props, { slots, emit }) {
         const valueRef = ref<string[]>([])
-        const value = computed<string[]>({
-            get() {
-                if (typeof props.modelValue === 'undefined') return valueRef.value
-                return props.modelValue
-            },
-            set(value) {
-                if (typeof props.modelValue === 'undefined') {
-                    valueRef.value = value
-                } else {
-                    emit('update:modelValue', value)
-                }
-            }
+        const value = useAutoControl(valueRef, props, 'modelValue', emit, {
+            passive: true,
+            deep: true
         })
         const inputingTag = ref('')
         const inputRef = ref<HTMLDivElement | null>(null)
@@ -101,12 +93,12 @@ export default defineComponent({
                 if (props.beforePush) {
                     const newText = props.beforePush(text)
                     if (typeof newText === 'string') {
-                        if (newText) value.value = [...value.value, newText]
+                        if (newText) value.value.push(newText)
                     } else {
-                        value.value = [...value.value, text]
+                        value.value.push(text)
                     }
                 } else {
-                    value.value = [...value.value, text]
+                    value.value.push(text)
                 }
                 
             }
@@ -248,7 +240,8 @@ export default defineComponent({
                                 'blank': !inputingTag.value
                             }}
                             style={{
-                                '--o-taginput-placehoder': `'${props.placeholder || ' '}'`
+                                '--o-taginput-placehoder': `'${props.placeholder || ' '}'`,
+                                minWidth: `${props.placeholder.length || 1}em`
                             } as CSSProperties}
                             onInput={(e) => {
                                 const text = (e.target as HTMLDivElement).innerText

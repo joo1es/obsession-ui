@@ -25,6 +25,7 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
         const app = createApp(defineComponent({
             setup() {
                 const show = ref(true)
+                const confirmButtonRef = ref<InstanceType<typeof Button> | null>(null)
                 return () => (
                     <Modal
                         width={300}
@@ -48,7 +49,7 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
                                     }
                                     {
                                         options?.showConfirm !== false ? (
-                                            <Button type="primary" onClick={() => {
+                                            <Button ref={confirmButtonRef} type="primary" onClick={() => {
                                                 show.value = false
                                                 resolve()
                                             }} {...options?.confirmProps}>
@@ -66,6 +67,9 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
                             document.body.removeChild(newDiv)
                             app.unmount()
                         }}
+                        onAfterOpen={() => {
+                            confirmButtonRef.value?.$el?.focus?.()
+                        }}    
                     />
                 )
             }

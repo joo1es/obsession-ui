@@ -1,4 +1,5 @@
 export * from './vue/flatten'
+export * from './vue/use-auto-control'
 export * from './format/string'
 export * from './with-install'
 export * from './get-max-z-index'
