@@ -1,8 +1,9 @@
 <template>
     <o-space vertical>
         激活项： {{ menuActive }}
+        折叠项 {{ unfold }}
         <o-button @click="collapse = !collapse">{{ collapse ? '展开' : '折叠' }}</o-button>
-        <o-menu v-model="menuActive" :list="menuList" vertical :collapse="collapse" width="300px" />
+        <o-menu v-model="menuActive" v-model:unfold="unfold" :list="menuList" vertical :collapse="collapse" width="300px" />
     </o-space>
 </template>
 
@@ -11,6 +12,7 @@ import { ref } from 'vue'
 import { HomeOutline, Accessibility, Cafe } from '@vicons/ionicons5'
 
 const collapse = ref(true)
+const unfold = ref([])
 
 const menuActive = ref('1')
 const menuList = [

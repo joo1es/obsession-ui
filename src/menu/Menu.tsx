@@ -1,11 +1,10 @@
 import { ref, computed, defineComponent, ExtractPropTypes, PropType, provide, watch } from 'vue'
 
-import { useVModel } from '@vueuse/core'
-
 import { MenuList, MenuRecord } from './typings'
 
 import MenuItem from './MenuItem'
 import Collapse, { CollapseSupport } from '../collapse'
+import { useAutoControl } from '../utils'
 
 export const menuProps = {
     vertical: {
@@ -54,27 +53,22 @@ export default defineComponent({
     setup(props, { emit, slots, attrs }) {
         provide('click', (record: MenuRecord) => props.click?.(record))
         const activeRef = ref<string | null>(null)
-        const active = typeof props.modelValue === 'undefined' ? activeRef : useVModel(props, 'modelValue', emit)
+        const active = useAutoControl(activeRef, props, 'modelValue', emit)
         provide('active', active)
         const slotsRef = ref(slots)
         provide('slots', slotsRef)
+        /**
+         * provide unfold
+         */
         const items = ref<CollapseSupport[]>([])
-        const unfoldItems = computed<CollapseSupport[]>({
-            get() {
-                if (typeof props.unfold !== 'undefined') {
-                    return props.unfold
-                } 
-                return items.value
-            },
-            set(value) {
-                if (typeof props.unfold !== 'undefined') {
-                    emit('update:unfold', value)
-                } else {
-                    items.value = value
-                }
-            }
+        const unfoldItems = useAutoControl(items, props, 'unfold', emit, {
+            passive: true,
+            deep: true
         })
         provide('unfold', unfoldItems)
+        /**
+         * provide unfold
+         */
         let collapseRecord: CollapseSupport[] = []
         provide('collapse', computed(() => props.collapse))
         watch(() => props.collapse, () => {

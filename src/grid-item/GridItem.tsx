@@ -1,4 +1,4 @@
-import { computed, defineComponent, inject } from 'vue'
+import { computed, defineComponent, inject, ref, Ref } from 'vue'
 import type { ExtractPropTypes } from 'vue'
 
 export const gridItemProps = {
@@ -22,8 +22,8 @@ export default defineComponent({
     props: gridItemProps,
     setup(props, { slots, attrs }) {
         const span = computed(() => {
-            const defaultSpan = inject<number>('defaultSpan')
-            return props.span || defaultSpan || 1
+            const defaultSpan = inject<Ref<number>>('defaultSpan', ref(1))
+            return props.span || defaultSpan.value
         })
         return () => (
             <>

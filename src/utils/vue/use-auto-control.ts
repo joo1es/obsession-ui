@@ -10,5 +10,5 @@ export function useAutoControl<
     Name extends string
 >(ref: T, props: P, key?: K, emit?: (name: Name, ...args: any[]) => void, options?: VModelOptions) {
     const vModal = useVModel(props, key, emit, options)
-    return ( vModal.value ? vModal : ref ) as T
+    return ( typeof vModal.value !== 'undefined' ? vModal : ref ) as T
 }

@@ -5,6 +5,8 @@ import Popover, { PopoverProps, PopoverPlacement } from '../popover'
 import type { DropdownRecord } from './typings'
 import DropdownItem from './DropdownItem'
 
+import { useAutoControl } from '../utils'
+
 export const dropdownProps = {
     modelValue: {
         type: Boolean,
@@ -40,18 +42,7 @@ export default defineComponent({
     },
     setup(props, { slots, emit, attrs }) {
         const showRef = ref(false)
-        const show = computed<boolean>({
-            get() {
-                return typeof props.modelValue === 'undefined' ? showRef.value : props.modelValue
-            },
-            set(value) {
-                if (typeof props.modelValue === 'undefined') {
-                    showRef.value = value
-                } else {
-                    emit('update:modelValue', value)
-                }
-            }
-        })
+        const show = useAutoControl(showRef, props, 'modelValue', emit)
         provide('o-dropdown-sub-menu-placement', computed(() => props.subMenuPlacement))
         provide('o-popover-props', computed(() => props.popover))
         provide('o-popover-close', () => {

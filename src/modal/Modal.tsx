@@ -6,6 +6,7 @@ import { Close } from '@vicons/ionicons5'
 import { onClickOutside } from '@vueuse/core'
 
 import { closeAll } from './utils'
+import { useAutoControl } from '../utils'
 
 export const modalProps = {
     overlay: {
@@ -76,21 +77,7 @@ export default defineComponent({
     setup(props, { emit, attrs, slots }) {
         const modalRef = ref<HTMLDivElement | null>(null)
         const showRef = ref(false)
-        const show = computed<boolean>({
-            get: () => {
-                if (typeof props.modelValue === 'undefined') {
-                    return showRef.value
-                } 
-                return props.modelValue
-            },
-            set: (value) => {
-                if (typeof props.modelValue === 'undefined') {
-                    showRef.value = value
-                } else {
-                    emit('update:modelValue', value)
-                }
-            }
-        })
+        const show = useAutoControl(showRef, props, 'modelValue', emit)
         const showOverlay = ref(false)
         const showBox = ref(false)
         let neverMeet = true

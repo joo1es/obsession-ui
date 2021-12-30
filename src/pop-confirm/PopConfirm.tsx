@@ -1,8 +1,10 @@
-import { defineComponent, ExtractPropTypes, ref, computed, PropType } from 'vue'
+import { defineComponent, ExtractPropTypes, ref, PropType } from 'vue'
 
 import Popover, { PopoverProps } from '../popover'
 import Button, { ButtonProps } from '../button'
 import Space, { SpaceProps } from '../space'
+
+import { useAutoControl } from '../utils'
 
 export const popConfirmProps = {
     modelValue: {
@@ -53,18 +55,7 @@ export default defineComponent({
     },
     setup(props, { slots, emit, attrs }) {
         const showRef = ref(false)
-        const show = computed<boolean>({
-            get() {
-                return typeof props.modelValue === 'undefined' ? showRef.value : props.modelValue
-            },
-            set(value) {
-                if (typeof props.modelValue === 'undefined') {
-                    showRef.value = value
-                } else {
-                    emit('update:modelValue', value)
-                }
-            }
-        })
+        const show = useAutoControl(showRef, props, 'modelValue', emit)
         return () => (
             <Popover
                 v-model={show.value}

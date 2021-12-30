@@ -2,6 +2,7 @@ import { defineComponent, computed, PropType, ExtractPropTypes, Component, h, VN
 import Modal, { modalProps } from '../modal'
 import Button from '../button'
 import Icon from '../icon'
+import { useAutoControl } from '../utils'
 
 export interface ActionSheetRecord {
     index?: string | number | symbol,
@@ -63,21 +64,7 @@ export default defineComponent({
     },
     setup(props, { attrs, emit, slots }) {
         const showRef = ref(false)
-        const show = computed<boolean>({
-            get() {
-                if (typeof props.modelValue === 'undefined') {
-                    return showRef.value
-                }
-                return props.modelValue
-            },
-            set(value) {
-                if (typeof props.modelValue === 'undefined') {
-                    showRef.value = value
-                    return
-                }
-                emit('update:modelValue', value)
-            }
-        })
+        const show = useAutoControl(showRef, props, 'modelValue', emit)
         const modalPropsMap = computed(() => {
             const propsBackup: Partial<ActionSheetProps> = { ...props }
             delete propsBackup.list

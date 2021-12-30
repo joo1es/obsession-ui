@@ -1,6 +1,7 @@
-import { defineComponent, PropType, provide, computed, ref } from 'vue'
+import { defineComponent, PropType, provide, ref } from 'vue'
 
 import type { ExtractPropTypes } from 'vue'
+import { useAutoControl } from '../utils'
 
 export type CollapseSupport = string | number | symbol;
 export const collapseProps = {
@@ -35,17 +36,14 @@ export default defineComponent({
     props: collapseProps,
     emits: collapseEmits,
     setup(props, { slots, emit }) {
-    /**
-     * 非受控模式，使用 ref 管理 collapseItems
-     */
+        /**
+         * 非受控模式，使用 ref 管理 collapseItems
+         */
         const collapseItems = ref<CollapseSupport[]>([])
+
         provide(
             'collapseItems',
-            computed(() =>
-                typeof props.modelValue !== 'undefined'
-                    ? props.modelValue
-                    : collapseItems.value
-            )
+            useAutoControl(collapseItems, props, 'modelValue', emit)
         )
         provide(
             'update:collapseItems',

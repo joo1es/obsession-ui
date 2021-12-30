@@ -2,7 +2,7 @@ import {
     defineComponent,
     inject,
     PropType,
-    ComputedRef,
+    Ref,
     computed,
     watch,
 } from 'vue'
@@ -46,7 +46,7 @@ export default defineComponent({
     },
     setup(props, { slots, emit }) {
         const collapseItems = inject<
-      ComputedRef<CollapseSupport | CollapseSupport[]>
+      Ref<CollapseSupport | CollapseSupport[]>
     >('collapseItems')
         const updateCollapseItems = inject<
       (value: CollapseSupport | CollapseSupport[]) => void

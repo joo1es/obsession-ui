@@ -1,4 +1,4 @@
-import { computed, defineComponent, PropType, provide } from 'vue'
+import { computed, defineComponent, PropType, provide, toRef } from 'vue'
 
 import type { ExtractPropTypes } from 'vue'
 
@@ -44,9 +44,9 @@ export default defineComponent({
             }) as [string, string]
         })
         /**
-     * provide 给子 gridItem defaultSpan
-     */
-        provide('defaultSpan', props.defaultSpan || 1)
+         * provide 给子 gridItem defaultSpan
+         */
+        provide('defaultSpan', toRef(props, 'defaultSpan'))
         return () => (
             <div
                 class="o-grid"

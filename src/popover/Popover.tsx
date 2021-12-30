@@ -18,7 +18,7 @@ import { VBinder, VTarget, VFollower } from 'vueuc'
 import type { ExtractPropTypes } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 
-import { getMaxZIndex } from '../utils'
+import { getMaxZIndex, useAutoControl } from '../utils'
 
 export type PopoverTrigger = 'click' | 'hover' | 'focus' | 'none';
 export type PopoverPlacement =
@@ -111,21 +111,7 @@ export default defineComponent({
      */
         const popoverShow = ref(false)
         const zIndex = ref(0)
-        const show = computed<boolean>({
-            get() {
-                if (typeof props.modelValue === 'undefined') {
-                    return popoverShow.value
-                }
-                return props.modelValue
-            },
-            set(value) {
-                if (typeof props.modelValue === 'undefined') {
-                    popoverShow.value = value
-                } else {
-                    emit('update:modelValue', value)
-                }
-            },
-        })
+        const show = useAutoControl(popoverShow, props, 'modelValue', emit)
         watch(show, () => {
             if (show.value && !props.zIndex) {
                 zIndex.value = getMaxZIndex()
