@@ -136,6 +136,9 @@
         &.o-menu-item__active {
             color: var(--o-menu-active-color);
         }
+        &-text {
+            min-width: 1em;
+        }
     }
     &__diabled {
         opacity: .6;
