@@ -23,5 +23,9 @@ export default [
     'badge-props',
     'tag-props',
     'tag-input-props',
-    'avatar-props'
+    'avatar-props',
+    'breadcrumb-props',
+    'layout-props',
+    'layout-aside-props',
+    'layout-content-props'
 ]

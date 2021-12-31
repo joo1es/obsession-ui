@@ -1,0 +1,22 @@
+:root {
+    --o-breadcrumb-color: #666;
+    --o-breadcrumb-font-size: 15px;
+    --o-breadcrumb-a-color: #333;
+    --o-breadcrumb-separator-color: #ccc;
+    --o-breadcrumb-separator-font-size: 13px;
+}
+
+.o-breadcrumb {
+    font-size: var(--o-breadcrumb-font-size);
+    color: var(--o-breadcrumb-color);
+    &-item {
+        a {
+            font-weight: bold;
+            color: var(--o-breadcrumb-a-color);
+        }
+    }
+    &-separator {
+        color: var(--o-breadcrumb-separator-color);
+        font-size: var(--o-breadcrumb-separator-font-size);
+    }
+}

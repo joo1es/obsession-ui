@@ -22,6 +22,10 @@ import oBadge from './badge'
 import oTag from './tag'
 import oTagInput from './tag-input'
 import oAvatar from './avatar'
+import oBreadcrumb from './breadcrumb'
+import oLayout from './layout'
+import oLayoutAside from './layout-aside'
+import oLayoutContent from './layout-content'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -53,6 +57,10 @@ declare module 'vue' {
         oTag: typeof oTag;
         oTagInput: typeof oTagInput;
         oAvatar: typeof oAvatar;
+        oBreadcrumb: typeof oBreadcrumb;
+        oLayout: typeof oLayout;
+        oLayoutAside: typeof oLayoutAside;
+        oLayoutContent: typeof oLayoutContent;
     }
     interface Vue {
         $dialog: typeof $dialog,

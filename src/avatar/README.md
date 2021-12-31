@@ -8,10 +8,10 @@
 
 ```js
 import { createApp } from 'vue'
-import { WpAvatar } from 'wisdom-plus'
+import { Avatar } from 'obsession-ui'
 
 const app = createApp()
-app.use(WpAvatar)
+app.use(Avatar)
 ```
 
 ## 代码演示

@@ -63,6 +63,10 @@ module.exports = {
                         path: 'collapse',
                         title: 'Collapse 折叠面板',
                     },
+                    {
+                        path: 'layout',
+                        title: 'Layout 布局',
+                    }
                 ],
             },
             {
@@ -80,6 +84,10 @@ module.exports = {
                     {
                         path: 'avatar',
                         title: 'Avatar 头像',
+                    },
+                    {
+                        path: 'breadcrumb',
+                        title: 'Breadcrumb 面包屑',
                     },
                     {
                         path: 'tag',
