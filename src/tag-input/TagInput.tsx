@@ -159,6 +159,7 @@ export default defineComponent({
                     if ((e.code === 'Enter' || e.code === 'NumpadEnter') && active.value && inputRef.value) {
                         inputRef.value.innerText = active.value
                         inputingTag.value = active.value
+                        active.value = ''
                         nextTick(() => {
                             if (!inputRef.value) return
                             inputRef.value.focus()
