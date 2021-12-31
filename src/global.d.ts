@@ -21,6 +21,7 @@ import oButtonGroup from './button-group'
 import oBadge from './badge'
 import oTag from './tag'
 import oTagInput from './tag-input'
+import oAvatar from './avatar'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -51,6 +52,7 @@ declare module 'vue' {
         oBadge: typeof oBadge;
         oTag: typeof oTag;
         oTagInput: typeof oTagInput;
+        oAvatar: typeof oAvatar;
     }
     interface Vue {
         $dialog: typeof $dialog,

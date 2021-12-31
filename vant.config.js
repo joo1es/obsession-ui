@@ -78,6 +78,10 @@ module.exports = {
                 title: '展示组件',
                 items: [
                     {
+                        path: 'avatar',
+                        title: 'Avatar 头像',
+                    },
+                    {
                         path: 'tag',
                         title: 'Tag 标签',
                     },

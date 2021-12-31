@@ -1,0 +1,12 @@
+.o-avatar {
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    font-weight: bold;
+    > img {
+        width: 100%;
+        height: 100%;
+    }
+}

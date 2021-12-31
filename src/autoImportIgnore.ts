@@ -22,5 +22,6 @@ export default [
     'modal-props',
     'badge-props',
     'tag-props',
-    'tag-input-props'
+    'tag-input-props',
+    'avatar-props'
 ]

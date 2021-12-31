@@ -13,7 +13,7 @@
 }
 .o-menu {
     max-width: var(--o-menu-max-width);
-    transition: max-width .2s;
+    transition: max-width .2s, min-width .2s;
     overflow: hidden;
     font-size: var(--o-menu-font-size);
     line-height: 1em;
@@ -46,6 +46,7 @@
     }
     &.o-menu__collapse {
         max-width: calc(1em + var(--o-menu-padding-left-right) * 2);
+        min-width: calc(1em + var(--o-menu-padding-left-right) * 2);
         > .o-menu-collapse > .o-menu-item > .o-menu-item-title {
             &::before {
                 position: absolute;
