@@ -194,15 +194,9 @@ export default defineComponent({
                 'o-modal__overlay-hidden': props.noOverlay
             }}>
                 <Transition name={props.transitionName || (props.type === 'drawer' ? `o-modal-${props.from}` : 'o-modal-fade')} onAfterLeave={() => emit('afterClose')} onAfterEnter={() => {
-                    modalRef.value?.focus()
                     emit('afterOpen')
                 }} onEnter={() => {
-                    const tabIndexBack = document.body.tabIndex
-                    document.body.tabIndex = -1
-                    document.body.focus()
-                    nextTick(() => {
-                        document.body.tabIndex = tabIndexBack
-                    })
+                    modalRef.value?.focus({ preventScroll: true })
                 }} appear={true} >
                     {
                         showBox.value ? (
