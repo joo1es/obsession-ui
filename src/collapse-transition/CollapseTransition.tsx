@@ -94,26 +94,26 @@ export default defineComponent({
         return () => {
             const type = props.group ? TransitionGroup : Transition
             return h(
-        type as any,
-        {
-            name: props.width
-                ? 'collapse-transition-width'
-                : props.reverse
-                    ? 'collapse-transition-reverse'
-                    : 'collapse-transition',
-            mode: props.mode,
-            appear: props.appear,
-            onEnter: handleEnter,
-            onAfterEnter: handleAfterEnter,
-            onBeforeLeave: handleBeforeLeave,
-            onLeave: handleLeave,
-            onAfterLeave: handleAfterLeave,
-            style: {
-                '--duration': props.duration || '',
-                '--delay': props.delay || ''
-            },
-        },
-        slots
+                type as any,
+                {
+                    name: props.width
+                        ? 'collapse-transition-width'
+                        : props.reverse
+                            ? 'collapse-transition-reverse'
+                            : 'collapse-transition',
+                    mode: props.mode,
+                    appear: props.appear,
+                    onEnter: handleEnter,
+                    onAfterEnter: handleAfterEnter,
+                    onBeforeLeave: handleBeforeLeave,
+                    onLeave: handleLeave,
+                    onAfterLeave: handleAfterLeave,
+                    style: {
+                        '--duration': props.duration || '',
+                        '--delay': props.delay || ''
+                    }
+                },
+                slots
             )
         }
     },
