@@ -62,6 +62,8 @@
         word-break: normal;
         word-wrap: break-word;
         display: block;
+        -webkit-user-modify: read-write-plaintext-only;
+        -moz-user-modify: read-write-plaintext-only;
         &.blank::after {
             content: var(--o-taginput-placehoder, ' ');
             color: #ccc;
