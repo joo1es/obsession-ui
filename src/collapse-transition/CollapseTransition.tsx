@@ -110,8 +110,7 @@ export default defineComponent({
             onAfterLeave: handleAfterLeave,
             style: {
                 '--duration': props.duration || '',
-                '--delay': props.delay || '',
-                overflow: 'hidden',
+                '--delay': props.delay || ''
             },
         },
         slots
