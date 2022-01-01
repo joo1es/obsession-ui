@@ -1,0 +1,82 @@
+:root {
+    --o-pop-dialog-left-color: #333;
+    --o-pop-dialog-left-bg: #fff;
+    --o-pop-dialog-left-active-bg: #f5f5f5;
+    --o-pop-dialog-right-color: #fff;
+    --o-pop-dialog-right-bg: #12b7f5;
+    --o-pop-dialog-right-active-bg: #0d9dd3;
+    --o-pop-dialog-arrow-size: 8px;
+    --o-pop-dialog-title-color: #666;
+    --o-pop-dialog-title-font-size: 13px;
+    --o-pop-dialog-padding: 10px;
+    --o-pop-dialog-border-radius: 10px;
+    --o-pop-dialog-font-size: 14px;
+    --o-pop-dialog-margin: 10px;
+}
+
+.o-pop-dialog {
+    display: flex;
+    &-content {
+        flex: 1;
+        &__title {
+            font-size: var(--o-pop-dialog-title-font-size);
+            margin-bottom: 5px;
+            color: var(--o-pop-dialog-title-color);
+            cursor: default;
+        }
+        &__in {
+            font-size: var(--o-pop-dialog-font-size);
+            border-radius: var(--o-pop-dialog-border-radius);
+            padding: var(--o-pop-dialog-padding);
+            display: inline-block;
+            position: relative;
+            color: var(--o-pop-dialog-left-color);
+            background: var(--o-pop-dialog-left-bg);
+            text-align: left;
+            line-height: 1.5;
+            cursor: default;
+            img {
+                vertical-align: middle;
+            }
+            &:not(.arrow) {
+                overflow: hidden;
+            }
+            &.arrow {
+                &::before {
+                    content: '';
+                    position: absolute;
+                    height: var(--o-pop-dialog-arrow-size);
+                    width: var(--o-pop-dialog-arrow-size);
+                    top: var(--o-pop-dialog-arrow-size);
+                    transform: rotate(45deg);
+                }
+            }
+            &.arrow-left {
+                &::before {
+                    background-color: var(--o-pop-dialog-left-bg);
+                    left: calc(1px - var(--o-pop-dialog-arrow-size) / 2);
+                }
+            }
+            &.arrow-right {
+                &::before {
+                    background-color: var(--o-pop-dialog-right-bg);
+                    right: calc(1px - var(--o-pop-dialog-arrow-size) / 2);
+                }
+            }
+            &-right {
+                color: var(--o-pop-dialog-right-color);
+                background: var(--o-pop-dialog-right-bg);
+            }
+            &:active {
+                --o-pop-dialog-left-bg: var(--o-pop-dialog-left-active-bg);
+                --o-pop-dialog-right-bg: var(--o-pop-dialog-right-active-bg);
+            }
+        }
+    }
+    .o-pop-dialog-avatar:first-child {
+        margin-right: var(--o-pop-dialog-margin);
+    }
+    .o-pop-dialog-content + .o-pop-dialog-avatar {
+        margin-left: var(--o-pop-dialog-margin);
+    }
+}

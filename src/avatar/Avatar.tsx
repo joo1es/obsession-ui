@@ -43,8 +43,7 @@ export default defineComponent({
             } if (typeof props.size === 'string') {
                 return [props.size, props.size]
             } 
-                return props.size.map(size => typeof size === 'number' || isNaN(Number(size)) ? `${size}px` : size) as [string, string]
-            
+            return props.size.map(size => typeof size === 'number' || !isNaN(Number(size)) ? `${size}px` : size) as [string, string]
         })
         const loading = ref(true)
         const error = ref(false)

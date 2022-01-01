@@ -122,14 +122,6 @@ module.exports = {
                         title: 'Ellipsis 文本省略',
                     },
                     {
-                        path: 'scroll-list',
-                        title: 'ScrollList 滚动列表',
-                    },
-                    {
-                        path: 'statistic',
-                        title: 'Statistic 统计数据',
-                    },
-                    {
                         path: 'overlay',
                         title: 'Overlay 遮罩',
                     },
@@ -143,6 +135,23 @@ module.exports = {
                     }
                 ],
             },
+            {
+                title: '业务组件',
+                items: [
+                    {
+                        path: 'scroll-list',
+                        title: 'ScrollList 滚动列表',
+                    },
+                    {
+                        path: 'statistic',
+                        title: 'Statistic 统计数据',
+                    },
+                    {
+                        path: 'pop-dialog',
+                        title: 'PopDialog 气泡对话'
+                    }
+                ]
+            }
         ],
     },
 }

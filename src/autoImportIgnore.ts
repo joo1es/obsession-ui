@@ -27,5 +27,6 @@ export default [
     'breadcrumb-props',
     'layout-props',
     'layout-aside-props',
-    'layout-content-props'
+    'layout-content-props',
+    'pop-dialog-props'
 ]
