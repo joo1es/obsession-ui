@@ -56,6 +56,11 @@ app.use(Modal)
 
 ### Methods
 
+在 _open_ 事件中如果要使用 HtmlElement 的 foucs 方法，请添加参数 preventScroll: true 避免滚动效果打断动画，如：
+```js
+inputRef.value?.focus({ preventScroll: true })
+```
+
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
 | update:modelValue     | 是否显示模态框   | _(value: boolean) => void_           | -      |
