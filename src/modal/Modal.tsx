@@ -86,7 +86,6 @@ export default defineComponent({
                 showOverlay.value = show.value
                 nextTick(() => {
                     showBox.value = show.value
-                    emit('open')
                     neverMeet = false
                 })
             } else {
@@ -193,11 +192,18 @@ export default defineComponent({
                 [`o-modal__overlay-${props.from}`]: props.type === 'drawer',
                 'o-modal__overlay-hidden': props.noOverlay
             }}>
-                <Transition name={props.transitionName || (props.type === 'drawer' ? `o-modal-${props.from}` : 'o-modal-fade')} onAfterLeave={() => emit('afterClose')} onAfterEnter={() => {
-                    emit('afterOpen')
-                }} onEnter={() => {
-                    modalRef.value?.focus({ preventScroll: true })
-                }} appear={true} >
+                <Transition
+                    name={props.transitionName || (props.type === 'drawer' ? `o-modal-${props.from}` : 'o-modal-fade')}
+                    onAfterLeave={() => emit('afterClose')}
+                    onAfterEnter={() => {
+                        emit('afterOpen')
+                    }}
+                    onEnter={() => {
+                        modalRef.value?.focus({ preventScroll: true })
+                        emit('open')
+                    }}
+                    appear={true}
+                >
                     {
                         props.overlay.useVShow || showBox.value ? (
                             <div
