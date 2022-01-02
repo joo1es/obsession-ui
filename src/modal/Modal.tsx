@@ -199,7 +199,7 @@ export default defineComponent({
                     modalRef.value?.focus({ preventScroll: true })
                 }} appear={true} >
                     {
-                        showBox.value ? (
+                        props.overlay.useVShow || showBox.value ? (
                             <div
                                 class={{
                                     'o-modal': true,

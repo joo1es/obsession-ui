@@ -2,8 +2,6 @@ import { defineComponent, ExtractPropTypes, PropType, computed } from 'vue'
 
 import Avatar, { AvatarProps } from '../avatar'
 
-import './index.scss'
-
 export const popDialogProps = {
     content: String,
     showAvatar: {
