@@ -90,7 +90,7 @@ export default defineComponent({
                 marginBottom: parentMarginBottom.value,
                 alignItems: getAlign(props.align),
                 justifyContent: getAlign(props.justify),
-                '--o-space-x-gap': sizeMap.value[0],
+                '--o-space-x-gap': props.vertical ? null : sizeMap.value[0],
                 '--o-space-y-gap': sizeMap.value[1],
             } as CSSProperties
                     }

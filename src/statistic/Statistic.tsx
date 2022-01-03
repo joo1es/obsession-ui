@@ -87,9 +87,11 @@ export default defineComponent({
                     alignItems: getAlign(props.align),
                     justifyContent: getAlign(props.justify)
                 }}>
+                    { slots.top?.() }
                     {
                         !props.reverse ? ( <>{ Label }{ Value }</> ) : ( <>{ Value }{ Label }</> )
                     }
+                    { slots.bottom?.() }
                 </div>
             )
         }

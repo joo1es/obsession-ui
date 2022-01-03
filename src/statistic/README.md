@@ -57,3 +57,5 @@ app.use(Statistic)
 | prefix | 数值前缀 |
 | suffix | 数值后缀 |
 | label | 标签 |
+| top | 前置插槽 |
+| bottom | 后置插槽 |
