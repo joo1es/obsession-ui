@@ -8,10 +8,10 @@
 
 ```js
 import { createApp } from 'vue'
-import { WpVirtualList } from 'wisdom-plus'
+import { VirtualList } from 'obsession-ui'
 
 const app = createApp()
-app.use(WpVirtualList)
+app.use(VirtualList)
 ```
 
 ## 代码演示
