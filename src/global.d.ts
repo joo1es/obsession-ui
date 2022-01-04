@@ -27,6 +27,7 @@ import oLayout from './layout'
 import oLayoutAside from './layout-aside'
 import oLayoutContent from './layout-content'
 import oPopDialog from './pop-dialog'
+import oVirtualList from './virtual-list'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -63,6 +64,7 @@ declare module 'vue' {
         oLayoutAside: typeof oLayoutAside;
         oLayoutContent: typeof oLayoutContent;
         oPopDialog: typeof oPopDialog;
+        oVirtualList: typeof oVirtualList;
     }
     interface Vue {
         $dialog: typeof $dialog,

@@ -46,6 +46,10 @@ module.exports = {
                         path: 'toast',
                         title: 'Toast 吐司提示',
                     },
+                    {
+                        path: 'virtual-list',
+                        title: 'VirtualList 虚拟列表'
+                    }
                 ],
             },
             {
