@@ -29,5 +29,6 @@ export default [
     'layout-aside-props',
     'layout-content-props',
     'pop-dialog-props',
-    'virtual-list-props'
+    'virtual-list-props',
+    'progress-props'
 ]

@@ -118,6 +118,10 @@ module.exports = {
                         title: 'PopConfirm 气泡弹出框',
                     },
                     {
+                        path: 'progress',
+                        title: 'Progress 进度条',
+                    },
+                    {
                         path: 'tooltip',
                         title: 'Tooltip 文字提示',
                     },
