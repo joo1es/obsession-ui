@@ -77,6 +77,14 @@ module.exports = {
                 title: '输入组件',
                 items: [
                     {
+                        path: 'checkbox',
+                        title: 'Checkbox 多选框'
+                    },
+                    {
+                        path: 'radio',
+                        title: 'Radio 单选框'
+                    },
+                    {
                         path: 'tag-input',
                         title: 'TagInput 标签输入'
                     }

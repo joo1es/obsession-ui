@@ -30,5 +30,8 @@ export default [
     'layout-content-props',
     'pop-dialog-props',
     'virtual-list-props',
-    'progress-props'
+    'progress-props',
+    'radio-props',
+    'radio-group-props',
+    'checkbox-props'
 ]

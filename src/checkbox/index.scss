@@ -1,0 +1,77 @@
+:root {
+    --o-checkbox-color: #333;
+    --o-checkbox-background: #fff;
+    --o-checkbox-font-size: 14px;
+    --o-checkbox-checked-font-color: #fff;
+    --o-checkbox-checked-color: #2080f0;
+    --o-checkbox-border-color: #ccc;
+    --o-checkbox-disabled-color: #eee;
+    --o-checkbox-size: 16px;
+    --o-checkbox-box-icon-size: 12px;
+}
+
+.o-checkbox {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--o-checkbox-color);
+    font-size: var(--o-checkbox-font-size);
+    vertical-align: middle;
+    line-height: var(--o-checkbox-size);
+    &--box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: var(--o-checkbox-size);
+        width: var(--o-checkbox-size);
+        font-size: var(--o-checkbox-box-icon-size);
+        background: var(--o-checkbox-background);
+        border: 1px solid var(--o-checkbox-border-color);
+        transition: background .2s, border .2s;
+    }
+    &--label {
+        padding-left: .4em;
+        flex: 1;
+        overflow: hidden;
+        a,
+        span {
+            vertical-align: middle;
+        }
+    }
+    &__small {
+        --o-checkbox-size: 14px;
+        --o-checkbox-font-size: 12px;
+    }
+    &__large {
+        --o-checkbox-size: 20px;
+        --o-checkbox-font-size: 16px;
+        .o-checkbox--box {
+            --o-checkbox-box-icon-size: 14px;
+        }
+    }
+    &__checked {
+        .o-checkbox--box {
+            color: var(--o-checkbox-checked-font-color);
+            background: var(--o-checkbox-checked-color);
+            border-color: var(--o-checkbox-checked-color);
+        }
+    }
+    &__disabled {
+        opacity: .6;
+        cursor: not-allowed;
+        .o-checkbox--box {
+            color: var(--o-checkbox-color);
+            background: var(--o-checkbox-disabled-color);
+            border-color: var(--o-checkbox-disabled-color);
+        }
+    }
+    &:not(.o-checkbox__disabled) {
+        &:focus,
+        &:hover {
+            outline: none;
+            .o-checkbox--box {
+                border-color: var(--o-checkbox-checked-color);
+            }
+        }
+    }
+}

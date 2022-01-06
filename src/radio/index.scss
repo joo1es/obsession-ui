@@ -1,0 +1,77 @@
+:root {
+    --o-radio-color: #333;
+    --o-radio-background: #fff;
+    --o-radio-font-size: 14px;
+    --o-radio-checked-font-color: #fff;
+    --o-radio-checked-color: #2080f0;
+    --o-radio-border-color: #ccc;
+    --o-radio-disabled-color: #eee;
+    --o-radio-size: 16px;
+    --o-radio-box-icon-size: 12px;
+}
+
+.o-radio {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    color: var(--o-radio-color);
+    font-size: var(--o-radio-font-size);
+    vertical-align: middle;
+    line-height: var(--o-radio-size);
+    &--box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: var(--o-radio-size);
+        width: var(--o-radio-size);
+        font-size: var(--o-radio-box-icon-size);
+        background: var(--o-radio-background);
+        border: 1px solid var(--o-radio-border-color);
+        transition: background .2s, border .2s;
+    }
+    &--label {
+        padding-left: .4em;
+        flex: 1;
+        overflow: hidden;
+        a,
+        span {
+            vertical-align: middle;
+        }
+    }
+    &__small {
+        --o-radio-size: 14px;
+        --o-radio-font-size: 12px;
+    }
+    &__large {
+        --o-radio-size: 20px;
+        --o-radio-font-size: 16px;
+        .o-radio--box {
+            --o-radio-box-icon-size: 14px;
+        }
+    }
+    &__checked {
+        .o-radio--box {
+            color: var(--o-radio-checked-font-color);
+            background: var(--o-radio-checked-color);
+            border-color: var(--o-radio-checked-color);
+        }
+    }
+    &__disabled {
+        opacity: .6;
+        cursor: not-allowed;
+        .o-radio--box {
+            color: var(--o-radio-color);
+            background: var(--o-radio-disabled-color);
+            border-color: var(--o-radio-disabled-color);
+        }
+    }
+    &:not(.o-radio__disabled) {
+        &:focus,
+        &:hover {
+            outline: none;
+            .o-radio--box {
+                border-color: var(--o-radio-checked-color);
+            }
+        }
+    }
+}

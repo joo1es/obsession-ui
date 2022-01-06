@@ -29,6 +29,10 @@ import oLayoutContent from './layout-content'
 import oPopDialog from './pop-dialog'
 import oVirtualList from './virtual-list'
 import oProgress from './progress'
+import oRadio from './radio'
+import oCheckbox from './checkbox'
+import oCheckboxGroup from './checkbox-group'
+import oRadioGroup from './radio-group'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -67,6 +71,10 @@ declare module 'vue' {
         oPopDialog: typeof oPopDialog;
         oVirtualList: typeof oVirtualList;
         oProgress: typeof oProgress;
+        oRadio: typeof oRadio;
+        oRadioGroup: typeof oRadioGroup;
+        oCheckbox: typeof oCheckbox;
+        oCheckboxGroup: typeof oCheckboxGroup;
     }
     interface Vue {
         $dialog: typeof $dialog,
