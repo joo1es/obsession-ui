@@ -33,6 +33,7 @@ import oRadio from './radio'
 import oCheckbox from './checkbox'
 import oCheckboxGroup from './checkbox-group'
 import oRadioGroup from './radio-group'
+import oImage from './image'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -75,6 +76,7 @@ declare module 'vue' {
         oRadioGroup: typeof oRadioGroup;
         oCheckbox: typeof oCheckbox;
         oCheckboxGroup: typeof oCheckboxGroup;
+        oImage: typeof oImage;
     }
     interface Vue {
         $dialog: typeof $dialog,

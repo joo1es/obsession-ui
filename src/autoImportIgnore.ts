@@ -33,5 +33,7 @@ export default [
     'progress-props',
     'radio-props',
     'radio-group-props',
-    'checkbox-props'
+    'checkbox-props',
+    'checkbox-group-props',
+    'image-props'
 ]

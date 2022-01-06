@@ -98,6 +98,10 @@ module.exports = {
                         title: 'Avatar 头像',
                     },
                     {
+                        path: 'image',
+                        title: 'Image 图片',
+                    },
+                    {
                         path: 'breadcrumb',
                         title: 'Breadcrumb 面包屑',
                     },
