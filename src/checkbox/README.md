@@ -68,6 +68,8 @@ app.use(CheckboxGroup)
 
 ## Checkbox Group API
 
+### 说明
+
 Checkbox Group 组件可以使用所有 Space 组件的 Props
 
 ### Props
