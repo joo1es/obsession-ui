@@ -10,7 +10,10 @@
         "moduleResolution": "Node",
         "lib": ["esnext", "dom"],
         "allowJs": true,
-        "noImplicitThis": true
+        "noImplicitThis": true,
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": false
     },
     "include": ["src/**/*", "docs/**/*", "test/**/*"]
 }

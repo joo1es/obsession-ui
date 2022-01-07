@@ -87,6 +87,10 @@ module.exports = {
                     {
                         path: 'tag-input',
                         title: 'TagInput 标签输入'
+                    },
+                    {
+                        path: 'tree',
+                        title: 'Tree 树'
                     }
                 ]
             },

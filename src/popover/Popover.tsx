@@ -88,6 +88,8 @@ export const popoverProps = {
     offset: {
         type: Array as PropType<number[]>,
     },
+    x: Number,
+    y: Number
 }
 
 export type PopoverProps = ExtractPropTypes<typeof popoverProps>;
@@ -223,6 +225,8 @@ export default defineComponent({
                     }
                     flip={props.flip}
                     teleportDisabled={toComputedRef.value === false}
+                    x={props.x}
+                    y={props.y}
                 >
                     <Transition
                         name={props.transition}

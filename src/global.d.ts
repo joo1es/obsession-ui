@@ -34,6 +34,7 @@ import oCheckbox from './checkbox'
 import oCheckboxGroup from './checkbox-group'
 import oRadioGroup from './radio-group'
 import oImage from './image'
+import oTree from './tree'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -77,6 +78,7 @@ declare module 'vue' {
         oCheckbox: typeof oCheckbox;
         oCheckboxGroup: typeof oCheckboxGroup;
         oImage: typeof oImage;
+        oTree: typeof oTree;
     }
     interface Vue {
         $dialog: typeof $dialog,

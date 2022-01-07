@@ -35,5 +35,6 @@ export default [
     'radio-group-props',
     'checkbox-props',
     'checkbox-group-props',
-    'image-props'
+    'image-props',
+    'tree-props'
 ]

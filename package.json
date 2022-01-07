@@ -78,7 +78,16 @@
                 }
             ],
             "no-void": 0,
-            "no-restricted-syntax": 0
+            "no-restricted-syntax": 0,
+            "no-continue": 0
+        },
+        "globals": {
+            "Atomics": "readonly",
+            "SharedArrayBuffer": "readonly",
+            "defineProps": "readonly",
+            "defineEmits": "readonly",
+            "defineExpose": "readonly",
+            "withDefaults": "readonly"
         }
     },
     "stylelint": {

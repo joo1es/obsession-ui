@@ -54,6 +54,8 @@ app.use(Popover)
 | popoverClass | Popover 元素的 class | _string \| Record<string, boolean>_ | - |
 | popoverStyle | Popover 元素的 style | _string \| CSSProperties_ | - |
 | offset | 偏移，`[x, y]` | _number[]_ | - |
+| x | 手动控制位置时弹出内容的 CSS `left` 的像素值（x，y 都设置才能生效） | _number_ | - |
+| y | 手动控制位置时弹出内容的 CSS `left` 的像素值（x，y 都设置才能生效） | _number_ | - |
 
 ### Methods
 
