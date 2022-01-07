@@ -6,8 +6,8 @@ import { useAutoControl } from '../utils'
 
 import VirtualList from '../virtual-list'
 
-import TreeNode from './TreeNode.vue'
-import TreeTransition from './TreeTransition.vue'
+import TreeNode from './TreeNode'
+import TreeTransition from './TreeTransition'
 
 import { flattenList, getChecked, getCheckedItems, itemsFilter } from './utils'
 
@@ -140,11 +140,9 @@ export default defineComponent({
         expose({
             getCheckedItems: () => getCheckedItems(props.list, checked.value, props)
         })
-        const TreeNodeElement: any = TreeNode
-        const TreeTransitionElement: any = TreeTransition
         return () => {
             const TreeNodeFactory = (item: TreeListItemExtra) => (
-                <TreeNodeElement
+                <TreeNode
                     { ...item }
                     expends={expends.value}
                     getChecked={(list: TreeListItemCustom) => getChecked(list, props, checkedSet.value)}
@@ -153,7 +151,7 @@ export default defineComponent({
                     onSetChecked={setingChecked}
                     onExpend={handleExpend}
                     v-slots={{
-                        default: (list: TreeListItemCustom) => slots.title?.(list)
+                        default: slots.title ? (list: TreeListItemCustom) => slots.title?.(list) : undefined
                     }}
                 />
             )
@@ -173,7 +171,7 @@ export default defineComponent({
                     if (finalList.length <= props.animationMax) {
                         return (
                             TreeNodeRender(
-                                <TreeTransitionElement key={item.key} {...expendsListFind} v-slots={{
+                                <TreeTransition key={item.key} {...expendsListFind} v-slots={{
                                     default: () => (
                                         <div>
                                             { finalList.map(TreeNodeFactory) }
