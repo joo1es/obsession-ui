@@ -38,7 +38,8 @@ export default defineComponent({
          */
         const { x, isScrolling, arrivedState } = useScroll(scrollElement)
         const touchRight = ref(true)
-        const getTouchRight = (element: HTMLElement) => {
+        const getTouchRight = (element?: HTMLElement | null) => {
+            if (!element) return
             touchRight.value = Math.abs(element.scrollLeft - (element.scrollWidth - element.offsetWidth)) < 5
         }
         /**
@@ -73,8 +74,8 @@ export default defineComponent({
         /**
          * Listen Resize to change scroll
          */
-        onMounted(() => scrollElement.value && getTouchRight(scrollElement.value))
-        useResizeObserver(scrollElement, () => scrollElement.value && getTouchRight(scrollElement.value))
+        onMounted(() => getTouchRight(scrollElement.value))
+        useResizeObserver(scrollElement, () => getTouchRight(scrollElement.value))
 
         onActivated(() => {
             scrollElement.value?.scrollTo({
@@ -95,6 +96,7 @@ export default defineComponent({
         }
     },
     render() {
+        this.getTouchRight(this.scrollElement)
         return (
             <div class={{
                 'o-x-scroll': true,
