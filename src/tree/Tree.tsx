@@ -150,6 +150,7 @@ export default defineComponent({
                     expendsList={expendsList.value}
                     onSetChecked={setingChecked}
                     onExpend={handleExpend}
+                    checkable={props.checkable}
                     v-slots={{
                         default: slots.title ? (list: TreeListItemCustom) => slots.title?.(list) : undefined
                     }}

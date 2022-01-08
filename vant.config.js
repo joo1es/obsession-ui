@@ -173,6 +173,10 @@ module.exports = {
                     {
                         path: 'pop-dialog',
                         title: 'PopDialog 气泡对话'
+                    },
+                    {
+                        path: 'x-scroll',
+                        title: 'XScroll 横向滚动',
                     }
                 ]
             }

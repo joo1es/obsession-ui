@@ -39,7 +39,8 @@ export default defineComponent({
             type: Array as PropType<ExpendsList[]>,
             required: true
         },
-        parent: Object as PropType<TreeListItemCustom | null>
+        parent: Object as PropType<TreeListItemCustom | null>,
+        checkable: Boolean
     },
     emits: {
         setChecked: (value: boolean, children: TreeListItemCustom[]) => {
@@ -97,29 +98,33 @@ export default defineComponent({
                         }
                     </div>
                     <div class="o-tree-node__content">
-                        <Checkbox
-                            disabled={disabled.value}
-                            modelValue={checkedStatus.value === 1}
-                            indeterminate={checkedStatus.value === 0}
-                            onClick={(e: Event) => {
-                                e.stopPropagation()
-                            }}
-                            onUpdate:modelValue={value => {
-                                if (disabled.value) return
-                                if (!props.children) {
-                                    if (!checkedList.value) return
-                                    const index = checkedList.value.indexOf(props.keyIs)
-                                    if (value) {
-                                        if (index > -1) return
-                                        checkedList.value.push(props.keyIs)
-                                    } else {
-                                        checkedList.value.splice(index, 1)
-                                    }
-                                } else {
-                                    emit('setChecked', value, props.children)
-                                }
-                            }}
-                        />
+                        {
+                            props.checkable ? (
+                                <Checkbox
+                                    disabled={disabled.value}
+                                    modelValue={checkedStatus.value === 1}
+                                    indeterminate={checkedStatus.value === 0}
+                                    onClick={(e: Event) => {
+                                        e.stopPropagation()
+                                    }}
+                                    onUpdate:modelValue={value => {
+                                        if (disabled.value) return
+                                        if (!props.children) {
+                                            if (!checkedList.value) return
+                                            const index = checkedList.value.indexOf(props.keyIs)
+                                            if (value) {
+                                                if (index > -1) return
+                                                checkedList.value.push(props.keyIs)
+                                            } else {
+                                                checkedList.value.splice(index, 1)
+                                            }
+                                        } else {
+                                            emit('setChecked', value, props.children)
+                                        }
+                                    }}
+                                />
+                            ) : null
+                        }
                         { slots.default?.(props.list) || props.title || props.keyIs }
                     </div>
                 </div>

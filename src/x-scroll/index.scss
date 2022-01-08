@@ -1,0 +1,58 @@
+@import '../style/var.scss';
+:root {
+    --o-x-scroll-arrow-width: 30px;
+    --o-x-scroll-arrow-color: #333;
+    --o-x-scroll-arrow-color-hover: var(--primary-color);
+    --o-x-scroll-arrow-left-bg: linear-gradient(to right, #fff, transparent);
+    --o-x-scroll-arrow-right-bg: linear-gradient(to left, #fff, transparent);
+    --o-x-scroll-duration: .2s;
+}
+.o-x-scroll {
+    position: relative;
+    &__hide {
+        .o-x-scroll-wrapper {
+            scrollbar-width: none;
+            &::-webkit-scrollbar {
+                width: 0;
+                height: 0;
+            }
+        }
+    }
+    &-wrapper {
+        overflow-x: auto;
+        overflow-y: hidden;
+        white-space: nowrap;
+    }
+    &-arrow {
+        position: absolute;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-image: var(--o-x-scroll-arrow-left-bg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+        transition: color var(--o-x-scroll-duration);
+        width: var(--o-x-scroll-arrow-width);
+        color: var(--o-x-scroll-arrow-color);
+        &:hover {
+            color: var(--o-x-scroll-arrow-color-hover);
+        }
+        &__right {
+            left: initial;
+            right: 0;
+            background-image: var(--o-x-scroll-arrow-right-bg);
+        }
+    }
+}
+
+.o-x-scroll-fade-enter-active,
+.o-x-scroll-fade-leave-active {
+    transition: var(--o-x-scroll-duration);
+}
+
+.o-x-scroll-fade-enter-from,
+.o-x-scroll-fade-leave-to{
+    opacity: 0;
+}
