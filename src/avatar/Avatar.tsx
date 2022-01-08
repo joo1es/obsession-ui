@@ -29,10 +29,10 @@ export default defineComponent({
     setup(props, { slots }) {
         return () => (
             <ImageElement class="o-avatar" { ...props } v-slots={{
-                default: slots.default?.(),
-                loading: slots.loading?.() || <Icon><Glasses /></Icon>,
-                error: slots.error?.(),
-                empty: slots.loading?.() || <Icon><Glasses /></Icon>
+                default: slots.default,
+                loading: slots.loading || (() => <Icon><Glasses /></Icon>),
+                error: slots.error,
+                empty: slots.loading || (() => <Icon><Glasses /></Icon>)
             }} />
         )
     }

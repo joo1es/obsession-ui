@@ -1,5 +1,5 @@
 import { useScroll, useResizeObserver } from '@vueuse/core'
-import { defineComponent, ExtractPropTypes, PropType, ref, Transition, onMounted } from 'vue'
+import { defineComponent, ExtractPropTypes, PropType, ref, Transition, onMounted, onActivated } from 'vue'
 
 import { ChevronBack, ChevronForward } from '@vicons/ionicons5'
 import Icon from '../icon'
@@ -75,6 +75,12 @@ export default defineComponent({
          */
         onMounted(() => scrollElement.value && getTouchRight(scrollElement.value))
         useResizeObserver(scrollElement, () => scrollElement.value && getTouchRight(scrollElement.value))
+
+        onActivated(() => {
+            scrollElement.value?.scrollTo({
+                left: x.value
+            })
+        })
 
         return {
             x,
