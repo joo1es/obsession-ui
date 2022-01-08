@@ -28,7 +28,7 @@ export default defineComponent({
     props: avatarProps,
     setup(props, { slots }) {
         return () => (
-            <ImageElement { ...props } v-slots={{
+            <ImageElement class="o-avatar" { ...props } v-slots={{
                 default: slots.default?.(),
                 loading: slots.loading?.() || <Icon><Glasses /></Icon>,
                 error: slots.error?.(),
