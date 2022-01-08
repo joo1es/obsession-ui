@@ -8,10 +8,10 @@
 
 ```js
 import { createApp } from 'vue'
-import { VirtualList } from 'obsession-ui'
+import { XScroll } from 'obsession-ui'
 
 const app = createApp()
-app.use(VirtualList)
+app.use(XScroll)
 ```
 
 ## 代码演示
