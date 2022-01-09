@@ -12,10 +12,9 @@
   }
   &-content {
     padding: 10px 15px;
-    z-index: 1;
   }
   .o-popover-arrow {
-    z-index: 0;
+    z-index: 1;
     position: absolute;
     width: 6px;
     height: 6px;
@@ -32,21 +31,6 @@
     > .o-popover-arrow {
         bottom: -3px;
         left: calc(50% - 3px);
-    }
-}
-
-[v-placement="top-start"] > .o-popover,
-[v-placement="bottom-start"] > .o-popover{
-    > .o-popover-arrow {
-        left: 20%;
-    }
-}
-
-[v-placement="top-end"] > .o-popover,
-[v-placement="bottom-end"] > .o-popover{
-    > .o-popover-arrow {
-        left: inherit;
-        right: 20%;
     }
 }
 
@@ -95,6 +79,20 @@
     }
 }
 
+[v-placement="top-start"] > .o-popover,
+[v-placement="bottom-start"] > .o-popover{
+    > .o-popover-arrow {
+        left: 20%;
+    }
+}
+
+[v-placement="top-end"] > .o-popover,
+[v-placement="bottom-end"] > .o-popover{
+    > .o-popover-arrow {
+        left: inherit;
+        right: 20%;
+    }
+}
 
 .popover-transition-enter-from,
 .popover-transition-leave-to {
