@@ -1,5 +1,5 @@
 import { useScroll, useResizeObserver } from '@vueuse/core'
-import { defineComponent, ExtractPropTypes, PropType, ref, Transition, onMounted, onActivated } from 'vue'
+import { defineComponent, ExtractPropTypes, PropType, ref, Transition, onMounted, onActivated, onUpdated } from 'vue'
 
 import { ChevronBack, ChevronForward } from '@vicons/ionicons5'
 import Icon from '../icon'
@@ -27,7 +27,8 @@ export const xScrollProps = {
     smooth: {
         type: Boolean,
         default: false
-    }
+    },
+    throttle: Number
 }
 
 export type XScrollProps = ExtractPropTypes<typeof xScrollProps>
@@ -40,13 +41,16 @@ export default defineComponent({
         /**
          * get Scroll status
          */
-        const { x, isScrolling, arrivedState } = useScroll(scrollElement)
         const touchRight = ref(true)
         const getTouchRight = () => {
             if (!scrollElement.value) return
             const element = scrollElement.value
             touchRight.value = Math.abs(element.scrollLeft - (element.scrollWidth - element.offsetWidth)) < 5
         }
+        const { x, isScrolling, arrivedState } = useScroll(scrollElement, {
+            throttle: props.throttle,
+            onScroll: getTouchRight
+        })
         /**
          * deltaScroll
          */
@@ -84,8 +88,9 @@ export default defineComponent({
         /**
          * Listen Resize to change scroll
          */
-        onMounted(() => getTouchRight())
-        useResizeObserver(scrollElement, () => getTouchRight())
+        onMounted(getTouchRight)
+        onUpdated(getTouchRight)
+        useResizeObserver(scrollElement, getTouchRight)
 
         onActivated(() => {
             scrollElement.value?.scrollTo({
@@ -106,7 +111,6 @@ export default defineComponent({
         }
     },
     render() {
-        this.getTouchRight()
         return (
             <div class={{
                 'o-x-scroll': true,
@@ -129,10 +133,7 @@ export default defineComponent({
                 </Transition>
                 <div
                     ref="scrollElement"
-                    onScroll={e => {
-                        this.getTouchRight()
-                        this.onScroll?.(e)
-                    }}
+                    onScroll={this.onScroll}
                     onWheel={this.disabled ? undefined : this.handleWheel} class="o-x-scroll-wrapper">
                     { this.$slots.default?.() }
                 </div>

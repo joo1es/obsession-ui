@@ -45,6 +45,7 @@ app.use(XScroll)
 | delta | 左右按钮点击滚动时的距离 | _number \| ((offsetWidth: number) => number)_ | 200 |
 | onScroll | 滚动时的回调 | _(event: Event) => void_ | - |
 | smooth | 使用滚轮时是否平滑滚动 | _boolean_ | false |
+| throttle | 频率节流间隔（即每多少 ms 获取一次滚动位置）| _number_ | - |
 
 ### Expose
 
