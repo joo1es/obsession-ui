@@ -100,23 +100,21 @@ export default defineComponent({
                         ) : null
                     }
                     {
-                        this.$slots.avatar?.() || (
-                            this.avatar ? (
-                                <div class="o-comment-avatar">
-                                    {
-                                        this.topLine ? (
-                                            <div class="o-comment-top-vertical-line" />
-                                        ) : null
-                                    }
-                                    <Avatar size={50} {...this.avatar} />
-                                    {
-                                        this.bottomLine ? (
-                                            <div class="o-comment-bottom-vertical-line" />
-                                        ) : null
-                                    }
-                                </div>
-                            ) : null
-                        )
+                        this.avatar ? (
+                            <div class="o-comment-avatar">
+                                {
+                                    this.topLine ? (
+                                        <div class="o-comment-top-vertical-line" />
+                                    ) : null
+                                }
+                                { this.$slots.avatar?.() || <Avatar size={50} {...this.avatar} /> }
+                                {
+                                    this.bottomLine ? (
+                                        <div class="o-comment-bottom-vertical-line" />
+                                    ) : null
+                                }
+                            </div>
+                        ) : null
                     }
                     <div class="o-comment-body">
                         <div class="o-comment-content">
