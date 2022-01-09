@@ -24,6 +24,11 @@
             display: inline-block;
             > .o-menu-item-title {
                 position: relative;
+                display: flex;
+                justify-content: center;
+                .o-menu-item__text {
+                    width: auto;
+                }
                 &::after {
                     content: '';
                     position: absolute;

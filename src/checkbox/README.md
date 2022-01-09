@@ -79,6 +79,7 @@ Checkbox Group 组件可以使用所有 Space 组件的 Props
 | modelValue `v-model`   | 可控模式值       | _(string \| number \| symbol)[]_          | -     |
 | disabled     | 是否禁用   | _boolean_           | -      |
 | size | 复选框尺寸 | _'small' \| 'default' \| 'large'_ | 'default' |
+| spaceSize | Space 组件的 Size | _string \| number \| [string \| number, string \| number]_ | - |
 
 ### Methods
 

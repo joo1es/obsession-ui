@@ -21,7 +21,7 @@ export const xScrollProps = {
         default: true
     },
     delta: {
-        type: Number,
+        type: [Number, Function] as PropType<number | ((offsetWidth: number) => number)>,
         default: 300
     },
     smooth: {
@@ -42,18 +42,20 @@ export default defineComponent({
          */
         const { x, isScrolling, arrivedState } = useScroll(scrollElement)
         const touchRight = ref(true)
-        const getTouchRight = (element?: HTMLElement | null) => {
-            if (!element) return
+        const getTouchRight = () => {
+            if (!scrollElement.value) return
+            const element = scrollElement.value
             touchRight.value = Math.abs(element.scrollLeft - (element.scrollWidth - element.offsetWidth)) < 5
         }
         /**
          * deltaScroll
          */
-        const deltaScroll = (target?: HTMLElement | null, delta = 0, isSmooth = true) => {
+        const deltaScroll = (target?: HTMLElement | null, delta: number | ((scrollWidth: number) => number) = 0, isSmooth = true, plus = true) => {
             if (!target) return
+            const deltaMap = typeof delta === 'function' ? delta(target.offsetWidth) : Number(delta)
             target.scrollTo({
                 behavior: isSmooth ? 'smooth' : undefined,
-                left: target.scrollLeft + delta
+                left: plus ? (target.scrollLeft + deltaMap) : (target.scrollLeft - deltaMap)
             })
         }
         function handleWheel(e: WheelEvent): void {
@@ -67,7 +69,7 @@ export default defineComponent({
                 if (touchRight.value && delta > 0) return
             }
             if (props.smooth) {
-                deltaScroll((e.currentTarget as HTMLElement), delta > 0 ? props.delta : -props.delta, true)
+                deltaScroll((e.currentTarget as HTMLElement), props.delta, true, delta > 0)
             } else {
                 deltaScroll((e.currentTarget as HTMLElement), delta, false)
             }
@@ -82,8 +84,8 @@ export default defineComponent({
         /**
          * Listen Resize to change scroll
          */
-        onMounted(() => getTouchRight(scrollElement.value))
-        useResizeObserver(scrollElement, () => getTouchRight(scrollElement.value))
+        onMounted(() => getTouchRight())
+        useResizeObserver(scrollElement, () => getTouchRight())
 
         onActivated(() => {
             scrollElement.value?.scrollTo({
@@ -104,7 +106,7 @@ export default defineComponent({
         }
     },
     render() {
-        this.getTouchRight(this.scrollElement)
+        this.getTouchRight()
         return (
             <div class={{
                 'o-x-scroll': true,
@@ -114,9 +116,9 @@ export default defineComponent({
                     {
                         this.showButton && !this.arrivedState.left ? (
                             this.$slots.leftArrow?.({
-                                click: () => this.deltaScroll(this.scrollElement, -this.delta)
+                                click: () => this.deltaScroll(this.scrollElement, this.delta, true, false)
                             }) || (
-                                <div class="o-x-scroll-arrow" onClick={() => this.deltaScroll(this.scrollElement, -this.delta)}>
+                                <div class="o-x-scroll-arrow" onClick={() => this.deltaScroll(this.scrollElement, this.delta, true, false)}>
                                     <Icon>
                                         <ChevronBack />
                                     </Icon>
@@ -128,7 +130,7 @@ export default defineComponent({
                 <div
                     ref="scrollElement"
                     onScroll={e => {
-                        this.getTouchRight((e.currentTarget as HTMLElement))
+                        this.getTouchRight()
                         this.onScroll?.(e)
                     }}
                     onWheel={this.disabled ? undefined : this.handleWheel} class="o-x-scroll-wrapper">

@@ -24,6 +24,10 @@ app.use(XScroll)
 
 <demo-code transform>./demo/Menu.vue</demo-code>
 
+#### 动态计算滚动距离
+
+<demo-code transform>./demo/OffsetWidth.vue</demo-code>
+
 #### 配合 Space 组件 和 Tag 标签 使用
 
 <demo-code transform>./demo/SpaceTag.vue</demo-code>
@@ -38,7 +42,7 @@ app.use(XScroll)
 | disabled | 禁用横向滚动切换 | _boolean_           | false      |
 | lockScrollIn | 触及边缘时是否阻止滚动事件 | _boolean_ | true |
 | showButton | 是否显示左右滚动按钮 | _boolean_ | true |
-| delta | 左右按钮点击滚动时的距离 | _number_ | 200 |
+| delta | 左右按钮点击滚动时的距离 | _number \| ((offsetWidth: number) => number)_ | 200 |
 | onScroll | 滚动时的回调 | _(event: Event) => void_ | - |
 | smooth | 使用滚轮时是否平滑滚动 | _boolean_ | false |
 
