@@ -38,5 +38,6 @@ export default [
     'image-props',
     'tree-props',
     'o-x-scroll-props',
-    'comment-props'
+    'comment-props',
+    'pagination-props'
 ]

@@ -98,6 +98,10 @@ module.exports = {
                 title: '展示组件',
                 items: [
                     {
+                        path: 'pagination',
+                        title: 'Pagination 分页'
+                    },
+                    {
                         path: 'avatar',
                         title: 'Avatar 头像',
                     },

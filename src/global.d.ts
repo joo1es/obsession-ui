@@ -37,6 +37,7 @@ import oImage from './image'
 import oTree from './tree'
 import oXScroll from './x-scroll'
 import oComment from './comment'
+import oPagination from './pagination'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -55,6 +56,7 @@ declare module 'vue' {
         oPopover: typeof oPopover;
         oTooltip: typeof oTooltip;
         oMenu: typeof oMenu;
+        oPagination: typeof oPagination;
         oEllipsis: typeof oEllipsis;
         oScrollList: typeof oScrollList;
         oStatistic: typeof oStatistic;
