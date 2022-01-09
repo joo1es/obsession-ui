@@ -65,7 +65,6 @@ export default defineComponent({
         const onInput = () => {
             inputing.value = pageRef.value
             setTimeout(() => {
-                console.log(input.value)
                 if (!input.value) return
                 input.value?.focus?.()
                 input.value?.select?.()
