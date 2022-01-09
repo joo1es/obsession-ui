@@ -177,6 +177,10 @@ module.exports = {
                     {
                         path: 'x-scroll',
                         title: 'XScroll 横向滚动',
+                    },
+                    {
+                        path: 'comment',
+                        title: 'Comment 评论',
                     }
                 ]
             }

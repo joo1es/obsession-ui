@@ -36,6 +36,7 @@ import oRadioGroup from './radio-group'
 import oImage from './image'
 import oTree from './tree'
 import oXScroll from './x-scroll'
+import oComment from './comment'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -81,6 +82,7 @@ declare module 'vue' {
         oImage: typeof oImage;
         oTree: typeof oTree;
         oXScroll: typeof oXScroll;
+        oComment: typeof oComment;
     }
     interface Vue {
         $dialog: typeof $dialog,

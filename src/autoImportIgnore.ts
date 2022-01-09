@@ -37,5 +37,6 @@ export default [
     'checkbox-group-props',
     'image-props',
     'tree-props',
-    'o-x-scroll-props'
+    'o-x-scroll-props',
+    'comment-props'
 ]

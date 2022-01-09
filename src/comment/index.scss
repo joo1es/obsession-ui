@@ -1,0 +1,112 @@
+
+:root {
+    --o-comment-padding: 10px;
+    --o-comment-color: #252525;
+    --o-comment-author-color: #657785;
+    --o-comment-actions-color: #657785;
+    --o-comment-font-size: 14px;
+    --o-comment-author-font-size: 13px;
+    --o-comment-actions-font-size: 12px;
+    --o-comment-line-height: 22px;
+    --o-comment-bottom-border: 1px solid #f5f5f5;
+    --o-comment-line-size: 1px;
+    --o-comment-line-color: #d3ddde;
+    --o-comment-line-border-radius: 2px;
+    --o-comment-active-bg: #f4f5f6;
+}
+
+.o-comment {
+    padding: var(--o-comment-padding) var(--o-comment-padding) 0 var(--o-comment-padding);
+    position: relative;
+    display: flex;
+    &:active {
+        background: var(--o-comment-active-bg);
+    }
+    &-indent {
+        width: var(--o-comment-indent-size);
+        display: inline-flex;
+        justify-content: center;
+        position: relative;
+    }
+    &-avatar {
+        margin-right: var(--o-comment-padding);
+        margin-top: 5px;
+        position: relative;
+    }
+    &-body {
+        width: 100%;
+        overflow: hidden;
+    }
+    &-content {
+        .o-comment-author {
+            font-size: var(--o-comment-author-font-size);
+            line-height: var(--o-comment-line-height);
+            color: var(--o-comment-author-color);
+            a {
+                color: var(--o-comment-author-color);
+            }
+        }
+        .o-comment-plain {
+            font-size: var(--o-comment-font-size);
+            line-height: var(--o-comment-author-color);
+            color: var(--o-comment-color);
+        }
+    }
+    &-actions {
+        width: 100%;
+        font-size: var(--o-comment-actions-font-size);
+        color: var(--o-comment-actions-color);
+        padding-top: 5px;
+    }
+    &-bottom {
+        padding-bottom: var(--o-comment-padding);
+        border-bottom: 1px solid #f5f5f5;
+    }
+    &:last-child {
+        .o-comment-bottom {
+            border: 0;
+        }
+    }
+
+    &-vertical-line {
+        width: var(--o-comment-line-size);
+        height: calc(var(--o-comment-avatar-height) / 2 + var(--o-comment-padding) + 5px);
+        margin-top: calc(0px - var(--o-comment-padding));
+        background-color: var(--o-comment-line-color);
+    }
+
+    &-horizontal-line {
+        height: var(--o-comment-line-size);
+        width: calc(var(--o-comment-indent-size) / 2 - var(--o-comment-padding) / 2);
+        margin-top: calc(0px - var(--o-comment-padding));
+        background-color: var(--o-comment-line-color);
+        position: absolute;
+        right: calc(var(--o-comment-padding) / 2 + var(--o-comment-line-size) / 2);
+        top: calc(var(--o-comment-avatar-height) / 2 + var(--o-comment-padding) + 5px);
+        border-top-right-radius: var(--o-comment-line-border-radius);
+        border-bottom-right-radius: var(--o-comment-line-border-radius);
+    }
+
+    &-bottom-vertical-line {
+        width: var(--o-comment-line-size);
+        height: calc(100% - var(--o-comment-avatar-height) - var(--o-comment-padding) / 2);
+        background-color: var(--o-comment-line-color);
+        position: absolute;
+        top: calc(var(--o-comment-avatar-height) + var(--o-comment-padding) / 2);
+        left: calc(var(--o-comment-indent-size) / 2 - var(--o-comment-line-size) / 2);
+        border-top-right-radius: var(--o-comment-line-border-radius);
+        border-top-left-radius: var(--o-comment-line-border-radius);
+    }
+
+    &-top-vertical-line {
+        width: var(--o-comment-line-size);
+        height: var(--o-comment-padding);
+        background-color: var(--o-comment-line-color);
+        position: absolute;
+        top: calc(-5px - var(--o-comment-padding));
+        left: calc(var(--o-comment-indent-size) / 2 - var(--o-comment-line-size) / 2);
+        border-bottom-right-radius: var(--o-comment-line-border-radius);
+        border-bottom-left-radius: var(--o-comment-line-border-radius);
+    }
+
+}

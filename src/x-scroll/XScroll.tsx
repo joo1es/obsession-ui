@@ -22,7 +22,11 @@ export const xScrollProps = {
     },
     delta: {
         type: Number,
-        default: 200
+        default: 300
+    },
+    smooth: {
+        type: Boolean,
+        default: false
     }
 }
 
@@ -45,10 +49,10 @@ export default defineComponent({
         /**
          * deltaScroll
          */
-        const deltaScroll = (target?: HTMLElement | null, delta = 0, smooth = true) => {
+        const deltaScroll = (target?: HTMLElement | null, delta = 0, isSmooth = true) => {
             if (!target) return
             target.scrollTo({
-                behavior: smooth ? 'smooth' : undefined,
+                behavior: isSmooth ? 'smooth' : undefined,
                 left: target.scrollLeft + delta
             })
         }
@@ -62,7 +66,11 @@ export default defineComponent({
                 if (x.value === 0 && delta < 0) return
                 if (touchRight.value && delta > 0) return
             }
-            deltaScroll((e.currentTarget as HTMLElement), delta, false)
+            if (props.smooth) {
+                deltaScroll((e.currentTarget as HTMLElement), delta > 0 ? props.delta : -props.delta, true)
+            } else {
+                deltaScroll((e.currentTarget as HTMLElement), delta, false)
+            }
             e.preventDefault()
         }
 

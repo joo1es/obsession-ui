@@ -40,6 +40,7 @@ app.use(XScroll)
 | showButton | 是否显示左右滚动按钮 | _boolean_ | true |
 | delta | 左右按钮点击滚动时的距离 | _number_ | 200 |
 | onScroll | 滚动时的回调 | _(event: Event) => void_ | - |
+| smooth | 使用滚轮时是否平滑滚动 | _boolean_ | false |
 
 ### Expose
 

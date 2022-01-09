@@ -1,5 +1,5 @@
 <template>
-    <o-x-scroll>
+    <o-x-scroll smooth>
         <o-menu :list="new Array(30).fill('菜单').map((text, index) => {
             return {
                 index,
