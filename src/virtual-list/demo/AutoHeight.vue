@@ -1,6 +1,6 @@
 <template>
-    <o-virtual-list v-slot="{ item }" style="height: 300px" :item-size="50" :items="list">
-        <div class="auto-item" :style="{ height: item.height + 'px' }" item-resizable>
+    <o-virtual-list v-slot="{ item }" style="height: 300px" :item-size="50" :items="list" item-resizable>
+        <div class="auto-item" :style="{ height: item.height + 'px' }">
             {{ item.key }}
         </div>
     </o-virtual-list>
