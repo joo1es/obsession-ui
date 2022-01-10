@@ -24,6 +24,10 @@ app.use(Tree)
 
 <demo-code transform>./demo/NoAnimation.vue</demo-code>
 
+#### 可选择
+
+<demo-code transform>./demo/Selection.vue</demo-code>
+
 #### 虚拟列表 / 可过滤
 
 <demo-code transform>./demo/Virtual.vue</demo-code>
@@ -46,6 +50,15 @@ app.use(Tree)
 | animationMax | 动画中包含最多的子元素数量 | _number_ | 80 |
 | filterable | 是否可过滤 | _filterable_ | false |
 | itemHeight | 项目高度，仅供虚拟列表使用 | _number_ | 30 |
+| selectable | 是否可选择 | _boolean_ | - |
+| selection `v-model` | 选择项 | _string \| number \| symbol_ | - |
+
+### Methods
+
+| 参数      | 说明           | 类型                                                                | 默认值 |
+| --------- | -------------- | ------------------------------------------------------------------- | ------ |
+| select      | 选择某项后的回调       | _(selection: string \| number \| symbol, item: _TreeListItemCustom) => void_          | -     |
+
 
 ### Slots
 

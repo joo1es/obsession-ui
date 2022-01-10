@@ -40,7 +40,9 @@ export default defineComponent({
             required: true
         },
         parent: Object as PropType<TreeListItemCustom | null>,
-        checkable: Boolean
+        checkable: Boolean,
+        selectable: Boolean,
+        selection: [String, Number, Symbol] as PropType<string | number | symbol>
     },
     emits: {
         setChecked: (value: boolean, children: TreeListItemCustom[]) => {
@@ -54,7 +56,16 @@ export default defineComponent({
             void level
             return true
         },
-        'update:modelValue': (value: (string | number | symbol)[]) => Array.isArray(value)
+        'update:modelValue': (value: (string | number | symbol)[]) => Array.isArray(value),
+        'update:selection': (selection: string | number | symbol) => {
+            void selection
+            return true
+        },
+        select: (selection: string | number | symbol, item: TreeListItemCustom) => {
+            void selection
+            void item
+            return true
+        }
     },
     setup(props, { slots, emit }) {
         const checkedList = useVModel(props, 'modelValue', emit, {
@@ -72,9 +83,17 @@ export default defineComponent({
             <div
                 class={{
                     'o-tree-node': true,
-                    'o-tree-node__disabled': disabled.value
+                    'o-tree-node__disabled': disabled.value,
+                    'o-tree-node__selected': props.selectable && props.selection === props.keyIs
                 }}
                 onClick={() => {
+                    if (props.selectable && !props.disabled) {
+                        if (props.selection !== props.keyIs) {
+                            emit('update:selection', props.keyIs)
+                            emit('select', props.keyIs, props.list)
+                            return
+                        }
+                    }
                     if (isNoChildren.value) return
                     const index = props.expends.indexOf(props.keyIs)
                     emit('expend', index > -1, props.keyIs, props.level)
@@ -88,7 +107,13 @@ export default defineComponent({
                     }
                 </div>
                 <div class='o-tree-node__title'>
-                    <div class="o-tree-node__arrow">
+                    <div class="o-tree-node__arrow" onClick={e => {
+                        if (!isNoChildren.value) {
+                            e.stopPropagation()
+                            const index = props.expends.indexOf(props.keyIs)
+                            emit('expend', index > -1, props.keyIs, props.level)
+                        }
+                    }}>
                         {
                             !isNoChildren.value ? (
                                 <Icon class={{ 'expend': expending.value }}>

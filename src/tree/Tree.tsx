@@ -50,7 +50,9 @@ export const treeProps = {
     animationMax: {
         type: Number,
         default: 80
-    }
+    },
+    selection: [String, Number, Symbol] as PropType<string | number | symbol>,
+    selectable: Boolean
 }
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>
@@ -60,7 +62,16 @@ export default defineComponent({
     props: treeProps,
     emits: {
         'update:expends': (expends: (string | number | symbol)[]) => Array.isArray(expends),
-        'update:checked': (checked: (string | number | symbol)[]) => Array.isArray(checked)
+        'update:checked': (checked: (string | number | symbol)[]) => Array.isArray(checked),
+        'update:selection': (selection: string | number | symbol) => {
+            void selection
+            return true
+        },
+        'select': (selection: string | number | symbol, item: TreeListItemCustom) => {
+            void selection
+            void item
+            return true
+        }
     },
     setup(props, { emit, expose, slots }) {
         const expendsRef = ref<(string | number | symbol)[]>([])
@@ -121,6 +132,7 @@ export default defineComponent({
             }
         }
         const handleExpend = (isDelete: boolean, key: string | number | symbol, level: number) => {
+            if (expendsList.value.length > 0) return
             if (props.animation) {
                 expendsList.value.push({
                     isDelete,
@@ -140,6 +152,8 @@ export default defineComponent({
         expose({
             getCheckedItems: () => getCheckedItems(props.list, checked.value, props)
         })
+        const selectionRef = ref<string | number | symbol>()
+        const selection = useAutoControl(selectionRef, props, 'selection', emit)
         return () => {
             const TreeNodeFactory = (item: TreeListItemExtra) => (
                 <TreeNode
@@ -151,6 +165,12 @@ export default defineComponent({
                     onSetChecked={setingChecked}
                     onExpend={handleExpend}
                     checkable={props.checkable}
+                    selectable={props.selectable}
+                    selection={selection.value}
+                    onUpdate:selection={value => {
+                        selection.value = value
+                    }}
+                    onSelect={(selection, item) => emit('select', selection, item)}
                     v-slots={{
                         default: slots.title ? (list: TreeListItemCustom) => slots.title?.(list) : undefined
                     }}
