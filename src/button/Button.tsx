@@ -40,6 +40,7 @@ export const buttonProps = {
     dashed: Boolean,
     block: Boolean,
     secondary: Boolean,
+    text: Boolean,
     iconPosition: {
         type: String as PropType<'left' | 'right'>,
         default: 'left',
@@ -115,6 +116,7 @@ export default defineComponent({
                         'o-button__disabled': disabled.value,
                         'o-button__ghost': props.ghost,
                         'o-button__secondary': props.secondary,
+                        'o-button__text': props.text,
                         'o-button__round': props.round,
                         'o-button__dashed': props.dashed,
                         'o-button__block': props.block,

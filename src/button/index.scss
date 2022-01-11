@@ -90,6 +90,20 @@
             background-color: var(--o-button-color--dark, #ddd) !important;
         }
     }
+    &.o-button__text {
+        border-color: transparent;
+        background-color: initial;
+        color: var(--o-button-main-color);
+        height: auto;
+        &:hover {
+            color: #fff;
+        }
+        &.o-button__default {
+            --o-button-main-color: #333 !important;
+            --o-button-color--light: #666 !important;
+            --o-button-color--dark: #111 !important;
+        }
+    }
 
     &.o-button__round {
         border-radius: var(--o-button-padding-left-right);
