@@ -12,8 +12,6 @@ import {
 import { addUnit } from '../utils'
 import Avatar, { AvatarProps } from '../avatar'
 
-import './index.scss'
-
 export const commentProps = {
     indent: Number,
     indentSize: {

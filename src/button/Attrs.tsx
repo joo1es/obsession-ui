@@ -1,34 +1,24 @@
 export const buttonTypes = {
     default: {
         '--o-button-color': '#333',
-        '--o-button-main-color': '#f5f5f5',
-        '--o-button-main-color--hover': '#ddd',
-        '--o-button-main-color--active': '#bbb',
+        '--o-button-main-color': '#f5f5f5'
     },
     primary: {
         '--o-button-color': '#fff',
-        '--o-button-main-color': 'var(--primary-color)',
-        '--o-button-main-color--hover': 'var(--primary-color--hover)',
-        '--o-button-main-color--active': 'var(--primary-color--active)',
+        '--o-button-main-color': 'var(--primary-color)'
     },
     success: {
         '--o-button-color': '#fff',
-        '--o-button-main-color': 'var(--success-color)',
-        '--o-button-main-color--hover': 'var(--success-color--hover)',
-        '--o-button-main-color--active': 'var(--success-color--active)',
+        '--o-button-main-color': 'var(--success-color)'
     },
     warning: {
         '--o-button-color': '#fff',
-        '--o-button-main-color': 'var(--warning-color)',
-        '--o-button-main-color--hover': 'var(--warning-color--hover)',
-        '--o-button-main-color--active': 'var(--warning-color--active)',
+        '--o-button-main-color': 'var(--warning-color)'
     },
     danger: {
         '--o-button-color': '#fff',
-        '--o-button-main-color': 'var(--danger-color)',
-        '--o-button-main-color--hover': 'var(--danger-color--hover)',
-        '--o-button-main-color--active': 'var(--danger-color--active)',
-    },
+        '--o-button-main-color': 'var(--danger-color)'
+    }
 }
 
 export const buttonSize = {

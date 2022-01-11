@@ -41,6 +41,10 @@ app.use(ButtonGroup)
 
 <demo-code transform>./demo/ButtonGroup.vue</demo-code>
 
+#### 自定义颜色
+
+<demo-code transform>./demo/Color.vue</demo-code>
+
 ## API
 
 ### Props
@@ -48,8 +52,9 @@ app.use(ButtonGroup)
 | 参数         | 说明                                                          | 类型                                                       | 默认值 |
 | ------------ | ------------------------------------------------------------- | ---------------------------------------------------------- | ------ |
 | icon          | 图标                                                      | _string \| Component_ | -      |
-| type         | 按钮类型                                                        | _ButtonTypes \| Record<string, string>_                                                   | default     |
+| type         | 按钮类型                                                        | _ButtonTypes_                                                   | default     |
 | size         | 按钮尺寸                                                        | _ButtonSize \| Record<string, string>_                                                   | default     |
+| color | 按钮颜色 | _string_ | - |
 | tag  | 渲染的标签                                               | _string \| Component_                                                   | button      |
 | disabled   | 是否禁用     | _boolean_                                                   | false      |
 | loading   | 是否加载中     | _boolean_                                                   | false      |

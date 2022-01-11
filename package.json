@@ -104,6 +104,7 @@
     ],
     "dependencies": {
         "@css-render/vue3-ssr": "^0.15.6",
+        "@ctrl/tinycolor": "^3.4.0",
         "@vicons/utils": "^0.1.4",
         "@vueuse/core": "^7.4.0",
         "vueuc": "^0.4.18"

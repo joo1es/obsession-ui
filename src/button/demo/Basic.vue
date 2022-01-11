@@ -21,6 +21,13 @@
       <o-button type="warning" ghost dashed> Warning </o-button>
       <o-button type="danger" ghost dashed> Danger </o-button>
     </o-space>
+    <o-space>
+      <o-button secondary> Default </o-button>
+      <o-button type="primary" secondary> Primary </o-button>
+      <o-button type="success" secondary> Success </o-button>
+      <o-button type="warning" secondary> Warning </o-button>
+      <o-button type="danger" secondary> Danger </o-button>
+    </o-space>
     <o-button type="danger" ghost block round size="large"> Danger </o-button>
   </o-space>
 </template>
