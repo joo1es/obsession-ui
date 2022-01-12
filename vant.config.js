@@ -98,6 +98,10 @@ module.exports = {
                 title: '展示组件',
                 items: [
                     {
+                        path: 'table',
+                        title: 'Table 表格'
+                    },
+                    {
                         path: 'pagination',
                         title: 'Pagination 分页'
                     },

@@ -1,0 +1,20 @@
+<template>
+    <o-table stripe border>
+        <tr>
+          <th>月份</th>
+          <th>存款</th>
+        </tr>
+        <tr>
+          <td>一月</td>
+          <td>￥100</td>
+        </tr>
+        <tr>
+          <td>二月</td>
+          <td>￥200</td>
+        </tr>
+        <tr>
+          <td>三月</td>
+          <td>￥300</td>
+        </tr>
+    </o-table>
+</template>

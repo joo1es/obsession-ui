@@ -1,0 +1,52 @@
+:root {
+    --o-table-font-size: 14px;
+    --o-table-border: 1px solid #eee;
+    --o-table-padding: 10px 15px;
+    --o-table-stripe-background: #fcfcfc;
+    --o-table-hover-background: #f8f8f8;
+}
+
+.o-table {
+    &--body {
+        width: 100%;
+        display: table;
+        font-size: var(--o-table-font-size);
+        border: var(--o-table-border);
+        border-bottom: 0;
+        border-collapse:collapse;
+        > tr {
+            border-bottom: var(--o-table-border);
+            &:nth-child(2n) {
+                background-color: initial;
+            }
+            > th {
+                padding: var(--o-table-padding);
+                font-weight: bold;
+                text-align: left;
+            }
+            > td {
+                padding: var(--o-table-padding);
+            }
+            &:hover {
+                > td {
+                    background-color: var(--o-table-hover-background);
+                }
+            }
+        }
+    }
+    &--stripe {
+        > tr {
+            &:nth-child(2n) {
+                background: var(--o-table-stripe-background);
+            }
+        }
+    }
+    &--border {
+        > tr {
+            > th,
+            > td {
+                border-right: var(--o-table-border);
+            }
+        }
+    }
+}

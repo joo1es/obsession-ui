@@ -38,6 +38,7 @@ import oTree from './tree'
 import oXScroll from './x-scroll'
 import oComment from './comment'
 import oPagination from './pagination'
+import oTable from './table'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -85,6 +86,7 @@ declare module 'vue' {
         oTree: typeof oTree;
         oXScroll: typeof oXScroll;
         oComment: typeof oComment;
+        oTable: typeof oTable;
     }
     interface Vue {
         $dialog: typeof $dialog,
