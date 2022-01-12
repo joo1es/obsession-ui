@@ -1,4 +1,4 @@
-import { computed, defineComponent, ExtractPropTypes, PropType, ref, VNodeChild } from 'vue'
+import { computed, defineComponent, ExtractPropTypes, PropType, ref, toRef, VNodeChild } from 'vue'
 
 import type { TreeListItemCustom, TreeListItemExtra, TreeListItem, ExpendsList } from './interface'
 
@@ -9,7 +9,7 @@ import VirtualList from '../virtual-list'
 import TreeNode from './TreeNode'
 import TreeTransition from './TreeTransition'
 
-import { flattenList, getChecked, getCheckedItems, itemsFilter } from './utils'
+import { flattenList, getChecked, getCheckedItems, itemsFilter, getFlattenList, getItemsCount } from './utils'
 
 export const treeProps = {
     list: {
@@ -34,14 +34,12 @@ export const treeProps = {
     },
     virtual: Boolean,
     getKey: Function as PropType<(item: TreeListItemCustom) => string | number | symbol>,
-    height: {
-        type: String,
-        default: '300px'
-    },
+    height: String,
     animation: {
         type: Boolean,
         default: true
     },
+    filter: String,
     filterable: Boolean,
     itemHeight: {
         type: Number,
@@ -52,7 +50,14 @@ export const treeProps = {
         default: 80
     },
     selection: [String, Number, Symbol] as PropType<string | number | symbol>,
-    selectable: Boolean
+    selectable: Boolean,
+    arrow: {
+        type: [Boolean, String] as PropType<boolean | 'left' | 'right'>,
+        default: true
+    },
+    useRadio: Boolean,
+    exclude: Array as PropType<(string | number | symbol)[]>,
+    link: Boolean
 }
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>
@@ -73,7 +78,7 @@ export default defineComponent({
             return true
         }
     },
-    setup(props, { emit, expose, slots }) {
+    setup(props, { emit }) {
         const expendsRef = ref<(string | number | symbol)[]>([])
         const expends = useAutoControl(expendsRef, props, 'expends', emit, {
             passive: true,
@@ -94,9 +99,9 @@ export default defineComponent({
                     continue
                 }
                 if (item.disabled) continue
+                if (item.children) continue
                 if (value) {
                     checkedSet.add(key)
-                    checked.value.push(key)
                 } else {
                     checkedSet.delete(key)
                 }
@@ -109,12 +114,12 @@ export default defineComponent({
         /**
          * 过滤
          */
-        const filterText = ref('')
+        const filterText = toRef(props, 'filter')
         const filterItems = computed(() => itemsFilter(props, filterText.value))
         const treeListFlatten = computed(() => {
             const finalList: TreeListItemExtra[] = []
             filterItems.value.forEach(item => {
-                flattenList(item, finalList, 0, null, expends, checked, props)
+                flattenList(item, finalList, 0, null, expends.value, props)
             })
             return finalList
         })
@@ -149,91 +154,114 @@ export default defineComponent({
                 done(isDelete, key)
             }
         }
-        expose({
-            getCheckedItems: () => getCheckedItems(props.list, checked.value, props)
-        })
         const selectionRef = ref<string | number | symbol>()
         const selection = useAutoControl(selectionRef, props, 'selection', emit)
-        return () => {
-            const TreeNodeFactory = (item: TreeListItemExtra) => (
-                <TreeNode
-                    { ...item }
-                    expends={expends.value}
-                    getChecked={(list: TreeListItemCustom) => getChecked(list, props, checkedSet.value)}
-                    v-model={checked.value}
-                    expendsList={expendsList.value}
-                    onSetChecked={setingChecked}
-                    onExpend={handleExpend}
-                    checkable={props.checkable}
-                    selectable={props.selectable}
-                    selection={selection.value}
-                    onUpdate:selection={value => {
-                        selection.value = value
-                    }}
-                    onSelect={(selection, item) => emit('select', selection, item)}
-                    v-slots={{
-                        default: slots.title ? (list: TreeListItemCustom) => slots.title?.(list) : undefined
-                    }}
-                />
-            )
-            const treeNodeRender = (item: TreeListItemExtra) => {
-                const TreeNodeRender = (dom?: VNodeChild) => (
-                    <>
-                        { TreeNodeFactory(item) }
-                        { dom }
-                    </>
-                )
-                const expendsListFind =  expendsList.value.find(expendsItem => expendsItem.keyIs === item.keyIs)
-                if (props.animation && expendsListFind && item.children) {
-                    const finalList: TreeListItemExtra[] = []
-                    item.children.forEach(child => {
-                        flattenList(child, finalList, expendsListFind.level + 1, null, expends, checked, props)
-                    })
-                    if (finalList.length <= props.animationMax) {
-                        return (
-                            TreeNodeRender(
-                                <TreeTransition key={item.key} {...expendsListFind} v-slots={{
-                                    default: () => (
-                                        <div>
-                                            { finalList.map(TreeNodeFactory) }
-                                        </div>
-                                    )
-                                }} />
-                            )
-                        )
-                    }
-                    leave(expendsListFind.keyIs)
-                    done(expendsListFind.isDelete, expendsListFind.keyIs)
-                }
-                return TreeNodeRender()
+        return {
+            selection,
+            checked,
+            checkedSet,
+            expends,
+            expendsList,
+            treeListFlatten,
+            leave,
+            done,
+            setingChecked,
+            handleExpend,
+            getCheckedItems: () => getCheckedItems(props.list, checked.value, props),
+            getFlattenList: (getSet = false) => getFlattenList(props.list, getSet),
+            getItemsCount: (filter = false) => getItemsCount(filter ? filterItems.value : props.list, props),
+            checkAll: () => {
+                if (props.useRadio) return
+                setingChecked(true, props.list)
             }
-            return (
-                <div class={'o-tree'}>
-                    { slots.default?.() }
-                    {
-                        props.filterable ? (
-                            <input v-model={filterText.value} />
-                        ) : null
-                    }
-                    {
-                        !props.virtual ? (
-                            treeListFlatten.value.map(treeNodeRender)
-                        ) : (
-                            <VirtualList
-                                keyField="key"
-                                style={{
-                                    height: props.height
-                                }}
-                                itemSize={props.itemHeight}
-                                items={treeListFlatten.value}
-                                v-slots={{
-                                    default: ({ item }: { item: TreeListItemExtra }) => treeNodeRender(item)
-                                }}
-                            />
-                        )
-                    }
-                </div>
-            )
         }
+    },
+    expose: ['getCheckedItems'],
+    render() {
+        const TreeNodeFactory = (item: TreeListItemExtra) => (
+            <TreeNode
+                { ...item }
+                expends={this.expends}
+                getChecked={(list: TreeListItemCustom) => getChecked(list, this.$props, this.checkedSet)}
+                v-model={this.checked}
+                expendsList={this.expendsList}
+                onSetChecked={this.setingChecked}
+                onExpend={this.handleExpend}
+                checkable={this.checkable}
+                selectable={this.selectable}
+                selection={this.selection}
+                onUpdate:selection={value => {
+                    this.selection = value
+                }}
+                onSelect={(selection, item) => this.$emit('select', selection, item)}
+                arrow={this.arrow}
+                useRadio={this.useRadio}
+                link={this.link}
+                v-slots={{
+                    prefix: this.$slots.prefix,
+                    suffix: this.$slots.suffix,
+                    default: this.$slots.title,
+                    arrow: this.$slots.arrow
+                }}
+            />
+        )
+        const treeNodeRender = (item: TreeListItemExtra) => {
+            const TreeNodeRender = (dom?: VNodeChild) => (
+                <>
+                    { TreeNodeFactory(item) }
+                    { dom }
+                </>
+            )
+            const expendsListFind =  this.expendsList.find(expendsItem => expendsItem.keyIs === item.keyIs)
+            if (this.animation && expendsListFind && item.children) {
+                const finalList: TreeListItemExtra[] = []
+                item.children.forEach(child => {
+                    flattenList(child, finalList, expendsListFind.level + 1, null, this.expends, this.$props)
+                })
+                if (finalList.length <= this.animationMax) {
+                    return (
+                        TreeNodeRender(
+                            <TreeTransition key={item.key} {...expendsListFind} v-slots={{
+                                default: () => (
+                                    <div>
+                                        { finalList.map(TreeNodeFactory) }
+                                    </div>
+                                )
+                            }} />
+                        )
+                    )
+                }
+                this.leave(expendsListFind.keyIs)
+                this.done(expendsListFind.isDelete, expendsListFind.keyIs)
+            }
+            return TreeNodeRender()
+        }
+        return (
+            <div class={'o-tree'}>
+                { this.$slots.default?.() }
+                {
+                    !this.virtual ? (
+                        <div class='o-tree-nodes' style={{
+                            height: this.height
+                        }}>
+                            { this.treeListFlatten.map(treeNodeRender) }
+                        </div>
+                    ) : (
+                        <VirtualList
+                            keyField="key"
+                            style={{
+                                height: this.height
+                            }}
+                            itemSize={this.itemHeight}
+                            items={this.treeListFlatten}
+                            class='o-tree-nodes'
+                            v-slots={{
+                                default: ({ item }: { item: TreeListItemExtra }) => treeNodeRender(item)
+                            }}
+                        />
+                    )
+                }
+            </div>
+        )
     }
 })

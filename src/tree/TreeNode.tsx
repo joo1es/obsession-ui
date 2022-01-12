@@ -3,6 +3,7 @@ import { computed, defineComponent, PropType } from 'vue'
 import Icon from '../icon'
 import { CaretForward } from '@vicons/ionicons5'
 import Checkbox from '../checkbox'
+import Radio from '../radio'
 
 import type { TreeListItemCustom, ExpendsList } from './interface'
 import { useVModel } from '@vueuse/core'
@@ -42,7 +43,13 @@ export default defineComponent({
         parent: Object as PropType<TreeListItemCustom | null>,
         checkable: Boolean,
         selectable: Boolean,
-        selection: [String, Number, Symbol] as PropType<string | number | symbol>
+        selection: [String, Number, Symbol] as PropType<string | number | symbol>,
+        arrow: {
+            type: [Boolean, String] as PropType<boolean | 'left' | 'right'>,
+            default: true
+        },
+        useRadio: Boolean,
+        link: Boolean
     },
     emits: {
         setChecked: (value: boolean, children: TreeListItemCustom[]) => {
@@ -79,6 +86,27 @@ export default defineComponent({
         const checkedStatus = computed(() => props.getChecked(props.list))
         const disabled = computed(() => props.disabled || checkedStatus.value === -2)
         const isNoChildren = computed(() => !props.children || props.children.length === 0)
+        const arrow = computed(() => (
+            <div class={{
+                'o-tree-node__arrow': true,
+                'left': props.arrow === true || props.arrow === 'left',
+                'right': props.arrow === 'right'
+            }} onClick={e => {
+                if (!isNoChildren.value) {
+                    e.stopPropagation()
+                    const index = props.expends.indexOf(props.keyIs)
+                    emit('expend', index > -1, props.keyIs, props.level)
+                }
+            }}>
+                {
+                    !isNoChildren.value ? (
+                        <Icon class={{ 'expend': expending.value }}>
+                            <CaretForward />
+                        </Icon>
+                    ) : null
+                }
+            </div>
+        ))
         return () => (
             <div
                 class={{
@@ -102,56 +130,63 @@ export default defineComponent({
                 <div class='o-tree-node__indent'>
                     {
                         levels.value.map(lv => (
-                            <div key={lv} class='o-tree-node__indent-cell' />
+                            <div key={lv} class={{
+                                'o-tree-node__indent-cell': true,
+                                'o-tree-node__indent-cell--link': props.link
+                            }} />
                         ))
                     }
                 </div>
                 <div class='o-tree-node__title'>
-                    <div class="o-tree-node__arrow" onClick={e => {
-                        if (!isNoChildren.value) {
-                            e.stopPropagation()
-                            const index = props.expends.indexOf(props.keyIs)
-                            emit('expend', index > -1, props.keyIs, props.level)
-                        }
-                    }}>
-                        {
-                            !isNoChildren.value ? (
-                                <Icon class={{ 'expend': expending.value }}>
-                                    <CaretForward />
-                                </Icon>
-                            ) : null
-                        }
-                    </div>
+                    { props.arrow === true || props.arrow === 'left' ? ( slots.arrow?.({ expending: expending.value }) || arrow.value ) : null }
                     <div class="o-tree-node__content">
                         {
                             props.checkable ? (
-                                <Checkbox
-                                    disabled={disabled.value}
-                                    modelValue={checkedStatus.value === 1}
-                                    indeterminate={checkedStatus.value === 0}
-                                    onClick={(e: Event) => {
-                                        e.stopPropagation()
-                                    }}
-                                    onUpdate:modelValue={value => {
-                                        if (disabled.value) return
-                                        if (!props.children) {
-                                            if (!checkedList.value) return
-                                            const index = checkedList.value.indexOf(props.keyIs)
-                                            if (value) {
-                                                if (index > -1) return
-                                                checkedList.value.push(props.keyIs)
+                                !props.useRadio ?
+                                    <Checkbox
+                                        disabled={disabled.value}
+                                        modelValue={checkedStatus.value === 1}
+                                        indeterminate={checkedStatus.value === 0}
+                                        onClick={(e: Event) => {
+                                            e.stopPropagation()
+                                        }}
+                                        onUpdate:modelValue={value => {
+                                            if (disabled.value) return
+                                            if (!props.children) {
+                                                if (!checkedList.value) return
+                                                const index = checkedList.value.indexOf(props.keyIs)
+                                                if (value) {
+                                                    if (index > -1) return
+                                                    checkedList.value.push(props.keyIs)
+                                                } else {
+                                                    checkedList.value.splice(index, 1)
+                                                }
                                             } else {
-                                                checkedList.value.splice(index, 1)
+                                                emit('setChecked', value, props.children)
                                             }
-                                        } else {
-                                            emit('setChecked', value, props.children)
-                                        }
-                                    }}
-                                />
+                                        }}
+                                    /> :
+                                    <Radio
+                                        disabled={disabled.value || Boolean(props.children)}
+                                        modelValue={checkedStatus.value !== -1}
+                                        onClick={(e: Event) => {
+                                            e.stopPropagation()
+                                        }}
+                                        onUpdate:modelValue={() => {
+                                            if (disabled.value) return
+                                            if (!props.children) {
+                                                if (!checkedList.value) return
+                                                checkedList.value = [props.keyIs]
+                                            }
+                                        }}
+                                    />
                             ) : null
                         }
+                        { slots.prefix?.({ ...props.list, expending: expending.value }) }
                         { slots.default?.(props.list) || props.title || props.keyIs }
                     </div>
+                    { slots.suffix?.({ ...props.list, expending: expending.value }) }
+                    { props.arrow === 'right' ? ( slots.arrow?.({ expending: expending.value }) || arrow.value ) : null }
                 </div>
             </div>
         )

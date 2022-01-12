@@ -48,7 +48,10 @@ export default defineComponent({
                 <div class="o-tag--text">{ slots.default?.() || props.label }</div>
                 {
                     props.closable ? (
-                        <div class="o-tag--close" onClick={e => emit('close', e)}>
+                        <div class="o-tag--close" onClick={e => {
+                            e.stopPropagation()
+                            emit('close', e)
+                        }}>
                             <Icon>
                                 { slots.closeIcon?.() || <Close /> }
                             </Icon>

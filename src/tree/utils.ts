@@ -1,45 +1,72 @@
 import { TreeListItemCustom, TreeListItemExtra } from './interface'
-import { Ref } from 'vue'
 import { TreeProps } from './Tree'
 
-export const itemsFilter = (props: TreeProps, text: string) => {
-    let { list } = props
-    const getListByText = (list: TreeListItemCustom[], finalList: TreeListItemCustom[]) => {
-        if (!text) return list
-        return list.forEach(item => {
-            const key = props.getKey?.(item) || item[props.props.key]
-            /**
-             * 1. 标题内容符合条件
-             */
-            if (
-                item[props.props.title]?.includes(text) ||
-                item[key]?.includes(text)
-            ) {
-                return finalList.push(item)
-            }
-            /**
-             * 2. 如果没有子元素
-             */
-            if (!item.children || item.children.length === 0) return
-            /**
-             * 3. 递归检查子元素
-             */
-            const children: TreeListItemCustom[] = []
-            getListByText(item.children, children)
-            if (children.length === 0) return
-            finalList.push({
-                ...item,
-                children
-            })
+const getListByText = (text: string | undefined, props: TreeProps, list: TreeListItemCustom[], finalList: TreeListItemCustom[]) => {
+    if (!text) return list
+    return list.forEach(item => {
+        const key = props.getKey?.(item) || item[props.props.key]
+        /**
+         * 1. 标题内容符合条件
+         */
+        if (
+            item[props.props.title]?.includes(text) ||
+            item[key]?.includes(text)
+        ) {
+            return finalList.push(item)
+        }
+        /**
+         * 2. 如果没有子元素
+         */
+        if (!item.children || item.children.length === 0) return
+        /**
+         * 3. 递归检查子元素
+         */
+        const children: TreeListItemCustom[] = []
+        getListByText(text, props, item.children, children)
+        if (children.length === 0) return
+        finalList.push({
+            ...item,
+            children
         })
-    }
+    })
+}
+
+const getListByExclude = (excludeSet: Set<string | number | symbol>, props: TreeProps, list: TreeListItemCustom[], finalList: TreeListItemCustom[]) => {
+    if (!excludeSet) return list
+    return list.forEach(item => {
+        const key = props.getKey?.(item) || item[props.props.key]
+        if (excludeSet.has(key)) return
+        if (!item.children) {
+            finalList.push(item)
+            return
+        }
+        if (item.children.length === 0) return
+        const children: TreeListItemCustom[] = []
+        getListByExclude(excludeSet, props, item.children, children)
+        if (children.length === 0) return
+        finalList.push({
+            ...item,
+            children
+        })
+    })
+}
+
+export const itemsFilter = (props: TreeProps, text?: string) => {
+    let { list } = props
     if (props.filterable && text) {
         const final: TreeListItemCustom[] = []
-        getListByText(props.list, final)
+        getListByText(text, props, props.list, final)
+        list = final
+    }
+    const excludeSet = props.exclude ? new Set<string | number | symbol>(props.exclude) : undefined
+    if (excludeSet) {
+        const final: TreeListItemCustom[] = []
+        getListByExclude(excludeSet, props, list, final)
         list = final
     }
     return list
 }
+
 
 export const getStatus = (
     children: TreeListItemCustom[],
@@ -60,7 +87,7 @@ export const getStatus = (
         }
         if (counter.checkedCount !== 0 && counter.count !== counter.checkedCount) return 0
         if (checkedSet.has(key)) counter.checkedCount += 1
-        counter.count += 1
+        if (!item.children) counter.count += 1
     }
     if (counter.count === 0) return -2
     if (counter.checkedCount === 0) return -1
@@ -85,8 +112,7 @@ export const flattenList = (
     finalList: TreeListItemExtra[],
     level = 0,
     parent: null | TreeListItemCustom = null,
-    expends: Ref<(string | number | symbol)[]>,
-    checked: Ref<(string | number | symbol)[]>,
+    expends: (string | number | symbol)[],
     props: TreeProps
 ) => {
     const key = props.getKey ? props.getKey(list) : list[props.props.key]
@@ -100,14 +126,21 @@ export const flattenList = (
         list,
         parent
     })
-    if (list.children && expends.value.includes(key)) {
+    if (list.children && expends.includes(key)) {
         for (const item of list.children) {
-            flattenList(item, finalList, level + 1, list, expends, checked, props)
+            flattenList(item, finalList, level + 1, list, expends, props)
         }
     }
 }
 
-export const getCheckedItems = (
+
+/**
+ * 
+ * Expose
+ * 
+ */
+
+ export const getCheckedItems = (
     treeList: TreeListItemCustom[],
     checked: (string | number | symbol)[],
     props: TreeProps
@@ -124,4 +157,28 @@ export const getCheckedItems = (
     }
     getItems(treeList)
     return Array.from(final)
+}
+
+export const getFlattenList = (fullList: TreeListItemCustom[], getSet = false) => {
+    const finalList = new Set<TreeListItemCustom>()
+    const getingFlattenList = (list: TreeListItemCustom) => {
+        finalList.add(list)
+        if (list.children && list.children.length > 0) {
+            list.children.forEach(item => getingFlattenList(item))
+        }
+    }
+    fullList.forEach(item => getingFlattenList(item))
+    return getSet ? finalList : Array.from(finalList)
+}
+
+export const getItemsCount = (fullList: TreeListItemCustom[], props: TreeProps) => {
+    const finalCounter = new Set<TreeListItemCustom>()
+    const flattenItems = getFlattenList(fullList, true) as Set<TreeListItemCustom>
+    for (const item of flattenItems) {
+        if (item.disabled) continue
+        if (item.children) continue
+        const key = props.getKey ? props.getKey(item) : item[props.props.key]
+        finalCounter.add(key)
+    }
+    return finalCounter.size
 }
