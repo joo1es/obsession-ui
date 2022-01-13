@@ -1,4 +1,4 @@
-import { computed, defineComponent, ExtractPropTypes, PropType, ref, toRef, VNodeChild } from 'vue'
+import { computed, defineComponent, ExtractPropTypes, PropType, ref, toRef, VNodeChild, provide } from 'vue'
 
 import type { TreeListItemCustom, TreeListItemExtra, TreeListItem, ExpendsList } from './interface'
 
@@ -57,7 +57,9 @@ export const treeProps = {
     },
     useRadio: Boolean,
     exclude: Array as PropType<(string | number | symbol)[]>,
-    link: Boolean
+    link: Boolean,
+    onRemote: Function as PropType<(item: TreeListItemCustom) => Promise<TreeListItemCustom[]>>,
+    draggable: Boolean
 }
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>
@@ -137,7 +139,7 @@ export default defineComponent({
             }
         }
         const handleExpend = (isDelete: boolean, key: string | number | symbol, level: number) => {
-            if (expendsList.value.length > 0) return
+            if (expendsList.value.find(item => item.keyIs === key)) return
             if (props.animation) {
                 expendsList.value.push({
                     isDelete,
@@ -156,6 +158,10 @@ export default defineComponent({
         }
         const selectionRef = ref<string | number | symbol>()
         const selection = useAutoControl(selectionRef, props, 'selection', emit)
+
+        const dragging = ref<TreeListItemExtra | null>(null)
+        provide('o-tree-dragging', dragging)
+
         return {
             selection,
             checked,
@@ -197,6 +203,17 @@ export default defineComponent({
                 arrow={this.arrow}
                 useRadio={this.useRadio}
                 link={this.link}
+                draggable={this.draggable}
+                propList={this.list}
+                onRemote={this.onRemote}
+                onRemoteChange={(list: TreeListItemCustom[]) => {
+                    item.list.remote = false
+                    item.list.children = list
+                }}
+                onChildrenAdd={(dragging: TreeListItemCustom) => {
+                    if (!item.list.children) item.list.children = []
+                    item.list.children.push(dragging)
+                }}
                 v-slots={{
                     prefix: this.$slots.prefix,
                     suffix: this.$slots.suffix,

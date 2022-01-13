@@ -52,7 +52,7 @@ const getListByExclude = (excludeSet: Set<string | number | symbol>, props: Tree
 }
 
 export const itemsFilter = (props: TreeProps, text?: string) => {
-    let { list } = props
+    let {list} = props
     if (props.filterable && text) {
         const final: TreeListItemCustom[] = []
         getListByText(text, props, props.list, final)
@@ -67,7 +67,6 @@ export const itemsFilter = (props: TreeProps, text?: string) => {
     return list
 }
 
-
 export const getStatus = (
     children: TreeListItemCustom[],
     counter: {
@@ -80,7 +79,7 @@ export const getStatus = (
     for (let i = 0; i < children.length; i++) {
         const item = children[i]
         const key = props.getKey?.(item) || item[props.props.key]
-        if (item.disabled) continue
+        if (item.disabled || item.remote) continue
         if (item.children && item.children.length > 0) {
             getStatus(item.children, counter, checkedSet, props)
             continue
@@ -124,15 +123,15 @@ export const flattenList = (
         children: list.children,
         disabled: Boolean(list.disabled),
         list,
-        parent
+        parent,
+        remote: list.remote
     })
-    if (list.children && expends.includes(key)) {
+    if (!list.remote && list.children && expends.includes(key)) {
         for (const item of list.children) {
             flattenList(item, finalList, level + 1, list, expends, props)
         }
     }
 }
-
 
 /**
  * 
@@ -140,7 +139,7 @@ export const flattenList = (
  * 
  */
 
- export const getCheckedItems = (
+export const getCheckedItems = (
     treeList: TreeListItemCustom[],
     checked: (string | number | symbol)[],
     props: TreeProps
@@ -175,10 +174,30 @@ export const getItemsCount = (fullList: TreeListItemCustom[], props: TreeProps) 
     const finalCounter = new Set<TreeListItemCustom>()
     const flattenItems = getFlattenList(fullList, true) as Set<TreeListItemCustom>
     for (const item of flattenItems) {
-        if (item.disabled) continue
+        if (item.disabled || item.remote) continue
         if (item.children) continue
         const key = props.getKey ? props.getKey(item) : item[props.props.key]
         finalCounter.add(key)
     }
     return finalCounter.size
+}
+
+/**
+ * Draggable
+ * 判断是否是自身或者子元素，避免拖动时删除自身或者造成无限引用
+ */
+export const isChildrenOrSelf = (item: TreeListItemCustom, compareItem?: TreeListItemCustom) => {
+    // 1. 比较项不存在，否
+    if (!compareItem) return false
+    // 2. 是自身
+    if (item === compareItem) return true
+    // 3. 无子元素，不可是子元素
+    if (
+        !item.children ||
+        item.remote ||
+        item.children.length === 0
+    ) return false
+    // 4. 扁平化后判断是否存在子元素
+    const itemChildrenSet = getFlattenList(item.children, true) as Set<TreeListItemCustom>
+    return itemChildrenSet.has(compareItem)
 }

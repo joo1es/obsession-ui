@@ -28,6 +28,14 @@ app.use(Tree)
 
 <demo-code transform>./demo/Selection.vue</demo-code>
 
+#### 远程加载
+
+<demo-code transform>./demo/Load.vue</demo-code>
+
+#### 可拖动
+
+<demo-code transform>./demo/Drag.vue</demo-code>
+
 #### 虚拟列表 / 可过滤
 
 <demo-code transform>./demo/Virtual.vue</demo-code>
@@ -57,12 +65,24 @@ app.use(Tree)
 | useRadio | 是否启用单选 | _boolean_ | false |
 | exclude | 排除项 | _(string \| number \| symbol)[]_ | - |
 | link | 是否显示连接线 | _boolean_ | false |
+| onRemote `ref` | 远程加载回调 | _(list: TreeListItemCustom) => Promise\<TreeListItemCustom[]\>_ | - |
+| draggable `ref` | 是否可拖动 | _boolean_ | - |
 
 ### Methods
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
 | select      | 选择某项后的回调       | _(selection: string \| number \| symbol, item: TreeListItemCustom) => void_          | -     |
+
+### Slots
+
+| 名称    | 说明     | 参数 |
+| ------- | -------- | --- |
+| default | 默认插槽，会放置在最顶端 | - |
+| title | 标题内容 | _...TreeListItemCustom, expending: boolean_ |
+| suffix | 标题内容后缀 | _...TreeListItemCustom, expending: boolean_ |
+| prefix | 标题内容前缀 | _...TreeListItemCustom, expending: boolean_ |
+| arrow | 指示箭头插槽 | _...TreeListItemCustom, expending: boolean_ |
 
 ### Expose
 
@@ -73,16 +93,6 @@ app.use(Tree)
 | getItemsCount | 获取叶子节点的数量 | _(filter: boolean) => number_ |
 | checkAll | 全选 | _() => void_ |
 
-### Slots
-
-| 名称    | 说明     | 参数 |
-| ------- | -------- | --- |
-| default | 默认插槽，会放置在最顶端 | - |
-| title | 标题内容 | _...TreeListItemCustom_ |
-| prefix | 树节点前置内容 | _...TreeListItemCustom, expanding: boolean_ |
-| suffix | 树节点后置内容 | _...TreeListItemCustom, expanding: boolean_ |
-| arrow | 箭头替换插槽 | _expanding: boolean_ |
-
 ## 类型
 
 ### TreeListItemCustom
@@ -92,4 +102,25 @@ app.use(Tree)
 | key | 唯一标识符 | _string \| number \| symbol_ | 是 |
 | title | 标题 | _string_ | 是 |
 | disabled | 是否禁用 | _boolean_ | 是 |
-| children | TreeListItemCustom[] | 是 |
+| remote | 是否使用远程加载 | _boolean_ | 是 |
+| children | 子节点 | _TreeListItemCustom[]_ | 是 |
+
+## 定制
+
+### 全局 CSS 变量
+
+| 变量名 | 默认值 | 说明 |
+| ---- | ---- | ---- |
+| --o-tree-indent | 18px | 缩进距离 |
+| --o-tree-font-size | 14px | 字号大小 |
+| --o-tree-node-hegiht | 30px | 节点高度 |
+| --o-tree-hover-bg | #fafafa | hover 时的背景 |
+| --o-tree-link-bg | #ccc | 连接线颜色 |
+| --o-tree-link-size | 1px | 连接线宽度 |
+| --o-tree-padding-top-bottom | 5px | 节点上下内边距 |
+| --o-tree-padding-left-right | 5px | 节点左右内边距 |
+| --o-tree-dropline-size | 5px | 拖动线高度 |
+| --o-tree-drop-bg | #eee | 拖动线背景 |
+| --o-tree-arrow-size | 12px | 箭头尺寸 |
+| --o-tree-arrow-color | #ccc | 箭头颜色 |
+| --o-tree-selecting-color | #f5f5f5 | 选中背景色 |

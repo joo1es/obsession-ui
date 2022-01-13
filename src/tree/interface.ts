@@ -3,6 +3,7 @@ export interface TreeListItem {
     title?: string,
     disabled?: boolean,
     children?: TreeListItem[],
+    remote?: boolean,
     [x: string]: any
 }
 
