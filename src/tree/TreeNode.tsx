@@ -150,7 +150,6 @@ export default defineComponent({
         const onDragging = ref(false)
         const dragging = inject<Ref<TreeListItemExtra | null>>('o-tree-dragging', ref(null))
         const handleDragStart = () => {
-            console.log('2332')
             dragging.value = props
         }
         const handleDragEnd = () => {
