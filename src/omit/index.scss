@@ -5,9 +5,11 @@
 
 .o-omit {
     &-ellipsis {
-        text-align: center;
-        padding: .4em 0;
+        padding: .6em 0;
         font-size: var(--o-omit-ellipsis-font-size);
         color: var(--o-omit-ellipsis-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }

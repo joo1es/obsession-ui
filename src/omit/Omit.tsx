@@ -28,6 +28,9 @@ export type OmitProps = ExtractPropTypes<typeof omitProps>
 export default defineComponent({
     name: 'OOmit',
     props: omitProps,
+    emits: {
+        ellipsisClick: (e: Event) => typeof e === 'object'
+    },
     setup(props) {
         const spacePropsFilter = computed(() => {
             const newProps: Partial<OmitProps> = { ...props }
@@ -56,7 +59,7 @@ export default defineComponent({
                 } else if (this.ellipsis) {
                     if (!preIsEllipsis) {
                         renderSlots.push(
-                            <div class="o-omit-ellipsis">
+                            <div class="o-omit-ellipsis" onClick={e => this.$emit('ellipsisClick', e)}>
                                 { this.$slots.ellipsis?.() || <Icon><EllipsisHorizontalOutline /></Icon> }
                             </div>
                         )
