@@ -150,6 +150,10 @@ module.exports = {
                         title: 'Tooltip 文字提示',
                     },
                     {
+                        path: 'omit',
+                        title: 'Omit 省略',
+                    },
+                    {
                         path: 'ellipsis',
                         title: 'Ellipsis 文本省略',
                     },

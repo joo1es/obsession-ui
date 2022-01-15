@@ -1,0 +1,13 @@
+:root {
+    --o-omit-ellipsis-color: #ccc;
+    --o-omit-ellipsis-font-size: 24px;
+}
+
+.o-omit {
+    &-ellipsis {
+        text-align: center;
+        padding: .4em 0;
+        font-size: var(--o-omit-ellipsis-font-size);
+        color: var(--o-omit-ellipsis-color);
+    }
+}

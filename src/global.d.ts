@@ -39,6 +39,8 @@ import oXScroll from './x-scroll'
 import oComment from './comment'
 import oPagination from './pagination'
 import oTable from './table'
+import oOmit from './omit'
+import oOmitItem from './omit-item'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -87,6 +89,8 @@ declare module 'vue' {
         oXScroll: typeof oXScroll;
         oComment: typeof oComment;
         oTable: typeof oTable;
+        oOmit: typeof oOmit;
+        oOmitItem: typeof oOmitItem;
     }
     interface Vue {
         $dialog: typeof $dialog,

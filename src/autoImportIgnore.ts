@@ -40,5 +40,7 @@ export default [
     'o-x-scroll-props',
     'comment-props',
     'pagination-props',
-    'table-props'
+    'table-props',
+    'omit-props',
+    'omit-item-props'
 ]
