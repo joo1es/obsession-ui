@@ -57,7 +57,7 @@ ActionSheet 组件可以使用全部 [Modal](./#/modal#props) 组件的 Props（
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
-| click | 每项点击事件 | _(record: DropdownRecord, done: () => void) => void_
+| click | 每项点击事件 | _(record: DropdownRecord, done: () => void) => void_ | - |
 
 ## 类型
 

@@ -39,6 +39,18 @@ app.use(Avatar)
 | color | 图标和文字的颜色 | _string_                                                   | -      |
 | alt | 图片的 alt 属性 | _string_                                                   | -      |
 | title | 标题，在默认情况下，错误或者无图像会显示 title 的第一个字符 | _string_ | - |
+| lazy | 是否使用懒加载 | _boolean_ | false |
+| lazyOptions | 懒加载选项 | _{ root?: MaybeElementRef, rootMargin?: string, threshold?: number \| number[] }_ | - |
+| onlyIntersectingVisible | 是否仅在视口内可见 | _boolean_ | false |
+
+### Methods
+
+| 参数      | 说明           | 类型                                                                | 默认值 |
+| --------- | -------------- | ------------------------------------------------------------------- | ------ |
+| load | 图片加载成功的回调 | _(event: Event) => void_ | - |
+| error | 图片加载出现错误的回调 | _() => void_ | - |
+| abort | 图片取消加载的回调 | _(event: Event) => void_ | - |
+| isIntersecting | 懒加载时图片更改可视状态的回调 | _(intersecting: boolean) => void_ | - |
 
 ### Slots
 
