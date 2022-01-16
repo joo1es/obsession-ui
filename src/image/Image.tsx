@@ -11,7 +11,7 @@ export const imageProps = {
         type: [Number, String, Array] as PropType<number | string | [number | string, number | string]>
     },
     src: String,
-    contain: {
+    fit: {
         type: String as PropType<'fill' | 'contain' | 'cover' | 'none' | 'scale-down'>
     },
     borderRadius: {
@@ -184,7 +184,7 @@ export default defineComponent({
                                     <img
                                         src={ props.src }
                                         style={{
-                                            objectFit: props.contain
+                                            objectFit: props.fit
                                         }}
                                         alt={ props.alt }
                                     />

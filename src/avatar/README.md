@@ -33,7 +33,7 @@ app.use(Avatar)
 | ------------ | ------------------------------------------------------------- | ---------------------------------------------------------- | ------ |
 | size | 图片的尺寸                                                      | _number \| string \| [number \| string, number \| string]_ | 64      |
 | src | 图片地址                                                        | _src_                                                   | -     |
-| contain | 图片适应容器的方式 | _'fill' \| 'contain' \| 'cover' \| 'none' \| 'scale-down'_                                                   | 'cover'      |
+| fit | 图片适应容器的方式 | _'fill' \| 'contain' \| 'cover' \| 'none' \| 'scale-down'_                                                   | 'cover'      |
 | borderRadius | 图片的圆角程度 | _string_                                                   | '50%'      |
 | background | 图片背景 | _string_                                                   | '#f5f5f5'      |
 | color | 图标和文字的颜色 | _string_                                                   | -      |
