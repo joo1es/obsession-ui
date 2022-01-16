@@ -180,13 +180,15 @@ export default defineComponent({
                     !loading.value && !error.value ? (
                         props.src ? (
                             slots.default?.() || (
-                                <img
-                                    src={ targetIsVisible.value ? props.src : undefined }
-                                    style={{
-                                        objectFit: props.contain
-                                    }}
-                                    alt={ props.alt }
-                                />
+                                targetIsVisible.value ? (
+                                    <img
+                                        src={ props.src }
+                                        style={{
+                                            objectFit: props.contain
+                                        }}
+                                        alt={ props.alt }
+                                    />
+                                ) : null
                             )
                         ) : (
                             slots.empty?.() || (
