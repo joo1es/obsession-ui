@@ -108,10 +108,10 @@ _(options?: DialogOptions, props?: ModalProps) => Promise\<void\>_
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
-| title      | 标题       | _VNode \| string_          | -     |
-| content     | 内容   | _VNode \| string_           | -      |
-| cancelText   | 取消文本 | _VNode \| string_      | '取消' |
-| confirmText  | 确认文本       | _VNode \| string_                                                           | '确认'  |
+| title      | 标题       | _VNode \| string \| (() => VNode \| string)_          | -     |
+| content     | 内容   | _VNode \| strin \| (() => VNode \| string)g_           | -      |
+| cancelText   | 取消文本 | _VNode \| string \| (() => VNode \| string)_      | '取消' |
+| confirmText  | 确认文本       | _VNode \| string \| (() => VNode \| string)_                                                           | '确认'  |
 | footer | 自定义底部 |  _(close?: () =\> void) =\> VNode \| string_ | - |
 | showFooter      | 是否显示底部       | _boolean_                                                           | true   |
 | showCancel      | 是否显示取消       | _boolean_                                                           | true   |

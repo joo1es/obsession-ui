@@ -5,10 +5,10 @@ import Button, { ButtonProps } from '../button'
 import Space, { SpaceProps } from '../space'
 
 export interface DialogOptions {
-    title?: VNode | string,
-    content?: VNode | string,
-    cancelText?: string | VNode,
-    confirmText?: string | VNode,
+    title?: VNode | string | (() => string | VNode),
+    content?: VNode | string | (() => string | VNode),
+    cancelText?: string | VNode | (() => string | VNode),
+    confirmText?: string | VNode | (() => string | VNode),
     showFooter?: boolean,
     showCancel?: boolean,
     showConfirm?: boolean,
@@ -32,8 +32,8 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
                         { ...props }
                         v-model={show.value}
                         v-slots={{
-                            title: () => options?.title || '提示',
-                            default: () => options?.content,
+                            title: () => typeof options?.title === 'function' ? options.title() : (options?.title || '提示'),
+                            default: () => typeof options?.content === 'function' ? options.content() : options?.content,
                             footer: () => options?.footer?.(() => {
                                 show.value = false
                             }) || (options?.showFooter !== false ? (
@@ -43,7 +43,7 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
                                             <Button onClick={() => {
                                                 show.value = false
                                             }} {...options?.cancelProps}>
-                                                { options?.cancelText || '取消' }
+                                                { typeof options?.cancelText === 'function' ? options.cancelText() : (options?.cancelText || '取消') }
                                             </Button>
                                         ) : null
                                     }
@@ -53,7 +53,7 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
                                                 show.value = false
                                                 resolve()
                                             }} {...options?.confirmProps}>
-                                                { options?.confirmText || '确定' }
+                                                { typeof options?.confirmText === 'function' ? options.confirmText() : options?.confirmText || '确定' }
                                             </Button>
                                         ) : null
                                     }
