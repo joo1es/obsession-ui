@@ -17,6 +17,7 @@ export default [
     'overlay-props',
     'dropdown-props',
     'close-all-modals',
+    'close-all-popovers',
     'action-sheet-props',
     'button-group-props',
     'modal-props',

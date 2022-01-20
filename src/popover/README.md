@@ -36,6 +36,8 @@ app.use(Popover)
 
 ### Props
 
+调用全局 closeAllPopovers，可以关闭所有的 popover
+
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
 | modelValue      | 是否展示 popover       | _boolean_          | -     |
@@ -56,6 +58,7 @@ app.use(Popover)
 | offset | 偏移，`[x, y]` | _number[]_ | - |
 | x | 手动控制位置时弹出内容的 CSS `left` 的像素值（x，y 都设置才能生效） | _number_ | - |
 | y | 手动控制位置时弹出内容的 CSS `left` 的像素值（x，y 都设置才能生效） | _number_ | - |
+| doNotCloseMe | 在调用全局 closeAllPopovers 方法的时候，是否不受影响 | _boolean_ | - |
 
 ### Methods
 

@@ -19,6 +19,7 @@ import type { ExtractPropTypes } from 'vue'
 import { onClickOutside } from '@vueuse/core'
 
 import { getMaxZIndex, useAutoControl } from '../utils'
+import { closeAll } from './utils'
 
 export type PopoverTrigger = 'click' | 'hover' | 'focus' | 'none';
 export type PopoverPlacement =
@@ -89,7 +90,8 @@ export const popoverProps = {
         type: Array as PropType<number[]>,
     },
     x: Number,
-    y: Number
+    y: Number,
+    doNotCloseMe: Boolean
 }
 
 export type PopoverProps = ExtractPropTypes<typeof popoverProps>;
@@ -117,6 +119,11 @@ export default defineComponent({
         watch(show, () => {
             if (show.value && !props.zIndex) {
                 zIndex.value = getMaxZIndex()
+            }
+        })
+        watch(closeAll, () => {
+            if (closeAll.value && !props.doNotCloseMe) {
+                show.value = false
             }
         })
         /**
