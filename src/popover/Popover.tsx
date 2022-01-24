@@ -109,7 +109,7 @@ export default defineComponent({
     inheritAttrs: false,
     props: popoverProps,
     emits: popoverEmits,
-    setup(props, { slots, emit }) {
+    setup(props, { slots, emit, attrs }) {
     /**
      * 非受控模式
      */
@@ -167,6 +167,7 @@ export default defineComponent({
         const getReferenceNode = () => {
             const references = slots.target?.()
             if (!references) {
+                if (props.x || props.y) return
                 console.warn(
                     'ObsessionUi: Popover 组件没有找到 target，请确保插槽中正确放入内容'
                 )
@@ -268,6 +269,7 @@ export default defineComponent({
                                             ? `translateX(${props.offset[0]}px) translateY(${props.offset[1]}px)`
                                             : '',
                                     }}
+                                    { ...attrs }
                                 >
                                     {slots.default?.()}
                                 </div>
@@ -293,6 +295,7 @@ export default defineComponent({
                                             transform: props.offset ? `translateX(${props.offset[0]}px) translateY(${props.offset[1]}px)` : ''
                                         }
                                     }, { style: props.popoverStyle })}
+                                    { ...attrs }
                                 >
                                     {props.arrow ? <div class="o-popover-arrow" /> : null}
                                     <div class="o-popover-content">{slots.default?.()}</div>

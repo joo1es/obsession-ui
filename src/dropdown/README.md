@@ -32,6 +32,7 @@ app.use(Dropdown)
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
 | modelValue `v-model`   | 是否显示菜单       | _boolean_          | false     |
 | popover     | Popover 组件的 Props，会改变父菜单及菜单的外层 Popover 容器   | _Partial\<PopoverProps\> & Record\<string, any\>_           | {}      |
+| rootPopover     | Popover 组件的 Props，会改变父菜单 Popover 容器   | _Partial\<PopoverProps\> & Record\<string, any\>_           | {}      |
 | list   | 下拉菜单列表 | _DropdownRecord[]_ | []      |
 | subMenuPlacement  | 子菜单弹出位置       | _PopoverPlacement_                                                           | 'right' |
 | showArrow      | 是否显示指示箭头       | _boolean_                                                           | true   |

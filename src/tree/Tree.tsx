@@ -59,7 +59,8 @@ export const treeProps = {
     exclude: Array as PropType<(string | number | symbol)[]>,
     link: Boolean,
     onRemote: Function as PropType<(item: TreeListItemCustom) => Promise<TreeListItemCustom[]>>,
-    draggable: Boolean
+    draggable: Boolean,
+    checkStrictly: Boolean
 }
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>
@@ -205,6 +206,7 @@ export default defineComponent({
                 link={this.link}
                 draggable={this.draggable}
                 propList={this.list}
+                checkStrictly={this.checkStrictly}
                 onRemote={this.onRemote}
                 onRemoteChange={(list: TreeListItemCustom[]) => {
                     item.list.remote = false

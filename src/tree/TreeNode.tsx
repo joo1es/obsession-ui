@@ -58,7 +58,8 @@ export default defineComponent({
         remote: Boolean,
         propList: Array as PropType<TreeListItemCustom[]>,
         onRemote: Function as PropType<(item: TreeListItemCustom) => Promise<TreeListItemCustom[]>>,
-        onRemoteChange: Function as PropType<(list: TreeListItemCustom[]) => void>
+        onRemoteChange: Function as PropType<(list: TreeListItemCustom[]) => void>,
+        checkStrictly: Boolean
     },
     emits: {
         setChecked: (value: boolean, children: TreeListItemCustom[]) => {
@@ -94,7 +95,7 @@ export default defineComponent({
         
         const expending = computed(() => props.expends.includes(props.keyIs) || props.expendsList.find(item => !item.isDelete && item.keyIs === props.keyIs))
         const checkedStatus = computed(() => props.getChecked(props.list))
-        const disabled = computed(() => props.disabled || checkedStatus.value === -2)
+        const disabled = computed(() => props.disabled || (checkedStatus.value === -2 && !props.checkStrictly))
         const isNoChildren = computed(() => !props.children || props.children.length === 0)
 
         /**
@@ -311,7 +312,7 @@ export default defineComponent({
                                         }}
                                         onUpdate:modelValue={value => {
                                             if (disabled.value) return
-                                            if (!props.children) {
+                                            if (!props.children || props.checkStrictly) {
                                                 if (!checkedList.value) return
                                                 const index = checkedList.value.indexOf(props.keyIs)
                                                 if (value) {
@@ -326,14 +327,14 @@ export default defineComponent({
                                         }}
                                     /> :
                                     <Radio
-                                        disabled={disabled.value || Boolean(props.children)}
+                                        disabled={disabled.value || (Boolean(props.children) && !props.checkStrictly)}
                                         modelValue={checkedStatus.value !== -1}
                                         onClick={(e: Event) => {
                                             e.stopPropagation()
                                         }}
                                         onUpdate:modelValue={() => {
                                             if (disabled.value) return
-                                            if (!props.children) {
+                                            if (!props.children || props.checkStrictly) {
                                                 if (!checkedList.value) return
                                                 checkedList.value = [props.keyIs]
                                             }

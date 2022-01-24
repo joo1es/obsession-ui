@@ -20,6 +20,10 @@ app.use(Tree)
 
 <demo-code transform>./demo/Basic.vue</demo-code>
 
+#### 可任意选择
+
+<demo-code transform>./demo/Strictly.vue</demo-code>
+
 #### 关闭动画
 
 <demo-code transform>./demo/NoAnimation.vue</demo-code>
@@ -66,7 +70,8 @@ app.use(Tree)
 | exclude | 排除项 | _(string \| number \| symbol)[]_ | - |
 | link | 是否显示连接线 | _boolean_ | false |
 | onRemote `ref` | 远程加载回调 | _(list: TreeListItemCustom) => Promise\<TreeListItemCustom[]\>_ | - |
-| draggable `ref` | 是否可拖动 | _boolean_ | - |
+| draggable `ref` | 是否可拖动 | _boolean_ | false |
+| checkStrictly | 是否可任意选择 | _boolean_ | false |
 
 ### Methods
 

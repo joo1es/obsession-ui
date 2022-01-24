@@ -16,6 +16,10 @@ export const dropdownProps = {
         type: Object as PropType<Partial<PopoverProps> & Record<string, any>>,
         default: () => ({})
     },
+    rootPopover: {
+        type: Object as PropType<Partial<PopoverProps> & Record<string, any>>,
+        default: () => ({})
+    },
     list: {
         type: Array as PropType<DropdownRecord[]>,
         default: () => []
@@ -69,6 +73,7 @@ export default defineComponent({
                 placement="bottom"
                 trigger="hover"
                 { ...props.popover }
+                { ...props.rootPopover }
                 popoverClass={classComputedRef.value}
                 v-model={show.value}
                 v-slots={{
