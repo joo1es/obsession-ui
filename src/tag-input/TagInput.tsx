@@ -242,8 +242,10 @@ export default defineComponent({
                             }}
                             style={{
                                 '--o-taginput-placehoder': `'${props.placeholder || ' '}'`,
-                                minWidth: `${props.placeholder.length || 1}em`
-                            } as CSSProperties}
+                                minWidth: `${props.placeholder.length || 1}em`,
+                                '-webkit-user-modify': !props.readonly && !props.disabled && notLimited.value ? 'read-write-plaintext-only' : undefined,
+                                '-moz-user-modify': !props.readonly && !props.disabled && notLimited.value ? 'read-write-plaintext-only' : undefined
+                            } as unknown as CSSProperties}
                             onInput={(e) => {
                                 const text = (e.target as HTMLDivElement).innerText
                                 active.value = ''
