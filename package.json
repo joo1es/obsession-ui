@@ -1,6 +1,6 @@
 {
     "name": "obsession-ui",
-    "version": "1.0.94",
+    "version": "1.0.100",
     "description": "",
     "main": "lib/obsession-ui.js",
     "style": "lib/index.css",
