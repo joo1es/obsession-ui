@@ -247,6 +247,7 @@ export default defineComponent({
             <div
                 class={{
                     'o-tree-node': true,
+                    'o-tree-node__selection-disabled': props.disabled,
                     'o-tree-node__disabled': disabled.value,
                     'o-tree-node__selecting': props.selectable && props.selection === props.keyIs,
                     'o-tree-node__ondrag': onDragging.value

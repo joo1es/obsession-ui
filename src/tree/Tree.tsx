@@ -93,12 +93,13 @@ export default defineComponent({
             deep: true
         })
         const checkedSet = computed(() => new Set(checked.value))
-        const setChecked = (value: boolean, list: TreeListItem[], checkedSet: Set<string | number | symbol>) => {
+        const setChecked = (value: boolean, list: TreeListItem[], checkedSet: Set<string | number | symbol>, excludeSet: Set<string | number | symbol>) => {
             for (let i = 0; i < list.length; i++) {
                 const item = list[i]
                 const key = props.getKey?.(item) || item[props.props.key]
+                if (excludeSet.has(key) && value) continue
                 if (item.children && item.children.length > 0) {
-                    setChecked(value, item.children, checkedSet)
+                    setChecked(value, item.children, checkedSet, excludeSet)
                     continue
                 }
                 if (item.disabled) continue
@@ -111,7 +112,8 @@ export default defineComponent({
             }
         }
         const setingChecked = (value: boolean, list: TreeListItem[]) => {
-            setChecked(value, list, checkedSet.value)
+            const excludeSet = new Set(props.exclude)
+            setChecked(value, list, checkedSet.value, excludeSet)
             checked.value = Array.from(checkedSet.value)
         }
         /**
