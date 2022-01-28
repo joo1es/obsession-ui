@@ -89,6 +89,10 @@ module.exports = {
                         title: 'TagInput 标签输入'
                     },
                     {
+                        path: 'upload',
+                        title: 'Upload 上传'
+                    },
+                    {
                         path: 'tree',
                         title: 'Tree 树'
                     }
@@ -177,6 +181,10 @@ module.exports = {
                     {
                         path: 'scroll-list',
                         title: 'ScrollList 滚动列表',
+                    },
+                    {
+                        path: 'count-to',
+                        title: 'CountTo 数值动画'
                     },
                     {
                         path: 'statistic',

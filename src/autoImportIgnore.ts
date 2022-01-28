@@ -43,5 +43,7 @@ export default [
     'pagination-props',
     'table-props',
     'omit-props',
-    'omit-item-props'
+    'omit-item-props',
+    'count-to-props',
+    'upload-props'
 ]

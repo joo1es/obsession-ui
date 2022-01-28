@@ -1,0 +1,158 @@
+@import '../style/var.scss';
+:root {
+    --o-upload-success: var(--success-color);
+    --o-upload-waiting: var(--primary-color);
+    --o-upload-fail: var(--danger-color);
+    --o-upload-loading: #d9d9d9;
+    --o-upload-drag-icon-color: #d9d9d9;
+    --o-upload-drag-icon-size: 64px;
+    --o-upload-font-size: 13px;
+    --o-upload-icon-size: 15px;
+    --o-upload-active-color: var(--primary-color);
+    --o-upload-item-padding: 5px;
+    --o-upload-item-hover-bg: #fcfcfc;
+    --o-upload-card-color: rgb(215, 217, 219);
+    --o-upload-card-bg: rgb(246, 247, 249);
+    --o-upload-card-active-bg: rgb(240, 241, 243);
+    --o-upload-card-overlay-bg: rgba(0, 0, 0, 153);
+}
+
+.o-upload {
+    font-size: var(--o-upload-font-size);
+    &__file {
+        display: none;
+    }
+    &__cell {
+        display: flex;
+        align-items: center;
+        padding: var(--o-upload-item-padding);
+        a {
+            color: var(--o-upload-active-color);
+        }
+        &-name {
+            flex: 1;
+            overflow: hidden;
+            margin: 0 var(--o-upload-item-padding);
+        }
+        &-progress {
+            margin-left: var(--o-upload-item-padding);
+            color: var(--o-upload-loading);
+        }
+        &-status {
+            font-size: var(--o-upload-icon-size);
+            &-0 {
+                color: var(--o-upload-success);
+            }
+            &-1 {
+                color: var(--o-upload-waiting);
+            }
+            &-2 {
+                color: var(--o-upload-loading);
+                animation: o-upload-loading infinite 1s;
+            }
+            &-3 {
+                color: var(--o-upload-fail);
+            }
+        }
+        &-delete {
+            cursor: pointer;
+        }
+        &:hover {
+            background: var(--o-upload-item-hover-bg);
+        }
+    }
+    &__drag-icon {
+        font-size: var(--o-upload-drag-icon-size);
+        color: var(--o-upload-drag-icon-color);
+        margin-bottom: 20px;
+    }
+    &__drag-button {
+        border: 1px dashed #d9d9d9;
+        border-radius: 6px;
+        box-sizing: border-box;
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+        flex-direction: column;
+        transition: border .2s;
+        em {
+            color: var(--o-upload-active-color);
+            font-style: normal;
+        }
+    }
+    &:not(.o-upload__disabled) {
+        .o-upload__drag-button {
+            &.o-upload__upload__drag-button__dragover,
+            &:hover {
+                border-color: var(--o-upload-active-color);
+            }
+        }
+    }
+    &.o-upload__disabled {
+        .o-upload__drag-button {
+            cursor: not-allowed;
+        }
+    }
+    &__card {
+        height: 100px;
+        width: 100px;
+        color: var(--o-upload-card-color);
+        font-size: 24px;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: var(--o-upload-card-bg);
+        position: relative;
+        .o-image {
+            height: 100%;
+            width: 100%;
+        }
+        &:active {
+            background-color: var(--o-upload-card-active-bg);
+        }
+        &-close {
+            position: absolute;
+            top: 0;
+            right: 0;
+            color: #fff;
+            background-color: var(--o-upload-card-overlay-bg);
+            font-size: 12px;
+            padding: 2px;
+            display: flex;
+            z-index: 2;
+        }
+        &-overlay {
+            z-index: 1;
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--o-upload-card-overlay-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            color: #fff;
+            &.is-loading {
+                .o-icon {
+                    animation: o-upload-loading infinite 1s;
+                }
+            }
+        }
+    }
+}
+
+@keyframes o-upload-loading {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
