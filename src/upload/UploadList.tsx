@@ -14,7 +14,6 @@ import {
 import { type UploadFile, UploadFileStatus } from './interface'
 import svgs, { start } from './svgs'
 
-const WpIcon = Icon as any
 const Icons = {
     [UploadFileStatus.Success]: CheckmarkCircleSharp,
     [UploadFileStatus.Waiting]: CloudUploadOutline,
@@ -119,7 +118,7 @@ export default defineComponent({
                                     this.uploadFiles?.map((file, index) => (
                                         this.$slots.list?.({ file }) || (
                                             <div class="o-upload__cell" onClick={e => this.$emit('itemClick', e, file)} key={index}>
-                                                <WpIcon class={'o-upload__cell-icon'} v-html={this.getFileTypeIcon(file.file?.name || file.name)} />
+                                                <Icon class={'o-upload__cell-icon'} v-html={this.getFileTypeIcon(file.file?.name || file.name)} />
                                                 <div class="o-upload__cell-name">
                                                     {
                                                         file.url ? (
@@ -127,7 +126,7 @@ export default defineComponent({
                                                         ): file.name
                                                     }
                                                     {
-                                                        (file.progress || file.progress === 0) && file.status === UploadFileStatus.Loading ? (
+                                                        file.progress && file.status === UploadFileStatus.Loading ? (
                                                             <span class="o-upload__cell-progress">
                                                                 { file.progress }%
                                                             </span>
@@ -135,16 +134,16 @@ export default defineComponent({
                                                     }
                                                 </div>
                                                 <Space class="o-upload__cell-status" size={5}>
-                                                    <WpIcon class={`o-upload__cell-status-${file.status || 0}`}>
+                                                    <Icon class={`o-upload__cell-status-${file.status || 0}`}>
                                                         {
                                                             h(this.getStatusIcon(file.status))
                                                         }
-                                                    </WpIcon>
+                                                    </Icon>
                                                     {
                                                         !this.disabled && ( 'pin' in file ? !file.pin : !this.pin ) ? (
-                                                            <WpIcon class="o-upload__cell-delete" onClick={() => this.handleDelete?.(file, index)}>
+                                                            <Icon class="o-upload__cell-delete" onClick={() => this.handleDelete?.(file, index)}>
                                                                 <CloseOutline />
-                                                            </WpIcon>
+                                                            </Icon>
                                                         ) : null
                                                     }
                                                 </Space>
