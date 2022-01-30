@@ -86,7 +86,10 @@ export default defineComponent({
                                         }
                                         {
                                             !this.disabled && ('pin' in file ? !file.pin : !this.pin) ? (
-                                                <div class="o-upload__card-close" onClick={() => this.handleDelete?.(file, index)}>
+                                                <div class="o-upload__card-close" onClick={e => {
+                                                    e.stopPropagation()
+                                                    this.handleDelete?.(file, index)
+                                                }}>
                                                     <Icon>
                                                         <CloseOutline />
                                                     </Icon>

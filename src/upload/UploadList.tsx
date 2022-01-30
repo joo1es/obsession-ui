@@ -111,7 +111,7 @@ export default defineComponent({
                     this.$slots.description?.()
                 }
                 {
-                    this.showFileList ? (
+                    this.showFileList && this.uploadFiles && this.uploadFiles?.length > 0 ? (
                         <div class="o-upload__cells">
                             {
                                 this.$slots.lists?.({ files: this.uploadFiles }) || (
