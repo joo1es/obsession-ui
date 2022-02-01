@@ -71,6 +71,7 @@ app.use(Upload)
 | description | 描述插槽，位置在上传按钮和文件列表之间 | - |
 | lists | 列表整体替换插槽 | _files: UploadFile[]_ |
 | list | 单个列表替换插槽 | _file: UploadFile_ |
+| cover | 图片的覆盖插槽，适用于 `presets: card` | _file: UploadFile_ |
 
 ### Expose
 

@@ -96,6 +96,7 @@ export default defineComponent({
                                                 </div>
                                             ) : null
                                         }
+                                        { this.$slots.cover?.({ file }) }
                                         <Image src={file.__o_src__} fit={'cover'} />
                                     </div>
                                 )
