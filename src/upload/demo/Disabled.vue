@@ -1,6 +1,8 @@
 <template>
-    <o-upload auto-upload :upload="handleUpload" multiple accept=".jpg,.png,.webp" disabled />
-    <o-upload auto-upload :upload="handleUpload" multiple drop disabled />
+    <o-space vertical>
+        <o-upload auto-upload :upload="handleUpload" multiple accept=".jpg,.png,.webp" disabled />
+        <o-upload auto-upload :upload="handleUpload" multiple drop disabled />
+    </o-space>
 </template>
 
 <script lang="ts" setup>

@@ -1,5 +1,5 @@
 import { defineComponent, watch, type PropType } from 'vue'
-import Space from '../space'
+import Space, { SpaceProps } from '../space'
 import { type UploadFile, UploadFileStatus } from './interface'
 
 import Icon from '../icon'
@@ -7,7 +7,7 @@ import Image from '../image'
 
 import {
     CloseOutline,
-    ReloadOutline,
+    Wifi,
     AddOutline
 } from '@vicons/ionicons5'
 
@@ -27,7 +27,8 @@ export default defineComponent({
         handleDelete: Function as PropType<(file: UploadFile, index: number) => void>,
         handleDrop: Function as PropType<(e: DragEvent) => void>,
         handleDragover: Function as PropType<(e: DragEvent) => void>,
-        handleDragleave: Function as PropType<(e: DragEvent) => void>
+        handleDragleave: Function as PropType<(e: DragEvent) => void>,
+        spaceProps: Object as PropType<Partial<SpaceProps> | Record<string, any>>
     },
     emits: {
         itemClick: (e: Event, value: UploadFile) => {
@@ -62,7 +63,7 @@ export default defineComponent({
                 {
                     'o-upload__disabled': this.disabled
                 }
-            ]} size={5}>
+            ]} size={5} { ...this.spaceProps }>
                 {
                     this.showFileList ? (
                         this.$slots.lists?.({ files: this.uploadFiles }) || (
@@ -78,7 +79,7 @@ export default defineComponent({
                                                 }]}>
                                                     <Icon>
                                                         {
-                                                            file.status === UploadFileStatus.Loading ? <ReloadOutline /> : <CloseOutline />
+                                                            file.status === UploadFileStatus.Loading ? <Wifi /> : <CloseOutline />
                                                         }
                                                     </Icon>
                                                 </div>

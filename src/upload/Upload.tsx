@@ -5,6 +5,7 @@ import UploadList from './UploadList'
 import UploadCard from './UploadCard'
 
 import { type UploadFile, UploadFileStatus } from './interface'
+import { SpaceProps } from '../space'
 
 export const uploadProps = {
     modelValue: {
@@ -37,7 +38,8 @@ export const uploadProps = {
     preset: {
         type: String,
         default: 'list'
-    }
+    },
+    spaceProps: Object as PropType<Partial<SpaceProps> | Record<string, any>>
 }
 
 export type UploadProps = ExtractPropTypes<typeof uploadProps>
@@ -206,6 +208,7 @@ export default defineComponent({
                         startUpload={this.startUpload}
                         handleChange={this.handleChange}
                         handleDelete={this.handleDelete}
+                        spaceProps={this.spaceProps}
                         onItemClick={(e, file) => this.$emit('itemClick', e, file)}
                         v-slots={{
                             ...this.$slots,
@@ -231,6 +234,7 @@ export default defineComponent({
                         startUpload={this.startUpload}
                         handleChange={this.handleChange}
                         handleDelete={this.handleDelete}
+                        spaceProps={this.spaceProps}
                         onItemClick={(e, file) => this.$emit('itemClick', e, file)}
                         v-slots={{
                             ...this.$slots,

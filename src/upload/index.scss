@@ -141,7 +141,7 @@
             color: #fff;
             &.is-loading {
                 .o-icon {
-                    animation: o-upload-loading infinite 1s;
+                    animation: o-upload-loading infinite 2s;
                 }
             }
         }
@@ -149,10 +149,14 @@
 }
 
 @keyframes o-upload-loading {
-    from {
-        transform: rotate(0);
+    0% {
+        opacity: 1;
     }
-    to {
-        transform: rotate(360deg);
+    50% {
+        // transform: rotate(360deg);
+        opacity: .6;
+    }
+    100% {
+        opacity: 1;
     }
 }

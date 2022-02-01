@@ -2,7 +2,7 @@ import { h, defineComponent, type PropType } from 'vue'
 
 import Icon from '../icon'
 import Button from '../button'
-import Space from '../space'
+import Space, { SpaceProps } from '../space'
 
 import {
     CloseOutline,
@@ -37,7 +37,8 @@ export default defineComponent({
         handleDelete: Function as PropType<(file: UploadFile, index: number) => void>,
         handleDrop: Function as PropType<(e: DragEvent) => void>,
         handleDragover: Function as PropType<(e: DragEvent) => void>,
-        handleDragleave: Function as PropType<(e: DragEvent) => void>
+        handleDragleave: Function as PropType<(e: DragEvent) => void>,
+        spaceProps: Object as PropType<Partial<SpaceProps> | Record<string, any>>
     },
     emits: {
         itemClick: (e: Event, value: UploadFile) => {
@@ -118,27 +119,44 @@ export default defineComponent({
                                     this.uploadFiles?.map((file, index) => (
                                         this.$slots.list?.({ file }) || (
                                             <div class="o-upload__cell" onClick={e => this.$emit('itemClick', e, file)} key={file.name}>
-                                                <Icon class={'o-upload__cell-icon'} v-html={this.getFileTypeIcon(file.file?.name || file.name)} />
+                                                {
+                                                    this.$slots.icon?.(file) || (
+                                                        <Icon
+                                                            class={'o-upload__cell-icon'}
+                                                            v-html={this.getFileTypeIcon(file.file?.name || file.name)}
+                                                        />
+                                                    )
+                                                }
                                                 <div class="o-upload__cell-name">
                                                     {
-                                                        file.url ? (
-                                                            <a href={file.url} target="_blank" onClick={e => e.stopPropagation()}>{file.name}</a>
-                                                        ): file.name
-                                                    }
-                                                    {
-                                                        file.progress && file.status === UploadFileStatus.Loading ? (
-                                                            <span class="o-upload__cell-progress">
-                                                                { file.progress }%
-                                                            </span>
-                                                        ) : null
+                                                        this.$slots.title?.(file) || (
+                                                            <>
+                                                                {
+                                                                    file.url ? (
+                                                                        <a href={file.url} target="_blank" onClick={e => e.stopPropagation()}>{file.name}</a>
+                                                                    ): file.name
+                                                                }
+                                                                {
+                                                                    file.progress && file.status === UploadFileStatus.Loading ? (
+                                                                        <span class="o-upload__cell-progress">
+                                                                            { file.progress }%
+                                                                        </span>
+                                                                    ) : null
+                                                                }
+                                                            </>
+                                                        )
                                                     }
                                                 </div>
-                                                <Space class="o-upload__cell-status" size={5}>
-                                                    <Icon class={`o-upload__cell-status-${file.status || 0}`}>
-                                                        {
-                                                            h(this.getStatusIcon(file.status))
-                                                        }
-                                                    </Icon>
+                                                <Space class="o-upload__cell-status" size={5} { ...this.spaceProps }>
+                                                    {
+                                                        this.$slots.status?.(file) || (
+                                                            <Icon class={`o-upload__cell-status-${file.status || 0}`}>
+                                                                {
+                                                                    h(this.getStatusIcon(file.status))
+                                                                }
+                                                            </Icon>
+                                                        )
+                                                    }
                                                     {
                                                         !this.disabled && ( 'pin' in file ? !file.pin : !this.pin ) ? (
                                                             <Icon class="o-upload__cell-delete" onClick={() => this.handleDelete?.(file, index)}>

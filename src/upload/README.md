@@ -55,6 +55,7 @@ app.use(Upload)
 | showButton | 是否显示上传按钮 | _boolean_ | true |
 | disabled | 是否为禁用状态 | _boolean_ | false |
 | preset | 预设，可选值为 card | _boolean_ | 'list' |
+| spaceProps | FileList 中 Space 组件的 Props | _Partial\<SpaceProps> \| Record\<string, any>_ | - |
 
 ### Methods
 
@@ -72,6 +73,9 @@ app.use(Upload)
 | lists | 列表整体替换插槽 | _files: UploadFile[]_ |
 | list | 单个列表替换插槽 | _file: UploadFile_ |
 | cover | 图片的覆盖插槽，适用于 `presets: card` | _file: UploadFile_ |
+| icon | 图标插槽，适用于 `presets: list` | _file: UploadFile_ |
+| title | 标题插槽，适用于 `presets: list` | _file: UploadFile_ |
+| status | 状态插槽，适用于 `presets: list` | _file: UploadFile_ |
 
 ### Expose
 

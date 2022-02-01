@@ -6,7 +6,7 @@
 const list = [
     {
         name: 'a.jpg',
-        url: 'https://avatars.githubusercontent.com/u/26594629?v=4'
+        url: 'https://avatars.githubusercontent.com/u/76929557?v=4'
     },
     {
         name: 'b.jpg'
