@@ -6,7 +6,7 @@ import Space, { SpaceProps } from '../space'
 
 import {
     CloseOutline,
-    ReloadOutline,
+    Wifi,
     CheckmarkCircleSharp,
     CloudUploadOutline
 } from '@vicons/ionicons5'
@@ -17,7 +17,7 @@ import svgs, { start } from './svgs'
 const Icons = {
     [UploadFileStatus.Success]: CheckmarkCircleSharp,
     [UploadFileStatus.Waiting]: CloudUploadOutline,
-    [UploadFileStatus.Loading]: ReloadOutline,
+    [UploadFileStatus.Loading]: Wifi,
     [UploadFileStatus.Fail]: CloseOutline
 }
 
