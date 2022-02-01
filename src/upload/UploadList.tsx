@@ -159,7 +159,10 @@ export default defineComponent({
                                                     }
                                                     {
                                                         !this.disabled && ( 'pin' in file ? !file.pin : !this.pin ) ? (
-                                                            <Icon class="o-upload__cell-delete" onClick={() => this.handleDelete?.(file, index)}>
+                                                            <Icon class="o-upload__cell-delete" onClick={e => {
+                                                                e.stopPropagation()
+                                                                this.handleDelete?.(file, index)
+                                                            }}>
                                                                 <CloseOutline />
                                                             </Icon>
                                                         ) : null
