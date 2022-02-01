@@ -1,7 +1,7 @@
 <template>
     <o-space vertical>
         <o-space>
-            <o-button @click="percentage += 10">+10</o-button>
+            <o-button @click="percentage += 90">+10</o-button>
             <o-button @click="percentage -= 10">-10</o-button>
         </o-space>
         <o-space>

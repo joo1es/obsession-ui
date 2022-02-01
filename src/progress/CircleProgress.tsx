@@ -88,11 +88,11 @@ export default defineComponent({
             }
         })
 
+        let rafId: number | undefined
+
         watch(
             () => props.rate,
-            (rate) => {
-                let rafId: number | undefined
-
+            rate => {
                 const startTime = Date.now()
                 const startRate = props.currentRate
                 const endRate = format(rate)
