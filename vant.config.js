@@ -110,6 +110,10 @@ module.exports = {
                         title: 'Pagination 分页'
                     },
                     {
+                        path: 'data-pagination',
+                        title: 'Data Pagination 数据分页'
+                    },
+                    {
                         path: 'avatar',
                         title: 'Avatar 头像',
                     },

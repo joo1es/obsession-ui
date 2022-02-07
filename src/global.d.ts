@@ -43,6 +43,7 @@ import oOmit from './omit'
 import oOmitItem from './omit-item'
 import oUpload from './upload'
 import oCountTo from './count-to'
+import oDataPagination from './data-pagination'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -95,6 +96,7 @@ declare module 'vue' {
         oOmitItem: typeof oOmitItem;
         oUpload: typeof oUpload;
         oCountTo: typeof oCountTo;
+        oDataPagination: typeof oDataPagination;
     }
     interface Vue {
         $dialog: typeof $dialog,

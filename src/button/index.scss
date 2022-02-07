@@ -95,8 +95,16 @@
         background-color: initial;
         color: var(--o-button-main-color);
         height: auto;
-        &:hover {
-            color: #fff;
+        &.o-button__hover:not(.o-button__disabled):hover {
+            color: var(--o-button-main-color);
+            border-color: transparent;
+            background-color: initial;
+            text-decoration: underline;
+        }
+        &:not(.o-button__disabled):active {
+            color: var(--o-button-main-color) !important;
+            border-color: transparent !important;
+            background-color: initial !important;
         }
         &.o-button__default {
             --o-button-main-color: #333 !important;

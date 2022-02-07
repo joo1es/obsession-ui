@@ -7,7 +7,8 @@ import {
     h,
     inject,
     ComputedRef,
-    Ref
+    Ref,
+    type VNode
 } from 'vue'
 
 import { DropdownRecord } from './typings'
@@ -26,7 +27,7 @@ export default defineComponent({
         index: {
             type: [String, Symbol, Number] as PropType<string | symbol | number>
         },
-        title: String,
+        title: [String, Object] as PropType<string | VNode>,
         click: Function as PropType<(record: DropdownRecord) => void>,
         groupName: String,
         disabled: Boolean,
