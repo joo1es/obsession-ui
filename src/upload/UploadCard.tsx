@@ -69,7 +69,7 @@ export default defineComponent({
                         this.$slots.lists?.({ files: this.uploadFiles }) || (
                             this.uploadFiles?.map((file, index) => (
                                 this.$slots.list?.({ file }) || (
-                                    <div class="o-upload__card" key={file.name} onClick={e => {
+                                    <div class="o-upload__card" key={file.name + index} onClick={e => {
                                         this.$emit('itemClick', e, file)
                                     }}>
                                         {
