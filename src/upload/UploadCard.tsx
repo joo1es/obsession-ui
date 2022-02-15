@@ -26,6 +26,7 @@ export default defineComponent({
         handleChange: Function as PropType<(e: Event) => void>,
         handleDelete: Function as PropType<(file: UploadFile, index: number) => void>,
         handleDrop: Function as PropType<(e: DragEvent) => void>,
+        handleRetry: Function as PropType<(file: UploadFile) => void>,
         handleDragover: Function as PropType<(e: DragEvent) => void>,
         handleDragleave: Function as PropType<(e: DragEvent) => void>,
         spaceProps: Object as PropType<Partial<SpaceProps> | Record<string, any>>
@@ -70,7 +71,11 @@ export default defineComponent({
                             this.uploadFiles?.map((file, index) => (
                                 this.$slots.list?.({ file }) || (
                                     <div class="o-upload__card" key={file.name + index} onClick={e => {
-                                        this.$emit('itemClick', e, file)
+                                        if (file.status === UploadFileStatus.Fail) {
+                                            this.handleRetry?.(file)
+                                        } else {
+                                            this.$emit('itemClick', e, file)
+                                        }
                                     }}>
                                         {
                                             file.status === UploadFileStatus.Loading || file.status === UploadFileStatus.Fail ? (

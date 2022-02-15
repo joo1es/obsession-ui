@@ -85,6 +85,11 @@ export default defineComponent({
             await props.upload?.(filterFiles, uploadFiles.value)
         }
 
+        const handleRetry = async(file: UploadFile) => {
+            file.status = UploadFileStatus.Loading
+            await props.upload?.([file], uploadFiles.value)
+        }
+
         const handleAddUpload = async(files: FileList | File[]) => {
             if (files.length === 0) return
             for (let i = 0; i < files.length; i++) {
@@ -189,7 +194,8 @@ export default defineComponent({
             handleDelete,
             handleDrop,
             handleDragleave,
-            handleDragover
+            handleDragover,
+            handleRetry
         }
     },
     render() {
@@ -222,6 +228,7 @@ export default defineComponent({
                         startUpload={this.startUpload}
                         handleChange={this.handleChange}
                         handleDelete={this.handleDelete}
+                        handleRetry={this.handleRetry}
                         spaceProps={this.spaceProps}
                         onItemClick={(e, file) => this.$emit('itemClick', e, file)}
                         v-slots={{
@@ -248,6 +255,7 @@ export default defineComponent({
                         startUpload={this.startUpload}
                         handleChange={this.handleChange}
                         handleDelete={this.handleDelete}
+                        handleRetry={this.handleRetry}
                         spaceProps={this.spaceProps}
                         onItemClick={(e, file) => this.$emit('itemClick', e, file)}
                         v-slots={{

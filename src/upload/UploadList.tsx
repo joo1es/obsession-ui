@@ -8,7 +8,8 @@ import {
     CloseOutline,
     Wifi,
     CheckmarkCircleSharp,
-    CloudUploadOutline
+    CloudUploadOutline,
+    ReloadSharp
 } from '@vicons/ionicons5'
 
 import { type UploadFile, UploadFileStatus } from './interface'
@@ -38,6 +39,7 @@ export default defineComponent({
         handleDrop: Function as PropType<(e: DragEvent) => void>,
         handleDragover: Function as PropType<(e: DragEvent) => void>,
         handleDragleave: Function as PropType<(e: DragEvent) => void>,
+        handleRetry: Function as PropType<(file: UploadFile) => void>,
         spaceProps: Object as PropType<Partial<SpaceProps> | Record<string, any>>
     },
     emits: {
@@ -118,7 +120,9 @@ export default defineComponent({
                                 this.$slots.lists?.({ files: this.uploadFiles }) || (
                                     this.uploadFiles?.map((file, index) => (
                                         this.$slots.list?.({ file }) || (
-                                            <div class="o-upload__cell" onClick={e => this.$emit('itemClick', e, file)} key={file.name + index}>
+                                            <div class="o-upload__cell" onClick={e => {
+                                                this.$emit('itemClick', e, file)
+                                            }} key={file.name + index}>
                                                 {
                                                     this.$slots.icon?.(file) || (
                                                         <Icon
@@ -148,6 +152,18 @@ export default defineComponent({
                                                     }
                                                 </div>
                                                 <Space class="o-upload__cell-status" size={5} { ...this.spaceProps }>
+                                                    {
+                                                        file.status === UploadFileStatus.Fail && (
+                                                            <Icon class="o-upload__cell-retry" onClick={(e) => {
+                                                                if (file.status === UploadFileStatus.Fail) {
+                                                                    e.stopPropagation()
+                                                                    this.handleRetry?.(file)
+                                                                }
+                                                            }}>
+                                                                <ReloadSharp />
+                                                            </Icon>
+                                                        )
+                                                    }
                                                     {
                                                         this.$slots.status?.(file) || (
                                                             <Icon class={`o-upload__cell-status-${file.status || 0}`}>

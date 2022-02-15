@@ -54,7 +54,8 @@
                 color: var(--o-upload-fail);
             }
         }
-        &-delete {
+        &-delete,
+        &-retry {
             cursor: pointer;
         }
         &:hover {
