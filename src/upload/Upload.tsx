@@ -39,7 +39,11 @@ export const uploadProps = {
         type: String,
         default: 'list'
     },
-    spaceProps: Object as PropType<Partial<SpaceProps> | Record<string, any>>
+    spaceProps: Object as PropType<Partial<SpaceProps> | Record<string, any>>,
+    cover: {
+        type: Boolean,
+        default: true
+    }
 }
 
 export type UploadProps = ExtractPropTypes<typeof uploadProps>
@@ -70,18 +74,20 @@ export default defineComponent({
         }
 
         const handleUpload = async() => {
-            uploadFiles.value.forEach(file => {
+            const filterFiles = uploadFiles.value.filter(file => {
                 if (file.status === UploadFileStatus.Waiting) {
                     file.status = UploadFileStatus.Loading
+                    return true
                 }
+                return false
             })
-            await props.upload?.(uploadFiles.value.filter(file => file.status === UploadFileStatus.Loading), uploadFiles.value)
+            if (filterFiles.length === 0) return
+            await props.upload?.(filterFiles, uploadFiles.value)
         }
 
         const handleAddUpload = async(files: FileList | File[]) => {
             if (files.length === 0) return
             for (let i = 0; i < files.length; i++) {
-                if (props.limit && files.length - i > props.limit) continue
                 uploadFiles.value.push({
                     name: files[i].name,
                     file: files[i],
@@ -89,12 +95,20 @@ export default defineComponent({
                     status: UploadFileStatus.Waiting
                 })
             }
+            const deleteList: UploadFile[] = [] 
             if (props.limit) {
                 while (uploadFiles.value.length > props.limit) {
-                    const file = uploadFiles.value.shift()
-                    if (file) await props.delete?.(file)
+                    const func = props.cover ? 'shift' : 'pop'
+                    const file = uploadFiles.value[func]()
+                    if (
+                        file &&
+                        (!file.status || file.status === UploadFileStatus.Loading)
+                    ) deleteList.push(file)
                 }
             }
+            deleteList.forEach(async(file) => {
+                await props.delete?.(file)
+            })
             if (props.autoUpload) {
                 handleUpload()
             }
@@ -184,7 +198,7 @@ export default defineComponent({
                 ref="fileRef"
                 type="file"
                 class="o-upload__file"
-                multiple={this.multiple}
+                multiple={this.multiple && this.limit !== 1}
                 accept={this.accept}
                 onChange={this.handleChange}
             />

@@ -43,7 +43,7 @@ app.use(Upload)
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
 | modelValue `v-model` | 文件列表，如果该 Prop 为 `undefined`，则组件为非受控模式       | _UploadFile[]_          | -     |
-| multiple | 是否可多选 | _boolean_           | _false_      |
+| multiple | 是否可多选，limit 为 1 时无效 | _boolean_           | _false_      |
 | accept   | 接收的文件格式，如 ".jpg,.png,.gif" | _string_ | -      |
 | drop | 是否可拖拽上传       | _boolean_                                                           | -  |
 | delete  | 删除前的回调函数     | _(file: UploadFile) => Promise\<void>_                                                           | -   |
@@ -56,6 +56,7 @@ app.use(Upload)
 | disabled | 是否为禁用状态 | _boolean_ | false |
 | preset | 预设，可选值为 card | _boolean_ | 'list' |
 | spaceProps | FileList 中 Space 组件的 Props | _Partial\<SpaceProps> \| Record\<string, any>_ | - |
+| cover | 上传文件且达到 limit 时，新文件是否会覆盖旧文件 | _boolean_ | true |
 
 ### Methods
 
