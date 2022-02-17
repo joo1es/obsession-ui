@@ -73,6 +73,7 @@ const color = {
 | clockwise | 进度条是否顺时针旋转，仅 type 为 `circle` 时有效 | _boolean_ | `true` |
 | startPosition | 进度条开始位置，仅 type 为 `circle` 时有效 | _'top' \| 'bottom' \| 'left' \| 'right'_ | 'top' |
 | appear | 挂载时是否有动画 | _boolean_ | false |
+| indeterminate | 加载进度不确定，通常用于 loading | _boolean_ | false |
 
 ### Slots
 
