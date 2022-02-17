@@ -111,9 +111,9 @@ export default defineComponent({
                     ) deleteList.push(file)
                 }
             }
-            deleteList.forEach(async(file) => {
+            for (const file of deleteList) {
                 await props.delete?.(file)
-            })
+            }
             if (props.autoUpload) {
                 handleUpload()
             }
