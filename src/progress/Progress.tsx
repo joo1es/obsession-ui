@@ -186,11 +186,11 @@ export default defineComponent({
              */
             const CircleProgress = (
                 <CircleProgressElement
-                    currentRate={currentRate.value}
+                    currentRate={props.indeterminate ? 50 : currentRate.value}
                     onUpdate:currentRate={(value: number) => {
                         currentRate.value = value
                     }}
-                    rate={progress.value}
+                    rate={props.indeterminate ? 50 : progress.value}
                     speed={100}
                     color={typeof props.color === 'string' || !Array.isArray(props.color) ? props.color : undefined}
                     layerColor={typeof props.backgroundColor === 'string' ? props.backgroundColor : ''}
