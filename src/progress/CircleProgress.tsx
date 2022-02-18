@@ -54,7 +54,8 @@ const circleProps = {
     startPosition: {
         type: String as unknown as PropType<CircleStartPosition>,
         default: 'top',
-    }
+    },
+    indeterminate: Boolean
 }
 
 
@@ -182,7 +183,7 @@ export default defineComponent({
         }
 
         const renderText = () => {
-            if (slots.default) {
+            if (slots.default && !props.indeterminate) {
                 return <div class={'o-progress-circle__text'}>{slots.default()}</div>
             }
             if (props.text) {
@@ -191,7 +192,12 @@ export default defineComponent({
         }
 
         return () => (
-            <div class="o-progress-circle" style={getSizeStyle(props.size)}>
+            <div class={[
+                "wp-progress-circle",
+                {
+                    "wp-progress-circle__circular": props.indeterminate
+                }
+            ]} style={getSizeStyle(props.size)}>
                 <svg
                     viewBox={`0 0 ${viewBoxSize.value} ${viewBoxSize.value}`}
                     style={svgStyle.value}
