@@ -29,6 +29,7 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
                 return () => (
                     <Modal
                         width={300}
+                        border={false}
                         { ...props }
                         v-model={show.value}
                         v-slots={{
@@ -39,21 +40,21 @@ const openDialog = function Dialog(options?: DialogOptions, props?: Partial<Moda
                             }) || (options?.showFooter !== false ? (
                                 <Space justify="end" { ...options?.spaceProps }>
                                     {
-                                        options?.showCancel !== false ? (
-                                            <Button onClick={() => {
-                                                show.value = false
-                                            }} {...options?.cancelProps}>
-                                                { typeof options?.cancelText === 'function' ? options.cancelText() : (options?.cancelText || '取消') }
-                                            </Button>
-                                        ) : null
-                                    }
-                                    {
                                         options?.showConfirm !== false ? (
                                             <Button ref={confirmButtonRef} type="primary" onClick={() => {
                                                 show.value = false
                                                 resolve()
                                             }} {...options?.confirmProps}>
                                                 { typeof options?.confirmText === 'function' ? options.confirmText() : options?.confirmText || '确定' }
+                                            </Button>
+                                        ) : null
+                                    }
+                                    {
+                                        options?.showCancel !== false ? (
+                                            <Button onClick={() => {
+                                                show.value = false
+                                            }} {...options?.cancelProps}>
+                                                { typeof options?.cancelText === 'function' ? options.cancelText() : (options?.cancelText || '取消') }
                                             </Button>
                                         ) : null
                                     }
