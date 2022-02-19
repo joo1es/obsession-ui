@@ -123,31 +123,28 @@
         
         &__circular {
             svg {
-              animation: o-rotate 1.5s ease-in-out infinite;
-            }
-            svg path:nth-child(3) {
-              animation: o-circular 3s ease-in-out infinite;
+              animation: o-rotate 1s infinite;
             }
         }
     }
     &__indeterminate {
         &__vertical-start {
-            animation: wp-progress-indeterminate-vertical 1s infinite;
+            animation: o-progress-indeterminate-vertical 1s infinite;
             transform-origin: top;
         }
         &__horizontal-start {
-            animation: wp-progress-indeterminate-horizontal 1.5s infinite;
+            animation: o-progress-indeterminate-horizontal 1.5s infinite;
             transform-origin: left;
         }
         &__vertical-end,
         &__vertical-center {
-            animation: wp-progress-indeterminate-vertical 1s infinite;
+            animation: o-progress-indeterminate-vertical 1s infinite;
             animation-direction: alternate;
             transform-origin: top;
         }
         &__horizontal-end,
         &__vertical-center {
-            animation: wp-progress-indeterminate-horizontal 1.5s infinite;
+            animation: o-progress-indeterminate-horizontal 1.5s infinite;
             animation-direction: alternate;
             transform-origin: left;
         }
@@ -182,15 +179,5 @@
 
     100% {
         transform: rotate(360deg);
-    }
-}
-
-@keyframes o-circular {
-    0% {
-        stroke-dashoffset: 0;
-    }
-
-    100% {
-        stroke-dashoffset: 4700;
     }
 }

@@ -173,7 +173,7 @@ export default defineComponent({
                             [`o-progress__indeterminate__vertical-${props.align}`]: props.indeterminate
                         }
                     ]} style={{
-                        width: `${props.indeterminate ? 100 : progress.value}%`,
+                        height: `${props.indeterminate ? 100 : progress.value}%`,
                         borderRadius: props.borderRadius,
                         background: color.value
                     }}>
@@ -186,11 +186,11 @@ export default defineComponent({
              */
             const CircleProgress = (
                 <CircleProgressElement
-                    currentRate={props.indeterminate ? 50 : currentRate.value}
+                    currentRate={props.indeterminate ? 30 : currentRate.value}
                     onUpdate:currentRate={(value: number) => {
                         currentRate.value = value
                     }}
-                    rate={props.indeterminate ? 50 : progress.value}
+                    rate={props.indeterminate ? 30 : progress.value}
                     speed={100}
                     color={typeof props.color === 'string' || !Array.isArray(props.color) ? props.color : undefined}
                     layerColor={typeof props.backgroundColor === 'string' ? props.backgroundColor : ''}

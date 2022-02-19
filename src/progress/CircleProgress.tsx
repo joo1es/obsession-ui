@@ -193,9 +193,9 @@ export default defineComponent({
 
         return () => (
             <div class={[
-                "wp-progress-circle",
+                'o-progress-circle',
                 {
-                    "wp-progress-circle__circular": props.indeterminate
+                    'o-progress-circle__circular': props.indeterminate
                 }
             ]} style={getSizeStyle(props.size)}>
                 <svg

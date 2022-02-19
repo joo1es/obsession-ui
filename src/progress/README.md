@@ -28,6 +28,10 @@ app.use(Progress)
 
 <demo-code transform>./demo/Grid.vue</demo-code>
 
+#### 不确定进度
+
+<demo-code transform>./demo/Indeterminate.vue</demo-code>
+
 ### 进度条颜色
 
 进度条颜色可以接受以下类型
