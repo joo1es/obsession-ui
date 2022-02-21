@@ -1,0 +1,18 @@
+@import '../style/var.scss';
+
+.o-list {
+    &--tip {
+        text-align: center;
+        font-size: 12px;
+        padding: 10px;
+        &__loading {
+            color: var(--primary-color);
+        }
+        &__error {
+            color: var(--danger-color);
+        }
+        &__finished {
+            color: #ccc;
+        }
+    }
+}

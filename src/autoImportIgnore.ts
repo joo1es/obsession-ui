@@ -46,5 +46,8 @@ export default [
     'omit-item-props',
     'count-to-props',
     'upload-props',
-    'data-pagination-props'
+    'data-pagination-props',
+    'pull-refresh-props',
+    'list-props',
+    'spin-props'
 ]

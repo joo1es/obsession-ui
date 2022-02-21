@@ -44,6 +44,9 @@ import oOmitItem from './omit-item'
 import oUpload from './upload'
 import oCountTo from './count-to'
 import oDataPagination from './data-pagination'
+import oPullRefresh from './pull-refresh'
+import oList from './list'
+import oSpin from './spin'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -97,6 +100,9 @@ declare module 'vue' {
         oUpload: typeof oUpload;
         oCountTo: typeof oCountTo;
         oDataPagination: typeof oDataPagination;
+        oPullRefresh: typeof oPullRefresh;
+        oList: typeof oList;
+        oSpin: typeof oSpin;
     }
     interface Vue {
         $dialog: typeof $dialog,

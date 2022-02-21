@@ -47,8 +47,20 @@ module.exports = {
                         title: 'Toast 吐司提示',
                     },
                     {
+                        path: 'spin',
+                        title: 'Spin 加载中'
+                    },
+                    {
+                        path: 'list',
+                        title: 'List 列表'
+                    },
+                    {
                         path: 'virtual-list',
                         title: 'VirtualList 虚拟列表'
+                    },
+                    {
+                        path: 'pull-refresh',
+                        title: 'PullRefresh 下拉刷新'
                     }
                 ],
             },

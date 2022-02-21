@@ -3,7 +3,7 @@ import { defineComponent, ExtractPropTypes, PropType, computed, ref, watch, onMo
 import { ImageOutline, Alert } from '@vicons/ionicons5'
 import Icon from '../icon'
 
-import { getFirstLetter } from '../utils'
+import { getFirstLetter, useScrollParent } from '../utils'
 import { useIntersectionObserver, type MaybeElementRef } from '@vueuse/core'
 
 export const imageProps = {
@@ -102,6 +102,7 @@ export default defineComponent({
          * lazyload
          */
         const imageRef = ref<HTMLImageElement | null>(null)
+        const scrollParent = useScrollParent(imageRef)
 
         const observer = ref<ReturnType<typeof useIntersectionObserver> | null>(null)
         const targetIsVisible = ref(false)
@@ -111,9 +112,8 @@ export default defineComponent({
                 observer.value.stop()
                 observer.value = null
             }
-            if (props.lazyOptions && 'root' in props.lazyOptions) {
-                if (!props.lazyOptions.root) return
-            }
+            const lazyOptions = props.lazyOptions || {}
+            const root = lazyOptions.root || ( scrollParent.value === document.body ? undefined : scrollParent )
             nextTick(() => {
                 if (props.lazy) {
                     observer.value = useIntersectionObserver(
@@ -130,7 +130,10 @@ export default defineComponent({
                                 observer.value?.stop()
                             }
                         },
-                        props.lazyOptions
+                        {
+                            ...lazyOptions,
+                            root
+                        }
                     )
                 } else {
                     targetIsVisible.value = true

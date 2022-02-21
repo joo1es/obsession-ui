@@ -123,7 +123,7 @@
         
         &__circular {
             svg {
-              animation: o-rotate 1s infinite;
+              animation: o-progress-rotate 1s infinite;
             }
         }
     }
@@ -172,7 +172,7 @@
 }
 
 
-@keyframes o-rotate {
+@keyframes o-progress-rotate {
     0% {
         transform: rotate(0);
     }
