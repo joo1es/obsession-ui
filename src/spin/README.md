@@ -30,10 +30,10 @@ app.use(Spin)
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
-| size      | 加载图标尺寸       | _number | string_          | -     |
+| size      | 加载图标尺寸       | _number \| string_          | -     |
 | color     | 加载图标颜色   | _string_           | -      |
 | vertical   | 是否纵向排列文字 | _boolean_ | false      |
-| textSize      | 文本尺寸       | _number | string_          | -     |
+| textSize      | 文本尺寸       | _number \| string_          | -     |
 | textColor     | 文本颜色   | _string_           | -      |
 | text   | 文本内容 | _string_ | -      |
 | loading  | 是否加载中，仅默认插槽中存在内容使用       | _boolean_                                                           | true  |
