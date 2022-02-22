@@ -49,9 +49,9 @@ export default defineComponent({
         watch(() => props.loading, () => {
             if (props.loading && props.fullscreen) {
                 zIndex.value = getMaxZIndex()
-                document.body.style.overflowY = 'hidden'
+                document.body.classList.add('o-prevent-scroll')
             } else if (props.fullscreen) {
-                document.body.style.overflowY = ''
+                document.body.classList.remove('o-prevent-scroll')
             }
         })
 
