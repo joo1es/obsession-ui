@@ -1,5 +1,5 @@
-import { defineComponent, type ExtractPropTypes } from 'vue'
-import { numericProp, addUnit } from '../utils'
+import { defineComponent, type ExtractPropTypes, Transition, Teleport, ref, watch } from 'vue'
+import { numericProp, addUnit, getMaxZIndex } from '../utils'
 
 const CircularIcon = (
     <svg class={'o-spin__circular'} viewBox="25 25 50 50">
@@ -17,7 +17,9 @@ export const spinProps = {
     loading: {
         type: Boolean,
         default: true
-    }
+    },
+    fullscreen: Boolean,
+    background: String
 }
 
 export type SpinProps = ExtractPropTypes<typeof spinProps>;
@@ -42,6 +44,17 @@ export default defineComponent({
             }
         }
 
+        const zIndex = ref(1)
+
+        watch(() => props.loading, () => {
+            if (props.loading && props.fullscreen) {
+                zIndex.value = getMaxZIndex()
+                document.body.style.overflowY = 'hidden'
+            } else if (props.fullscreen) {
+                document.body.style.overflowY = ''
+            }
+        })
+
         return () => {
             const Spin = (
                 <div class={[
@@ -60,17 +73,34 @@ export default defineComponent({
                 </div>
             )
             return (
-                slots.default ? (
-                    <div class='o-spin-wrapper'>
-                        { slots.default() }
-                        {
-                            props.loading && (
-                                <div class='o-spin-wrapper--icon'>
-                                    { Spin }
-                                </div>
-                            )
-                        }
-                    </div>
+                slots.default || props.fullscreen ? (
+                    <Teleport to='body' disabled={!props.fullscreen}>
+                        <Transition name='o-spin-transition'>
+                            {
+                                (!props.fullscreen || props.loading) ? (
+                                    <div class='o-spin-wrapper' style={props.fullscreen ? {
+                                        position: 'fixed',
+                                        top: 0,
+                                        left: 0,
+                                        height: '100%',
+                                        width: '100%',
+                                        zIndex: zIndex.value
+                                    } : undefined}>
+                                        {slots.default?.()}
+                                        <Transition name='o-spin-transition'>
+                                            {
+                                                props.loading && (
+                                                    <div class='o-spin-wrapper--icon' style={{ background: props.background }}>
+                                                        {Spin}
+                                                    </div>
+                                                )
+                                            }
+                                        </Transition>
+                                    </div>
+                                ) : null
+                            }        
+                        </Transition>                
+                    </Teleport>
                 ) : Spin
             )
         }

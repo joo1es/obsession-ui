@@ -122,7 +122,7 @@ export default defineComponent({
             isLoading
         }
     },
-    expose: ['root'],
+    expose: ['root', 'refresh'],
     render() {
         return (
             <div

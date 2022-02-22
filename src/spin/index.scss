@@ -113,3 +113,15 @@
         transform: rotate(360deg);
     }
 }
+
+.o-spin-transition-enter-from,
+.o-spin-transition-leave-to {
+    transition: opacity .2s;
+    opacity: 0;
+}
+
+.o-spin-transition-leave-from,
+.o-spin-transition-enter-to {
+    transition: opacity .2s;
+    opacity: 1;
+}
