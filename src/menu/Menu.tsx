@@ -73,7 +73,7 @@ export default defineComponent({
         provide('collapse', computed(() => props.collapse))
         watch(() => props.collapse, () => {
             if (props.collapse) {
-                collapseRecord = unfoldItems.value
+                collapseRecord = unfoldItems.value || []
                 unfoldItems.value = []
             } else {
                 if (collapseRecord.length === 0) return

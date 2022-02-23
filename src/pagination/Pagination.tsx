@@ -63,7 +63,7 @@ export default defineComponent({
         }
         
         const onInput = () => {
-            inputing.value = pageRef.value
+            inputing.value = pageRef.value || 0
             setTimeout(() => {
                 if (!input.value) return
                 input.value?.focus?.()
@@ -104,9 +104,9 @@ export default defineComponent({
                 <Button
                     icon={ChevronBack}
                     size={this.size}
-                    disabled={this.pageRef <= 1}
+                    disabled={!this.pageRef || this.pageRef <= 1}
                     onClick={() => {
-                        this.pageRef -= 1
+                        this.pageRef = (this.pageRef ?? 0) - 1
                     }}
                 />
                 <Dropdown
@@ -161,9 +161,9 @@ export default defineComponent({
                 <Button
                     icon={ChevronForward}
                     size={this.size}
-                    disabled={this.pageRef >= this.total}
+                    disabled={!this.pageRef || this.pageRef >= this.total}
                     onClick={() => {
-                        this.pageRef += 1
+                        this.pageRef = (this.pageRef ?? 0) + 1
                     }}
                 />
             </div>

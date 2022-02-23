@@ -47,6 +47,7 @@ import oDataPagination from './data-pagination'
 import oPullRefresh from './pull-refresh'
 import oList from './list'
 import oSpin from './spin'
+import oInput from './input'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -103,6 +104,7 @@ declare module 'vue' {
         oPullRefresh: typeof oPullRefresh;
         oList: typeof oList;
         oSpin: typeof oSpin;
+        oInput: typeof oInput;
     }
     interface Vue {
         $dialog: typeof $dialog,

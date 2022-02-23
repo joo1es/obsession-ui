@@ -89,6 +89,9 @@ export default defineComponent({
             if (props.trim) {
                 text = text.trim()
             }
+            if (!value.value || !props.modelValue) {
+                value.value = []
+            }
             if (text && (props.allowRepeat || !value.value.includes(text))) {
                 if (props.beforePush) {
                     const newText = props.beforePush(text)
@@ -115,19 +118,20 @@ export default defineComponent({
          */
         const tagsMap = computed(() => {
             let finalValue: string[] = []
+            if (!value.value) return []
             if (props.max) {
-                finalValue = value.value.slice(0, props.max)
+                finalValue = value.value?.slice(0, props.max)
             } else {
                 finalValue = value.value
             }
             const final = finalValue.map((tag, index) => ({
-                    tag,
-                    index,
-                    close: () => {
-                        value.value.splice(index, 1)
-                    },
-                    active: active.value === tag
-                }))
+                tag,
+                index,
+                close: () => {
+                    value.value?.splice(index, 1)
+                },
+                active: active.value === tag
+            }))
             if (props.max && props.max < value.value.length) final.push({
                 tag: `${value.value.length - props.max}+`,
                 index: -1,
@@ -137,7 +141,7 @@ export default defineComponent({
             return final
         })
 
-        const notLimited = computed(() => !props.limit || value.value.length < props.limit)
+        const notLimited = computed(() => !props.limit || (!value.value || value.value.length < props.limit))
         return () => (
             <div
                 class={{
@@ -175,6 +179,7 @@ export default defineComponent({
                      * press Delete to delete choosed one
                      */
                     if ((e.code === 'Delete' || e.code === 'Backspace') && active.value) {
+                        if (!value.value) return
                         const index = value.value.indexOf(active.value)
                         if (index > -1) {
                             value.value.splice(index, 1)
@@ -210,6 +215,7 @@ export default defineComponent({
                                              */
                                             if (e.button === 1) {
                                                 e.preventDefault()
+                                                if (!value.value) return
                                                 value.value.splice(tag.index, 1)
                                             }
                                         }}
@@ -223,6 +229,7 @@ export default defineComponent({
                                                     { ...props.tagProps }
                                                     onClose={(e: Event) => {
                                                         e.stopPropagation()
+                                                        if (!value.value) return
                                                         value.value.splice(tag.index, 1)
                                                     }}
                                                 >
@@ -284,6 +291,7 @@ export default defineComponent({
                                     if (!props.keyboardDelete || props.disabled || props.readonly || !notLimited.value) return
                                     if (active.value) return
                                     e.stopPropagation()
+                                    if (!value.value) return
                                     if (!inputingTag.value && value.value.length > 0) {
                                         active.value = value.value[value.value.length - 1]
                                     }
@@ -293,7 +301,7 @@ export default defineComponent({
                     </Space>
                 </div>
                 {
-                    props.clearable && value.value.length > 0 && !props.readonly && !props.disabled ? (
+                    props.clearable && value.value && value.value.length > 0 && !props.readonly && !props.disabled ? (
                         <div class="o-taginput__clear">
                             <div class="o-taginput__clear-icon" onClick={() => {
                                 value.value = []

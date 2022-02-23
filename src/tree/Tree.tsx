@@ -124,12 +124,15 @@ export default defineComponent({
         const treeListFlatten = computed(() => {
             const finalList: TreeListItemExtra[] = []
             filterItems.value.forEach(item => {
-                flattenList(item, finalList, 0, null, expends.value, props)
+                flattenList(item, finalList, 0, null, expends.value || [], props)
             })
             return finalList
         })
         const expendsList = ref<ExpendsList[]>([])
         const done = (isDelete: boolean, key: string | number | symbol) => {
+            if (!expends.value || !props.expends) {
+                expends.value = []
+            }
             const index = expends.value.indexOf(key)
             if (isDelete) {
                 expends.value.splice(index, 1)
@@ -176,7 +179,7 @@ export default defineComponent({
             done,
             setingChecked,
             handleExpend,
-            getCheckedItems: () => getCheckedItems(props.list, checked.value, props),
+            getCheckedItems: () => getCheckedItems(props.list, checked.value || [], props),
             getFlattenList: (getSet = false) => getFlattenList(props.list, getSet),
             getItemsCount: (filter = false) => getItemsCount(filter ? filterItems.value : props.list, props),
             checkAll: () => {
@@ -190,7 +193,7 @@ export default defineComponent({
         const TreeNodeFactory = (item: TreeListItemExtra) => (
             <TreeNode
                 { ...item }
-                expends={this.expends}
+                expends={this.expends || []}
                 getChecked={(list: TreeListItemCustom) => getChecked(list, this.$props, this.checkedSet)}
                 v-model={this.checked}
                 expendsList={this.expendsList}
@@ -237,7 +240,7 @@ export default defineComponent({
             if (this.animation && expendsListFind && item.children) {
                 const finalList: TreeListItemExtra[] = []
                 item.children.forEach(child => {
-                    flattenList(child, finalList, expendsListFind.level + 1, null, this.expends, this.$props)
+                    flattenList(child, finalList, expendsListFind.level + 1, null, this.expends || [], this.$props)
                 })
                 if (finalList.length <= this.animationMax) {
                     return (

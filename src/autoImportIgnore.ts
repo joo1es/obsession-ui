@@ -49,5 +49,6 @@ export default [
     'data-pagination-props',
     'pull-refresh-props',
     'list-props',
-    'spin-props'
+    'spin-props',
+    'input-props'
 ]

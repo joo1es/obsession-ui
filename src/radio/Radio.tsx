@@ -13,11 +13,11 @@ import { CheckmarkSharp } from '@vicons/ionicons5'
 
 export const radioProps = {
     modelValue: {
-        type: Boolean,
+        type: [String, Number, Symbol, Boolean] as PropType<string | number | symbol | boolean>,
         default: undefined
     },
     value: {
-        type: [String, Number, Symbol] as PropType<string | number | symbol>
+        type: [String, Number, Symbol, Boolean] as PropType<string | number | symbol | boolean>
     },
     label: {
         type: String
@@ -38,12 +38,15 @@ export default defineComponent({
     name: 'ORadio',
     props: radioProps,
     emits: {
-        'update:modelValue': (value: boolean) => typeof value === 'boolean'
+        'update:modelValue': (value: string | number | symbol | boolean) => {
+            void value
+            return true
+        }
     },
     setup(props, { slots, emit }) {
         const checkedRef = ref(false)
         const checkedControl = useAutoControl(checkedRef, props, 'modelValue', emit)
-        const checkedValue = inject<Ref<string | number | symbol> | false>(
+        const checkedValue = inject<Ref<string | number | symbol | boolean> | false>(
             'o-radio-value',
             false
         )
@@ -51,14 +54,18 @@ export default defineComponent({
             get() {
                 if (checkedValue) {
                     return checkedValue.value === props.value
-                } 
-                    return Boolean(checkedControl.value)
-                
+                }
+                if (props.value !== undefined) {
+                    return checkedControl.value === props.value
+                }
+                return Boolean(checkedControl.value)
             },
             set(value) {
                 if (checkedValue) {
                     if (!props.value) return
                     checkedValue.value = props.value
+                } else if (props.value !== undefined) {
+                    checkedControl.value = props.value
                 } else {
                     checkedControl.value = value
                 }

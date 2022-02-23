@@ -74,24 +74,27 @@ export default defineComponent({
         }
 
         const handleUpload = async() => {
-            const filterFiles = uploadFiles.value.filter(file => {
+            const filterFiles = uploadFiles.value?.filter(file => {
                 if (file.status === UploadFileStatus.Waiting) {
                     file.status = UploadFileStatus.Loading
                     return true
                 }
                 return false
-            })
+            }) || []
             if (filterFiles.length === 0) return
-            await props.upload?.(filterFiles, uploadFiles.value)
+            await props.upload?.(filterFiles, uploadFiles.value || [])
         }
 
         const handleRetry = async(file: UploadFile) => {
             file.status = UploadFileStatus.Loading
-            await props.upload?.([file], uploadFiles.value)
+            await props.upload?.([file], uploadFiles.value || [])
         }
 
         const handleAddUpload = async(files: FileList | File[]) => {
             if (files.length === 0) return
+            if (!uploadFiles.value || !props.modelValue) {
+                uploadFiles.value = []
+            }
             for (let i = 0; i < files.length; i++) {
                 uploadFiles.value.push({
                     name: files[i].name,
@@ -133,7 +136,7 @@ export default defineComponent({
         const handleDelete = async(file: UploadFile, index: number) => {
             if (props.disabled) return
             await props.delete?.(file)
-            uploadFiles.value.splice(index, 1)
+            if (uploadFiles.value) uploadFiles.value.splice(index, 1)
         }
 
         const dragover = ref(false)

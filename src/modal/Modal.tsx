@@ -85,13 +85,13 @@ export default defineComponent({
             if (show.value) {
                 showOverlay.value = show.value
                 nextTick(() => {
-                    showBox.value = show.value
+                    showBox.value = show.value ?? false
                     neverMeet = false
                 })
             } else {
-                showBox.value = show.value
+                showBox.value = show.value ?? false
                 nextTick(() => {
-                    showOverlay.value = show.value
+                    showOverlay.value = show.value ?? false
                     if (!neverMeet) {
                         emit('close')
                     } else {

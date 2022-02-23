@@ -89,6 +89,10 @@ module.exports = {
                 title: '输入组件',
                 items: [
                     {
+                        path: 'input',
+                        title: 'Input 输入框'
+                    },
+                    {
                         path: 'checkbox',
                         title: 'Checkbox 多选框'
                     },

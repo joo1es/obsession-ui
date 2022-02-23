@@ -1,5 +1,5 @@
 <template>
-    <o-upload auto-upload :delete="handleDelete" :upload="handleUpload" multiple :limit="1" accept=".jpg,.png,.webp">
+    <o-upload v-model="files" auto-upload :delete="handleDelete" :upload="handleUpload" multiple :limit="1" accept=".jpg,.png,.webp">
         <template #description>
             允许的文件格式 .jpg,.png,.webp
         </template>
@@ -7,7 +7,10 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue'
 import type { UploadFile } from '../index'
+
+const files = ref<UploadFile[]>()
 
 const handleDelete = () => new Promise<void>((resolve) => {
     setTimeout(() => {
