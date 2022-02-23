@@ -44,7 +44,7 @@ app.use(CheckboxGroup)
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
 | modelValue `v-model`   | 可控模式值       | _boolean_          | -     |
-| value     | 复选框值   | _string \| number \| symbol_           | -      |
+| value     | 复选框值   | _string \| number \| symbol \| boolean_           | -      |
 | label | 复选框文本内容 | _string_ | - |
 | disabled | 是否禁用 | _boolean_ | false |
 | indeterminate | 是否部分选中 | _boolean_ | false |
@@ -76,7 +76,7 @@ Checkbox Group 组件可以使用所有 Space 组件的 Props
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
-| modelValue `v-model`   | 可控模式值       | _(string \| number \| symbol)[]_          | -     |
+| modelValue `v-model`   | 可控模式值       | _(string \| number \| symbol \| boolean)[]_          | -     |
 | disabled     | 是否禁用   | _boolean_           | -      |
 | size | 复选框尺寸 | _'small' \| 'default' \| 'large'_ | 'default' |
 | spaceSize | Space 组件的 Size | _string \| number \| [string \| number, string \| number]_ | - |
@@ -85,4 +85,4 @@ Checkbox Group 组件可以使用所有 Space 组件的 Props
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
-| update:modelValue      | 复选框值更改的回调       | _(value: (string \| number \| symbol)[]) => void_          | -     |
+| update:modelValue      | 复选框值更改的回调       | _(value: (string \| number \| symbol \| boolean)[]) => void_          | -     |

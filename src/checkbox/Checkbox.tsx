@@ -18,7 +18,8 @@ export const checkboxProps = {
         default: undefined
     },
     value: {
-        type: [String, Number, Symbol] as PropType<string | number | symbol>
+        type: [String, Number, Symbol, Boolean] as PropType<string | number | symbol | boolean>,
+        default: undefined
     },
     label: {
         type: String
@@ -45,7 +46,7 @@ export default defineComponent({
     setup(props, { slots, emit }) {
         const checkedRef = ref(false)
         const checkedControl = useAutoControl(checkedRef, props, 'modelValue', emit)
-        const checkedList = inject<Ref<(string | number | symbol)[]> | false>(
+        const checkedList = inject<Ref<(string | number | symbol | boolean)[]> | false>(
             'o-checkbox-list',
             false
         )

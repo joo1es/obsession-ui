@@ -17,7 +17,8 @@ export const radioProps = {
         default: undefined
     },
     value: {
-        type: [String, Number, Symbol, Boolean] as PropType<string | number | symbol | boolean>
+        type: [String, Number, Symbol, Boolean] as PropType<string | number | symbol | boolean>,
+        default: undefined
     },
     label: {
         type: String

@@ -5,7 +5,7 @@ import Space, { spaceProps } from '../space'
 
 const radioGroupSelf = {
     modelValue: {
-        type: [String, Number, Symbol] as PropType<string | number | symbol>,
+        type: [String, Number, Symbol, Boolean] as PropType<string | number | symbol | boolean>,
         default: undefined
     },
     disabled: Boolean,
@@ -27,13 +27,13 @@ export default defineComponent({
     name: 'ORadioGroup',
     props: radioGroupProps,
     emits: {
-        'update:modelValue': (value: string | number | symbol) =>  {
+        'update:modelValue': (value: string | number | symbol | boolean) =>  {
             void value
             return true
         }
     },
     setup(props, { slots, emit }) {
-        const radioValueRef = ref<string | number | symbol>()
+        const radioValueRef = ref<string | number | symbol | boolean>()
         const radioValue = useAutoControl(radioValueRef, props, 'modelValue', emit)
         provide('o-radio-value', radioValue)
         provide('o-radio-disabled', toRef(props, 'disabled'))

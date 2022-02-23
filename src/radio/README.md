@@ -39,8 +39,8 @@ app.use(RadioGroup)
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
-| modelValue `v-model`   | 可控模式值       | _boolean_          | -     |
-| value     | 单选框值   | _string \| number \| symbol_           | -      |
+| modelValue `v-model`   | 可控模式值，如果存在 value，则会与 value 进行比较       | _string \| number \| symbol \| boolean_          | -     |
+| value     | 单选框值   | _string \| number \| symbol \| boolean_           | -      |
 | label | 单选框文本内容 | _string_ | - |
 | disabled | 是否禁用 | _boolean_ | false |
 | size | 单选框尺寸 | _'small' \| 'default' \| 'large'_ | 'default' |
@@ -70,7 +70,7 @@ Radio Group 组件可以使用所有 Space 组件的 Props
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
-| modelValue `v-model`   | 可控模式值       | _string \| number \| symbol_          | -     |
+| modelValue `v-model`   | 可控模式值       | _string \| number \| symbol \| boolean_          | -     |
 | disabled     | 是否禁用   | _boolean_           | -      |
 | size | 单选框尺寸 | _'small' \| 'default' \| 'large'_ | 'default' |
 | spaceSize | Space 组件的 Size | _string \| number \| [string \| number, string \| number]_ | - |
@@ -79,4 +79,4 @@ Radio Group 组件可以使用所有 Space 组件的 Props
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
-| update:modelValue      | 单选框值更改的回调       | _(value: string \| number \| symbol) => void_          | -     |
+| update:modelValue      | 单选框值更改的回调       | _(value: string \| number \| symbol \| boolean) => void_          | -     |

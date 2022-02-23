@@ -5,7 +5,7 @@ import Space, { spaceProps } from '../space'
 
 const checkboxGroupSelf = {
     modelValue: {
-        type: Array as PropType<(string | number | symbol)[]>,
+        type: Array as PropType<(string | number | symbol | boolean)[]>,
         default: undefined
     },
     disabled: Boolean,
@@ -27,10 +27,10 @@ export default defineComponent({
     name: 'OCheckboxGroup',
     props: checkboxGroupProps,
     emits: {
-        'update:modelValue': (value: (string | number | symbol)[]) =>  Array.isArray(value)
+        'update:modelValue': (value: (string | number | symbol | boolean)[]) =>  Array.isArray(value)
     },
     setup(props, { slots, emit }) {
-        const checkboxListRef = ref<(string | number | symbol)[]>([])
+        const checkboxListRef = ref<(string | number | symbol | boolean)[]>([])
         const checkboxList = useAutoControl(checkboxListRef, props, 'modelValue', emit, {
             passive: true,
             deep: true
