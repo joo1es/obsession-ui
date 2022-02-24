@@ -12,6 +12,8 @@ import OIcon from '../icon'
 import { buttonTypes, buttonSize } from './Attrs'
 import { useCssVar } from '@vueuse/core'
 import { TinyColor } from '@ctrl/tinycolor'
+import Spin from '../spin'
+import CollapseTransition from '../collapse-transition'
 
 export type ButtonTypes = keyof typeof buttonTypes;
 export type ButtonSize = keyof typeof buttonSize;
@@ -94,19 +96,23 @@ export default defineComponent({
         return () => {
             const defaultSlot = slots.default?.()
             const iconSlot = slots.icon?.()
-            const Icon = props.loading ? (
-                <OIcon class="o-button__text-loading">
-                    <div class="o-button__text-loading-block" />
-                </OIcon>
-            ) : iconSlot ? (
-                <OIcon>{iconSlot}</OIcon>
-            ) : props.icon ? (
-                typeof props.icon === 'string' ? (
-                    <OIcon name={props.icon} />
-                ) : (
-                    <OIcon>{h(props.icon)}</OIcon>
-                )
-            ) : null
+            const Icon = (
+                <CollapseTransition width>
+                    {
+                        props.loading ? (
+                            <Spin color="currentcolor" class="o-icon" />
+                        ) : iconSlot ? (
+                            <OIcon>{iconSlot}</OIcon>
+                        ) : props.icon ? (
+                            typeof props.icon === 'string' ? (
+                                <OIcon name={props.icon} />
+                            ) : (
+                                <OIcon>{h(props.icon)}</OIcon>
+                            )
+                        ) : null
+                    }
+                </CollapseTransition>
+            )
             return h(
                 props.tag as any,
                 {

@@ -145,20 +145,6 @@
                 margin: 0;
             }
         }
-        .o-button__text-loading {
-            --o-button-loading-size: .4em;
-            --o-button-loading-duration: .5s;
-            .o-button__text-loading-block {
-                box-sizing: border-box;
-                border: 2px solid;
-                border-top: 2px solid transparent;
-                border-right: 2px solid transparent;
-                height: 1em;
-                width: 1em;
-                border-radius: 50%;
-                animation: o-loading .8s infinite;
-            }
-        }
     }
 }
 

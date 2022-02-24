@@ -1,13 +1,14 @@
 import { computed, defineComponent, inject, PropType, ref, Ref } from 'vue'
 
 import Icon from '../icon'
-import { CaretForward, ReloadOutline } from '@vicons/ionicons5'
+import { CaretForward } from '@vicons/ionicons5'
 import Checkbox from '../checkbox'
 import Radio from '../radio'
 
 import type { TreeListItemCustom, ExpendsList, TreeListItemExtra } from './interface'
 import { isChildrenOrSelf } from './utils'
 import { useVModel } from '@vueuse/core'
+import Spin from '../spin'
 
 export default defineComponent({
     props: {
@@ -136,7 +137,7 @@ export default defineComponent({
                         }}>
                             {
                                 loading.value ? (
-                                    <ReloadOutline class="loading" />
+                                    <Spin color="var(--o-tree-arrow-color)" />
                                 ) : <CaretForward />
                             }
                         </Icon>

@@ -25,6 +25,7 @@
         padding: var(--o-tree-padding-top-bottom) var(--o-tree-padding-left-right);
         height: var(--o-tree-node-hegiht);
         position: relative;
+        box-sizing: border-box;
         &:hover {
             background: var(--o-tree-hover-bg);
         }
@@ -94,9 +95,6 @@
             &.right {
                 margin-left: var(--o-tree-padding-left-right);
                 width: auto;
-            }
-            .loading {
-                animation: o-tree-loading infinite 1s;
             }
             > .xicon {
                 transition: transform .2s;
