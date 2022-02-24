@@ -89,7 +89,7 @@ export default defineComponent({
             if (props.trim) {
                 text = text.trim()
             }
-            if (!value.value || !props.modelValue) {
+            if (!value.value) {
                 value.value = []
             }
             if (text && (props.allowRepeat || !value.value.includes(text))) {
