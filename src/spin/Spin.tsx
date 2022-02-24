@@ -14,10 +14,7 @@ export const spinProps = {
     textSize: numericProp,
     textColor: String,
     text: String,
-    loading: {
-        type: Boolean,
-        default: true
-    },
+    loading: Boolean,
     fullscreen: Boolean,
     background: String
 }
@@ -53,6 +50,8 @@ export default defineComponent({
             } else if (props.fullscreen) {
                 document.body.classList.remove('o-prevent-scroll')
             }
+        }, {
+            immediate: true
         })
 
         return () => {

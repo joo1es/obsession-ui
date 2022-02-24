@@ -40,7 +40,7 @@ app.use(Spin)
 | textSize      | 文本尺寸       | _number \| string_          | -     |
 | textColor     | 文本颜色   | _string_           | -      |
 | text   | 文本内容 | _string_ | -      |
-| loading  | 是否加载中，仅默认插槽中存在内容使用       | _boolean_                                                           | true  |
+| loading  | 是否加载中，仅默认插槽中存在内容或 fullscreen 使用       | _boolean_                                                           | false  |
 | fullscreen | 是否全屏 | _boolean_ | false |
 | background | 自定义背景 | _stirng_ | - |
 
