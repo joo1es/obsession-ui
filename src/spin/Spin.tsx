@@ -1,4 +1,4 @@
-import { defineComponent, type ExtractPropTypes, Transition, Teleport, ref, watch } from 'vue'
+import { defineComponent, type ExtractPropTypes, Transition, Teleport, ref, watch, onMounted } from 'vue'
 import { numericProp, addUnit, getMaxZIndex } from '../utils'
 
 const CircularIcon = (
@@ -50,8 +50,12 @@ export default defineComponent({
             } else if (props.fullscreen) {
                 document.body.classList.remove('o-prevent-scroll')
             }
-        }, {
-            immediate: true
+        })
+
+        onMounted(() => {
+            if (props.loading && props.fullscreen) {
+                zIndex.value = getMaxZIndex()
+            }
         })
 
         return () => {
