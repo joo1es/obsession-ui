@@ -55,6 +55,7 @@ export default defineComponent({
         onMounted(() => {
             if (props.loading && props.fullscreen) {
                 zIndex.value = getMaxZIndex()
+                document.body.classList.add('o-prevent-scroll')
             }
         })
 
