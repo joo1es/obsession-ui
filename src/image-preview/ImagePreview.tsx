@@ -1,6 +1,6 @@
 import { computed, defineComponent, ExtractPropTypes, nextTick, onMounted, PropType, ref, Transition, watch } from 'vue'
 import type { PreviewImage } from './interface'
-import Overlay from '../overlay'
+import Overlay, { OverlayProps } from '../overlay'
 import Space from '../space'
 import Icon from '../icon'
 import { ArrowForward, ArrowBack, CloseCircle, Play, Stop } from '@vicons/ionicons5'
@@ -34,6 +34,10 @@ export const imagePreviewProps = {
     wheelEvent: {
         type: Boolean,
         default: true
+    },
+    overlay: {
+        type: Object as PropType<(Partial<OverlayProps> & Record<string, any>)>,
+        default: () => ({})
     }
 }
 export type ImagePreviewProps = ExtractPropTypes<typeof imagePreviewProps>
@@ -327,6 +331,7 @@ export default defineComponent({
                 onUpdate:modelValue={show => {
                     this.showDefine = show
                 }}
+                { ...this.overlay }
             >
                 <div
                     class="o-image-preview"
