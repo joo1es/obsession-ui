@@ -31,6 +31,8 @@ app.use(ImagePreview)
 | index `v-model` | 显示的图片索引 | _number_                                                   | -      |
 | swipeDistance | 触发滑动手势的距离 | _number_                                                   | 150      |
 | longPictureScale | 长图的比例，宽 / 高 | _number_                                                   | 2.5      |
+| keyboardEvent | 是否启用键盘快捷键 | _boolean_ | true |
+| wheelEvent | 是否启用滚轮快捷键 | _boolean_ | true |
 
 ### Slots
 

@@ -78,15 +78,47 @@ export default defineComponent({
             setDefaultScroll()
         }
 
+        const count = ref(0)
+        const countTimer = ref<ReturnType<typeof setTimeout>>()
         const canBeWheelPrev = () => {
             if (!box.value || !imgEl.value) return
-            // box.value.scrollTop === 0
-            return imgEl.value.offsetHeight === box.value.offsetHeight && imgEl.value.offsetWidth === box.value.offsetWidth
+            if (
+                Math.abs(imgEl.value.offsetHeight - box.value.offsetHeight) < 5 &&
+                Math.abs(imgEl.value.offsetWidth - box.value.offsetWidth) < 5
+            ) return true
+            if (box.value.scrollTop === 0 && box.value.scrollLeft === 0) {
+                if (countTimer.value) clearTimeout(countTimer.value)
+                countTimer.value = setTimeout(() => {
+                    count.value = 0
+                }, 500)
+                count.value += 1
+                if (count.value >= 3) {
+                    count.value = 0
+                    return true
+                }
+            }
         }
 
         const canBeWheelNext = () => {
             if (!box.value || !imgEl.value) return
-            return imgEl.value.offsetHeight === box.value.offsetHeight && imgEl.value.offsetWidth === box.value.offsetWidth
+            if (
+                Math.abs(imgEl.value.offsetHeight - box.value.offsetHeight) < 5 &&
+                Math.abs(imgEl.value.offsetWidth - box.value.offsetWidth) < 5
+            ) return true
+            if (
+                Math.abs(box.value.scrollTop - (imgEl.value.offsetHeight - box.value.offsetHeight)) < 5 &&
+                Math.abs(box.value.scrollLeft - (imgEl.value.offsetWidth - box.value.offsetWidth)) < 5
+            ) {
+                if (countTimer.value) clearTimeout(countTimer.value)
+                countTimer.value = setTimeout(() => {
+                    count.value = 0
+                }, 500)
+                count.value += 1
+                if (count.value >= 5) {
+                    count.value = 0
+                    return true
+                }
+            }
         }
 
         const src = computed(() => props.getSrc(props.image || ''))
@@ -159,12 +191,27 @@ export default defineComponent({
     render() {
         return (
             <div class="o-image-preview--wrapper" ref="wrapper">
-                <div class={[
-                    'o-image-preview--box',
-                    {
-                        'o-image-preview--longpicture-box': this.isLongPicture
-                    }
-                ]} ref="box" onDblclick={this.handleDblClick}>
+                <div
+                    class={[
+                        'o-image-preview--box',
+                        {
+                            'o-image-preview--longpicture-box': this.isLongPicture
+                        }
+                    ]}
+                    ref="box"
+                    onDblclick={this.handleDblClick}
+                    onWheel={e => {
+                        if (!this.imgEl || !this.box) return
+                        if (this.imgEl.offsetHeight === this.box.offsetHeight) {
+                            this.box.style.scrollBehavior = 'inherit'
+                            this.box.scrollLeft += e.deltaY + e.deltaX
+                            this.$nextTick(() => {
+                                if (!this.box) return
+                                this.box.style.scrollBehavior = ''
+                            })
+                        }
+                    }}
+                >
                     {
                         this.live && (
                             <div class={[

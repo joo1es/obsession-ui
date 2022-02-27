@@ -1,4 +1,4 @@
-export type PreviewImage = string | {
+export type PreviewImage = string | ({
     src: string,
     thumb?: string,
     element?: string | Element,
@@ -8,4 +8,4 @@ export type PreviewImage = string | {
         size?: [number, number],
         description?: string
     }[]
-}
+} & Record<any, any>)

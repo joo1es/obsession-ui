@@ -3,7 +3,7 @@ import type { PreviewImage } from './interface'
 import Overlay from '../overlay'
 import Space from '../space'
 import Icon from '../icon'
-import { ArrowForward, ArrowBack, CloseSharp, Play, Stop } from '@vicons/ionicons5'
+import { ArrowForward, ArrowBack, CloseCircle, Play, Stop } from '@vicons/ionicons5'
 import { useAutoControl } from '../utils'
 
 import ImageWrapper from './ImageWrapper'
@@ -26,6 +26,14 @@ export const imagePreviewProps = {
     longPictureScale: {
         type: Number,
         default: 2.5
+    },
+    keyboardEvent: {
+        type: Boolean,
+        default: true
+    },
+    wheelEvent: {
+        type: Boolean,
+        default: true
     }
 }
 export type ImagePreviewProps = ExtractPropTypes<typeof imagePreviewProps>
@@ -164,10 +172,13 @@ export default defineComponent({
 
         const playing = ref(false)
         const keyEvent = (e: KeyboardEvent) => {
+            if (!props.keyboardEvent) return
             switch (e.code) {
                 case 'ArrowRight':
+                    if (props.images.length <= 1) return
                     return next()
                 case 'ArrowLeft':
+                    if (props.images.length <= 1) return
                     return prev()
                 case 'ArrowUp':
                     if (
@@ -179,8 +190,9 @@ export default defineComponent({
                     }
                     return
                 case 'Space':
-                    playing.value = !playing.value
                     e.preventDefault()
+                    if (props.images.length <= 1) return
+                    playing.value = !playing.value
                     return
                 case 'Escape':
                     showDefine.value = false
@@ -258,7 +270,6 @@ export default defineComponent({
             if (playingProgress.value < 100) {
                 aniFrame.value = requestAnimationFrame(progressAdder)
             } else {
-                playingProgress.value = 0
                 aniFrame.value = requestAnimationFrame(progressAdder)
                 next()
             }
@@ -270,6 +281,10 @@ export default defineComponent({
                 playingProgress.value = 0
                 cancelAnimationFrame(aniFrame.value)
             }
+        })
+
+        watch(indexDefine, () => {
+            playingProgress.value = 0
         })
 
         return {
@@ -317,7 +332,8 @@ export default defineComponent({
                     class="o-image-preview"
                     { ...this.$attrs }
                     onWheel={e => {
-                        if (!this.ImageWrapperRef) return
+                        if (!this.ImageWrapperRef || !this.wheelEvent) return
+                        if (this.images.length <= 1) return
                         if (!e.altKey && e.deltaY === 0) return
                         if (e.deltaY < 0) {
                             if (e.altKey || this.ImageWrapperRef.canBeWheelPrev()) this.prev()
@@ -343,23 +359,33 @@ export default defineComponent({
                         }}
                     >
                         { this.$slots.cover?.() }
-                        <div
-                            class="o-image-preview--cover__prev"
-                            onClick={e => {
-                                e.stopPropagation()
-                                this.prev()
-                            }}
-                        ><Icon><ArrowBack /></Icon></div>
-                        <div
-                            class="o-image-preview--cover__next"
-                            onClick={e => {
-                                e.stopPropagation()
-                                this.next()
-                            }}
-                        ><Icon><ArrowForward /></Icon></div>
-                        <div
-                            class="o-image-preview--cover__index"
-                        >{ (this.indexDefine || 0) + 1 } / { this.images.length }</div>
+                        {
+                            this.images.length > 1 && (
+                                <>
+                                    <div
+                                        class="o-image-preview--cover__prev"
+                                        onClick={e => {
+                                            e.stopPropagation()
+                                            this.prev()
+                                        }}
+                                    ><Icon><ArrowBack /></Icon></div>
+                                    <div
+                                        class="o-image-preview--cover__next"
+                                        onClick={e => {
+                                            e.stopPropagation()
+                                            this.next()
+                                        }}
+                                    ><Icon><ArrowForward /></Icon></div>
+                                </>
+                            )
+                        }
+                        {
+                            this.images.length > 1 && (
+                                <div
+                                    class="o-image-preview--cover__index"
+                                >{ (this.indexDefine || 0) + 1 } / { this.images.length }</div>
+                            )
+                        }
                         <div
                             class="o-image-preview--cover__size"
                             v-show={this.size[0]}
@@ -388,7 +414,7 @@ export default defineComponent({
                                         e.stopPropagation()
                                         this.showDefine = false
                                     }}
-                                ><CloseSharp /></Icon>
+                                ><CloseCircle /></Icon>
                             </div>
                         </Space>
                         <Transition name="o-image-preview--fade">
