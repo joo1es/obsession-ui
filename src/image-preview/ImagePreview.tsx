@@ -30,12 +30,6 @@ export const imagePreviewProps = {
 }
 export type ImagePreviewProps = ExtractPropTypes<typeof imagePreviewProps>
 
-interface ImagesShowing {
-    prev?: PreviewImage,
-    current?: PreviewImage,
-    next?: PreviewImage
-}
-
 export default defineComponent({
     name: 'OImagePreview',
     inheritAttrs: false,
@@ -62,7 +56,11 @@ export default defineComponent({
         const showReplace = ref(false)
 
         const imagesShowing = computed(() => {
-            const showing: ImagesShowing = {}
+            const showing: {
+                prev?: PreviewImage,
+                current?: PreviewImage,
+                next?: PreviewImage
+            } = {}
             if (props.images.length === 0) return showing
             const indexIs = indexDefine.value || 0
             showing.prev = props.images[indexIs - 1] || props.images[props.images.length - 1]
