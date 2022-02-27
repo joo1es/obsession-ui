@@ -1976,6 +1976,18 @@
     "@typescript-eslint/types" "5.6.0"
     eslint-visitor-keys "^3.0.0"
 
+"@use-gesture/core@10.2.6":
+  version "10.2.6"
+  resolved "https://registry.yarnpkg.com/@use-gesture/core/-/core-10.2.6.tgz#12bdab107501798334ae28a6d193ef6ccd7a8930"
+  integrity sha512-+GpVSEoCLv1OeZ+qgAV+tLUKit1LKgKO3PgIiEVZqNr4A/YTXzbC1unlThpfzwyj5Dx22UxHDh0UfgRrQ9Lb1w==
+
+"@use-gesture/vanilla@^10.2.6":
+  version "10.2.6"
+  resolved "https://registry.yarnpkg.com/@use-gesture/vanilla/-/vanilla-10.2.6.tgz#ae3731fc42ac22f3a98e320a4a2172b679c5631c"
+  integrity sha512-HOlhy3D0q2vMXcUSQb1jlHpVO+UWwt+NbswUZ2OfKG90nOEPkJlXx/9f2x8XUL5gOhKkEpodRNrVfWv/hucp7w==
+  dependencies:
+    "@use-gesture/core" "10.2.6"
+
 "@vant/cli@^3.9.0":
   version "3.11.4"
   resolved "https://registry.npmjs.org/@vant/cli/-/cli-3.11.4.tgz"

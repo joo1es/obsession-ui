@@ -48,6 +48,7 @@ import oPullRefresh from './pull-refresh'
 import oList from './list'
 import oSpin from './spin'
 import oInput from './input'
+import oImagePreview from './image-preview'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -105,6 +106,7 @@ declare module 'vue' {
         oList: typeof oList;
         oSpin: typeof oSpin;
         oInput: typeof oInput;
+        oImagePreview: typeof oImagePreview;
     }
     interface Vue {
         $dialog: typeof $dialog,

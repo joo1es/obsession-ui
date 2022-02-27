@@ -138,6 +138,10 @@ module.exports = {
                         title: 'Image 图片',
                     },
                     {
+                        path: 'image-preview',
+                        title: 'ImagePreview 图片预览',
+                    },
+                    {
                         path: 'breadcrumb',
                         title: 'Breadcrumb 面包屑',
                     },

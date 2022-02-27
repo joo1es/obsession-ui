@@ -50,5 +50,6 @@ export default [
     'pull-refresh-props',
     'list-props',
     'spin-props',
-    'input-props'
+    'input-props',
+    'image-preview-props'
 ]
