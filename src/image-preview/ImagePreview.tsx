@@ -21,7 +21,7 @@ export const imagePreviewProps = {
     index: Number,
     swipeDistance: {
         type: Number,
-        default: 150
+        default: 100
     },
     longPictureScale: {
         type: Number,
@@ -506,6 +506,7 @@ export default defineComponent({
                                 onSize={size => {
                                     this.size = size
                                 }}
+                                disabled={this.images.length <= 1}
                                 ref="ImageWrapperRef"
                             />
                             { this.previewRender('next', !this.hidePrevNext) }

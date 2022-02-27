@@ -18,7 +18,8 @@ export default defineComponent({
             type: Function as PropType<(x: number, y: number) => void>,
             required: true
         },
-        playing: Boolean
+        playing: Boolean,
+        disabled: Boolean
     },
     expose: ['reset', 'canBeWheelPrev', 'canBeWheelNext', 'checkSwipe', 'isLongPicture'],
     emits: ['hideReplace', 'size'],
@@ -42,6 +43,7 @@ export default defineComponent({
         }
 
         watch([isSwiping, lengthX, lengthY], () => {
+            if (props.disabled) return
             const swipe = isSwiping.value
             props.setActive(swipe)
             if (swipe) {
