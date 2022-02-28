@@ -1,5 +1,5 @@
-import { defineComponent, ExtractPropTypes } from 'vue'
-import { Icon } from '@vicons/utils'
+import { addUnit } from '../utils'
+import { defineComponent, ExtractPropTypes, h } from 'vue'
 
 export const iconProps = {
     size: [String, Number],
@@ -11,21 +11,26 @@ export const iconProps = {
     name: String,
 }
 
-export type IconProps = ExtractPropTypes<typeof iconProps>;
+export type IconProps = ExtractPropTypes<typeof iconProps>
 
 export default defineComponent({
     name: 'OIcon',
     props: iconProps,
     setup(props, { slots }) {
         return () => (
-            <Icon
-                size={props.size}
-                color={props.color}
-                tag={props.tag}
-                class="o-icon"
-            >
-                {slots.default?.() || <i class={props.name} />}
-            </Icon>
+            h(
+                props.tag,
+                {
+                    style: {
+                        fontSize: addUnit(props.size),
+                        color: props.color
+                    },
+                    class: 'o-icon'
+                },
+                h('svg', null, {
+                    default: slots.default || (() => h('i', { class: props.name }))
+                })
+            )
         )
     },
 })

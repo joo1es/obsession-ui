@@ -32,16 +32,6 @@ app.use(Icon)
 <o-icon :size="30" name="add-o" />
 ```
 
-### Emoji
-
-```html
-<o-icon :size="30">
-    😂
-</o-icon>
-```
-
-<demo-code transform>./demo/Emoji.vue</demo-code>
-
 ## API
 
 ### Props
