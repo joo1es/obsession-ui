@@ -352,7 +352,7 @@ export default defineComponent({
                         this.setHidePrevNextTrue
                         setTimeout(() => {
                             this.showOverlay = false
-                        }, 150)
+                        }, 120)
                     }}
                     onLeaveCancelled={this.setHidePrevNextFalse}
                     // onAfterLeave={() => {
