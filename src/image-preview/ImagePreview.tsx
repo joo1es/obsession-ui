@@ -349,11 +349,16 @@ export default defineComponent({
                     }}
                     onAfterEnter={this.setHidePrevNextFalse}
                     onEnterCancelled={this.setHidePrevNextTrue}
-                    onLeave={this.setHidePrevNextTrue}
-                    onLeaveCancelled={this.setHidePrevNextFalse}
-                    onAfterLeave={() => {
-                        this.showOverlay = false
+                    onLeave={() => {
+                        this.setHidePrevNextTrue
+                        setTimeout(() => {
+                            this.showOverlay = false
+                        }, 100)
                     }}
+                    onLeaveCancelled={this.setHidePrevNextFalse}
+                    // onAfterLeave={() => {
+                    //     this.showOverlay = false
+                    // }}
                     v-show={this.showCore}
                 >
                     <div
