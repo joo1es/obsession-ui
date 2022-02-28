@@ -216,7 +216,6 @@ export default defineComponent({
                 })
             } else {
                 document.removeEventListener('keydown', keyEvent)
-                ImageWrapperRef.value?.reset()
                 setTransformOrigin()
                 showCore.value = false
                 playing.value = false
@@ -353,7 +352,7 @@ export default defineComponent({
                         this.setHidePrevNextTrue
                         setTimeout(() => {
                             this.showOverlay = false
-                        }, 100)
+                        }, 150)
                     }}
                     onLeaveCancelled={this.setHidePrevNextFalse}
                     // onAfterLeave={() => {
