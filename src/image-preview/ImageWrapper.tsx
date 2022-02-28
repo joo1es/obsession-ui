@@ -19,7 +19,9 @@ export default defineComponent({
             required: true
         },
         playing: Boolean,
-        disabled: Boolean
+        disabled: Boolean,
+        init: Boolean,
+        show: Boolean
     },
     expose: ['reset', 'canBeWheelPrev', 'canBeWheelNext', 'checkSwipe', 'isLongPicture'],
     emits: ['hideReplace', 'size'],
@@ -136,7 +138,8 @@ export default defineComponent({
         const currentSrc = ref<string>()
         const currentSize = ref([0, 0])
         const hideImage = ref(false)
-        watch(() => props.image, () => {
+        watch(() => [props.image, props.init, props.show], () => {
+            if (!props.show) return
             currentSrc.value = props.getSrc(props.image || '', true)
             /**
              * 为了避免闪烁
@@ -149,13 +152,18 @@ export default defineComponent({
             })
             const src = props.getSrc(props.image || '')
             currentSize.value = [0, 0]
-            const newImage = new Image()
-            newImage.src = src || ''
-            const currentImage = props.image
-            newImage.onload = () => {
-                if (props.image !== currentImage) return
-                currentSrc.value = newImage.src
-                currentSize.value = [newImage.width, newImage.height]
+            if (props.init) {
+                new Promise<void>(resolve => {
+                    const newImage = new Image()
+                    newImage.src = src || ''
+                    const currentImage = props.image
+                    newImage.onload = () => {
+                        if (props.image !== currentImage) return
+                        currentSrc.value = newImage.src
+                        currentSize.value = [newImage.width, newImage.height]
+                        resolve()
+                    }
+                })
             }
         }, {
             immediate: true
@@ -266,7 +274,7 @@ export default defineComponent({
                         }
                     </Transition>
                     {
-                        this.points.length > 0 && (
+                        this.points.length > 0 && this.currentSize[0] && (
                             <div class="o-image-preview--points">
                                 { this.showPoints && this.points.map((point, index) => (
                                     <div key={index} class="o-image-preview--point" style={{

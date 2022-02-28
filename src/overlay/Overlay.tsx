@@ -50,7 +50,8 @@ export default defineComponent({
     inheritAttrs: false,
     props: overlayProps,
     emits: {
-        'update:modelValue': (value: boolean) => typeof value === 'boolean'
+        'update:modelValue': (value: boolean) => typeof value === 'boolean',
+        'enter': () => true
     },
     setup(props, { slots, emit, attrs }) {
         const overlaySymbol = Symbol('overlay')
@@ -95,7 +96,7 @@ export default defineComponent({
         })
         return () => (
             <Teleport to={props.to || null} disabled={!props.to}>
-                <Transition name={props.transitionName} appear={true}>
+                <Transition name={props.transitionName} appear={true} onEnter={() => emit('enter')}>
                     {
                         !props.useVShow && !props.modelValue ? null : (
                             <>

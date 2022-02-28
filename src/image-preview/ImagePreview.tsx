@@ -203,8 +203,10 @@ export default defineComponent({
             }
         }
 
+        const init = ref(false)
         watch(showDefine, define => {
             if (define) {
+                init.value = false
                 document.addEventListener('keydown', keyEvent)
                 ImageWrapperRef.value?.reset()
                 showOverlay.value = true
@@ -321,7 +323,8 @@ export default defineComponent({
             longPictureSet,
             playing,
             playingProgress,
-            core
+            core,
+            init
         }
     },
     render() {
@@ -331,189 +334,195 @@ export default defineComponent({
                 onUpdate:modelValue={show => {
                     this.showDefine = show
                 }}
+                onEnter={() => {
+                    this.init = true
+                }}
                 { ...this.overlay }
             >
-                <div
-                    class="o-image-preview"
-                    { ...this.$attrs }
-                    onWheel={e => {
-                        if (!this.ImageWrapperRef || !this.wheelEvent) return
-                        if (this.images.length <= 1) return
-                        if (!e.altKey && e.deltaY === 0) return
-                        if (e.deltaY < 0) {
-                            if (e.altKey || this.ImageWrapperRef.canBeWheelPrev()) this.prev()
-                        } else if (e.altKey || this.ImageWrapperRef.canBeWheelNext()) {
-                            this.next()
-                        }
+                <Transition
+                    name="o-image-preview--transition"
+                    onEnter={() => {
+                        this.setHidePrevNextTrue()
+                        this.core?.focus({ preventScroll: true })
                     }}
+                    onAfterEnter={this.setHidePrevNextFalse}
+                    onEnterCancelled={this.setHidePrevNextTrue}
+                    onLeave={this.setHidePrevNextTrue}
+                    onLeaveCancelled={this.setHidePrevNextFalse}
+                    onAfterLeave={() => {
+                        this.showOverlay = false
+                    }}
+                    v-show={this.showCore}
                 >
-                    <Transition name="o-image-preview--fade">
-                        {
-                            this.playing && (
-                                <div class="o-image-preview--playing">
-                                    <img src={this.getSrc(this.images[(this.indexDefine || 0) + 1] || this.images[0])} />
-                                    <Progress percentage={this.playingProgress} showText={false} size={'5px'} borderRadius={'0px'} />
-                                </div>
-                            )
-                        }
-                    </Transition>
                     <div
-                        class="o-image-preview--cover"
-                        style={{
-                            opacity: this.showCore ? undefined : '0'
+                        class="o-image-preview"
+                        { ...this.$attrs }
+                        onWheel={e => {
+                            if (!this.ImageWrapperRef || !this.wheelEvent) return
+                            if (this.images.length <= 1) return
+                            if (!e.altKey && e.deltaY === 0) return
+                            if (e.deltaY < 0) {
+                                if (e.altKey || this.ImageWrapperRef.canBeWheelPrev()) this.prev()
+                            } else if (e.altKey || this.ImageWrapperRef.canBeWheelNext()) {
+                                this.next()
+                            }
                         }}
                     >
-                        { this.$slots.cover?.() }
-                        {
-                            this.images.length > 1 && (
-                                <>
-                                    <div
-                                        class="o-image-preview--cover__prev"
-                                        onClick={e => {
-                                            e.stopPropagation()
-                                            this.prev()
-                                        }}
-                                    ><Icon><ArrowBack /></Icon></div>
-                                    <div
-                                        class="o-image-preview--cover__next"
-                                        onClick={e => {
-                                            e.stopPropagation()
-                                            this.next()
-                                        }}
-                                    ><Icon><ArrowForward /></Icon></div>
-                                </>
-                            )
-                        }
-                        {
-                            this.images.length > 1 && (
-                                <div
-                                    class="o-image-preview--cover__index"
-                                >{ (this.indexDefine || 0) + 1 } / { this.images.length }</div>
-                            )
-                        }
-                        <div
-                            class="o-image-preview--cover__size"
-                            v-show={this.size[0]}
-                        >{ this.size[0] }×{this.size[1]}</div>
-                        <Space
-                            class="o-image-preview--cover__tool"
-                            align='center'
-                            size={5}
-                        >
-                            { this.$slots.tools?.() }
-                            {
-                                this.images.length > 1 && (
-                                    <div class="o-image-preview--cover__play">
-                                        <Icon
-                                            onClick={e => {
-                                                e.stopPropagation()
-                                                this.playing = !this.playing
-                                            }}
-                                        >{ this.playing ? <Stop /> : <Play /> }</Icon>
-                                    </div>
-                                )
-                            }
-                            <div class="o-image-preview--cover__close">
-                                <Icon
-                                    onClick={e => {
-                                        e.stopPropagation()
-                                        this.showDefine = false
-                                    }}
-                                ><CloseCircle /></Icon>
-                            </div>
-                        </Space>
                         <Transition name="o-image-preview--fade">
                             {
-                                this.imagesShowing.current && this.longPictureSet.has(this.imagesShowing.current) && (
-                                    <div
-                                        class="o-image-preview--cover__long-tool"
-                                    >
-                                        <span onClick={e => {
-                                            e.stopPropagation()
-                                            if (!this.ImageWrapperRef) return
-                                            this.ImageWrapperRef.isLongPicture = !this.ImageWrapperRef.isLongPicture
-                                        }}>长图模式</span>
+                                this.playing && (
+                                    <div class="o-image-preview--playing">
+                                        <img src={this.getSrc(this.images[(this.indexDefine || 0) + 1] || this.images[0])} />
+                                        <Progress percentage={this.playingProgress} showText={false} size={'5px'} borderRadius={'0px'} />
                                     </div>
                                 )
                             }
                         </Transition>
-                    </div>
-                    <Transition
-                        name="o-image-preview--transition"
-                        onEnter={() => {
-                            this.setHidePrevNextTrue()
-                            this.core?.focus({ preventScroll: true })
-                        }}
-                        onAfterEnter={this.setHidePrevNextFalse}
-                        onEnterCancelled={this.setHidePrevNextTrue}
-                        onLeave={this.setHidePrevNextTrue}
-                        onLeaveCancelled={this.setHidePrevNextFalse}
-                        onAfterLeave={() => {
-                            this.showOverlay = false
-                        }}
-                    >
                         <div
-                            ref="core"
-                            onTransitionend={() => {
-                                if (this.dragingDoing) {
-                                    this.dragingDoing = false
-                                    this.transition = false
-                                    this.transform = ''
-                                    if (this.willBeIndex !== undefined) this.goIndexRaw(this.willBeIndex)
-                                    if (this.replace && this.indexDefine === this.images.indexOf(this.replace)) {
-                                        this.showReplace = true
-                                    }
-                                }
-                            }}
-                            class={[
-                                'o-image-preview--core',
-                                {
-                                    'o-image-preview--core__transition': this.transition
-                                }
-                            ]}
-                            v-show={this.showCore}
+                            class="o-image-preview--cover"
                             style={{
-                                transform: this.transform,
-                                transformOrigin: this.transformOrigin
+                                opacity: this.showCore ? undefined : '0'
                             }}
                         >
-                            { this.previewRender('prev', !this.hidePrevNext) }
-                            { this.previewRender('replace', this.showReplace) }
-                            <ImageWrapper
-                                image={this.imagesShowing.current}
-                                playing={!this.draging && this.dragingDoing}
-                                getSrc={this.getSrc}
-                                setActive={active => {
-                                    if (!this.ImageWrapperRef?.checkSwipe?.()) return
-                                    this.draging = active
-                                }}
-                                setTransform={x => {
-                                    if (!this.ImageWrapperRef?.checkSwipe?.()) return
-                                    this.translateX = -x
-                                    this.transform = `translateX(${this.translateX}px)`
-                                    const indexIs = this.indexDefine || 0
-                                    if (this.translateX > this.swipeDistance) {
-                                        this.replace = this.images[indexIs - 1] || this.images[this.images.length - 1]
-                                    } else if (this.translateX < -this.swipeDistance) {
-                                        this.replace = this.images[indexIs + 1] || this.images[0]
-                                    } else {
-                                        this.replace = this.images[indexIs] || this.images[0]
+                            { this.$slots.cover?.() }
+                            {
+                                this.images.length > 1 && (
+                                    <>
+                                        <div
+                                            class="o-image-preview--cover__prev"
+                                            onClick={e => {
+                                                e.stopPropagation()
+                                                this.prev()
+                                            }}
+                                        ><Icon><ArrowBack /></Icon></div>
+                                        <div
+                                            class="o-image-preview--cover__next"
+                                            onClick={e => {
+                                                e.stopPropagation()
+                                                this.next()
+                                            }}
+                                        ><Icon><ArrowForward /></Icon></div>
+                                    </>
+                                )
+                            }
+                            {
+                                this.images.length > 1 && (
+                                    <div
+                                        class="o-image-preview--cover__index"
+                                    >{ (this.indexDefine || 0) + 1 } / { this.images.length }</div>
+                                )
+                            }
+                            <div
+                                class="o-image-preview--cover__size"
+                                v-show={this.size[0]}
+                            >{ this.size[0] }×{this.size[1]}</div>
+                            <Space
+                                class="o-image-preview--cover__tool"
+                                align='center'
+                                size={5}
+                            >
+                                { this.$slots.tools?.() }
+                                {
+                                    this.images.length > 1 && (
+                                        <div class="o-image-preview--cover__play">
+                                            <Icon
+                                                onClick={e => {
+                                                    e.stopPropagation()
+                                                    this.playing = !this.playing
+                                                }}
+                                            >{ this.playing ? <Stop /> : <Play /> }</Icon>
+                                        </div>
+                                    )
+                                }
+                                <div class="o-image-preview--cover__close">
+                                    <Icon
+                                        onClick={e => {
+                                            e.stopPropagation()
+                                            this.showDefine = false
+                                        }}
+                                    ><CloseCircle /></Icon>
+                                </div>
+                            </Space>
+                            <Transition name="o-image-preview--fade">
+                                {
+                                    this.imagesShowing.current && this.longPictureSet.has(this.imagesShowing.current) && (
+                                        <div
+                                            class="o-image-preview--cover__long-tool"
+                                        >
+                                            <span onClick={e => {
+                                                e.stopPropagation()
+                                                if (!this.ImageWrapperRef) return
+                                                this.ImageWrapperRef.isLongPicture = !this.ImageWrapperRef.isLongPicture
+                                            }}>长图模式</span>
+                                        </div>
+                                    )
+                                }
+                            </Transition>
+                        </div>
+                        
+                            <div
+                                ref="core"
+                                onTransitionend={() => {
+                                    if (this.dragingDoing) {
+                                        this.dragingDoing = false
+                                        this.transition = false
+                                        this.transform = ''
+                                        if (this.willBeIndex !== undefined) this.goIndexRaw(this.willBeIndex)
+                                        if (this.replace && this.indexDefine === this.images.indexOf(this.replace)) {
+                                            this.showReplace = true
+                                        }
                                     }
                                 }}
-                                onHideReplace={() => {
-                                    this.showReplace = false
+                                class={[
+                                    'o-image-preview--core',
+                                    {
+                                        'o-image-preview--core__transition': this.transition
+                                    }
+                                ]}
+                                style={{
+                                    transform: this.transform,
+                                    transformOrigin: this.transformOrigin
                                 }}
-                                onSize={size => {
-                                    this.size = size
-                                }}
-                                disabled={this.images.length <= 1}
-                                ref="ImageWrapperRef"
-                            />
-                            { this.previewRender('next', !this.hidePrevNext) }
-                        </div>
-                    </Transition>
-                    { this.$slots.default?.() }
-                </div>
+                            >
+                                { this.previewRender('prev', !this.hidePrevNext) }
+                                { this.previewRender('replace', this.showReplace) }
+                                <ImageWrapper
+                                    image={this.imagesShowing.current}
+                                    playing={!this.draging && this.dragingDoing}
+                                    getSrc={this.getSrc}
+                                    init={this.init}
+                                    show={this.showDefine}
+                                    setActive={active => {
+                                        if (!this.ImageWrapperRef?.checkSwipe?.()) return
+                                        this.draging = active
+                                    }}
+                                    setTransform={x => {
+                                        if (!this.ImageWrapperRef?.checkSwipe?.()) return
+                                        this.translateX = -x
+                                        this.transform = `translateX(${this.translateX}px)`
+                                        const indexIs = this.indexDefine || 0
+                                        if (this.translateX > this.swipeDistance) {
+                                            this.replace = this.images[indexIs - 1] || this.images[this.images.length - 1]
+                                        } else if (this.translateX < -this.swipeDistance) {
+                                            this.replace = this.images[indexIs + 1] || this.images[0]
+                                        } else {
+                                            this.replace = this.images[indexIs] || this.images[0]
+                                        }
+                                    }}
+                                    onHideReplace={() => {
+                                        this.showReplace = false
+                                    }}
+                                    onSize={size => {
+                                        this.size = size
+                                    }}
+                                    disabled={this.images.length <= 1}
+                                    ref="ImageWrapperRef"
+                                />
+                                { this.previewRender('next', !this.hidePrevNext) }
+                            </div>
+                        { this.$slots.default?.() }
+                    </div>
+                </Transition>
             </Overlay>
         )
     }
