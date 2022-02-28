@@ -244,16 +244,16 @@
 }
 
 .o-image-preview--transition-enter-active {
-    transition: .5s;
+    transition: .4s;
 }
 
 .o-image-preview--transition-leave-active {
-    transition: .3s;
+    transition: .2s;
 }
 
 .o-image-preview--transition-enter-from,
 .o-image-preview--transition-leave-to {
-    transform: scale(.4);
+    transform: scale(.9);
     opacity: 0;
 }
 
