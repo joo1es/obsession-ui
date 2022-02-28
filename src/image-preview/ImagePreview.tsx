@@ -357,6 +357,9 @@ export default defineComponent({
                     <div
                         class="o-image-preview"
                         { ...this.$attrs }
+                        style={{
+                            transformOrigin: this.transformOrigin
+                        }}
                         onWheel={e => {
                             if (!this.ImageWrapperRef || !this.wheelEvent) return
                             if (this.images.length <= 1) return
@@ -480,8 +483,7 @@ export default defineComponent({
                                     }
                                 ]}
                                 style={{
-                                    transform: this.transform,
-                                    transformOrigin: this.transformOrigin
+                                    transform: this.transform
                                 }}
                             >
                                 { this.previewRender('prev', !this.hidePrevNext) }
