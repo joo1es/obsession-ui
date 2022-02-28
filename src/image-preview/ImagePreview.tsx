@@ -335,7 +335,9 @@ export default defineComponent({
                     this.showDefine = show
                 }}
                 onEnter={() => {
-                    this.init = true
+                    this.$nextTick(() => {
+                        this.init = true
+                    })
                 }}
                 { ...this.overlay }
             >

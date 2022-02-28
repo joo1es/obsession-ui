@@ -243,14 +243,17 @@
     }
 }
 
-.o-image-preview--transition-leave-active,
 .o-image-preview--transition-enter-active {
-    transition: .2s;
+    transition: .5s;
+}
+
+.o-image-preview--transition-leave-active {
+    transition: .3s;
 }
 
 .o-image-preview--transition-enter-from,
 .o-image-preview--transition-leave-to {
-    transform: scale(.6);
+    transform: scale(.4);
     opacity: 0;
 }
 
