@@ -96,10 +96,10 @@
                 margin-left: var(--o-tree-padding-left-right);
                 width: auto;
             }
-            > .xicon {
+            > .o-icon {
                 transition: transform .2s;
             }
-            > .xicon.expend {
+            > .o-icon.expend {
                 transform: rotate(90deg);
             }
         }

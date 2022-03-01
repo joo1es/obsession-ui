@@ -132,15 +132,15 @@ export default defineComponent({
             }}>
                 {
                     !isNoChildren.value || props.remote ? (
-                        <Icon class={{
-                            expend: expending.value
-                        }}>
-                            {
-                                loading.value ? (
-                                    <Spin color="var(--o-tree-arrow-color)" />
-                                ) : <CaretForward />
-                            }
-                        </Icon>
+                        loading.value ? (
+                            <Spin color="currentcolor" />
+                        ) : (
+                            <Icon class={{
+                                expend: expending.value
+                            }}>
+                                <CaretForward />
+                            </Icon>
+                        )
                     ) : null
                 }
             </div>
