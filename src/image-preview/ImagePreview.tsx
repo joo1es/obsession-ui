@@ -38,6 +38,10 @@ export const imagePreviewProps = {
     overlay: {
         type: Object as PropType<(Partial<OverlayProps> & Record<string, any>)>,
         default: () => ({})
+    },
+    closeDuration: {
+        type: Number,
+        default: 100
     }
 }
 export type ImagePreviewProps = ExtractPropTypes<typeof imagePreviewProps>
@@ -352,7 +356,7 @@ export default defineComponent({
                         this.setHidePrevNextTrue
                         setTimeout(() => {
                             this.showOverlay = false
-                        }, 120)
+                        }, this.closeDuration)
                     }}
                     onLeaveCancelled={this.setHidePrevNextFalse}
                     // onAfterLeave={() => {

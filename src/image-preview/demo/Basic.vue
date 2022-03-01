@@ -1,6 +1,6 @@
 <template>
     <o-button id="test" @click="show = !show">显示</o-button>
-    <o-image-preview v-model:show="show" v-model:index="index" :images="images" :overlay="{ useVShow: true }" />
+    <o-image-preview v-model:show="show" v-model:index="index" :images="images"/>
 </template>
 
 <script lang="ts" setup>
