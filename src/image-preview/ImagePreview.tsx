@@ -38,10 +38,6 @@ export const imagePreviewProps = {
     overlay: {
         type: Object as PropType<(Partial<OverlayProps> & Record<string, any>)>,
         default: () => ({})
-    },
-    closeDuration: {
-        type: Number,
-        default: 50
     }
 }
 export type ImagePreviewProps = ExtractPropTypes<typeof imagePreviewProps>

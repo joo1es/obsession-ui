@@ -34,7 +34,6 @@ app.use(ImagePreview)
 | keyboardEvent | 是否启用键盘快捷键 | _boolean_ | true |
 | wheelEvent | 是否启用滚轮快捷键 | _boolean_ | true |
 | overlay | overlay 的 props | _Partial\<OverlayProps> & Record\<string, any>_ | {} |
-| closeDuration | 图片动画开始后，多长时间之后关闭 overlay | _number_ | 100 |
 
 ### Slots
 
