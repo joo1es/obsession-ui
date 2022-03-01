@@ -274,33 +274,6 @@ export default defineComponent({
                         }
                     </Transition>
                     {
-                        this.points.length > 0 && this.currentSize[0] && (
-                            <div class="o-image-preview--points">
-                                { this.showPoints && this.points.map((point, index) => (
-                                    <div key={index} class="o-image-preview--point" style={{
-                                        width: point.size?.[0] ? `${(point.size[0] / this.currentSize[0] * 100)}%` : 'auto',
-                                        height: point.size?.[1] ? `${(point.size[1] / this.currentSize[1] * 100)}%` : 'auto',
-                                        top: `${point.position[0] / this.currentSize[0] * 100}%`,
-                                        left: `${point.position[1] / this.currentSize[1] * 100}%`
-                                    }}>
-                                        { point.description }
-                                    </div>
-                                )) }
-                                <div class="o-image-preview--point" style={{
-                                    left: '15px',
-                                    bottom: '15px',
-                                    pointerEvents: 'all',
-                                    cursor: 'default'
-                                }} onClick={e => {
-                                    e.stopPropagation()
-                                    this.showPoints = !this.showPoints
-                                }}>
-                                    {this.showPoints ? '隐藏' : '显示'}标记
-                                </div>
-                            </div>
-                        )
-                    }
-                    {
                         !this.hideImage && (
                             <img
                                 class="o-image-preview--image"
@@ -316,6 +289,51 @@ export default defineComponent({
                             />
                         )
                     }
+                    <Transition name="o-image-preview--fade">
+                        {
+                            this.points.length > 0 && this.currentSize[0] && !this.playing && (
+                                <div class="o-image-preview--points">
+                                    { this.showPoints && this.points.map((point, index) => (
+                                        point.size?.[0] ? (
+                                            <div key={index} class="o-image-preview--point--box" style={{
+                                                width: point.size?.[0] ? `${(point.size[0] / this.currentSize[0] * 100)}%` : 'auto',
+                                                height: point.size?.[1] ? `${(point.size[1] / this.currentSize[1] * 100)}%` : 'auto',
+                                                top: `${point.position[0] / this.currentSize[0] * 100}%`,
+                                                left: `${point.position[1] / this.currentSize[1] * 100}%`
+                                            }}>
+                                                { point.description }
+                                            </div>
+                                        ) : (
+                                            <div key={index} class={[
+                                                'o-image-preview--point',
+                                                {
+                                                    left: point.position[1] / this.currentSize[1] * 100 < 50
+                                                }
+                                            ]} style={{
+                                                top: `${point.position[0] / this.currentSize[0] * 100}%`,
+                                                left: `${point.position[1] / this.currentSize[1] * 100}%`
+                                            }}>
+                                                <div>
+                                                    { point.description }
+                                                </div>
+                                            </div>
+                                        )
+                                    )) }
+                                    <div class="o-image-preview--point--box" style={{
+                                        left: '15px',
+                                        bottom: '15px',
+                                        pointerEvents: 'all',
+                                        cursor: 'default'
+                                    }} onClick={e => {
+                                        e.stopPropagation()
+                                        this.showPoints = !this.showPoints
+                                    }}>
+                                        {this.showPoints ? '隐藏' : '显示'}标记
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </Transition>
                 </div>
             </div>
         )

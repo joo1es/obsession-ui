@@ -230,12 +230,56 @@
         position: absolute;
         height: 100%;
         width: 100%;
+        top: 0;
+        left: 0;
         color: #fff;
         z-index: 3;
         font-size: 12px;
         pointer-events: none;
     }
     &--point {
+        position: absolute;
+        height: 5px;
+        width: 5px;
+        background-color: #fff;
+        filter: drop-shadow(.5px 1px 2px #333);
+        border-radius: 50%;
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 1.5px;
+            width: 20px;
+            height: 2px;
+            background-color: #fff;
+        }
+        > div {
+            position: absolute;
+            max-width: 200px;
+            min-width: 50px;
+            left: 20px;
+            padding: 5px 10px;
+            top: -13.5px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            background-color: rgba(0, 0, 0, .3);
+            border-radius: 15px;
+            border: 2px solid #fff;
+        }
+        &.left {
+            &::after {
+                left: initial;
+                right: 0;
+            }
+            > div {
+                left: initial;
+                right: 20px
+            }
+        }
+    }
+    &--point--box {
         border: 1px solid #fff;
         filter: drop-shadow(.5px 1px 2px #333);
         padding: 2px 4px;
@@ -265,16 +309,6 @@
 .o-image-preview--fade-enter-from,
 .o-image-preview--fade-leave-to {
     opacity: 0;
-}
-
-.o-image-preview--fade2-enter-active,
-.o-image-preview--fade2-leave-active {
-    transition: opacity .2s;
-}
-
-.o-image-preview--fade2-enter-from,
-.o-image-preview--fade2-leave-to {
-    opacity: 1;
 }
 
 @keyframes o-image-preview--live-animation {
