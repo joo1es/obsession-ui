@@ -204,23 +204,23 @@ export default defineComponent({
         }
 
         const init = ref(false)
-        watch(showDefine, define => {
-            setTransformOrigin()
+        watch(showDefine, async(define) => {
             if (define) {
+                setTransformOrigin()
                 init.value = false
                 document.addEventListener('keydown', keyEvent)
                 ImageWrapperRef.value?.reset()
                 showOverlay.value = true
-                nextTick(() => {
-                    showCore.value = true
-                })
+                await nextTick()
+                showCore.value = true
             } else {
+                setTransformOrigin()
+                await nextTick()
                 showCore.value = false
                 document.removeEventListener('keydown', keyEvent)
                 playing.value = false
-                nextTick(() => {
-                    showOverlay.value = false
-                })
+                await nextTick()
+                showOverlay.value = false
             }
         })
 
