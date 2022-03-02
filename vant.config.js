@@ -101,6 +101,10 @@ module.exports = {
                         title: 'Radio 单选框'
                     },
                     {
+                        path: 'slider',
+                        title: 'Slider 滑块'
+                    },
+                    {
                         path: 'tag-input',
                         title: 'TagInput 标签输入'
                     },

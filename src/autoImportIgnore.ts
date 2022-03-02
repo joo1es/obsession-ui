@@ -51,5 +51,6 @@ export default [
     'list-props',
     'spin-props',
     'input-props',
-    'image-preview-props'
+    'image-preview-props',
+    'slider-props'
 ]

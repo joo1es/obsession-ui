@@ -110,9 +110,9 @@ export default defineComponent({
     props: popoverProps,
     emits: popoverEmits,
     setup(props, { slots, emit, attrs }) {
-    /**
-     * 非受控模式
-     */
+        /**
+         * 非受控模式
+         */
         const popoverShow = ref(false)
         const zIndex = ref(0)
         const show = useAutoControl(popoverShow, props, 'modelValue', emit)
@@ -127,8 +127,8 @@ export default defineComponent({
             }
         })
         /**
-     * 点击外部自动关闭自身
-     */
+         * 点击外部自动关闭自身
+         */
         const popoverRef = ref<HTMLDivElement | null>(null)
         const popoverId = Math.random().toString(36).slice(-8)
         onClickOutside(popoverRef, (event) => {
@@ -143,8 +143,8 @@ export default defineComponent({
         })
         const mouseMoveing = ref<ReturnType<typeof setTimeout> | null>(null)
         /**
-     * 处理事件
-     */
+         * 处理事件
+         */
         const handleClick = () => {
             show.value = !show.value
         }
@@ -179,8 +179,8 @@ export default defineComponent({
                     : references[0]
             )
             /**
-       * 绑定事件
-       */
+             * 绑定事件
+             */
             if (!reference.props) reference.props = {}
             const handlers: Record<string, () => void> = {}
             if (props.trigger === 'click') handlers.onClick = handleClick

@@ -49,6 +49,7 @@ import oList from './list'
 import oSpin from './spin'
 import oInput from './input'
 import oImagePreview from './image-preview'
+import oSlider from './slider'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -107,6 +108,7 @@ declare module 'vue' {
         oSpin: typeof oSpin;
         oInput: typeof oInput;
         oImagePreview: typeof oImagePreview;
+        oSlider: typeof oSlider;
     }
     interface Vue {
         $dialog: typeof $dialog,
