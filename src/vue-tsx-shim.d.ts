@@ -6,7 +6,7 @@ declare module 'vue' {
     interface ComponentCustomProps {
         id?: string;
         role?: string;
-        tabindex?: number;
+        tabindex?: number | string;
         onClick?: EventHandler;
         onTouchend?: EventHandler;
         onTouchmove?: EventHandler;

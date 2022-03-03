@@ -93,6 +93,10 @@ module.exports = {
                         title: 'Input 输入框'
                     },
                     {
+                        path: 'input-number',
+                        title: 'InputNumber 数字输入框'
+                    },
+                    {
                         path: 'checkbox',
                         title: 'Checkbox 多选框'
                     },

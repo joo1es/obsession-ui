@@ -52,5 +52,6 @@ export default [
     'spin-props',
     'input-props',
     'image-preview-props',
-    'slider-props'
+    'slider-props',
+    'input-number-props'
 ]

@@ -27,7 +27,9 @@ export const inputProps = {
         default: 'default'
     },
     autofocus: Boolean,
-    tabindex: [String, Number],
+    tabindex: {
+        type: [String, Number]
+    },
     name: String,
     showPasswordIcon: {
         type: Boolean,
@@ -36,7 +38,10 @@ export const inputProps = {
     resize: {
         type: String as PropType<'none' | 'both' | 'horizontal' | 'vertical'>,
         default: 'vertical'
-    }
+    },
+    min: Number,
+    max: Number,
+    step: Number
 }
 
 export type InputProps = ExtractPropTypes<typeof inputProps>
@@ -45,7 +50,11 @@ export default defineComponent({
     name: 'OInput',
     props: inputProps,
     emits: {
-        'update:modelValue': (value: string) => typeof value === 'string'
+        'update:modelValue': (value: string) => ((void value, true)),
+        'blur': (e: Event) => ((void e, true)),
+        'change': (e: Event) => ((void e, true)),
+        'focus': (e: Event) => ((void e, true)),
+        'clear': () => true
     },
     setup(props, { emit }) {
         const inputElementRef = ref<HTMLInputElement | HTMLTextAreaElement>()
@@ -80,6 +89,9 @@ export default defineComponent({
                 autofocus={this.autofocus}
                 tabindex={this.tabindex}
                 name={this.name}
+                onBlur={e => this.$emit('blur', e)}
+                onFocus={e => this.$emit('focus', e)}
+                onChange={e => this.$emit('change', e)}
             />
         ) : (
             <textarea
@@ -96,6 +108,9 @@ export default defineComponent({
                 autofocus={this.autofocus}
                 tabindex={this.tabindex}
                 name={this.name}
+                onBlur={e => this.$emit('blur', e)}
+                onFocus={e => this.$emit('focus', e)}
+                onChange={e => this.$emit('change', e)}
             />
         )
         const Size = this.showWordSize && (
@@ -159,6 +174,7 @@ export default defineComponent({
                                     <div class="o-input__clear">
                                         <div class="o-input__clear-icon" onClick={() => {
                                             this.input = ''
+                                            this.$emit('clear')
                                         }}>
                                             <Icon>
                                                 { this.$slots.clearIcon?.() || <Close /> }

@@ -50,6 +50,7 @@ import oSpin from './spin'
 import oInput from './input'
 import oImagePreview from './image-preview'
 import oSlider from './slider'
+import oInputNumber from './input-number'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -109,6 +110,7 @@ declare module 'vue' {
         oInput: typeof oInput;
         oImagePreview: typeof oImagePreview;
         oSlider: typeof oSlider;
+        oInputNumber: typeof oInputNumber;
     }
     interface Vue {
         $dialog: typeof $dialog,

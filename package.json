@@ -96,7 +96,10 @@
     "stylelint": {
         "extends": [
             "@vant/stylelint-config"
-        ]
+        ],
+        "rules": {
+            "at-rule-no-unknown": null
+        }
     },
     "prettier": {
         "singleQuote": true
