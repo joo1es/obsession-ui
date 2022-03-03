@@ -83,15 +83,22 @@ export default defineComponent({
             )
         `
 
+        const calcPercentage = (percentage: number | string, extra = '') => {
+            const startPoint = 'var(--o-slider-thumb-width) / 2'
+            const distance = '(100% - var(--o-slider-thumb-width))'
+            const percentageString = typeof percentage === 'number' ? percentage / 100 : `( ${percentage} / 100 )`
+            return `calc(${startPoint} + ${distance} * ${percentageString} ${extra})`
+        }
+
         const linearGradient = computed(() => {
             if (Array.isArray(data.value)) {
                 return GetLinearGradient(`
-                    transparent,  transparent var(--o-slider--min-percentage, 0%),
-                    var(--o-slider-track-active-background) var(--o-slider--min-percentage, 0%), var(--o-slider-track-active-background) var(--o-slider--percentage, 0%),
+                    transparent,  transparent ${calcPercentage(minPercentage.value)},
+                    var(--o-slider-track-active-background) ${calcPercentage(minPercentage.value)}, var(--o-slider-track-active-background) ${calcPercentage(percentage.value)},
                 `)
             } 
                 return GetLinearGradient(`
-                    var(--o-slider-track-active-background), var(--o-slider-track-active-background) var(--o-slider--percentage, 0%),
+                    var(--o-slider-track-active-background), var(--o-slider-track-active-background) ${calcPercentage(percentage.value)},
                 `)
             
         })
@@ -104,12 +111,6 @@ export default defineComponent({
                 return Object.entries(props.marks)
             
         })
-
-        const calcPercentage = (percentage: number, extra = '') => {
-            const startPoint = 'var(--o-slider-thumb-width) / 2'
-            const distance = '(100% - var(--o-slider-thumb-width))'
-            return `calc(${startPoint} + ${distance} * ${percentage / 100} ${extra})`
-        }
 
         return {
             data,
@@ -145,8 +146,6 @@ export default defineComponent({
                         'o-slider--range'
                     ]}
                     style={{
-                        '--o-slider--percentage': `${this.percentage}%`,
-                        '--o-slider--min-percentage': `${this.minPercentage}%`,
                         '--o-slider--background-image': this.linearGradient
                     } as CSSProperties}
                     min={this.min}
