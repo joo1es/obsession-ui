@@ -38,13 +38,14 @@
             font-size: 13px;
             line-height: 13px;
             cursor: pointer;
-            filter: drop-shadow(.5px 1px 2px #333);
+            letter-spacing: 1px;
             > .o-badge-value {
                 margin-right: 6px;
             }
             > b {
-                color: #000;
+                color: #ccc;
                 margin-right: 6px;
+                font-weight: normal;
             }
             &.playing {
                 animation: o-image-preview--live-animation 1s infinite;

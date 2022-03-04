@@ -55,6 +55,7 @@ app.use(Slider)
 | reverse | 是否翻转       | _boolean_                                                    | false     |
 | marks | 标记       | _Record\<number, string> \| number[]_                                                    | -     |
 | showTip | 是否显示提示 | _boolean_ | false |
+| disabled | 是否禁用 | _boolean_ | false |
 
 ## 定制
 

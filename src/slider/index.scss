@@ -58,7 +58,6 @@
             border: var(--o-slider-thumb-border);
             transform: var(--o-slider-thumb-transform);
             box-shadow: var(--o-slider-thumb-shadow);
-            cursor: pointer;
             box-sizing: border-box;
             transition: all var(--o-slider-thumb-duration);
         }
@@ -174,6 +173,15 @@
     &.o-slider--reverse {
         .o-slider--tip--content {
             transform: translateX(50%);
+        }
+    }
+    &.o-slider--disabled {
+        opacity: .6;
+        cursor: not-allowed;
+        .o-slider--range {
+            pointer-events: none;
+            &::-webkit-slider-thumb { pointer-events: none; }
+            &::-moz-range-thumb { pointer-events: none; }
         }
     }
 }

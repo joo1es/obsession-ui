@@ -26,7 +26,8 @@ export const sliderProps = {
     marks: {
         type: [Object, Array] as PropType<Record<number, string> | number[]>
     },
-    showTip: Boolean
+    showTip: Boolean,
+    disabled: Boolean
 }
 export type SliderProps = ExtractPropTypes<typeof sliderProps>
 
@@ -132,7 +133,8 @@ export default defineComponent({
                     'o-slider',
                     {
                         'o-slider--vertical': this.vertical,
-                        'o-slider--reverse': this.reverse
+                        'o-slider--reverse': this.reverse,
+                        'o-slider--disabled': this.disabled
                     }
                 ]}
                 style={{
