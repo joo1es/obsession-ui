@@ -34,6 +34,11 @@ export type SliderProps = ExtractPropTypes<typeof sliderProps>
 export default defineComponent({
     name: 'OSlider',
     props: sliderProps,
+    emits: {
+        drag: (e: Event) => ((void e, true)),
+        dragEnd: (e: Event) => ((void e, true)),
+        'update:modelValue': (value?: number | number[]) => ((void value, true))
+    },
     setup(props, { emit }) {
         const dataRef = ref(0)
         const data = useAutoControl(dataRef, props, 'modelValue', emit, { passive: true, deep: true })
@@ -113,10 +118,13 @@ export default defineComponent({
             
         })
 
+        const dragging = ref(false)
+
         return {
             data,
             percentage,
             height,
+            dragging,
             marksMap,
             currentModel,
             secondModel,
@@ -154,6 +162,15 @@ export default defineComponent({
                     max={this.max}
                     step={this.step}
                     v-model={this.currentModel}
+                    onInput={e => {
+                        if (this.dragging) return
+                        this.dragging = true
+                        this.$emit('drag', e)
+                    }}
+                    onChange={e => {
+                        this.dragging = false
+                        this.$emit('dragEnd', e)
+                    }}
                 />
                 {
                     this.showTip && !this.vertical && !Array.isArray(this.data) && (
@@ -182,6 +199,15 @@ export default defineComponent({
                                 max={this.max}
                                 step={this.step}
                                 v-model={this.secondModel}
+                                onInput={e => {
+                                    if (this.dragging) return
+                                    this.dragging = true
+                                    this.$emit('drag', e)
+                                }}
+                                onChange={e => {
+                                    this.dragging = false
+                                    this.$emit('dragEnd', e)
+                                }}
                             />
                         </div>
                     )

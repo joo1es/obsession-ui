@@ -57,6 +57,13 @@ app.use(Slider)
 | showTip | 是否显示提示 | _boolean_ | false |
 | disabled | 是否禁用 | _boolean_ | false |
 
+### Methods
+
+| 参数      | 说明           | 类型                                                                | 默认值 |
+| --------- | -------------- | ------------------------------------------------------------------- | ------ |
+| drag      | 拖动开始       | _(e: Event) => void_          | -     |
+| dragEnd      | 拖动结束       | _(e: Event) => void_          | -     |
+
 ## 定制
 
 ### CSS 变量
