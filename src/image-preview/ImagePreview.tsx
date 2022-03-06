@@ -38,6 +38,14 @@ export const imagePreviewProps = {
     overlay: {
         type: Object as PropType<(Partial<OverlayProps> & Record<string, any>)>,
         default: () => ({})
+    },
+    showIndex: {
+        type: Boolean,
+        default: true
+    },
+    showImageSize: {
+        type: Boolean,
+        default: true
     }
 }
 export type ImagePreviewProps = ExtractPropTypes<typeof imagePreviewProps>
@@ -414,16 +422,21 @@ export default defineComponent({
                                         )
                                     }
                                     {
-                                        this.images.length > 1 && (
+                                        this.showIndex && this.images.length > 1 && (
                                             <div
                                                 class="o-image-preview--cover__index"
                                             >{ (this.indexDefine || 0) + 1 } / { this.images.length }</div>
                                         )
                                     }
-                                    <div
-                                        class="o-image-preview--cover__size"
-                                        v-show={this.size[0]}
-                                    >{ this.size[0] }×{this.size[1]}</div>
+                                    <Transition name="o-image-preview--fade">
+                                        {
+                                            this.showImageSize && this.size[0] && (
+                                                <div
+                                                    class="o-image-preview--cover__size"
+                                                >{ this.size[0] }×{this.size[1]}</div>
+                                            )
+                                        }
+                                    </Transition>
                                     <Space
                                         class="o-image-preview--cover__tool"
                                         align='center'

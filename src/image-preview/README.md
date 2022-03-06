@@ -34,6 +34,8 @@ app.use(ImagePreview)
 | keyboardEvent | 是否启用键盘快捷键 | _boolean_ | true |
 | wheelEvent | 是否启用滚轮快捷键 | _boolean_ | true |
 | overlay | overlay 的 props | _Partial\<OverlayProps> & Record\<string, any>_ | {} |
+| showIndex | 是否显示索引 | _boolean_ | true |
+| showImageSize | 是否显示图片尺寸 | _boolean_ | true |
 
 ### Slots
 
