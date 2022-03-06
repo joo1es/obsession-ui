@@ -44,6 +44,7 @@ app.use(ImagePreview)
 | default | 默认插槽 |
 | cover | 覆盖层插槽 |
 | tools | 右上角工具插槽 |
+| description | point 的描述插槽 |
 
 ## 类型
 

@@ -301,7 +301,7 @@ export default defineComponent({
                                                 top: `${point.position[0] / this.currentSize[0] * 100}%`,
                                                 left: `${point.position[1] / this.currentSize[1] * 100}%`
                                             }}>
-                                                { point.description }
+                                                { this.$slots.description?.({ point }) || point.description }
                                             </div>
                                         ) : (
                                             <div key={index} class={[
@@ -314,7 +314,7 @@ export default defineComponent({
                                                 left: `${point.position[1] / this.currentSize[1] * 100}%`
                                             }}>
                                                 <div>
-                                                    { point.description }
+                                                    { this.$slots.description?.({ point }) || point.description }
                                                 </div>
                                             </div>
                                         )

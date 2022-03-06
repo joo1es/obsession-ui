@@ -64,6 +64,12 @@ app.use(Slider)
 | drag      | 拖动开始       | _(e: Event) => void_          | -     |
 | dragEnd      | 拖动结束       | _(e: Event) => void_          | -     |
 
+### Slots
+
+| 名称    | 说明     | 参数 |
+| ------- | -------- | --- |
+| mark | 标记插槽 | { percentage: number, content: string } |
+
 ## 定制
 
 ### CSS 变量

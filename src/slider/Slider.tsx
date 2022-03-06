@@ -242,7 +242,7 @@ export default defineComponent({
                                             } as CSSProperties}
                                         >
                                             {
-                                                mark[1] && !this.vertical && <div class="o-slider--mark--text">{mark[1]}</div>
+                                                mark[1] && !this.vertical && <div class="o-slider--mark--text">{this.$slots.mark?.({ percentage: mark[0], content: mark[1] }) || mark[1]}</div>
                                             }
                                         </div>
                                     )

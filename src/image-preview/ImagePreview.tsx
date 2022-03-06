@@ -537,6 +537,7 @@ export default defineComponent({
                                             }}
                                             disabled={this.images.length <= 1}
                                             ref="ImageWrapperRef"
+                                            v-slots={this.$slots}
                                         />
                                         { this.previewRender('next', !this.hidePrevNext) }
                                     </div>
