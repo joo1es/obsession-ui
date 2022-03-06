@@ -123,6 +123,7 @@ export default defineComponent({
         const needTouchEvent = computed(() => props.handler)
         const handleTouchStart = (e: TouchEvent) => {
             if (!needTouchEvent.value) return
+            e.stopPropagation()
             transitionDuration.value = 'none'
             startX.value = e.touches[0].pageX
             startY.value = e.touches[0].pageY
