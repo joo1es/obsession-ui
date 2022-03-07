@@ -344,7 +344,7 @@ export default defineComponent({
                                     />
                             ) : null
                         }
-                        { slots.default?.(props.list) || props.title || props.keyIs }
+                        { slots.default?.(props.list) ?? props.title ?? props.keyIs }
                     </div>
                     { slots.suffix?.(slotBind) }
                     { props.arrow === 'right' ? ( slots.arrow?.(slotBind) || arrow.value ) : null }

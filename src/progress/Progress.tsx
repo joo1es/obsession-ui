@@ -201,7 +201,7 @@ export default defineComponent({
                     startPosition={props.startPosition}
                     indeterminate={props.indeterminate}
                 >
-                    { props.showText ? (slots.default?.() || `${props.percentage}%`) : null }
+                    { props.showText ? (slots.default?.() ?? `${props.percentage}%`) : null }
                 </CircleProgressElement>
             )
 
@@ -231,7 +231,7 @@ export default defineComponent({
                     {
                         props.showText && props.type !== 'circle' ? (
                             <span class="o-progress__text">
-                                {slots.default?.() || (!props.indeterminate ? `${props.percentage}%` : '') }
+                                {slots.default?.() ?? (!props.indeterminate ? `${props.percentage}%` : '') }
                             </span>
                         ) : null
                     }

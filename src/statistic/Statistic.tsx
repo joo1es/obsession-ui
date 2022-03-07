@@ -68,7 +68,7 @@ export default defineComponent({
                             </div>
                         ) : null
                     }
-                    { slots.default?.() || slots.value?.() || props.value }
+                    { slots.default?.() ?? slots.value?.() ?? props.value }
                     {
                         slots.suffix || props.suffix ? (
                             <div class="o-statistic__suffix" style={props.suffixStyle}>

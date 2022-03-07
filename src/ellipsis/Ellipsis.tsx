@@ -76,7 +76,7 @@ export default defineComponent({
                     { slots.default?.() }
                 </span>
             )
-            const Title = slots.title?.() || props.title || slots.default?.()
+            const Title = slots.title?.() ?? props.title ?? slots.default?.()
             return (
                 <>
                     {

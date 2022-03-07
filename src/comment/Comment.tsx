@@ -117,10 +117,10 @@ export default defineComponent({
                     <div class="o-comment-body">
                         <div class="o-comment-content">
                             <div class="o-comment-author">
-                                { this.$slots.author?.() || this.author }
+                                { this.$slots.author?.() ?? this.author }
                             </div>
                             <div class="o-comment-plain">
-                                { this.$slots.default?.() || this.content }
+                                { this.$slots.default?.() ?? this.content }
                             </div>
                         </div>
                         {

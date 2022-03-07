@@ -120,7 +120,7 @@ export default defineComponent({
                 {
                     slots.default || props.label ? (
                         <span class={'o-radio--label'}>
-                            { slots.default?.() || props.label }
+                            { slots.default?.() ?? props.label }
                         </span>
                     ) : null
                 }

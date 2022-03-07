@@ -44,7 +44,7 @@ export default defineComponent({
     },
     render() {
         const getSlots = () => {
-            const flattenSlots = flatten(this.$slots.default?.() || [])
+            const flattenSlots = flatten(this.$slots.default?.() ?? [])
             if (this.disabled) return flattenSlots
             const renderSlots = []
             let preIsEllipsis = false

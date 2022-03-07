@@ -129,7 +129,7 @@ export default defineComponent({
                 {
                     slots.default || props.label ? (
                         <span class={'o-checkbox--label'}>
-                            { slots.default?.() || props.label }
+                            { slots.default?.() ?? props.label }
                         </span>
                     ) : null
                 }

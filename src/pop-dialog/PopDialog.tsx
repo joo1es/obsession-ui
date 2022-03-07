@@ -98,7 +98,7 @@ export default defineComponent({
                                 emit('click', e)
                             }}
                         >
-                            { slots.default?.() || props.content }
+                            { slots.default?.() ?? props.content }
                         </div>
                     </div>
                     { AvatarVNode(props.right) }

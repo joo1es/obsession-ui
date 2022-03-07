@@ -45,7 +45,7 @@ export default defineComponent({
                         </div>
                     ) : null
                 }
-                <div class="o-tag--text">{ slots.default?.() || props.label }</div>
+                <div class="o-tag--text">{ slots.default?.() ?? props.label }</div>
                 {
                     props.closable ? (
                         <div class="o-tag--close" onClick={e => {

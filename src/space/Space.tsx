@@ -77,7 +77,7 @@ export default defineComponent({
             return align
         }
         return () => {
-            const defaultSlots = flatten(slots.default?.() || [])
+            const defaultSlots = flatten(slots.default?.() ?? [])
             return (
                 <div
                     class={{
