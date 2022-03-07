@@ -53,5 +53,6 @@ export default [
     'input-props',
     'image-preview-props',
     'slider-props',
-    'input-number-props'
+    'input-number-props',
+    'cascader-props'
 ]

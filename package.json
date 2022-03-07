@@ -114,6 +114,7 @@
         "@use-gesture/vanilla": "^10.2.6",
         "@vicons/utils": "^0.1.4",
         "@vueuse/core": "^7.4.0",
+        "vuedraggable": "^4.1.0",
         "vueuc": "^0.4.18"
     }
 }

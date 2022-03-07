@@ -101,6 +101,10 @@ module.exports = {
                         title: 'Checkbox 多选框'
                     },
                     {
+                        path: 'cascader',
+                        title: 'Cascader 级联'
+                    },
+                    {
                         path: 'radio',
                         title: 'Radio 单选框'
                     },
