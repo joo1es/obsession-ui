@@ -1,5 +1,5 @@
 <template>
-  <o-popover :dark="dark">
+  <o-popover :dark="dark" use-v-show>
     <template #target> 点我 </template>
     <o-button @click="dark = !dark">
       {{ dark ? '黑夜' : '白天' }}

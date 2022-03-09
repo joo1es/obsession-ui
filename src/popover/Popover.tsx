@@ -91,7 +91,8 @@ export const popoverProps = {
     },
     x: Number,
     y: Number,
-    doNotCloseMe: Boolean
+    doNotCloseMe: Boolean,
+    useVShow: Boolean
 }
 
 export type PopoverProps = ExtractPropTypes<typeof popoverProps>;
@@ -249,7 +250,7 @@ export default defineComponent({
                             leaving.value = false
                         }}
                     >
-                        {show.value ? (
+                        { props.useVShow || show.value ? (
                             props.raw ? (
                                 <div
                                     class={popoverClassRef}
@@ -269,6 +270,7 @@ export default defineComponent({
                                             ? `translateX(${props.offset[0]}px) translateY(${props.offset[1]}px)`
                                             : '',
                                     }}
+                                    v-show={!props.useVShow ? true : show.value}
                                     { ...attrs }
                                 >
                                     {slots.default?.()}
@@ -295,6 +297,7 @@ export default defineComponent({
                                             transform: props.offset ? `translateX(${props.offset[0]}px) translateY(${props.offset[1]}px)` : ''
                                         }
                                     }, { style: props.popoverStyle })}
+                                    v-show={!props.useVShow ? true : show.value}
                                     { ...attrs }
                                 >
                                     {props.arrow ? <div class="o-popover-arrow" /> : null}
