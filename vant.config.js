@@ -113,6 +113,10 @@ module.exports = {
                         title: 'Slider 滑块'
                     },
                     {
+                        path: 'switch',
+                        title: 'Switch 开关'
+                    },
+                    {
                         path: 'tag-input',
                         title: 'TagInput 标签输入'
                     },

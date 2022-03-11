@@ -52,6 +52,7 @@ import oImagePreview from './image-preview'
 import oSlider from './slider'
 import oInputNumber from './input-number'
 import oCascader from './cascader'
+import oSwitch from './switch'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -113,6 +114,7 @@ declare module 'vue' {
         oSlider: typeof oSlider;
         oInputNumber: typeof oInputNumber;
         oCascader: typeof oCascader;
+        oSwitch: typeof oSwitch;
     }
     interface Vue {
         $dialog: typeof $dialog,
