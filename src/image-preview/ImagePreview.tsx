@@ -215,6 +215,7 @@ export default defineComponent({
         watch(showDefine, async(define) => {
             if (define) {
                 setTransformOrigin()
+                transform.value = ''
                 init.value = false
                 document.addEventListener('keydown', keyEvent)
                 ImageWrapperRef.value?.reset()
