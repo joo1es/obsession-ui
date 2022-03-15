@@ -1,5 +1,5 @@
 import { useResizeObserver } from '@vueuse/core'
-import { ref, defineComponent, ExtractPropTypes, VNode, PropType, computed, watch, nextTick, onUpdated, onMounted, Transition, CSSProperties, onActivated, onDeactivated } from 'vue'
+import { ref, defineComponent, ExtractPropTypes, VNode, PropType, computed, watch, nextTick, onUpdated, onMounted, Transition, CSSProperties, onActivated } from 'vue'
 
 import Space, { SpaceProps } from '../space'
 import XScroll, { XScrollProps } from '../x-scroll'
@@ -91,10 +91,8 @@ export default defineComponent({
         })
         onUpdated(getLeft)
         onMounted(getLeft)
-        onDeactivated(() => {
-            init.value = false
-        })
         onActivated(() => {
+            init.value = false
             setTimeout(() => {
                 init.value = true
             })
