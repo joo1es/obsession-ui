@@ -54,15 +54,18 @@ export default defineComponent({
         const scrollRef = ref<InstanceType<typeof XScroll> | null>(null)
         const activeTabTitle = ref<null | HTMLDivElement>(null)
         const tabsRef = ref<null | HTMLDivElement>(null)
+        const init = ref(false)
 
         const left = ref(0)
         const width = ref('0px')
-        const getLeft = () => {
+        const getLeft = async() => {
             if (!activeTabTitle.value || !props.showLine || props.card) return
-            nextTick(() => {
-                if (!activeTabTitle.value) return
-                left.value = activeTabTitle.value.offsetLeft + activeTabTitle.value.offsetWidth / 2
-                width.value = activeTabTitle.value.offsetWidth + 'px'
+            await nextTick()
+            if (!activeTabTitle.value) return
+            left.value = activeTabTitle.value.offsetLeft + activeTabTitle.value.offsetWidth / 2
+            width.value = activeTabTitle.value.offsetWidth + 'px'
+            setTimeout(() => {
+                init.value = true
             })
         }
 
@@ -89,7 +92,7 @@ export default defineComponent({
         onUpdated(getLeft)
         onMounted(getLeft)
 
-        useResizeObserver(tabsRef, getLeft)
+        useResizeObserver(activeTabTitle, getLeft)
 
         const spaceSize = computed<[string | number, string | number]>(() => {
             if (!props.spaceProps || !props.spaceProps.size) return [props.card ? 0 : 20, 0]
@@ -117,7 +120,8 @@ export default defineComponent({
             spaceSize,
             scrollRef,
             widthComputed,
-            propsHandle
+            propsHandle,
+            init
         }
     },
     render() {
@@ -136,7 +140,7 @@ export default defineComponent({
                     <XScroll ref="scrollRef" {...this.xScrollProps}>
                         <Space {...this.spaceProps} wrap={false} size={this.spaceSize} v-slots={{
                             suffix: this.showLine && !this.card ? () => (
-                                <div class="o-tabs--line" style={{ left: this.left + 'px', width: this.widthComputed }} />
+                                <div class="o-tabs--line" style={{ left: this.left + 'px', width: this.widthComputed, transition: this.init ? undefined : 'none' }} />
                             ) : undefined
                         }}>
                             { this.$slots?.prefix?.() }
