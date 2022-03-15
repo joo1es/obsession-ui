@@ -62,8 +62,12 @@ export default defineComponent({
             if (!activeTabTitle.value || !props.showLine || props.card) return
             await nextTick()
             if (!activeTabTitle.value) return
-            left.value = activeTabTitle.value.offsetLeft + activeTabTitle.value.offsetWidth / 2
-            width.value = activeTabTitle.value.offsetWidth + 'px'
+            const leftValue = activeTabTitle.value.offsetLeft + activeTabTitle.value.offsetWidth / 2
+            const widthValue = activeTabTitle.value.offsetWidth
+            if (leftValue && widthValue) {
+                left.value = leftValue
+                width.value = widthValue + 'px'
+            }
             setTimeout(() => {
                 init.value = true
             })
