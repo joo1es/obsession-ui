@@ -59,6 +59,9 @@ export default defineComponent({
         const left = ref(0)
         const width = ref('0px')
         const getLeft = async() => {
+            setTimeout(() => {
+                init.value = true
+            })
             if (!activeTabTitle.value || !props.showLine || props.card) return
             await nextTick()
             if (!activeTabTitle.value) return
@@ -68,9 +71,6 @@ export default defineComponent({
                 left.value = leftValue
                 width.value = widthValue + 'px'
             }
-            setTimeout(() => {
-                init.value = true
-            })
         }
 
         const widthComputed = computed(() => props.lineWidth ? addUnit(props.lineWidth) : width.value)
