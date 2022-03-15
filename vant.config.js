@@ -134,6 +134,10 @@ module.exports = {
                 title: '展示组件',
                 items: [
                     {
+                        path: 'tabs',
+                        title: 'Tabs 标签页'
+                    },
+                    {
                         path: 'table',
                         title: 'Table 表格'
                     },

@@ -95,6 +95,7 @@ export default defineComponent({
             } as CSSProperties
                     }
                 >
+                    {slots.perfix?.()}
                     {defaultSlots.map((vNode, index) => (
                         <div
                             class={{
@@ -110,6 +111,7 @@ export default defineComponent({
                             {vNode}
                         </div>
                     ))}
+                    {slots.suffix?.()}
                 </div>
             )
         }

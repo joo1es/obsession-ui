@@ -91,3 +91,5 @@ app.use(Space)
 | 名称    | 说明     |
 | ------- | -------- |
 | default | 默认插槽 |
+| prefix | 前置插槽 |
+| suffix | 后置插槽 |

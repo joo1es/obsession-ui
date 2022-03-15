@@ -53,6 +53,8 @@ import oSlider from './slider'
 import oInputNumber from './input-number'
 import oCascader from './cascader'
 import oSwitch from './switch'
+import oTabs from './tabs'
+import oTab from './tab'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -115,6 +117,8 @@ declare module 'vue' {
         oInputNumber: typeof oInputNumber;
         oCascader: typeof oCascader;
         oSwitch: typeof oSwitch;
+        oTabs: typeof oTabs;
+        oTab: typeof oTab;
     }
     interface Vue {
         $dialog: typeof $dialog,

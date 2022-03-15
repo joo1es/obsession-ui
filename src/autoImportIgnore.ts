@@ -55,5 +55,7 @@ export default [
     'slider-props',
     'input-number-props',
     'cascader-props',
-    'switch-props'
+    'switch-props',
+    'tabs-props',
+    'tab-props'
 ]
