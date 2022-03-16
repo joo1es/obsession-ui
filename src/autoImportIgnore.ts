@@ -57,5 +57,6 @@ export default [
     'cascader-props',
     'switch-props',
     'tabs-props',
-    'tab-props'
+    'tab-props',
+    'carousel-props'
 ]

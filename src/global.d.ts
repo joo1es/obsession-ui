@@ -55,6 +55,7 @@ import oCascader from './cascader'
 import oSwitch from './switch'
 import oTabs from './tabs'
 import oTab from './tab'
+import oCarousel from './carousel'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -119,6 +120,7 @@ declare module 'vue' {
         oSwitch: typeof oSwitch;
         oTabs: typeof oTabs;
         oTab: typeof oTab;
+        oCarousel: typeof oCarousel;
     }
     interface Vue {
         $dialog: typeof $dialog,

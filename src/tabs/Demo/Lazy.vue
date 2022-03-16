@@ -1,5 +1,5 @@
 <template>
-    <o-tabs closable lazy>
+    <o-tabs closable lazy :swipe-animation="false">
         <o-tab>
             <template #title>
                 只要热烈，都好过温存

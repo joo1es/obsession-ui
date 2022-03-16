@@ -20,13 +20,16 @@ app.use(Tab)
 #### 基础用法
 
 <demo-code transform>./Demo/Basic.vue</demo-code>
-:::
+
+#### 标题位置
+
+<demo-code transform>./Demo/Position.vue</demo-code>
 
 #### 可关闭，卡片式
 
 <demo-code transform>./Demo/Card.vue</demo-code>
 
-#### 惰性渲染
+#### 惰性渲染、关闭切换动画
 
 <demo-code transform>./Demo/Lazy.vue</demo-code>
 
@@ -52,6 +55,8 @@ OTab 上组件的 attrs 会被集成到 标题对应的 dom 上
 | titleOnly | 是否仅显示标题 | _boolean_ | false |
 | lazy | 是否惰性渲染（使用 v-if）| _boolean_ | false |
 | card | 是否使用卡片模式 | _boolean_ | false |
+| swipeAnimation | 是否使用切换动画 | _boolean_ | false |
+| position | 标题位置 | _'top' \| 'left' \| 'right' \| 'left' \| 'none'_ | 'top' |
 
 ### Methods
 

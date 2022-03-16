@@ -138,6 +138,10 @@ module.exports = {
                         title: 'Tabs 标签页'
                     },
                     {
+                        path: 'carousel',
+                        title: 'Carousel 轮播图'
+                    },
+                    {
                         path: 'table',
                         title: 'Table 表格'
                     },

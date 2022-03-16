@@ -16,6 +16,8 @@
     --o-tabs-card-title-padding: 0;
     --o-tabs-card-title-font-size: 13px;
     --o-tabs-card-title-color: #333;
+    --o-tabs-title-vertical-padding: 10px 0;
+    --o-tabs-title-vertical-cell-padding: 0 10px;
 }
 
 .o-tabs {
@@ -38,9 +40,15 @@
             padding: var(--o-tabs-title-cell-padding);
             display: flex;
             align-items: center;
-            &:hover,
             &--active {
                 color: var(--o-tabs-active-color);
+            }
+            &:not(.o-tabs--title--cell--disabled):hover {
+                color: var(--o-tabs-active-color);
+            }
+            &--disabled {
+                opacity: .6;
+                cursor: not-allowed;
             }
             &--close {
                 font-size: var(--o-tabs-title-close-font-size);
@@ -95,6 +103,63 @@
             .o-tabs--title--cell--active {
                 background-color: var(--o-tabs-card-title-active-background);
             }
+        }
+    }
+    &--bottom {
+        .o-tabs--title {
+            &::after {
+                bottom: initial;
+                top: 0;
+            }
+        }
+        .o-tabs--line {
+            bottom: inherit;
+            top: 0;
+        }
+    }
+    &--left,
+    &--right {
+        display: flex;
+        width: 100%;
+        .o-tabs--wrapper {
+            flex: 1;
+            overflow: hidden;
+        }
+        .o-tabs--title {
+            padding: var(--o-tabs-title-vertical-padding);
+            &::after {
+                bottom: initial;
+                top: 0;
+                right: 0;
+                border-bottom: 0;
+                height: 100%;
+                border-right: var(--o-tabs-title-border);
+                width: auto;
+                left: initial
+            }
+            &--cell {
+                padding: var(--o-tabs-title-vertical-cell-padding);
+            }
+        }
+        .o-tabs--line {
+            bottom: initial;
+            left: initial;
+            width: var(--o-tabs-line-height);
+            right: 0;
+            top: 0;
+            transform: translateY(-50%);
+        }
+    }
+    &--right {
+        .o-tabs--title {
+            &::after {
+                right: initial;
+                left: 0;
+            }
+        }
+        .o-tabs--line {
+            right: initial;
+            left: 0;
         }
     }
 }

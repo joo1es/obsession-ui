@@ -1,0 +1,114 @@
+:root {
+    --o-carousel-transition-duration: .3s;
+    --o-carousel-height: 300px;
+    --o-carousel-cell-background: #ddd;
+    --o-carousel-indicators-margin: 10px;
+    --o-carousel-indicator-size: 6px;
+    --o-carousel-indicator-active-size: 30px;
+    --o-carousel-indicator-margin: 3px;
+    --o-carousel-indicator-background: rgba(255, 255, 255, .6);
+    --o-carousel-indicator-active-background: #fff;
+    --o-carousel-arrow-size: 40px;
+    --o-carousel-arrow-font-size: 12px;
+    --o-carousel-arrow-margin: 15px;
+    --o-carousel-arrow-color: #fff;
+    --o-carousel-arrow-background: rgba(0, 0, 0, .1);
+    --o-carousel-arrow-active-background: rgba(0, 0, 0, .2);
+}
+
+.o-carousel {
+    position: relative;
+    overflow: hidden;
+    height: var(--o-carousel-height);
+    &--wrapper {
+        white-space: nowrap;
+        height: 100%;
+        transition: var(--o-carousel-transition-duration);
+    }
+    &--cell {
+        width: 100%;
+        height: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        vertical-align: middle;
+        background: var(--o-carousel-cell-background);
+        > img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+    &--indicators {
+        position: absolute;
+        bottom: var(--o-carousel-indicators-margin);
+        right: var(--o-carousel-indicators-margin);
+        display: flex;
+    }
+    &--indicator {
+        width: var(--o-carousel-indicator-size);
+        height: var(--o-carousel-indicator-size);
+        margin: var(--o-carousel-indicator-margin);
+        border-radius: calc(var(--o-carousel-indicator-size) / 2);
+        background: var(--o-carousel-indicator-background);
+        transition: var(--o-carousel-transition-duration);
+        &--active {
+            background: var(--o-carousel-indicator-active-background);
+            width: var(--o-carousel-indicator-active-size);
+        }
+    }
+    &--arrow {
+        position: absolute;
+        height: 100%;
+        top: 0;
+        display: flex;
+        align-items: center;
+        font-size: var(--o-carousel-arrow-font-size);
+        pointer-events: none;
+        transition: var(--o-carousel-transition-duration);
+        > .o-icon {
+            pointer-events: all;
+            background: var(--o-carousel-arrow-background);
+            color: var(--o-carousel-arrow-color);
+            width: var(--o-carousel-arrow-size);
+            height: var(--o-carousel-arrow-size);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--o-carousel-transition-duration);
+            &:hover {
+                background-color: var(--o-carousel-arrow-active-background);
+            }
+        }
+        &-left {
+            left: var(--o-carousel-arrow-margin);
+        }
+        &-right {
+            right: var(--o-carousel-arrow-margin);
+        }
+        &.o-carouel--arrow-hover {
+            opacity: 0;
+        }
+    }
+    &:hover {
+        .o-carouel--arrow-hover {
+            opacity: 1;
+        }
+    }
+    &-vertical {
+        .o-carousel--indicators {
+            bottom: var(--o-carousel-indicators-margin);
+            left: var(--o-carousel-indicators-margin);
+            right: initial;
+            flex-direction: column;
+            .o-carousel--indicator--active {
+                height: var(--o-carousel-indicator-active-size);
+                width: initial;
+            }
+        }
+        .o-carousel--wrapper {
+            white-space: normal;
+        }
+    }
+}
