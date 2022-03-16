@@ -76,6 +76,7 @@
         padding: var(--o-tabs-tab-padding);
         font-size: var(--o-tabs-tab-font-size);
         box-sizing: border-box;
+        white-space: initial;
     }
     &--line {
         position: absolute;
