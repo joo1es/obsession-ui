@@ -17,10 +17,10 @@ export const tabsProps = {
         default: 300
     },
     spaceProps: {
-        type: Object as PropType<SpaceProps & Record<any, any>>
+        type: Object as PropType<Partial<SpaceProps> & Record<any, any>>
     },
     xScrollProps: {
-        type: Object as PropType<XScrollProps & Record<any, any>>
+        type: Object as PropType<Partial<XScrollProps> & Record<any, any>>
     },
     showLine: {
         type: Boolean,
