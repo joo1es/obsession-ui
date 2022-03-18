@@ -58,5 +58,6 @@ export default [
     'switch-props',
     'tabs-props',
     'tab-props',
-    'carousel-props'
+    'carousel-props',
+    'rate-props'
 ]

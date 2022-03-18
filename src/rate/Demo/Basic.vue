@@ -1,0 +1,3 @@
+<template>
+    <o-rate />
+</template>

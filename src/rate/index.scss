@@ -1,0 +1,37 @@
+:root {
+    --o-rate-color: #cdd0d6;
+    --o-rate-active-color: rgb(243, 181, 51);
+    --o-rate-size: 18px;
+    --o-rate-gap: 5px;
+    --o-rate-text-size: 14px;
+}
+
+.o-rate {
+    display: inline-flex;
+    align-items: center;
+    &-rate {
+        display: inline-flex;
+        &:not(:first-child) {
+            margin-left: var(--o-rate-gap);
+        }
+        &-icon {
+            font-size: var(--o-rate-size);
+            color: var(--o-rate-color);
+            transition: .2s;
+        }
+        &--active {
+            .o-rate-rate-icon {
+                color: var(--o-rate-active-color);
+            }
+        }
+        &--hover {
+            .o-rate-rate-icon {
+                transform: scale(1.2);
+            }
+        }
+    }
+    &-text {
+        margin-left: calc(var(--o-rate-gap) * 1.5);
+        font-size: var(--o-rate-text-size);
+    }
+}

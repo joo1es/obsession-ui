@@ -127,6 +127,10 @@ module.exports = {
                     {
                         path: 'tree',
                         title: 'Tree 树'
+                    },
+                    {
+                        path: 'rate',
+                        title: 'Rate 评分',
                     }
                 ]
             },
