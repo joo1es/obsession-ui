@@ -36,7 +36,7 @@ app.use(Popover)
 
 ### Props
 
-调用全局 closeAllPopovers，可以关闭所有的 popover
+调用全局 closeAllPopovers，可以关闭所有的 popover。添加 data-o-popover-wrapper 属性可以避免触发 clickoutside。
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
