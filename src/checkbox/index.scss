@@ -28,6 +28,7 @@
         background: var(--o-checkbox-background);
         border: 1px solid var(--o-checkbox-border-color);
         transition: background .2s, border .2s;
+        box-sizing: border-box;
     }
     &--label {
         padding-left: .4em;
