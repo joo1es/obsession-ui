@@ -134,7 +134,7 @@ export default defineComponent({
         const popoverId = Math.random().toString(36).slice(-8)
         onClickOutside(popoverRef, (event) => {
             if (!props.closeOnClickOutside) return
-            const { path } = event as PointerEvent & { path: HTMLElement[] }
+            const path = (event as PointerEvent & { path: HTMLElement[] })?.path || (event as PointerEvent & { composedPath: () => HTMLElement[] })?.composedPath() || []
             for (const el of path) {
                 const wpPopover = el.getAttribute?.('_o_popover_')
                 if (wpPopover === popoverId) return
