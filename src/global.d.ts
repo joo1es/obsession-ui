@@ -57,6 +57,8 @@ import oTabs from './tabs'
 import oTab from './tab'
 import oCarousel from './carousel'
 import oRate from './rate'
+import oTimeline from './timeline'
+import oTimelineItem from './timeline-item'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -123,6 +125,8 @@ declare module 'vue' {
         oTab: typeof oTab;
         oCarousel: typeof oCarousel;
         oRate: typeof oRate;
+        oTimeline: typeof oTimeline;
+        oTimelineItem: typeof oTimelineItem;
     }
     interface Vue {
         $dialog: typeof $dialog,

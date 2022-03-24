@@ -146,6 +146,10 @@ module.exports = {
                         title: 'Carousel 轮播图'
                     },
                     {
+                        path: 'timeline',
+                        title: 'Timeline 时间线'
+                    },
+                    {
                         path: 'table',
                         title: 'Table 表格'
                     },

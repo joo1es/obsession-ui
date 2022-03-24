@@ -1,8 +1,15 @@
 import { useFocus } from '@vueuse/core'
-import { ref, defineComponent, ExtractPropTypes, computed, Component, PropType, h } from 'vue'
+import { ref, defineComponent, ExtractPropTypes, computed, Component, PropType, h, watch } from 'vue'
 import Icon from '../icon'
 import { Close, EyeOutline as EyeOutlined, EyeOffOutline as EyeInvisibleOutlined } from '@vicons/ionicons5'
 import { useAutoControl } from '../utils'
+import Popover from '../popover'
+import Spin from '../spin'
+
+export type AutocompleteList = {
+    value: string,
+    label?: string
+} & Record<string, any>
 
 export const inputProps = {
     modelValue: {
@@ -41,7 +48,11 @@ export const inputProps = {
     },
     min: Number,
     max: Number,
-    step: Number
+    step: Number,
+    autocomplete: Boolean,
+    autocompleteList: {
+        type: [Array, Function] as PropType<AutocompleteList[] | ((keyword: string) => Promise<AutocompleteList[]>)>
+    }
 }
 
 export type InputProps = ExtractPropTypes<typeof inputProps>
@@ -54,7 +65,7 @@ export default defineComponent({
         'blur': (e: Event) => ((void e, true)),
         'change': (e: Event) => ((void e, true)),
         'focus': (e: Event) => ((void e, true)),
-        'clear': () => true
+        'clear': (e: MouseEvent) => ((void e, true))
     },
     setup(props, { emit }) {
         const inputElementRef = ref<HTMLInputElement | HTMLTextAreaElement>()
@@ -67,12 +78,68 @@ export default defineComponent({
 
         const showPassword = ref(true)
 
+        const autocompleteListMap = ref<AutocompleteList[]>([])
+        const autocompleteLoading = ref(false)
+        const autocompleteActive = ref(-1)
+
+        watch([input, focused], async() => {
+            if (!focused.value) return
+            if (props.autocomplete && !props.disabled && !props.readonly) {
+                try {
+                    autocompleteLoading.value = true
+                    if (!props.autocompleteList) {
+                        autocompleteListMap.value = []
+                    } else if (Array.isArray(props.autocompleteList)) {
+                            if (!input.value) {
+                                autocompleteListMap.value = props.autocompleteList
+                            } else {
+                                const regExp = new RegExp(input.value.trim(), 'i')
+                                autocompleteListMap.value = props.autocompleteList.filter(item => regExp.test(item.label || '') || regExp.test(item.value))
+                            }
+                        } else {
+                            const inputingIs = input.value
+                            const result = await props.autocompleteList(input.value || '')
+                            if (inputingIs === input.value) {
+                                autocompleteListMap.value = result
+                            }
+                        }
+                } finally {
+                    autocompleteActive.value = -1
+                    autocompleteLoading.value = false
+                }
+            }
+        }, {
+            immediate: true
+        })
+
+        const onFocus = (event: Event) => {
+            emit('focus', event)
+        }
+
+        const focusedTimeout = ref(focused.value)
+        let timer: ReturnType<typeof setTimeout> 
+        watch(focused, () => {
+            if (timer) clearTimeout(timer)
+            if (focused.value) {
+                focusedTimeout.value = true
+            } else {
+                timer = setTimeout(() => {
+                    focusedTimeout.value = false
+                }, 50)
+            }
+        })
+
         return {
             input,
             focused,
             inputElementRef,
             clearable,
-            showPassword
+            showPassword,
+            autocompleteListMap,
+            autocompleteLoading,
+            autocompleteActive,
+            focusedTimeout,
+            onFocus
         }
     },
     render() {
@@ -122,7 +189,7 @@ export default defineComponent({
                 }
             </div>
         )
-        return (
+        const Input = (
             <div class={[
                 'o-input',
                 `o-input-${this.size}`,
@@ -130,7 +197,27 @@ export default defineComponent({
                     'o-input--disabled': this.disabled,
                     'o-input--focused': this.focused
                 }
-            ]}>
+            ]} {...this.$attrs} onKeydown={e => {
+                if (!this.autocomplete || this.disabled || this.readonly) return
+                if (e.code === 'ArrowDown') {
+                    if (this.autocompleteActive === this.autocompleteListMap.length - 1) {
+                        this.autocompleteActive = 0
+                        return
+                    }
+                    this.autocompleteActive += 1
+                }
+                if (e.code === 'ArrowUp') {
+                    if (this.autocompleteActive <= 0) {
+                        this.autocompleteActive = this.autocompleteListMap.length - 1
+                        return
+                    }
+                    this.autocompleteActive -= 1
+                }
+                if (e.code === 'Enter' && this.autocompleteActive >= 0) {
+                    this.input = this.autocompleteListMap[this.autocompleteActive].value
+                    this.focused = false
+                }
+            }}>
                 {
                     (this.prefix || this.$slots.prefix) && (
                         <div class="o-input--prefix">
@@ -172,9 +259,9 @@ export default defineComponent({
                             {
                                 this.clearable && (
                                     <div class="o-input__clear">
-                                        <div class="o-input__clear-icon" onClick={() => {
+                                        <div class="o-input__clear-icon" onClick={(ev) => {
                                             this.input = ''
-                                            this.$emit('clear')
+                                            this.$emit('clear', ev)
                                         }}>
                                             <Icon>
                                                 { this.$slots.clearIcon?.() || <Close /> }
@@ -183,10 +270,64 @@ export default defineComponent({
                                     </div>
                                 )
                             }
+                            {
+                                this.$slots.suffix?.() || (
+                                    this.suffix && <Icon>{h(this.suffix)}</Icon>
+                                )
+                            }
                         </div>
                     )
                 }
             </div>
         )
+        return (
+            this.autocomplete && !this.disabled && !this.readonly ? (
+                <Popover
+                    placement={'bottom'}
+                    width={'target'}
+                    v-model={this.focusedTimeout}
+                    trigger="none"
+                    class="o-autocomplete"
+                >
+                    {{
+                        target: () => Input,
+                        default: () => (
+                            !this.autocompleteLoading ? (
+                                this.autocompleteListMap.length === 0 ? (
+                                    <div class="o-autocomplete-empty">
+                                        暂无数据
+                                    </div>
+                                ) : (
+                                    this.autocompleteListMap.map((item, index) => (
+                                        this.$slots.autocompleteItem?.({ input: this.input, ...item }) || (
+                                            <div
+                                                class={[
+                                                    'o-autocomplete-cell',
+                                                    {
+                                                        'o-autocomplete-cell--active': this.autocompleteActive === index
+                                                    }
+                                                ]}
+                                                onClick={e => {
+                                                    e.stopPropagation()
+                                                    this.input = item.value
+                                                }}
+                                                key={item.value}
+                                            >
+                                                { item.label || item.value }
+                                            </div>
+                                        )
+                                    ))
+                                )
+                            ) : (
+                                <div class="o-autocomplete-empty">
+                                    <Spin size="24" />
+                                </div>
+                            )
+                        )
+                    }}
+                </Popover>
+            ) : Input
+        )
     }
 })
+

@@ -20,6 +20,10 @@ app.use(Input)
 
 <demo-code transform>./demo/Basic.vue</demo-code>
 
+#### 自动填充
+
+<demo-code transform>./demo/Autocomplete.vue</demo-code>
+
 #### 密码
 
 <demo-code transform>./demo/Password.vue</demo-code>
@@ -58,6 +62,8 @@ app.use(Input)
 | min | 最小值，原生属性 | _number_ | - |
 | max | 最大值，原生属性 | _number_ | - |
 | step | 步长，原生属性 | _number_ | - |
+| autocomplete | 是否启用自动填充 | _boolean_ | false |
+| autocompleteList | 自动填充列表，如果输入的是一个数组，则会通过正则匹配排除过滤项 | _AutocompleteList[] \| ((keyword: string) => Promise\<AutocompleteList[]>)_ | - |
 
 ### Methods
 

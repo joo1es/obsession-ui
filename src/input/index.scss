@@ -124,3 +124,28 @@
         --o-input-line-height: 38px;
     }
 }
+
+.o-autocomplete {
+    font-size: 15px;
+    .o-popover-content {
+        padding: 5px 0;
+        max-height: 200px;
+        overflow: auto;
+    }
+    &-cell {
+        padding: 5px 10px;
+        cursor: default;
+        &:hover {
+            background-color: #fcfcfc;
+        }
+        &--active {
+            background-color: #f5f5f5 !important;
+        }
+    }
+    &-empty {
+        text-align: center;
+        padding: 20px;
+        color: #ccc;
+    }
+}
+
