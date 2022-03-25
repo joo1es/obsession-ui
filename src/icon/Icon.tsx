@@ -27,9 +27,9 @@ export default defineComponent({
                     },
                     class: 'o-icon'
                 },
-                h('svg', null, {
+                {
                     default: slots.default || (() => h('i', { class: props.name }))
-                })
+                }
             )
         )
     },
