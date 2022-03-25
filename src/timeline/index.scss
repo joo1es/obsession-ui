@@ -5,3 +5,9 @@
 .o-timeline {
     font-size: var(--o-timeline-font-size);
 }
+
+.o-timeline--horizontal {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}

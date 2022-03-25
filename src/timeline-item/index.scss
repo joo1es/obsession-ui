@@ -41,7 +41,7 @@
             width: var(--o-timeline-item-line-width);
             background: var(--o-timeline-item-line-color);
             margin-top: .5em;
-            transition: var(--o-timeline-duration);
+            transition: color var(--o-timeline-duration);
         }
     }
     @mixin label {
@@ -101,3 +101,71 @@
         }
     }
 }
+
+.o-timeline--horizontal {
+    .o-timeline-item {
+        flex-direction: column;
+        flex: 1;
+        &-label {
+            width: auto;
+            height: calc(var(--o-timeline-label-width) / 2);
+            display: flex;
+            align-items: flex-end;
+        }
+        &-line {
+            height: var(--o-timeline-line-width);
+            width: auto;
+            flex-direction: row;
+            position: relative;
+            &-self {
+                width: 100%;
+                height: var(--o-timeline-item-line-width);
+                margin-left: .5em;
+                margin-right: .5em;
+                margin-top: 0;
+            }
+            &-icon,
+            &-dot {
+                margin-top: 0;
+                .o-icon {
+                    vertical-align: middle;
+                }
+            }
+        }
+        &-content {
+            padding-bottom: 0 !important;
+        }
+        &:last-of-type {
+            .o-timeline-item-line-self {
+                display: block;
+            }
+        }
+        &--left {
+            .o-timeline-item-label {
+                text-align: left;
+            }
+        }
+        &--right {
+            .o-timeline-item-label {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+        &--alternate {
+            .o-timeline-item-label {
+                flex: initial;
+                width: 100%;
+                justify-content: center;
+            }
+            .o-timeline-item-content {
+                text-align: center;
+            }
+        }
+        &:not(.o-timeline-item--relative) {
+            .o-timeline-item-label {
+                display: none;
+            }
+        }
+    }
+}
+
