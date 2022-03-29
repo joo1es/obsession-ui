@@ -102,6 +102,8 @@
     }
 }
 
+.o-modal-fade-enter-active,
+.o-modal-fade-leave-active,
 .o-modal-left-enter-active,
 .o-modal-left-leave-active,
 .o-modal-right-enter-active,
@@ -111,11 +113,6 @@
 .o-modal-bottom-enter-active,
 .o-modal-bottom-leave-active {
     transition: var(--o-modal-duration);
-}
-
-.o-modal-fade-enter-active,
-.o-modal-fade-leave-active {
-    transition: var(--o-modal-duration) cubic-bezier(.2, -.5, .2, 2);
 }
 
 .o-modal-fade-enter-from,
