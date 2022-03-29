@@ -27,11 +27,7 @@ export default defineComponent({
     render() {
         return (
             <div class={this.basic}>
-                <div class={this.of('icon')}>
-                    <Icon>
-                        {this.$slots.icon?.() || this.icon}
-                    </Icon>
-                </div>
+                <div class={this.of('icon')}><Icon>{this.$slots.icon?.() || this.icon}</Icon></div>
                 {
                     (this.$slots.message || this.message) && (
                         <div class={this.of('message')}>
