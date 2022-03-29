@@ -228,6 +228,10 @@ module.exports = {
                     {
                         path: 'badge',
                         title: 'Badge 徽章',
+                    },
+                    {
+                        path: 'result',
+                        title: 'Result 结果',
                     }
                 ],
             },

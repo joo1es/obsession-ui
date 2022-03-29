@@ -164,7 +164,7 @@ export default defineComponent({
             propsHandle,
             init,
             update: getLeft,
-            scrollToView，
+            scrollToView,
             tabsTitle
         }
 
