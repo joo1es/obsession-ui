@@ -72,9 +72,9 @@ const specToast = (color: string, icon: Component) => {
     }
 }
 
-Toast.success = specToast('var(--wp-color-success)', CheckCircleFilled)
-Toast.warning = specToast('var(--wp-color-warning)', WarningFilled)
-Toast.info = specToast('var(--wp-color-info)', InfoCircleFilled)
-Toast.error = specToast('var(--wp-color-danger)', CloseCircleFilled)
+Toast.success = specToast('var(--success-color)', CheckCircleFilled)
+Toast.warning = specToast('var(--warning-color)', WarningFilled)
+Toast.info = specToast('var(--primary-color)', InfoCircleFilled)
+Toast.error = specToast('var(--danger-color)', CloseCircleFilled)
 
 export default Toast
