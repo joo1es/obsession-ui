@@ -42,6 +42,8 @@ app.use(ScrollList)
 | base | 播放时以哪个元素为基准 | _'first' \| 'last'_ | 'first' |
 | reverse | 反向播放     | _boolean_                                                    | true     |
 | autoUpdate | 是否自动更新元素。设置为 `true` 时，元素发生任意变化就会重置元素位置。设置为 `false` 时，可主动调用 `update` 方法更新元素 | _boolean_ | true |
+| count | 一次滚动的数量 | _number_ | 1 |
+| linear | 是否使用线性动画 | _boolean_ | false |
 
 ### Expose
 
