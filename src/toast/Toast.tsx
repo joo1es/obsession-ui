@@ -1,6 +1,8 @@
-import { createApp, defineComponent, ref, VNode, Transition, Teleport, App, CSSProperties } from 'vue'
+import { createApp, defineComponent, ref, VNode, Transition, Teleport, App, CSSProperties, Component, h } from 'vue'
 
 import { getMaxZIndex } from '../utils'
+import Icon from '../icon'
+import { AlertCircle, InformationCircle, CloseCircle, CheckmarkCircle } from '@vicons/ionicons5'
 
 export interface ToastOptions {
     dark?: boolean;
@@ -56,25 +58,23 @@ Toast.install = (app: App<Element>) => {
     app.config.globalProperties.$toast = Toast
 }
 
-const specToast = (color: string, icon: Component) => {
-    return (message: string | VNode, options: Omit<ToastOptions, 'message'> = {}) => {
-        Toast({
-            ...options,
-            message: 
-                h('div', { class: 'wp-toast--spec' }, {
-                    default: () => [h(Icon, {
-                        color
-                    }, {
-                        default: () => h(icon)
-                    }), message]
-                })
-        })
-    }
+const specToast = (color: string, icon: Component) => (message: string | VNode, options: Omit<ToastOptions, 'message'> = {}) => {
+    Toast({
+        ...options,
+        message: 
+            h('div', { class: 'o-toast--spec' }, {
+                default: () => [h(Icon, {
+                    color
+                }, {
+                    default: () => h(icon)
+                }), message]
+            })
+    })
 }
 
-Toast.success = specToast('var(--success-color)', CheckCircleFilled)
-Toast.warning = specToast('var(--warning-color)', WarningFilled)
-Toast.info = specToast('var(--primary-color)', InfoCircleFilled)
-Toast.error = specToast('var(--danger-color)', CloseCircleFilled)
+Toast.success = specToast('var(--success-color)', CheckmarkCircle)
+Toast.warning = specToast('var(--warning-color)', AlertCircle)
+Toast.info = specToast('var(--primary-color)', InformationCircle)
+Toast.error = specToast('var(--danger-color)', CloseCircle)
 
 export default Toast

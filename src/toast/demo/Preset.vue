@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts" setup>
-import { h } from 'vue'
+import Toast from '../Toast'
 
 const tip = () => Toast.success('我成功了！')
 const tip1 = () => Toast.warning('我被警告了了！')

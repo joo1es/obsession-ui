@@ -40,6 +40,15 @@
     }
 }
 
+
+.o-toast--spec {
+    display: flex;
+    align-items: center;
+    > .o-icon {
+        margin-right: .5em;
+    }
+}
+
 .o-toast-fade-enter-active,
 .o-toast-fade-leave-active {
     transition: var(--o-toast-duration);
