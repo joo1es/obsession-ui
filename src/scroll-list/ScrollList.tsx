@@ -50,7 +50,12 @@ export const scrollListProps = {
     base: {
         type: String as PropType<'first' | 'last'>,
         default: 'first'
-    }
+    },
+    count: {
+        type: Number,
+        default: 1
+    },
+    linear: Boolean
 }
 
 export type ScrollListProps = ExtractPropTypes<typeof scrollListProps>
@@ -88,11 +93,13 @@ export default defineComponent({
             if (scrollListRef.value) {
                 if (scrollListRef.value.$el.scrollHeight <= scrollListRef.value.$el.offsetHeight) return
             }
-            const firstChild = slotsElements.value.shift()
-            if (firstChild) {
-                firstChild.id = Symbol('id')
-                slotsElements.value.push(firstChild)
-            }
+            const count = props.count > slotsElements.value.length ? slotsElements.value.length : props.count
+            const pushTo = slotsElements.value.slice(0, count)
+            slotsElements.value.splice(0, count)
+            pushTo.forEach(child => {
+                child.id = Symbol('id')
+                slotsElements.value.push(child)
+            })
         }
         const timer = ref<null | ReturnType<typeof setInterval>>(null)
         const end = () => {
@@ -100,7 +107,8 @@ export default defineComponent({
         }
         const start = () => {
             end()
-            timer.value = setInterval(popList, props.duration)
+            popList()
+            timer.value = setInterval(popList, props.duration + props.animationDuration)
         }
         watch(() => props.play, () => {
             if (props.play) {
@@ -157,7 +165,8 @@ export default defineComponent({
                     default: () => (
                         slotsElements.value.map((element, index) => (
                             <div class={{
-                                'o-scroll-list__cell': true
+                                'o-scroll-list__cell': true,
+                                'linear': props.linear
                             }} style={{
                                 '--duration': props.animationDuration / 1000 + 's',
                                 paddingBottom: index !== slotsElements.value.length - 1 ? (!isNaN(Number(props.space)) ? `${props.space}px` : props.space) : ''
