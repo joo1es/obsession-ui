@@ -56,4 +56,25 @@ Toast.install = (app: App<Element>) => {
     app.config.globalProperties.$toast = Toast
 }
 
+const specToast = (color: string, icon: Component) => {
+    return (message: string | VNode, options: Omit<ToastOptions, 'message'> = {}) => {
+        Toast({
+            ...options,
+            message: 
+                h('div', { class: 'wp-toast--spec' }, {
+                    default: () => [h(Icon, {
+                        color
+                    }, {
+                        default: () => h(icon)
+                    }), message]
+                })
+        })
+    }
+}
+
+Toast.success = specToast('var(--wp-color-success)', CheckCircleFilled)
+Toast.warning = specToast('var(--wp-color-warning)', WarningFilled)
+Toast.info = specToast('var(--wp-color-info)', InfoCircleFilled)
+Toast.error = specToast('var(--wp-color-danger)', CloseCircleFilled)
+
 export default Toast
