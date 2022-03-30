@@ -32,6 +32,10 @@ Toast({
 
 <demo-code>./demo/Basic.vue</demo-code>
 
+#### 预设
+
+<demo-code>./demo/Preset.vue</demo-code>
+
 ## API
 
 ### ToastOptions
@@ -44,3 +48,20 @@ Toast({
 | placement      | 位置       | _'top'\| 'bottom' \| 'center'_                                                           | 'bottom'   |
 | style | 自定义样式 | _string \| CSSProperties_ | - |
 | transition | 过渡名 | _string_ | 'o-toast-fade' |
+
+### Preset
+
+Toast 函数上有一些静态方法可供使用，他们的函数签名为
+
+```ts
+(message: string | VNode, options?: Omit<ToastOptions, 'message'>) => void
+```
+
+具体函数有
+
+```ts
+Toast.success()
+Toast.info()
+Toast.warning()
+Toast.error()
+```
