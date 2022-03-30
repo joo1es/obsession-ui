@@ -107,7 +107,6 @@ export default defineComponent({
         }
         const start = () => {
             end()
-            popList()
             timer.value = setInterval(popList, props.duration + props.animationDuration)
         }
         watch(() => props.play, () => {
