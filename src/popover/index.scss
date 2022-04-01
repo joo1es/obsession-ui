@@ -6,6 +6,7 @@
   background-color: var(--o-popover-bg-color, #fff);
   color: var(--o-popover-color, #666);
   border-radius: 4px;
+  font-size: 14px;
   &.o-popover__dark {
     --o-popover-bg-color: #000;
     --o-popover-color: #fff;

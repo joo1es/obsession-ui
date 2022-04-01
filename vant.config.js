@@ -232,6 +232,10 @@ module.exports = {
                     {
                         path: 'result',
                         title: 'Result 结果',
+                    },
+                    {
+                        path: 'notice-bar',
+                        title: 'NoticeBar 通知栏',
                     }
                 ],
             },

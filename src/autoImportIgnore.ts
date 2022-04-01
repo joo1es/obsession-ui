@@ -60,5 +60,6 @@ export default [
     'tab-props',
     'carousel-props',
     'rate-props',
-    'result-props'
+    'result-props',
+    'notice-bar-props'
 ]
