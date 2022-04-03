@@ -1,5 +1,5 @@
 import { useResizeObserver } from '@vueuse/core'
-import { ref, defineComponent, ExtractPropTypes, VNode, PropType, computed, watch, nextTick, onUpdated, onMounted, Transition, CSSProperties, onActivated } from 'vue'
+import { ref, defineComponent, type ExtractPropTypes, VNode, PropType, computed, watch, nextTick, onUpdated, onMounted, Transition, CSSProperties, onActivated } from 'vue'
 
 import Space, { SpaceProps } from '../space'
 import XScroll, { XScrollProps } from '../x-scroll'

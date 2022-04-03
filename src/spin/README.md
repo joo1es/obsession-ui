@@ -28,6 +28,10 @@ app.use(Spin)
 
 <demo-code transform>./demo/FullScreen.vue</demo-code>
 
+#### 延迟关闭
+
+<demo-code transform>./demo/Timeout.vue</demo-code>
+
 ## API
 
 ### Props
@@ -43,6 +47,7 @@ app.use(Spin)
 | loading  | 是否加载中，仅默认插槽中存在内容或 fullscreen 使用       | _boolean_                                                           | false  |
 | fullscreen | 是否全屏 | _boolean_ | false |
 | background | 自定义背景 | _stirng_ | - |
+| timeout | 延时关闭，设置之后 loading 状态会至少停留 timeout 毫秒，否则立即关闭 | _number_ | - |
 
 ### Slots
 

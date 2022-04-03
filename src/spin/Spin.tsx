@@ -16,7 +16,8 @@ export const spinProps = {
     text: String,
     loading: Boolean,
     fullscreen: Boolean,
-    background: String
+    background: String,
+    timeout: Number
 }
 
 export type SpinProps = ExtractPropTypes<typeof spinProps>;
@@ -59,6 +60,31 @@ export default defineComponent({
             }
         })
 
+        const loading = ref(false)
+        const timer = ref<ReturnType<typeof setTimeout>>()
+        const arriveStart = ref(0)
+        const arriveEnd = ref(0)
+
+        watch(() => props.loading, () => {
+            if (timer.value) clearTimeout(timer.value)
+            if (!props.timeout || props.loading) {
+                loading.value = props.loading
+                arriveStart.value = performance.now()
+                return
+            }
+            arriveEnd.value = performance.now()
+            const delta = arriveEnd.value - arriveStart.value
+            if (delta >= props.timeout) {
+                loading.value = false
+            } else {
+                timer.value = setTimeout(() => {
+                    loading.value = props.loading
+                }, props.timeout - delta)
+            }
+        }, {
+            immediate: true
+        })
+
         return () => {
             const Spin = (
                 <div class={[
@@ -81,7 +107,7 @@ export default defineComponent({
                     <Teleport to='body' disabled={!props.fullscreen}>
                         <Transition name='o-spin-transition'>
                             {
-                                (!props.fullscreen || props.loading) ? (
+                                (!props.fullscreen || loading.value) ? (
                                     <div class='o-spin-wrapper' style={props.fullscreen ? {
                                         position: 'fixed',
                                         top: 0,
@@ -93,7 +119,7 @@ export default defineComponent({
                                         {slots.default?.()}
                                         <Transition name='o-spin-transition'>
                                             {
-                                                props.loading && (
+                                                loading.value && (
                                                     <div class='o-spin-wrapper--icon' style={{ background: props.background }}>
                                                         {Spin}
                                                     </div>
