@@ -53,6 +53,10 @@
             &-3 {
                 color: var(--o-upload-fail);
             }
+            .wp-space-item {
+                display: flex;
+                align-items: center;
+            }
         }
         &-delete,
         &-retry {
