@@ -74,6 +74,7 @@ export default defineComponent({
         const intersecting = ref(false)
         const doLoad = async(isPullRefresh = false) => {
             if (!isPullRefresh && (errorSync.value || loadingSync.value || props.finished)) return
+            if (!props.load) return
             loadingSync.value = true
             try {
                 await props.load?.(isPullRefresh)
