@@ -49,15 +49,24 @@ export default defineComponent({
                 (
                     parseInt(element.style.paddingBottom, 10) || 0
                 )
-            if ((
-                rangeWidth + paddingRow > element.offsetWidth ||
-                rangeHeight + paddingCol > element.offsetHeight ||
-                element.scrollWidth > element.offsetWidth ||
-                element.scrollHeight > element.offsetHeight
-            ) && props.tooltip) {
-                showTitle.value = true
+            if (props.line === 1) {
+                if ((
+                    Math.round(rangeWidth + paddingRow) > element.offsetWidth ||
+                    element.scrollWidth > element.offsetWidth
+                ) && props.tooltip) {
+                    showTitle.value = true
+                } else {
+                    showTitle.value = false
+                }
             } else {
-                showTitle.value = false
+                if ((
+                    Math.round(rangeHeight + paddingCol) > element.offsetHeight ||
+                    element.scrollHeight > element.offsetHeight
+                ) && props.tooltip) {
+                    showTitle.value = true
+                } else {
+                    showTitle.value = false
+                }
             }
         }
         return () => {
