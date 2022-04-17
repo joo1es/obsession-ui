@@ -82,6 +82,10 @@ module.exports = {
                     {
                         path: 'layout',
                         title: 'Layout 布局',
+                    },
+                    {
+                        path: 'contain',
+                        title: 'Contain 容纳',
                     }
                 ],
             },

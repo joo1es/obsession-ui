@@ -61,5 +61,6 @@ export default [
     'carousel-props',
     'rate-props',
     'result-props',
-    'notice-bar-props'
+    'notice-bar-props',
+    'contain-props'
 ]
