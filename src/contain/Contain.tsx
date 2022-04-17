@@ -36,9 +36,9 @@ function getPercentage(total: number, value?: number) {
     if (!value) return
     return `${(value / total * 100)}%`
 }
-export function getStyle(style: CSSProperties & Partial<ContainStyle>, width = 1920, height = 1080, dev = false) {
+export function getStyle(style: CSSProperties & Partial<ContainStyle>, dev = false, width = 1920, height = 1080) {
     return {
-        border: dev ? '5px dashed red' : undefined,
+        outline: dev ? 'red dashed 5px' : undefined,
         position: style.fixed ? 'fixed' : 'absolute',
         ...style,
         width: getPercentage(width, style.width),
@@ -50,7 +50,7 @@ export function getStyle(style: CSSProperties & Partial<ContainStyle>, width = 1
     } as CSSProperties
 }
 
-export const containInjectKey: InjectionKey<(style: CSSProperties & Partial<ContainStyle>, width?: number, height?: number, dev?: boolean) => CSSProperties> = Symbol('contain')
+export const containInjectKey: InjectionKey<typeof getStyle> = Symbol('contain')
 export const useGetStyle = () => inject(containInjectKey, getStyle)
 
 export default defineComponent({
@@ -64,8 +64,8 @@ export default defineComponent({
 
         const scale = computed(() => Math.min(width.value / props.width, height.value / props.height))
 
-        function getComponentStyle(style: CSSProperties & Partial<ContainStyle>, width?: number, height?: number, dev?: boolean) {
-            return getStyle(style, width ?? props.width, height ?? props.height, dev ?? props.dev)
+        function getComponentStyle(style: CSSProperties & Partial<ContainStyle>, dev?: boolean, width?: number, height?: number) {
+            return getStyle(style, dev ?? props.dev, width ?? props.width, height ?? props.height)
         }
 
         provide(containInjectKey, getStyle)

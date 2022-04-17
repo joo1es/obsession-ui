@@ -41,13 +41,13 @@ app.use(Contain)
 
 | 名称    | 说明     | 参数 |
 | ------- | -------- | ----- |
-| default | 默认插槽 | _getStyle: (style: CSSProperties & Partial\<ContainStyle\>, width?: number, height?: number, dev?: boolean) =\> CSSProperties_ |
+| default | 默认插槽 | _getStyle: (style: CSSProperties & Partial\<ContainStyle\>, dev?: boolean, width?: number, height?: number) =\> CSSProperties_ |
 
 ### Expose
 
 | 参数      | 说明           | 类型                                                                |
 | --------- | -------------- | ------------------------------------------------------------------- |
-| getStyle | 等同于默认插槽中的 getStyle 方法       | _(style: CSSProperties & Partial\<ContainStyle\>, width?: number, height?: number, dev?: boolean) =\> CSSProperties_          |
+| getStyle | 等同于默认插槽中的 getStyle 方法       | _(style: CSSProperties & Partial\<ContainStyle\>, dev?: boolean, width?: number, height?: number) =\> CSSProperties_          |
 | toggleFullscreen      | 切换全屏状态       | _() => void_          |
 
 ## Interface
