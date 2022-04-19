@@ -64,7 +64,6 @@ app.use(ButtonGroup)
 | block | 是否为块元素 | _boolean_ | false |
 | iconPosition | 图标位置 | _'left' \| 'right'_ | left |
 | buttonType | 原生 button 的 type | _string_ | - |
-| hover | 是否需要 hover 效果，手机端关闭可以避免 hover 残留 | _boolean_ | true |
 
 ### Slots
 
