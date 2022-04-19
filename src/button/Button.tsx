@@ -47,11 +47,7 @@ export const buttonProps = {
         type: String as PropType<'left' | 'right'>,
         default: 'left',
     },
-    buttonType: String,
-    hover: {
-        type: Boolean,
-        default: true
-    }
+    buttonType: String
 }
 
 export type ButtonProps = ExtractPropTypes<typeof buttonProps>;
@@ -126,7 +122,6 @@ export default defineComponent({
                         'o-button__round': props.round,
                         'o-button__dashed': props.dashed,
                         'o-button__block': props.block,
-                        'o-button__hover': props.hover,
                         [`o-button__${props.type}`]: true
                     },
                     style: buttonStyleComputed.value,
