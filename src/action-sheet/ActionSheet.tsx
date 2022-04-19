@@ -147,7 +147,7 @@ export default defineComponent({
                                     slots.cancel?.() || (
                                         <Button size="large" block round onClick={() => {
                                             show.value = false
-                                        }} hover={false}>{ props.cancelText }</Button>
+                                        }}>{ props.cancelText }</Button>
                                     )
                                 }
                             </div>
