@@ -33,9 +33,11 @@
         background-color: var(--o-button-color--dark) !important;
         border-color: var(--o-button-color--dark) !important;
     }
-    &.o-button__hover:not(.o-button__disabled):hover {
-        background-color: var(--o-button-color--light);
-        border-color: var(--o-button-color--light);
+    @media (any-hover: hover) {
+        .o-button:not(.o-button__disabled):hover {
+            background-color: var(--o-button-color--light);
+            border-color: var(--o-button-color--light);
+        }
     }
     &.o-button__block {
         display: flex;
@@ -59,10 +61,12 @@
             --o-button-color--light: #666 !important;
             --o-button-color--dark: #111 !important;
         }
-        &.o-button__hover:not(.o-button__disabled):hover {
-            color: var(--o-button-color);
-            background-color: var(--o-button-main-color);
-            border-color: var(--o-button-main-color);
+        @media (any-hover: hover) {
+            .o-button:not(.o-button__disabled):hover {
+                color: var(--o-button-color);
+                background-color: var(--o-button-main-color);
+                border-color: var(--o-button-main-color);
+            }
         }
         &:not(.o-button__disabled):active {
             color: var(--o-button-color) !important;
@@ -80,10 +84,12 @@
             --o-button-color--light: #666 !important;
             --o-button-color--dark: #111 !important;
         }
-        &.o-button__hover:not(.o-button__disabled):hover {
-            color: var(--o-button-color);
-            background-color: var(--o-button-main-color);
-            border-color: var(--o-button-main-color);
+        @media (any-hover: hover) {
+            .o-button:not(.o-button__disabled):hover {
+                color: var(--o-button-color);
+                background-color: var(--o-button-main-color);
+                border-color: var(--o-button-main-color);
+            }
         }
         &:not(.o-button__disabled):active {
             color: var(--o-button-color) !important;
@@ -95,11 +101,13 @@
         background-color: initial;
         color: var(--o-button-main-color);
         height: auto;
-        &.o-button__hover:not(.o-button__disabled):hover {
-            color: var(--o-button-main-color);
-            border-color: transparent;
-            background-color: initial;
-            text-decoration: underline;
+        @media (any-hover: hover) {
+            .o-button:not(.o-button__disabled):hover {
+                color: var(--o-button-main-color);
+                border-color: transparent;
+                background-color: initial;
+                text-decoration: underline;
+            }
         }
         &:not(.o-button__disabled):active {
             color: var(--o-button-main-color) !important;
