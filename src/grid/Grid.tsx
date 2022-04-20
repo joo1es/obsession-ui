@@ -53,7 +53,7 @@ export default defineComponent({
                 class="o-grid"
                 style={{
                     gridTemplateColumns: `repeat(${props.cols}, minmax(0px, 1fr))`,
-                    gap: `${gapMap.value[1]} ${gapMap.value[0]}`,
+                    gridGap: `${gapMap.value[1]} ${gapMap.value[0]}`,
                     gridAutoRows: typeof props.autoRows === 'string' ? props.autoRows : props.autoRows ? '1fr' : undefined,
                     placeItems: props.placeItems,
                     placeContent: props.placeContent,
