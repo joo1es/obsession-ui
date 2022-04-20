@@ -78,6 +78,7 @@ app.use(GridItem)
 | placeItems   | align-items 和 justify-items 属性的简写，用于设置对齐模式     | _string_                                                   | -      |
 | placeContent | align-content 和 justify-content 属性的简写，用于设置对齐模式 | _string_                                                   | -      |
 | dense        | 是否行优先，设置为 `true` 后会优先填充空隙                    | _boolean_                                                  | false  |
+| autoRows | 在使用 `autoRows` 时，设置为 `true` 后，每行等高，设置为 `string` 则与 CSS 中的 `grid-auto-rows` 行为一致              | _boolean \| string_                                                  | false  |
 
 ### Slots
 

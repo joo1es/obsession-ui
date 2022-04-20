@@ -20,6 +20,7 @@ export const gridProps = {
     placeItems: String,
     placeContent: String,
     dense: Boolean,
+    autoRows: [Boolean, String]
 }
 
 export type GridProps = ExtractPropTypes<typeof gridProps>;
@@ -53,6 +54,7 @@ export default defineComponent({
                 style={{
                     gridTemplateColumns: `repeat(${props.cols}, minmax(0px, 1fr))`,
                     gap: `${gapMap.value[1]} ${gapMap.value[0]}`,
+                    gridAutoRows: typeof props.autoRows === 'string' ? props.autoRows : props.autoRows ? '1fr' : undefined,
                     placeItems: props.placeItems,
                     placeContent: props.placeContent,
                     gridAutoFlow: props.dense ? 'row dense' : '',
