@@ -136,7 +136,7 @@ export default defineComponent({
             const index = expends.value.indexOf(key)
             if (isDelete) {
                 expends.value.splice(index, 1)
-            } else if (key) expends.value.push(key)
+            } else expends.value.push(key)
         }
         const leave = (key: string | number | symbol) => {
             const expendIndex = expendsList.value.findIndex(expendsItem => expendsItem.keyIs === key)
