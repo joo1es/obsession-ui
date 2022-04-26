@@ -176,12 +176,14 @@ export const getFlattenList = (fullList: TreeListItemCustom[], getSet = false) =
 }
 
 export const getItemsCount = (fullList: TreeListItemCustom[], props: TreeProps) => {
+    const excludeSet = props.exclude ? new Set<string | number | symbol>(props.exclude) : undefined
     const finalCounter = new Set<TreeListItemCustom>()
     const flattenItems = getFlattenList(fullList, true) as Set<TreeListItemCustom>
     for (const item of flattenItems) {
         if (item.disabled || item.remote) continue
         if (item.children) continue
         const key = props.getKey ? props.getKey(item) : item[props.props.key]
+        if (excludeSet && excludeSet.has(key)) continue
         finalCounter.add(key)
     }
     return finalCounter.size
