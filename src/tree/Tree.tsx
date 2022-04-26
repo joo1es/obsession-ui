@@ -60,7 +60,8 @@ export const treeProps = {
     link: Boolean,
     onRemote: Function as PropType<(item: TreeListItemCustom) => Promise<TreeListItemCustom[]>>,
     draggable: Boolean,
-    checkStrictly: Boolean
+    checkStrictly: Boolean,
+    autoExpends: Boolean
 }
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>
@@ -120,7 +121,7 @@ export default defineComponent({
          * 过滤
          */
         const filterText = toRef(props, 'filter')
-        const filterItems = computed(() => itemsFilter(props, filterText.value))
+        const filterItems = computed(() => itemsFilter(props, filterText.value, expends))
         const treeListFlatten = computed(() => {
             const finalList: TreeListItemExtra[] = []
             filterItems.value.forEach(item => {

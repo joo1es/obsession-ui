@@ -10,6 +10,7 @@
         filterable
         :animation-max="300"
         height="200px"
+        auto-expends
     />
 </template>
 

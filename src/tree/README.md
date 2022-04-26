@@ -72,6 +72,7 @@ app.use(Tree)
 | onRemote `ref` | 远程加载回调 | _(list: TreeListItemCustom) => Promise\<TreeListItemCustom[]\>_ | - |
 | draggable `ref` | 是否可拖动 | _boolean_ | false |
 | checkStrictly | 是否可任意选择 | _boolean_ | false |
+| autoExpends | 是否自动展开 | _boolean_ | false |
 
 ### Methods
 
