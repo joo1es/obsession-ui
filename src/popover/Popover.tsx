@@ -22,19 +22,9 @@ import { getMaxZIndex, useAutoControl } from '../utils'
 import { closeAll } from './utils'
 
 export type PopoverTrigger = 'click' | 'hover' | 'focus' | 'none';
-export type PopoverPlacement =
-  | 'top-start'
-  | 'top'
-  | 'top-end'
-  | 'right-start'
-  | 'right'
-  | 'right-end'
-  | 'bottom-start'
-  | 'bottom'
-  | 'bottom-end'
-  | 'left-start'
-  | 'left'
-  | 'left-end';
+
+type PopoverPlacementBase = 'top' | 'right' | 'bottom' | 'left'
+export type PopoverPlacement = PopoverPlacementBase | `${PopoverPlacementBase}-start` | `${PopoverPlacementBase}-end`
 export const popoverProps = {
     modelValue: {
         type: Boolean,
