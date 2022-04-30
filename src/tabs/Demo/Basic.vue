@@ -1,6 +1,6 @@
 <template>
     <o-tabs>
-        <o-tab title="test">
+        <o-tab title="test" index="test">
             内容
         </o-tab>
         <o-tab title="test2">

@@ -171,7 +171,10 @@ export default defineComponent({
     },
     render() {
         const tabs = flatten(this.$slots.default?.() || []).filter(tab => (tab.type as { name?: string }).name === 'OTab')
-        const activeIndex = tabs.findIndex((tab, index) => (tab.props?.key || index) === this.active)
+        if (this.active === undefined && !this.titleOnly) {
+            this.active = tabs[0]?.props?.index || 0
+        }
+        const activeIndex = tabs.findIndex((tab, index) => (tab.props?.index || index) === this.active)
         this.activeIndex = this.titleOnly ? activeIndex : (activeIndex > -1 ? activeIndex : 0)
 
         const TitleCellsRender = (vertical = false) => (
@@ -191,18 +194,18 @@ export default defineComponent({
                                     'o-tabs--title--cell--disabled': tab.props?.disabled || tab.props?.disabled === ''
                                 }
                             ]}
-                            key={tab.props?.key || index}
+                            key={tab.props?.index || index}
                             onClick={() => {
                                 if (tab.props?.disabled || tab.props?.disabled === '') return
-                                this.active = tab.props?.key || index
-                                this.$emit('change', this.active)
+                                this.active = tab.props?.index || index
+                                this.$emit('change', tab.props?.index || index)
                             }}
                             onMousedown={e => {
                                 if (typeof tab.props?.closable === 'boolean' ? tab.props?.closable : this.closable) {
                                     if (e.button === 1) {
                                         e.stopPropagation()
                                         e.preventDefault()
-                                        this.$emit('close', tab.props?.key || index)
+                                        this.$emit('close', tab.props?.index || index)
                                     }
                                 }
                             }}
@@ -214,7 +217,7 @@ export default defineComponent({
                                 this.$slots.close?.() ?? (
                                     <Icon class="o-tabs--title--cell--close" onClick={e => {
                                         e.stopPropagation()
-                                        this.$emit('close', tab.props?.key || index)
+                                        this.$emit('close', tab.props?.index || index)
                                     }}>
                                         <CloseSharp />
                                     </Icon>
@@ -264,7 +267,7 @@ export default defineComponent({
                             }}>
                                 {
                                     tabs.map((tab, index) => (
-                                        <div class="o-tabs--tab" key={tab.props?.key || index}>
+                                        <div class="o-tabs--tab" key={tab.props?.index || index}>
                                             {
                                                 this.lazy ? (
                                                     <Transition name={this.swipeAnimation ? 'o-tabs-fade' : undefined}>

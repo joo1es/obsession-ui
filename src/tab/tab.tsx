@@ -17,7 +17,6 @@ export default defineComponent({
     setup() {
     },
     render() {
-        this.index
         return this.$slots.default?.()
     }
 })
