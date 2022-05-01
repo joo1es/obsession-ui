@@ -146,6 +146,10 @@ module.exports = {
                         title: 'Tabs 标签页'
                     },
                     {
+                        path: 'back-top',
+                        title: 'BackTop 返回顶部'
+                    },
+                    {
                         path: 'carousel',
                         title: 'Carousel 轮播图'
                     },

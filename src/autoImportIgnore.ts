@@ -62,5 +62,6 @@ export default [
     'rate-props',
     'result-props',
     'notice-bar-props',
-    'contain-props'
+    'contain-props',
+    'back-top-props'
 ]

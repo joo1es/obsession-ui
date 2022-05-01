@@ -1,0 +1,42 @@
+:root {
+    --o-back-top-size: 30px;
+    --o-back-top-shadow: 0 1px 2px rgba(0, 0, 0, .12), 0 0 3px rgba(0, 0, 0, .04);
+    --o-back-top-icon-size: 14px;
+    --o-back-top-padding: 20px;
+}
+
+.o-back-top {
+    position: sticky;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+    overflow: hidden;
+    bottom: 0;
+    padding: 0 var(--o-back-top-padding);
+
+    &-button {
+        min-width: var(--o-back-top-size);
+        min-height: var(--o-back-top-size);
+        border-radius: 50%;
+        background-color: #fff;
+        box-shadow: var(--o-back-top-shadow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        pointer-events: all;
+        cursor: pointer;
+        font-size: var(--o-back-top-icon-size);
+    }
+}
+
+.o-back-top-transition-enter-active,
+.o-back-top-transition-leave-active {
+    transition: .2s;
+    will-change: transform, opacity;
+}
+
+.o-back-top-transition-enter-from,
+.o-back-top-transition-leave-to {
+    transform: translateY(100%);
+    opacity: 0;
+}

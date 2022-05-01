@@ -62,6 +62,7 @@ import oTimelineItem from './timeline-item'
 import oResult from './result'
 import oNoticeBar from './notice-bar'
 import oContain from './contain'
+import oBackTop from './back-top'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -133,6 +134,7 @@ declare module 'vue' {
         oResult: typeof oResult;
         oNoticeBar: typeof oNoticeBar;
         oContain: typeof oContain;
+        oBackTop: typeof oBackTop;
     }
     interface Vue {
         $dialog: typeof $dialog,
