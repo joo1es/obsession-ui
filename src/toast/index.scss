@@ -10,17 +10,22 @@
     display: flex;
     align-items: flex-end;
     justify-content: center;
+    word-break: break-all;
+
     &__bottom {
         bottom: 10%;
     }
+
     &__top {
         top: 10%;
     }
+
     &__center {
         top: 0;
         height: 100%;
         align-items: center;
     }
+
     &-message {
         display: inline-flex;
         align-items: center;
@@ -33,6 +38,7 @@
         max-width: 200px;
         line-height: 20px;
         box-shadow: 0 6px 6px -4px rgba(0, 0, 0, 0.03), 0 6px 16px 0 rgba(0, 0, 0, 0.02), 0 9px 28px 8px rgba(0, 0, 0, 0.03);
+
         &__dark {
             color: #fff;
             background-color: #333;
@@ -44,7 +50,8 @@
 .o-toast--spec {
     display: flex;
     align-items: center;
-    > .o-icon {
+
+    >.o-icon {
         margin-right: .5em;
     }
 }
