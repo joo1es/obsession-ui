@@ -1,4 +1,5 @@
 @import '../style/var.scss';
+
 :root {
     --o-button-color: '#333';
     --o-button-main-color: '#f5f5f5';
@@ -6,6 +7,7 @@
     --o-button-padding-left-right: 16px;
     --o-button-font-size: 13px;
 }
+
 .o-button {
     --o-button-color: var(--o-button-color);
     --o-button-main-color: var(--o-button-main-color);
@@ -29,23 +31,28 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     &:not(.o-button__disabled):active {
         background-color: var(--o-button-color--dark) !important;
         border-color: var(--o-button-color--dark) !important;
     }
+
     @media (any-hover: hover) {
         &:not(.o-button__disabled):hover {
             background-color: var(--o-button-color--light);
             border-color: var(--o-button-color--light);
         }
     }
+
     &.o-button__block {
         display: flex;
         width: 100%;
     }
+
     &.o-button__dashed {
         border-style: dashed;
     }
+
     &.o-button__default {
         --o-button-color--light: #eee !important;
     }
@@ -55,12 +62,14 @@
         background-color: var(--o-button-color);
         color: var(--o-button-main-color);
         border-color: var(--o-button-main-color);
+
         &.o-button__default {
             --o-button-color: #fff !important;
             --o-button-main-color: #333 !important;
             --o-button-color--light: #666 !important;
             --o-button-color--dark: #111 !important;
         }
+
         @media (any-hover: hover) {
             &:not(.o-button__disabled):hover {
                 color: var(--o-button-color);
@@ -68,6 +77,7 @@
                 border-color: var(--o-button-main-color);
             }
         }
+
         &:not(.o-button__disabled):active {
             color: var(--o-button-color) !important;
             background-color: var(--o-button-color--dark, #ddd) !important;
@@ -79,11 +89,13 @@
         background-color: var(--o-button-color--lighten);
         color: var(--o-button-color--dark);
         border-color: var(--o-button-color--lighting);
+
         &.o-button__default {
             --o-button-color: #fff !important;
             --o-button-color--light: #666 !important;
             --o-button-color--dark: #111 !important;
         }
+
         @media (any-hover: hover) {
             &:not(.o-button__disabled):hover {
                 color: var(--o-button-color);
@@ -91,16 +103,19 @@
                 border-color: var(--o-button-main-color);
             }
         }
+
         &:not(.o-button__disabled):active {
             color: var(--o-button-color) !important;
             background-color: var(--o-button-color--dark, #ddd) !important;
         }
     }
+
     &.o-button__text {
         border-color: transparent;
         background-color: initial;
         color: var(--o-button-main-color);
         height: auto;
+
         @media (any-hover: hover) {
             &:not(.o-button__disabled):hover {
                 color: var(--o-button-main-color);
@@ -109,11 +124,13 @@
                 text-decoration: underline;
             }
         }
+
         &:not(.o-button__disabled):active {
             color: var(--o-button-main-color) !important;
             border-color: transparent !important;
             background-color: initial !important;
         }
+
         &.o-button__default {
             --o-button-main-color: #333 !important;
             --o-button-color--light: #666 !important;
@@ -124,30 +141,37 @@
     &.o-button__round {
         border-radius: var(--o-button-padding-left-right);
     }
+
     &.o-button--onlyicon {
         padding: var(--o-button-padding-top-bottom) var(--o-button-padding-top-bottom);
         width: calc(var(--o-button-padding-top-bottom) * 2 + var(--o-button-font-size) * 1.3);
+
         &.o-button__round {
             border-radius: 50%;
         }
     }
+
     &.o-button__disabled {
         opacity: .8;
         cursor: not-allowed;
     }
+
     &__text {
         display: flex;
         align-items: center;
         justify-content: center;
+
         .o-icon {
-            margin-right: 5px;
+            margin-right: 10px;
         }
+
         &.o-button__text--margin-left {
             .o-icon {
-                margin-left: 5px;
+                margin-left: 10px;
                 margin-right: 0;
             }
         }
+
         &.o-button__text--no-margin {
             .o-icon {
                 margin: 0;
@@ -156,13 +180,15 @@
     }
 }
 
-@keyframes o-loading{
-    0%{
+@keyframes o-loading {
+    0% {
         transform: rotate(0deg);
     }
+
     50% {
         border-top: 2px solid;
     }
+
     100% {
         transform: rotate(360deg);
     }

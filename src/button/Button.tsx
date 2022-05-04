@@ -92,10 +92,8 @@ export default defineComponent({
         return () => {
             const defaultSlot = slots.default?.()
             const iconSlot = slots.icon?.()
-            const Icon = (
-                <CollapseTransition width>
-                    {
-                        props.loading ? (
+            const Loading = (
+                props.loading ? (
                             <Spin color="currentcolor" class="o-icon" />
                         ) : iconSlot ? (
                             <OIcon>{iconSlot}</OIcon>
@@ -106,8 +104,13 @@ export default defineComponent({
                                 <OIcon>{h(props.icon)}</OIcon>
                             )
                         ) : null
-                    }
-                </CollapseTransition>
+            )
+            const Icon = (
+                !props.icon && !slots.icon ? (
+                    <CollapseTransition width>
+                        { Loading }
+                    </CollapseTransition>
+                ) : Loading
             )
             return h(
                 props.tag as any,
