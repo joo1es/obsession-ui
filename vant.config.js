@@ -86,6 +86,10 @@ module.exports = {
                     {
                         path: 'contain',
                         title: 'Contain 容纳',
+                    },
+                    {
+                        path: 'aspect-ratio',
+                        title: 'AspectRatio 纵横比',
                     }
                 ],
             },

@@ -63,5 +63,7 @@ export default [
     'result-props',
     'notice-bar-props',
     'contain-props',
-    'back-top-props'
+    'back-top-props',
+    'aspect-radio-props',
+    'upload-file-status'
 ]

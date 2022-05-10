@@ -63,6 +63,7 @@ import oResult from './result'
 import oNoticeBar from './notice-bar'
 import oContain from './contain'
 import oBackTop from './back-top'
+import OAspectRatio from './aspect-ratio'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -135,6 +136,7 @@ declare module 'vue' {
         oNoticeBar: typeof oNoticeBar;
         oContain: typeof oContain;
         oBackTop: typeof oBackTop;
+        OAspectRatio: typeof OAspectRatio;
     }
     interface Vue {
         $dialog: typeof $dialog,
