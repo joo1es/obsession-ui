@@ -20,7 +20,7 @@ import Icon from '../icon'
 import WpVirtualList from '../virtual-list'
 import DataTableRender from './Render'
 
-import { ArrowForward } from '@vicons/ionicons5'
+import { ChevronForward } from '@vicons/ionicons5'
 
 export const dataTableProps = {
     columns: {
@@ -326,7 +326,7 @@ export default defineComponent({
                                             }
                                         ]}
                                     >
-                                        <ArrowForward />
+                                        <ChevronForward />
                                     </Icon>
                                 )
                             }

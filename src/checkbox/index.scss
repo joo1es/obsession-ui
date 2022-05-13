@@ -1,3 +1,5 @@
+@import '../style/var.scss';
+
 :root {
     --o-checkbox-color: #333;
     --o-checkbox-background: #fff;
@@ -11,6 +13,8 @@
 }
 
 .dark {
+    --o-checkbox-border-color: var(--o-color-dark-gray-light);
+    --o-checkbox-checked-font-color: var(--o-color-black);
     --o-checkbox-background: transparent;
 }
 

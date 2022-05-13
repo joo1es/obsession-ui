@@ -1,3 +1,5 @@
+@import '../style/var.scss';
+
 :root {
     --o-radio-color: #333;
     --o-radio-background: #fff;
@@ -11,7 +13,9 @@
 }
 
 .dark {
-    --o-radio-background: transparent;
+    --o-radio-border-color: var(--o-color-dark-gray-light);
+    --o-radio-checked-font-color: var(--o-color-black);
+    --o-radio-background: tranparent;
 }
 
 .o-radio {
