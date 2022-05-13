@@ -37,6 +37,7 @@ export default defineComponent({
         return () => (
             <Popover
                 {...props}
+                class="o-tooltip"
                 v-slots={{
                     default: () => slots.title?.() || props.title,
                     target: () => slots.default?.(),

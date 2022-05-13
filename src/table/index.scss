@@ -1,51 +1,206 @@
 :root {
-    --o-table-font-size: 14px;
     --o-table-border: 1px solid #eee;
-    --o-table-padding: 10px 15px;
-    --o-table-stripe-background: #fcfcfc;
-    --o-table-hover-background: #f8f8f8;
+    --o-table-font-size: 14px;
+    --o-table-cell-padding: 14px 16px;
+    --o-table-cell-background: #fff;
+    --o-table-cell-hover-background: #fafafa;
+    --o-table-cell-stripe-background: #fcfcfc;
+    --o-table-head-padding: 14px 16px;
+    --o-table-head-background: rgb(249, 249, 249);
+    --o-table-foot-background: rgb(249, 249, 249);
+    --o-table-showdow-color: rgba(0, 0, 0, 0.149);
+    --o-table-indent: 30px;
+}
+
+.dark {
+    --o-table-border: 1px solid var(--o-color-dark-gray);
+    --o-table-head-background: var(--o-color-dark-lights);
+    --o-table-foot-background: var(--o-color-dark-lights);
+    --o-table-cell-background: var(--o-color-dark);
+    --o-table-cell-hover-background: var(--o-color-dark-lighter);
+    --o-table-cell-stripe-background: var(--o-color-dark-light);
+    --o-table-showdow-color: #000;
 }
 
 .o-table {
-    &--body {
-        width: 100%;
-        display: table;
+    width: 100%;
+    border: var(--o-table-border);
+    word-break: break-all;
+    box-sizing: border-box;
+    background-color: var(--o-table-cell-background);
+    overflow: auto;
+
+    &-empty {
         font-size: var(--o-table-font-size);
-        border: var(--o-table-border);
-        border-bottom: 0;
-        border-collapse:collapse;
-        > tr {
-            border-bottom: var(--o-table-border);
-            &:nth-child(2n) {
-                background-color: initial;
-            }
-            > th {
-                padding: var(--o-table-padding);
-                font-weight: bold;
-                text-align: left;
-            }
-            > td {
-                padding: var(--o-table-padding);
-            }
-            &:hover {
-                > td {
-                    background-color: var(--o-table-hover-background);
+        padding: var(--o-table-cell-padding);
+        color: var(--o-text-color-regular);
+        text-align: center;
+    }
+
+    .o-table-outer,
+    .o-table-outerhead,
+    .o-table-outerfoot {
+        width: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+    }
+
+    &:hover {
+        .o-table-outer {
+            overflow: auto;
+            overflow: overlay;
+        }
+    }
+
+    &.o-table--fixed {
+        display: flex;
+        flex-direction: column;
+
+        .o-table-outer {
+            flex: 1;
+        }
+    }
+
+    &-self {
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: separate;
+        box-sizing: border-box;
+        background-color: var(--o-table-cell-background);
+        font-size: var(--o-table-font-size);
+        line-height: 1.5;
+        margin: 0;
+    }
+
+    th {
+        font-weight: bold;
+        color: var(--o-text-color-primary);
+        padding: var(--o-table-head-padding);
+        background: var(--o-table-head-background);
+        box-sizing: border-box;
+        text-align: center;
+
+        &.o-table-head--fixed {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+    }
+
+    td {
+        color: var(--o-text-color-regular);
+        padding: var(--o-table-cell-padding);
+        background: var(--o-table-cell-background);
+        box-sizing: border-box;
+    }
+
+    tfoot td {
+        border-top: var(--o-table-border);
+        background: var(--o-table-foot-background);
+        box-sizing: border-box;
+
+        &.o-table-foot--fixed {
+            position: sticky;
+            bottom: 0;
+            z-index: 1;
+        }
+    }
+
+    .o-table-cell--fixed {
+        position: sticky;
+        z-index: 1;
+    }
+
+    .o-table-cell--fixed--left {
+        left: 0;
+    }
+
+    .o-table-cell--fixed--right {
+        right: 0;
+        // transform: translateX(.5px);
+    }
+
+    tr td,
+    tr th {
+        border-right: var(--o-table-border);
+    }
+
+    tr:not(:last-child) td,
+    tr th {
+        border-bottom: var(--o-table-border);
+    }
+
+
+    th.no-border,
+    td:last-child {
+        border-right: 0;
+    }
+
+    &.o-table--noborder tr td,
+    &.o-table--noborder tr th {
+        border-right: 0;
+    }
+
+    &-cell-arrow {
+        margin-right: 10px;
+        vertical-align: middle;
+        transition: .3s;
+        cursor: pointer;
+        font-size: 13px;
+
+        &--active {
+            transform: rotate(90deg);
+        }
+    }
+
+    &-cell-indent {
+        width: var(--o-table-indent);
+        display: inline-block;
+    }
+
+    .o-table-shadow--left,
+    .o-table-shadow--right {
+        &::after {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            transform: translate(-100%);
+            transition: box-shadow .3s;
+            content: "";
+            pointer-events: none;
+            box-shadow: inset -10px 0 8px -8px var(--o-table-showdow-color);
+        }
+    }
+
+    .o-table-shadow--right {
+        &::after {
+            left: initial;
+            right: 0;
+            transform: translate(100%);
+            box-shadow: inset 10px 0 8px -8px var(--o-table-showdow-color);
+        }
+    }
+
+    tbody>tr:hover {
+        td {
+            background: var(--o-table-cell-hover-background);
+        }
+    }
+
+    &.o-table--stripe {
+        tbody>tr {
+            &:nth-child(even) {
+                td {
+                    background: var(--o-table-cell-stripe-background);
                 }
             }
-        }
-    }
-    &--stripe {
-        > tr {
-            &:nth-child(2n) {
-                background: var(--o-table-stripe-background);
-            }
-        }
-    }
-    &--border {
-        > tr {
-            > th,
-            > td {
-                border-right: var(--o-table-border);
+
+            &:hover {
+                td {
+                    background: var(--o-table-cell-hover-background);
+                }
             }
         }
     }

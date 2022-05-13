@@ -1,15 +1,16 @@
 <template>
-    <o-table :columns="columns" :data="data"></o-table>
+    <o-table :columns="columns" :data="data" stripe border dark scroll-width="2000px"></o-table>
 </template>
 <script setup lang="ts">
-import {ref} from 'vue'
+import { ref } from 'vue'
 import { DataColumn } from '..'
 
 const columns = ref<DataColumn[]>([
-    {type: 'selection', width:55, align: 'center'},
-    {label: '日期', prop: 'date', width: 120},
-    {label: '姓名', prop: 'name', align: 'center'},
-    {label: '地址', prop: 'address'},
+    {type: 'index', width: 55, fixed: 'left', align: 'center'},
+    {type: 'selection', width: 55, fixed: 'left', align: 'center'},
+    {label:'日期', prop:'date'},
+    {label:'姓名', prop:'name'},
+    {label:'地址', prop:'address'},
 ])
 const data = ref([{
     date: '2016-05-02',
@@ -26,10 +27,6 @@ const data = ref([{
 }, {
     date: '2016-05-03',
     name: '王小虎',
-    address: '上海市普陀区金沙江路 1516 弄'
-}, {
-    date: '2016-05-03',
-    name: 0,
     address: '上海市普陀区金沙江路 1516 弄'
 }])
 </script>

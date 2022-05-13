@@ -1,11 +1,14 @@
 .o-ellipsis {
     overflow: hidden;
+
     &:not(.o-ellipsis__line) {
         display: inline-block;
         text-overflow: ellipsis;
         white-space: nowrap;
-        width: 100%;
+        max-width: 100%;
+        vertical-align: middle;
     }
+
     &__line {
         display: -webkit-inline-box;
         -webkit-box-orient: vertical;
