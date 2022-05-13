@@ -12,8 +12,8 @@ const columns = ref<DataColumn[]>([
     {type: 'radio', width: 55, fixed: 'left', align: 'center'},
     {label:'日期', prop:'date'},
     {label:'姓名', prop:'name'},
-    {label:'性别', prop:'gender.name'},
-    {label:'地址', prop:'address', fixed: 'right'},
+    {label:'性别', prop:'gender.name', fixed: 'right'},
+    {label:'地址', prop:'address', fixed: 'right', width: 300},
 ])
 const data = ref(
     new Array(20000).fill(0).map((_, i) => ({

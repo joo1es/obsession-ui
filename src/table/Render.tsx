@@ -30,7 +30,7 @@ export default defineComponent({
             <table cellspacing="0" class={this.of('self')} ref="tableRef">
                 <colgroup>
                     {this.childrenColumns?.map(column => (
-                        <col style={{ width: addUnit(column.width), minWidth: addUnit(column.minWidth) }} />
+                        <col style={{ width: column.width ? addUnit(column.width) : column.fixed ? '100px' : undefined, minWidth: addUnit(column.minWidth) }} />
                     ))}
                 </colgroup>
                 <tbody>

@@ -210,12 +210,12 @@ export default defineComponent({
         const top = ref(0)
 
         const getClass = (column: DataColumn) => ({
-                [of('cell--fixed')]: column.fixed,
-                [of('cell--fixed--left')]: column.fixed === true || column.fixed === 'left',
-                [of('cell--fixed--right')]: column.fixed === 'right',
-                [of('shadow--left')]: props.shadow && column.fixed === 'right' && column[firstRight] && !arrivedState.right,
-                [of('shadow--right')]: props.shadow && (column.fixed === 'left' || column.fixed === true) && column[lastLeft] && !arrivedState.left
-            })
+            [of('cell--fixed')]: column.fixed,
+            [of('cell--fixed--left')]: column.fixed === true || column.fixed === 'left',
+            [of('cell--fixed--right')]: column.fixed === 'right',
+            [of('shadow--left')]: props.shadow && column.fixed === 'right' && column[firstRight] && !arrivedState.right,
+            [of('shadow--right')]: props.shadow && (column.fixed === 'left' || column.fixed === true) && column[lastLeft] && !arrivedState.left
+        })
 
         const checkAll = computed({
             get() {
@@ -369,7 +369,7 @@ export default defineComponent({
         const Colgroup = (
             <colgroup>
                 {this.columnsCollect.childrenColumns.map(column => (
-                    <col style={{ width: addUnit(column.width), minWidth: addUnit(column.minWidth) }} />
+                    <col style={{ width: column.width ? addUnit(column.width) : column.fixed ? '100px' : undefined, minWidth: addUnit(column.minWidth) }} />
                 ))}
             </colgroup>
         )
