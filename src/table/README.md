@@ -61,7 +61,7 @@ app.use(Table)
 | scrollWidth | 滚动宽度，可以配合列的 fixed | _number \| string_ | - |
 | childrenField | children 字段 | _string_ | - |
 | rowClassName | 行的 Class | _string \| ((rowData: object, index: number) => string)_ | - |
-| cellClassName | 项的 Class | _string \| ((rowData: object, index: number, column: [DataColumn](#datacolumn)[]) => string)_ | - |
+| cellClassName | 项的 Class | _string \| ((rowData: object, index: number, column: [DataColumn](#/table#datacolumn)[]) => string)_ | - |
 | virtual | 是否使用虚拟列表渲染 | _boolean_ | false |
 | hideHead | 是否隐藏表头 | _boolean_ | false |
 | shadow | 是否为 fixed 的列显示阴影，如果 fixed 列不在两边，建议关闭阴影 | _boolean_ | true |
@@ -71,15 +71,15 @@ app.use(Table)
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
 | rowClick      | 行点击事件       | _(rowData: object, index: number) => string_          | -     |
-| cellClick      | 项的点击事件       | _(rowData: object, index: number, column: [DataColumn](#datacolumn)[]) => string_          | -     |
+| cellClick      | 项的点击事件       | _(rowData: object, index: number, column: [DataColumn](#/table#datacolumn)[]) => string_          | -     |
 
 ### Slots
 
 | 名称    | 说明     | 参数 |
 | ------- | -------- | ----- |
-| table-[prop] | 表格替换插槽 | _column: [DataColumn](#datacolumn), row: object, index: number_ |
-| head-[prop] | 头部替换插槽 | _column: [DataColumn](#datacolumn)_ |
-| foot-[prop] | 合计行替换插槽 | _column: [DataColumn](#datacolumn)_ |
+| table-[prop] | 表格替换插槽 | _column: [DataColumn](#/table#datacolumn), row: object, index: number_ |
+| head-[prop] | 头部替换插槽 | _column: [DataColumn](#/table#datacolumn)_ |
+| foot-[prop] | 合计行替换插槽 | _column: [DataColumn](#/table#datacolumn)_ |
 | empty | 数据为空的替换插槽 | - |
 
 ## 类型
@@ -95,7 +95,7 @@ app.use(Table)
 | minWidth | 最小宽度 | _string \| number_ | - |
 | fixed | 是否固定 | _boolean \| 'left' \| 'right'_ | - |
 | align | 对齐方式 | _'left' \| 'right' \| 'center'_ | - |
-| children | 子列 | _[DataColumn](#datacolumn)[]_ | - |
+| children | 子列 | _[DataColumn](#/table#datacolumn)[]_ | - |
 | type | 类型 | _'index' \| 'selection' \| 'chekcbox' \| 'radio'_ | - |
 | indent | 是否用作缩进列 | _boolean_ | - |
 | colSpan | 跨列 | _(rowData: object, rowIndex: number) => number_ | - |

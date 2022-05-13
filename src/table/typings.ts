@@ -1,3 +1,4 @@
+import { CSSProperties } from 'vue'
 import type { EllipsisProps } from '../ellipsis'
 
 export const fixedWidth = Symbol('fixedWidth')
@@ -15,7 +16,7 @@ export interface DataColumn {
     width?: string | number
     minWidth?: string | number
     fixed?: boolean | 'left' | 'right'
-    align?: 'left' | 'right' | 'center'
+    align?: CSSProperties['textAlign']
     children?: DataColumn[]
     type?: 'index' | 'selection' | 'radio' | 'checkbox'
     indent?: boolean
