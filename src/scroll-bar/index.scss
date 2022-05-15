@@ -1,0 +1,62 @@
+@import '../style/var.scss';
+
+:root {
+    --o-scroll-bar-color: var(--primary-color);
+}
+
+.o-scroll-bar {
+    position: relative;
+    overflow: hidden;
+
+    >* {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
+    &-track {
+        position: absolute;
+        z-index: 10;
+        transition: transform .3s;
+
+        &--y {
+            top: 0;
+            right: 0;
+            height: 100%;
+            transform: scaleX(var(--o-scroll-bar-scale-y));
+            transform-origin: right;
+
+            .o-scroll-bar-thumb {
+                min-height: 5%;
+            }
+        }
+
+        &--x {
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            transform: scaleY(var(--o-scroll-bar-scale-x));
+            transform-origin: bottom;
+
+            .o-scroll-bar-thumb {
+                min-width: 5%;
+            }
+        }
+    }
+
+    &-thumb {
+        background: var(--o-scroll-bar-color);
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    &:hover {
+        .o-scroll-bar-track {
+            transform: none;
+        }
+    }
+}

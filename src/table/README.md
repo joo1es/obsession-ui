@@ -70,8 +70,8 @@ app.use(Table)
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
-| rowClick      | 行点击事件       | _(rowData: object, index: number) => string_          | -     |
-| cellClick      | 项的点击事件       | _(rowData: object, index: number, column: [DataColumn](#/table#datacolumn)[]) => string_          | -     |
+| rowClick      | 行点击事件       | _(rowData: object, index: number) => void_          | -     |
+| cellClick      | 项的点击事件       | _(rowData: object, index: number, column: [DataColumn](#/table#datacolumn)[]) => void_          | -     |
 
 ### Slots
 

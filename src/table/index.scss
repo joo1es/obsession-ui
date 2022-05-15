@@ -39,7 +39,6 @@
         text-align: center;
     }
 
-    .o-table-outer,
     .o-table-outerhead,
     .o-table-outerfoot {
         width: 100%;
@@ -47,18 +46,24 @@
         box-sizing: border-box;
     }
 
-    &:hover {
-        .o-table-outer {
-            overflow: auto;
-            overflow: overlay;
-        }
+    .o-table-outer {
+        overflow: auto;
+        height: 100%;
     }
+
+    // &:hover {
+    //     .o-table-outer {
+    //         overflow: auto;
+    //         overflow: overlay;
+    //     }
+    // }
 
     &.o-table--fixed {
         display: flex;
         flex-direction: column;
 
-        .o-table-outer {
+        >.o-table-outer,
+        >.o-scroll-bar {
             flex: 1;
         }
     }

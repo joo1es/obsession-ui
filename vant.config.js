@@ -90,6 +90,10 @@ module.exports = {
                     {
                         path: 'aspect-ratio',
                         title: 'AspectRatio 纵横比',
+                    },
+                    {
+                        path: 'scroll-bar',
+                        title: 'ScrollBar 滚动条',
                     }
                 ],
             },

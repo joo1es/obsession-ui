@@ -17,8 +17,9 @@ import { useScroll } from '@vueuse/core'
 import Checkbox from '../checkbox'
 import Radio from '../radio'
 import Icon from '../icon'
-import WpVirtualList from '../virtual-list'
+import VirtualList from '../virtual-list'
 import DataTableRender from './Render'
+import ScrollBar from '../scroll-bar'
 
 import { ChevronForward } from '@vicons/ionicons5'
 
@@ -91,7 +92,7 @@ export default defineComponent({
         const tableRef = ref<HTMLDivElement>()
         const headRef = ref<HTMLDivElement>()
         const footRef = ref<HTMLDivElement>()
-        const virtualRef = ref<InstanceType<typeof WpVirtualList>>()
+        const virtualRef = ref<InstanceType<typeof VirtualList>>()
 
         const scrollElement = computed(() => {
             if (props.virtual) {
@@ -411,7 +412,7 @@ export default defineComponent({
                 }
             </div>
         ) : (
-            h(WpVirtualList as any, {
+            h(VirtualList as any, {
                 visibleItemsTag: DataTableRender,
                 itemSize: this.itemHeight,
                 class: [
@@ -499,7 +500,9 @@ export default defineComponent({
                         </div>
                     )
                 }
-                {Tbody}
+                <ScrollBar>
+                    {Tbody}
+                </ScrollBar>
                 {
                     this.totalLine && (
                         <div class={this.of('outerfoot')} ref="footRef">

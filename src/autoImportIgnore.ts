@@ -65,5 +65,6 @@ export default [
     'contain-props',
     'back-top-props',
     'aspect-radio-props',
-    'upload-file-status'
+    'upload-file-status',
+    'scroll-bar-props'
 ]
