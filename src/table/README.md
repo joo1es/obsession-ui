@@ -65,6 +65,7 @@ app.use(Table)
 | virtual | 是否使用虚拟列表渲染 | _boolean_ | false |
 | hideHead | 是否隐藏表头 | _boolean_ | false |
 | shadow | 是否为 fixed 的列显示阴影，如果 fixed 列不在两边，建议关闭阴影 | _boolean_ | true |
+| scrollBar | 滚动条组件的 props | _Partial\<ScrollBarProps\> & Record\<string, any\>_ | - |
 
 ### Methods
 

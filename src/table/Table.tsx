@@ -19,7 +19,7 @@ import Radio from '../radio'
 import Icon from '../icon'
 import VirtualList from '../virtual-list'
 import DataTableRender from './Render'
-import ScrollBar from '../scroll-bar'
+import ScrollBar, { type ScrollBarProps } from '../scroll-bar'
 
 import { ChevronForward } from '@vicons/ionicons5'
 
@@ -71,6 +71,9 @@ export const dataTableProps = {
     shadow: {
         type: Boolean,
         default: true
+    },
+    scrollBar: {
+        type: Object as PropType<Partial<ScrollBarProps> & Record<string, any>>,
     }
 }
 
@@ -500,7 +503,7 @@ export default defineComponent({
                         </div>
                     )
                 }
-                <ScrollBar>
+                <ScrollBar {...this.scrollBar}>
                     {Tbody}
                 </ScrollBar>
                 {
