@@ -1,6 +1,6 @@
 import { useNamespace } from '../utils'
 import { computed, CSSProperties, defineComponent, ExtractPropTypes, onMounted, onUpdated, PropType, ref } from 'vue'
-import { usePointerSwipe, useResizeObserver, useScroll, type PointerSwipeOptions } from '@vueuse/core'
+import { usePointerSwipe, useRafFn, useResizeObserver, useScroll, type PointerSwipeOptions } from '@vueuse/core'
 
 export const scrollBarProps = {
     xSize: {
@@ -29,7 +29,8 @@ export const scrollBarProps = {
     leaveSize: {
         type: Number,
         default: 2
-    }
+    },
+    useRaf: Boolean
 }
 
 export type ScrollBarProps = ExtractPropTypes<typeof scrollBarProps>
@@ -52,8 +53,15 @@ export default defineComponent({
         const { x, y } = useScroll(scrollInnerRef, {
             onScroll: e => emit('scroll', e)
         })
-        useResizeObserver(scrollRef, update)
-        useResizeObserver(scrollInnerRefExtra, update)
+
+        if (props.useRaf) {
+            useRafFn(update)
+        } else {
+            useResizeObserver(scrollRef, update)
+            useResizeObserver(scrollInnerRefExtra, update)
+            onUpdated(update)
+            onMounted(update)
+        }
 
         const height = ref(0)
         const width = ref(0)
@@ -72,9 +80,6 @@ export default defineComponent({
             scrollHeight.value = scrollInnerRefExtra.value?.scrollHeight || 0
             scrollWidth.value = scrollInnerRefExtra.value?.scrollWidth || 0
         }
-
-        onUpdated(update)
-        onMounted(update)
 
         const scrollBarHeightNumber = computed(() => height.value / scrollHeight.value)
         const scrollBarWidthNumber = computed(() => width.value / scrollWidth.value)
