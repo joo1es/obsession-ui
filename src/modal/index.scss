@@ -1,46 +1,57 @@
 :root {
     --o-modal-duration: .3s;
 }
+
 .o-modal {
     min-width: 0;
     min-height: 0;
     max-height: 100%;
     background-color: #fff;
     border-radius: var(--o-modal-border-radius);
-    overflow: auto;
     font-size: 15px;
     transition: var(--o-modal-duration);
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     outline: none;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+
     &__drawer {
         border-radius: 0;
+
         &-left {
             border-top-right-radius: var(--o-modal-border-radius);
             border-bottom-right-radius: var(--o-modal-border-radius);
         }
+
         &-right {
             border-top-left-radius: var(--o-modal-border-radius);
             border-bottom-left-radius: var(--o-modal-border-radius);
         }
+
         &-left,
         &-right {
             min-height: 100%;
             max-height: 100%;
         }
+
         &-top {
             border-bottom-left-radius: var(--o-modal-border-radius);
             border-bottom-right-radius: var(--o-modal-border-radius);
         }
+
         &-bottom {
             border-top-left-radius: var(--o-modal-border-radius);
             border-top-right-radius: var(--o-modal-border-radius);
         }
+
         &-top,
         &-bottom {
             min-width: 100%;
             max-width: 100%;
         }
     }
+
     .o-modal__header {
         display: flex;
         padding: 15px 20px;
@@ -48,28 +59,37 @@
         color: #333;
         border-bottom: 1px solid #eee;
         align-items: center;
+
         &-text {
             flex: 1;
             font-weight: bold;
         }
+
         .o-modal__icon {
             color: #999;
             cursor: pointer;
             font-size: 18px;
         }
     }
+
     .o-modal__content {
         padding: 20px;
+        flex: 1;
+        overflow: auto;
     }
+
     .o-modal__footer {
         padding: 15px 20px;
         border-top: 1px solid #eee;
     }
+
     &.o-modal__no-border {
+
         .o-modal__header,
         .o-modal__footer {
             border: 0;
         }
+
         .o-modal__content {
             padding: 10px 20px;
         }
@@ -81,22 +101,28 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
     &-hidden {
         background: transparent !important;
         pointer-events: none;
-        > .o-modal {
+
+        >.o-modal {
             pointer-events: all;
         }
     }
+
     &-top {
         align-items: flex-start;
     }
+
     &-bottom {
         align-items: flex-end;
     }
+
     &-left {
         justify-content: flex-start;
     }
+
     &-right {
         justify-content: flex-end;
     }
