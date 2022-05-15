@@ -2,7 +2,7 @@ import { Ref } from 'vue'
 import { TreeListItemCustom, TreeListItemExtra } from './interface'
 import { TreeProps } from './Tree'
 
-const getListByText = (text: string | undefined, props: TreeProps, list: TreeListItemCustom[], finalList: TreeListItemCustom[], expends?: (string | number | symbol)[]) => {
+const getListByText = (text: string | undefined, props: TreeProps, list: TreeListItemCustom[], finalList: TreeListItemCustom[], expands?: (string | number | symbol)[]) => {
     if (!text) return list
     return list.forEach(item => {
         const key = props.getKey?.(item) || item[props.props.key]
@@ -19,12 +19,12 @@ const getListByText = (text: string | undefined, props: TreeProps, list: TreeLis
          * 2. 如果没有子元素
          */
         if (!item.children || item.children.length === 0) return
-        if (expends) expends.push(key)
+        if (expands) expands.push(key)
         /**
          * 3. 递归检查子元素
          */
         const children: TreeListItemCustom[] = []
-        getListByText(text, props, item.children, children, expends)
+        getListByText(text, props, item.children, children, expands)
         if (children.length === 0) return
         finalList.push({
             ...item,
@@ -53,14 +53,14 @@ const getListByExclude = (excludeSet: Set<string | number | symbol>, props: Tree
     })
 }
 
-export const itemsFilter = (props: TreeProps, text?: string, expendsRef?: Ref<(string | number | symbol)[] | undefined>) => {
+export const itemsFilter = (props: TreeProps, text?: string, expandsRef?: Ref<(string | number | symbol)[] | undefined>) => {
     let { list } = props
-    if (props.autoExpends && expendsRef) expendsRef.value = []
+    if (props.autoExpands && expandsRef) expandsRef.value = []
     if (props.filterable && text) {
-        const expends: (string | number | symbol)[] = []
+        const expands: (string | number | symbol)[] = []
         const final: TreeListItemCustom[] = []
-        getListByText(text, props, props.list, final, expends)
-        if (props.autoExpends && expendsRef) expendsRef.value = expends as (string | number | symbol)[]
+        getListByText(text, props, props.list, final, expands)
+        if (props.autoExpands && expandsRef) expandsRef.value = expands as (string | number | symbol)[]
         list = final
     }
     const excludeSet = props.exclude ? new Set<string | number | symbol>(props.exclude) : undefined
@@ -116,7 +116,7 @@ export const flattenList = (
     finalList: TreeListItemExtra[],
     level = 0,
     parent: null | TreeListItemCustom = null,
-    expends: (string | number | symbol)[],
+    expands: (string | number | symbol)[],
     props: TreeProps
 ) => {
     const key = props.getKey ? props.getKey(list) : list[props.props.key]
@@ -131,9 +131,9 @@ export const flattenList = (
         parent,
         remote: list.remote
     })
-    if (!list.remote && list.children && expends.includes(key)) {
+    if (!list.remote && list.children && expands.includes(key)) {
         for (const item of list.children) {
-            flattenList(item, finalList, level + 1, list, expends, props)
+            flattenList(item, finalList, level + 1, list, expands, props)
         }
     }
 }

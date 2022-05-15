@@ -47,7 +47,7 @@ app.use(Table)
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
 | selections `v-model:selections`      | 选中项       | _any[]_          | -    |
 | radio `v-model:radio` | 单选中项 | _any_ | - |
-| expends `v-model:expends`      | 展开项       | _any[]_          | -    |
+| expands `v-model:expands`      | 展开项       | _any[]_          | -    |
 | dark | 是否启用黑暗模式 | _boolean_ | false |
 | columns | 列 | _[DataColumn](#datacolumn)[]_ | - |
 | data | 表格数据 | _any[]_ | - |

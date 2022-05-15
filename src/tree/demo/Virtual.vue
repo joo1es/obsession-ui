@@ -3,14 +3,14 @@
     <o-tree
         ref="treeRef"
         v-model:checked="checked"
-        v-model:expends="expends"
+        v-model:expands="expands"
         :list="treeList"
         :filter="filter"
         virtual
         filterable
         :animation-max="300"
         height="200px"
-        auto-expends
+        auto-expands
     />
 </template>
 
@@ -19,7 +19,7 @@ import { ref } from 'vue'
 
 import type { TreeListItemCustom } from '../interface'
 
-const expends = ref<string[]>(['0', '1', '2', '3'])
+const expands = ref<string[]>(['0', '1', '2', '3'])
 const checked = ref<string[]>([])
 const treeList = ref<TreeListItemCustom[]>([])
 

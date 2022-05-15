@@ -17,25 +17,31 @@
 .o-tree {
     cursor: default;
     font-size: var(--o-tree-font-size);
+
     &-nodes {
         overflow: auto;
     }
+
     &-node {
         display: flex;
         padding: var(--o-tree-padding-top-bottom) var(--o-tree-padding-left-right);
         height: var(--o-tree-node-hegiht);
         position: relative;
         box-sizing: border-box;
+
         &:hover {
             background: var(--o-tree-hover-bg);
         }
+
         &__indent {
             &-cell {
                 display: inline-block;
                 width: var(--o-tree-indent);
+
                 &--link {
                     position: relative;
                     height: 100%;
+
                     &::after {
                         content: '';
                         position: absolute;
@@ -48,39 +54,47 @@
                 }
             }
         }
+
         &__dropline {
             position: absolute;
             left: 0;
             width: 100%;
             height: var(--o-tree-dropline-size);
             background-color: transparent;
+
             &.top {
                 top: 0;
             }
+
             &.bottom {
                 bottom: 0;
             }
         }
+
         &__ondrag {
             background: var(--o-tree-drop-bg);
         }
+
         &__title {
             display: flex;
             align-items: center;
             flex: 1;
             overflow: hidden;
             white-space: nowrap;
+
             .o-checkbox,
             .o-radio {
                 margin-right: var(--o-tree-padding-left-right);
             }
         }
+
         &__content {
             flex: 1;
             overflow: hidden;
             display: flex;
             align-items: center;
         }
+
         &__arrow {
             font-size: var(--o-tree-arrow-size);
             color: var(--o-tree-arrow-color);
@@ -89,24 +103,30 @@
             align-items: center;
             justify-content: center;
             height: 100%;
+
             &.left {
                 margin-right: var(--o-tree-padding-left-right);
             }
+
             &.right {
                 margin-left: var(--o-tree-padding-left-right);
                 width: auto;
             }
-            > .o-icon {
+
+            >.o-icon {
                 transition: transform .2s;
             }
-            > .o-icon.expend {
+
+            >.o-icon.expand {
                 transform: rotate(90deg);
             }
         }
+
         &__selection-disabled {
             cursor: not-allowed;
             opacity: .9;
         }
+
         &__selecting {
             background-color: var(--o-tree-selecting-color) !important;
         }
@@ -117,6 +137,7 @@
     from {
         transform: rotate(0);
     }
+
     to {
         transform: rotate(360deg);
     }

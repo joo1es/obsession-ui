@@ -1,6 +1,6 @@
 import { computed, defineComponent, ExtractPropTypes, PropType, ref, toRef, VNodeChild, provide } from 'vue'
 
-import type { TreeListItemCustom, TreeListItemExtra, TreeListItem, ExpendsList } from './interface'
+import type { TreeListItemCustom, TreeListItemExtra, TreeListItem, ExpandsList } from './interface'
 
 import { useAutoControl } from '../utils'
 
@@ -23,7 +23,7 @@ export const treeProps = {
             title: 'title'
         })
     },
-    expends: {
+    expands: {
         type: Array as PropType<(string | number | symbol)[]>,
         default: undefined
     },
@@ -61,7 +61,7 @@ export const treeProps = {
     onRemote: Function as PropType<(item: TreeListItemCustom) => Promise<TreeListItemCustom[]>>,
     draggable: Boolean,
     checkStrictly: Boolean,
-    autoExpends: Boolean
+    autoExpands: Boolean
 }
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>
@@ -70,7 +70,7 @@ export default defineComponent({
     name: 'OTree',
     props: treeProps,
     emits: {
-        'update:expends': (expends: (string | number | symbol)[]) => Array.isArray(expends),
+        'update:expands': (expands: (string | number | symbol)[]) => Array.isArray(expands),
         'update:checked': (checked: (string | number | symbol)[]) => Array.isArray(checked),
         'update:selection': (selection: string | number | symbol) => {
             void selection
@@ -83,8 +83,8 @@ export default defineComponent({
         }
     },
     setup(props, { emit }) {
-        const expendsRef = ref<(string | number | symbol)[]>([])
-        const expends = useAutoControl(expendsRef, props, 'expends', emit, {
+        const expandsRef = ref<(string | number | symbol)[]>([])
+        const expands = useAutoControl(expandsRef, props, 'expands', emit, {
             passive: true,
             deep: true
         })
@@ -121,34 +121,34 @@ export default defineComponent({
          * 过滤
          */
         const filterText = toRef(props, 'filter')
-        const filterItems = computed(() => itemsFilter(props, filterText.value, expends))
+        const filterItems = computed(() => itemsFilter(props, filterText.value, expands))
         const treeListFlatten = computed(() => {
             const finalList: TreeListItemExtra[] = []
             filterItems.value.forEach(item => {
-                flattenList(item, finalList, 0, null, expends.value || [], props)
+                flattenList(item, finalList, 0, null, expands.value || [], props)
             })
             return finalList
         })
-        const expendsList = ref<ExpendsList[]>([])
+        const expandsList = ref<ExpandsList[]>([])
         const done = (isDelete: boolean, key: string | number | symbol) => {
-            if (!expends.value) {
-                expends.value = []
+            if (!expands.value) {
+                expands.value = []
             }
-            const index = expends.value.indexOf(key)
+            const index = expands.value.indexOf(key)
             if (isDelete) {
-                expends.value.splice(index, 1)
-            } else expends.value.push(key)
+                expands.value.splice(index, 1)
+            } else expands.value.push(key)
         }
         const leave = (key: string | number | symbol) => {
-            const expendIndex = expendsList.value.findIndex(expendsItem => expendsItem.keyIs === key)
-            if (expendIndex > -1) {
-                expendsList.value.splice(expendIndex, 1)
+            const expandIndex = expandsList.value.findIndex(expandsItem => expandsItem.keyIs === key)
+            if (expandIndex > -1) {
+                expandsList.value.splice(expandIndex, 1)
             }
         }
-        const handleExpend = (isDelete: boolean, key: string | number | symbol, level: number) => {
-            if (expendsList.value.find(item => item.keyIs === key)) return
+        const handleExpand = (isDelete: boolean, key: string | number | symbol, level: number) => {
+            if (expandsList.value.find(item => item.keyIs === key)) return
             if (props.animation) {
-                expendsList.value.push({
+                expandsList.value.push({
                     isDelete,
                     keyIs: key,
                     level,
@@ -173,13 +173,13 @@ export default defineComponent({
             selection,
             checked,
             checkedSet,
-            expends,
-            expendsList,
+            expands,
+            expandsList,
             treeListFlatten,
             leave,
             done,
             setingChecked,
-            handleExpend,
+            handleExpand,
             getCheckedItems: () => getCheckedItems(props.list, checked.value || [], props),
             getFlattenList: (getSet = false) => getFlattenList(props.list, getSet),
             getItemsCount: (filter = false) => getItemsCount(filter ? filterItems.value : props.list, props),
@@ -194,12 +194,12 @@ export default defineComponent({
         const TreeNodeFactory = (item: TreeListItemExtra) => (
             <TreeNode
                 { ...item }
-                expends={this.expends || []}
+                expands={this.expands || []}
                 getChecked={(list: TreeListItemCustom) => getChecked(list, this.$props, this.checkedSet)}
                 v-model={this.checked}
-                expendsList={this.expendsList}
+                expandsList={this.expandsList}
                 onSetChecked={this.setingChecked}
-                onExpend={this.handleExpend}
+                onExpand={this.handleExpand}
                 checkable={this.checkable}
                 selectable={this.selectable}
                 selection={this.selection}
@@ -237,16 +237,16 @@ export default defineComponent({
                     { dom }
                 </>
             )
-            const expendsListFind =  this.expendsList.find(expendsItem => expendsItem.keyIs === item.keyIs)
-            if (this.animation && expendsListFind && item.children) {
+            const expandsListFind =  this.expandsList.find(expandsItem => expandsItem.keyIs === item.keyIs)
+            if (this.animation && expandsListFind && item.children) {
                 const finalList: TreeListItemExtra[] = []
                 item.children.forEach(child => {
-                    flattenList(child, finalList, expendsListFind.level + 1, null, this.expends || [], this.$props)
+                    flattenList(child, finalList, expandsListFind.level + 1, null, this.expands || [], this.$props)
                 })
                 if (finalList.length <= this.animationMax) {
                     return (
                         TreeNodeRender(
-                            <TreeTransition key={item.key} {...expendsListFind} v-slots={{
+                            <TreeTransition key={item.key} {...expandsListFind} v-slots={{
                                 default: () => (
                                     <div>
                                         { finalList.map(TreeNodeFactory) }
@@ -256,8 +256,8 @@ export default defineComponent({
                         )
                     )
                 }
-                this.leave(expendsListFind.keyIs)
-                this.done(expendsListFind.isDelete, expendsListFind.keyIs)
+                this.leave(expandsListFind.keyIs)
+                this.done(expandsListFind.isDelete, expandsListFind.keyIs)
             }
             return TreeNodeRender()
         }

@@ -19,7 +19,7 @@ export interface TreeListItemExtra extends TreeListItem {
     parent: TreeListItemCustom | null
 }
 
-export interface ExpendsList {
+export interface ExpandsList {
     isDelete: boolean,
     keyIs: string | number | symbol,
     level: number,

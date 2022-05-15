@@ -5,7 +5,7 @@ import { CaretForward } from '@vicons/ionicons5'
 import Checkbox from '../checkbox'
 import Radio from '../radio'
 
-import type { TreeListItemCustom, ExpendsList, TreeListItemExtra } from './interface'
+import type { TreeListItemCustom, ExpandsList, TreeListItemExtra } from './interface'
 import { isChildrenOrSelf } from './utils'
 import { useVModel } from '@vueuse/core'
 import Spin from '../spin'
@@ -21,7 +21,7 @@ export default defineComponent({
             type: Number,
             required: true
         },
-        expends: {
+        expands: {
             type: Array as PropType<(string | number | symbol)[]>,
             required: true
         },
@@ -38,8 +38,8 @@ export default defineComponent({
             required: true
         },
         children: Array as PropType<TreeListItemCustom[]>,
-        expendsList: {
-            type: Array as PropType<ExpendsList[]>,
+        expandsList: {
+            type: Array as PropType<ExpandsList[]>,
             required: true
         },
         parent: {
@@ -68,7 +68,7 @@ export default defineComponent({
             void children
             return true
         },
-        expend: (isDelete: boolean, key: string | number | symbol, level: number) => {
+        expand: (isDelete: boolean, key: string | number | symbol, level: number) => {
             void isDelete
             void key
             void level
@@ -94,7 +94,7 @@ export default defineComponent({
         
         const levels = computed(() => new Array(props.level).fill(''))
         
-        const expending = computed(() => props.expends.includes(props.keyIs) || props.expendsList.find(item => !item.isDelete && item.keyIs === props.keyIs))
+        const expanding = computed(() => props.expands.includes(props.keyIs) || props.expandsList.find(item => !item.isDelete && item.keyIs === props.keyIs))
         const checkedStatus = computed(() => props.getChecked(props.list))
         const disabled = computed(() => props.disabled || (checkedStatus.value === -2 && !props.checkStrictly))
         const isNoChildren = computed(() => !props.children || props.children.length === 0)
@@ -103,16 +103,16 @@ export default defineComponent({
          * 展开的函数
          */
         const loading = ref(false)
-        const expend = async() => {
+        const expand = async() => {
             if (isNoChildren.value && !props.remote) return
             try {
                 if (props.remote && props.onRemote) {
                     loading.value = true
                     const list = await props.onRemote(props.list)
                     props.onRemoteChange?.(list)
-                    emit('expend', props.expends.includes(props.keyIs), props.keyIs, props.level)
+                    emit('expand', props.expands.includes(props.keyIs), props.keyIs, props.level)
                 } else {
-                    emit('expend', props.expends.includes(props.keyIs), props.keyIs, props.level)
+                    emit('expand', props.expands.includes(props.keyIs), props.keyIs, props.level)
                 }
             } finally {
                 loading.value = false
@@ -127,7 +127,7 @@ export default defineComponent({
             }} onClick={e => {
                 if (!isNoChildren.value || props.remote) {
                     e.stopPropagation()
-                    expend()
+                    expand()
                 }
             }}>
                 {
@@ -136,7 +136,7 @@ export default defineComponent({
                             <Spin color="currentcolor" />
                         ) : (
                             <Icon class={{
-                                expend: expending.value
+                                expand: expanding.value
                             }}>
                                 <CaretForward />
                             </Icon>
@@ -242,7 +242,7 @@ export default defineComponent({
             dragRemove(typeof index === 'number' ? ( isTop ? index : index + 1 ) : undefined)
         }
         
-        const slotBind = computed(() => ({ ...props.list, expending: expending.value, loading: loading.value })) 
+        const slotBind = computed(() => ({ ...props.list, expanding: expanding.value, loading: loading.value })) 
 
         return () => (
             <div
@@ -261,7 +261,7 @@ export default defineComponent({
                             return
                         }
                     }
-                    expend()
+                    expand()
                 }}
                 draggable={props.draggable}
                 onDragstart={handleDragStart}

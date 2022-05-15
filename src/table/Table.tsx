@@ -49,7 +49,7 @@ export const dataTableProps = {
         type: Array as PropType<any[]>
     },
     radio: null,
-    expends: {
+    expands: {
         type: Array as PropType<any[]>
     },
     childrenField: {
@@ -86,7 +86,7 @@ export default defineComponent({
         rowClick: (rowData: object, index: number) => ((void rowData, index, true)),
         cellClick: (rowData: object, index: number, column: DataColumn) => ((void rowData, index, column, true)),
         'update:selections': (selections: any[]) => ((void selections, true)),
-        'update:expends': (expends: any[]) => ((void expends, true)),
+        'update:expands': (expands: any[]) => ((void expands, true)),
         'update:radio': (radio: any) => ((void radio, true))
     },
     setup(props, { emit, slots }) {
@@ -135,8 +135,8 @@ export default defineComponent({
         const radioRef = ref<any>()
         const radio = useAutoControl(radioRef, props, 'radio', emit)
 
-        const expendsRef = ref<any[]>([])
-        const expends = useAutoControl(expendsRef, props, 'expends', emit, {
+        const expandsRef = ref<any[]>([])
+        const expands = useAutoControl(expandsRef, props, 'expands', emit, {
             deep: true,
             passive: true
         })
@@ -148,7 +148,7 @@ export default defineComponent({
                     [origin]: item
                 })
                 const key = props.rowKey ? item[props.rowKey] : item
-                if (item[childrenField] && Array.isArray(item[childrenField]) && expends.value?.includes(key)) {
+                if (item[childrenField] && Array.isArray(item[childrenField]) && expands.value?.includes(key)) {
                     flatting(final, childrenField, item[childrenField], level + 1)
                 }
             })
@@ -316,17 +316,17 @@ export default defineComponent({
                                 data[props.childrenField] && data[props.childrenField].length > 0 && (
                                     <Icon
                                         onClick={() => {
-                                            if (!expends.value) expends.value = []
-                                            if (expends.value.includes(key)) {
-                                                expends.value.splice(expends.value.indexOf(key), 1)
+                                            if (!expands.value) expands.value = []
+                                            if (expands.value.includes(key)) {
+                                                expands.value.splice(expands.value.indexOf(key), 1)
                                             } else {
-                                                expends.value.push(key)
+                                                expands.value.push(key)
                                             }
                                         }}
                                         class={[
                                             of('arrow', of('cell')),
                                             {
-                                                [of('arrow--active', of('cell'))]: expends.value?.includes(key)
+                                                [of('arrow--active', of('cell'))]: expands.value?.includes(key)
                                             }
                                         ]}
                                     >

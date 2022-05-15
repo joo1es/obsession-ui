@@ -52,7 +52,7 @@ app.use(Tree)
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
 | list | 渲染列表       | _TreeListItemCustom[]_          | []     |
 | props | 参数 | _\{ key: string, title: string }_           | _key: 'key', title: 'title'_      |
-| expends `v-model`   | 展开的项 | _(string \| number \| symbol)[]_ | -      |
+| expands `v-model`   | 展开的项 | _(string \| number \| symbol)[]_ | -      |
 | checked `v-model` | 选中项       | _(string \| number \| symbol)[]_                                                           | -  |
 | checkable  | 是否可选中     | _boolean_                                                           | false   |
 | virtual | 是否使用虚拟列表 | _boolean_ | false |
@@ -72,7 +72,7 @@ app.use(Tree)
 | onRemote `ref` | 远程加载回调 | _(list: TreeListItemCustom) => Promise\<TreeListItemCustom[]\>_ | - |
 | draggable `ref` | 是否可拖动 | _boolean_ | false |
 | checkStrictly | 是否可任意选择 | _boolean_ | false |
-| autoExpends | 是否自动展开 | _boolean_ | false |
+| autoExpands | 是否自动展开 | _boolean_ | false |
 
 ### Methods
 
@@ -85,10 +85,10 @@ app.use(Tree)
 | 名称    | 说明     | 参数 |
 | ------- | -------- | --- |
 | default | 默认插槽，会放置在最顶端 | - |
-| title | 标题内容 | _...TreeListItemCustom, expending: boolean_ |
-| suffix | 标题内容后缀 | _...TreeListItemCustom, expending: boolean_ |
-| prefix | 标题内容前缀 | _...TreeListItemCustom, expending: boolean_ |
-| arrow | 指示箭头插槽 | _...TreeListItemCustom, expending: boolean_ |
+| title | 标题内容 | _...TreeListItemCustom, expanding: boolean_ |
+| suffix | 标题内容后缀 | _...TreeListItemCustom, expanding: boolean_ |
+| prefix | 标题内容前缀 | _...TreeListItemCustom, expanding: boolean_ |
+| arrow | 指示箭头插槽 | _...TreeListItemCustom, expanding: boolean_ |
 
 ### Expose
 
