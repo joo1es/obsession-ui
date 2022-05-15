@@ -32,7 +32,7 @@ app.use(ScrollBar)
 | yShow | 是否显示纵轴滚动条 | _boolean_ | true |
 | container | 监听的容器，如果不填写，则默认为子容器 | _Window \| HTMLElement \| SVGElement_ | - |
 | smooth | 点击轨道时，是否平滑滚动 | _boolean_ | true |
-| leaveSize | 非 hover 状态下的滚动条宽度/高度 | _number_ | 1 |
+| leaveSize | 非 hover 状态下的滚动条宽度/高度 | _number_ | 1.5 |
 | useRaf | 是否使用 requestAnimationFrame 监听高度变化，会比直接监听数据更可靠，但同时也可能存在过度监听的问题 | _boolean_ | false |
 
 ### Methods

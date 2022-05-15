@@ -28,7 +28,7 @@ export const scrollBarProps = {
     },
     leaveSize: {
         type: Number,
-        default: 1
+        default: 1.5
     },
     useRaf: Boolean
 }
