@@ -1,12 +1,12 @@
 import { useNamespace, addUnit } from '../utils'
 import { defineComponent, PropType, ref } from 'vue'
-import { DataColumn } from './typings'
+import { TableColumn } from './typings'
 
 export default defineComponent({
     props: {
         colgroup: null,
         childrenColumns: {
-            type: Array as PropType<DataColumn[]>
+            type: Array as PropType<TableColumn[]>
         }
     },
     emits: {

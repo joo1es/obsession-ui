@@ -3,9 +3,9 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DataColumn } from '..'
+import { TableColumn } from '..'
 
-const columns = ref<DataColumn[]>([
+const columns = ref<TableColumn[]>([
     {type: 'index', width: 55, fixed: 'left', align: 'center'},
     {type: 'selection', width: 55, fixed: 'left', align: 'center'},
     {label:'日期', prop:'date'},

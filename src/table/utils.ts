@@ -1,13 +1,13 @@
 import { addUnit } from '../utils'
-import { DataColumn, fixedWidth, colSpan, childLevel, noBorder } from './typings'
+import { TableColumn, fixedWidth, colSpan, childLevel, noBorder } from './typings'
 
-export const getStyle = (column: DataColumn) => ({
+export const getStyle = (column: TableColumn) => ({
     left: column.fixed === true || column.fixed === 'left' ? `${column[fixedWidth]}` : undefined,
     right: column.fixed === 'right' ? `calc(${column[fixedWidth]})` : undefined,
     textAlign: column.align
 })
 
-export const calcFixedPosition = (columns: DataColumn[]) => {
+export const calcFixedPosition = (columns: TableColumn[]) => {
     let fixedLeft = ''
     columns.forEach(column => {
         const width = addUnit(column.width) || '100px'
@@ -27,7 +27,7 @@ export const calcFixedPosition = (columns: DataColumn[]) => {
 /**
  * Get leaf nodes' count
  */
-const getLeafNodeCount = (column: DataColumn) => {
+const getLeafNodeCount = (column: TableColumn) => {
     let count = 0
     if (column.children && column.children.length) {
         for (let i = 0; i < column.children.length; i++) {
@@ -42,7 +42,7 @@ const getLeafNodeCount = (column: DataColumn) => {
 /**
  * This is a recursive function that returns the sum of all leaf nodes under the column
  */
-export const getColSpanByColumn = (columns: DataColumn[], childrenColumns: DataColumn[], renderColumns: DataColumn[][], level = 0) => {
+export const getColSpanByColumn = (columns: TableColumn[], childrenColumns: TableColumn[], renderColumns: TableColumn[][], level = 0) => {
     columns.map(column => {
         column[colSpan] = getLeafNodeCount(column)
         column[childLevel] = level
@@ -60,7 +60,7 @@ export const getColSpanByColumn = (columns: DataColumn[], childrenColumns: DataC
 /**
  * search last no border column
  */
-export const setNoBorder = (columns: DataColumn[]) => {
+export const setNoBorder = (columns: TableColumn[]) => {
     columns[columns.length - 1][noBorder] = true
     const lastColumn = columns[columns.length - 1]
     if (lastColumn.children && lastColumn.children.length > 0) {

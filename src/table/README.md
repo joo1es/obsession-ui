@@ -49,7 +49,7 @@ app.use(Table)
 | radio `v-model:radio` | 单选中项 | _any_ | - |
 | expands `v-model:expands`      | 展开项       | _any[]_          | -    |
 | dark | 是否启用黑暗模式 | _boolean_ | false |
-| columns | 列 | _[DataColumn](#datacolumn)[]_ | - |
+| columns | 列 | _[TableColumn](#tablecolumn)[]_ | - |
 | data | 表格数据 | _any[]_ | - |
 | rowKey | 行id | _string_ | - |
 | border | 是否显示纵向线条 | _string_ | - |
@@ -61,7 +61,7 @@ app.use(Table)
 | scrollWidth | 滚动宽度，可以配合列的 fixed | _number \| string_ | - |
 | childrenField | children 字段 | _string_ | - |
 | rowClassName | 行的 Class | _string \| ((rowData: object, index: number) => string)_ | - |
-| cellClassName | 项的 Class | _string \| ((rowData: object, index: number, column: [DataColumn](#/table#datacolumn)[]) => string)_ | - |
+| cellClassName | 项的 Class | _string \| ((rowData: object, index: number, column: [TableColumn](#/table#tablecolumn)[]) => string)_ | - |
 | virtual | 是否使用虚拟列表渲染 | _boolean_ | false |
 | hideHead | 是否隐藏表头 | _boolean_ | false |
 | shadow | 是否为 fixed 的列显示阴影，如果 fixed 列不在两边，建议关闭阴影 | _boolean_ | true |
@@ -72,20 +72,20 @@ app.use(Table)
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
 | rowClick      | 行点击事件       | _(rowData: object, index: number) => void_          | -     |
-| cellClick      | 项的点击事件       | _(rowData: object, index: number, column: [DataColumn](#/table#datacolumn)[]) => void_          | -     |
+| cellClick      | 项的点击事件       | _(rowData: object, index: number, column: [TableColumn](#/table#tablecolumn)[]) => void_          | -     |
 
 ### Slots
 
 | 名称    | 说明     | 参数 |
 | ------- | -------- | ----- |
-| table-[prop] | 表格替换插槽 | _column: [DataColumn](#/table#datacolumn), row: object, index: number_ |
-| head-[prop] | 头部替换插槽 | _column: [DataColumn](#/table#datacolumn)_ |
-| foot-[prop] | 合计行替换插槽 | _column: [DataColumn](#/table#datacolumn)_ |
+| table-[prop] | 表格替换插槽 | _column: [TableColumn](#/table#tablecolumn), row: object, index: number_ |
+| head-[prop] | 头部替换插槽 | _column: [TableColumn](#/table#tablecolumn)_ |
+| foot-[prop] | 合计行替换插槽 | _column: [TableColumn](#/table#tablecolumn)_ |
 | empty | 数据为空的替换插槽 | - |
 
 ## 类型
 
-### DataColumn
+### TableColumn
 
 | 参数      | 说明           | 类型                                                                | 默认值 |
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
@@ -96,7 +96,7 @@ app.use(Table)
 | minWidth | 最小宽度 | _string \| number_ | - |
 | fixed | 是否固定 | _boolean \| 'left' \| 'right'_ | - |
 | align | 对齐方式 | _'left' \| 'right' \| 'center'_ | - |
-| children | 子列 | _[DataColumn](#/table#datacolumn)[]_ | - |
+| children | 子列 | _[TableColumn](#/table#tablecolumn)[]_ | - |
 | type | 类型 | _'index' \| 'selection' \| 'chekcbox' \| 'radio'_ | - |
 | indent | 是否用作缩进列 | _boolean_ | - |
 | colSpan | 跨列 | _(rowData: object, rowIndex: number) => number_ | - |

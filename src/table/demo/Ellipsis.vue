@@ -3,10 +3,10 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DataColumn } from '..'
+import { TableColumn } from '..'
 
 const table = ref(null)
-const columns = ref<DataColumn[]>([
+const columns = ref<TableColumn[]>([
     {label:'信息', prop:'date', children: [
         {label:'日期', prop:'date', width:120},
         {label:'姓名', prop:'name', align:'center'}

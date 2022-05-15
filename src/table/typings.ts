@@ -8,7 +8,7 @@ export const rowSpan = Symbol('rowSpan')
 export const childLevel = Symbol('childLevel')
 export const noBorder = Symbol('noBorder')
 
-export interface DataColumn {
+export interface TableColumn {
     label?: string
     prop?: keyof any
     ellipsis?: boolean | Partial<EllipsisProps>
@@ -16,7 +16,7 @@ export interface DataColumn {
     minWidth?: string | number
     fixed?: boolean | 'left' | 'right'
     align?: 'left' | 'center' | 'right'
-    children?: DataColumn[]
+    children?: TableColumn[]
     type?: 'index' | 'selection' | 'radio' | 'checkbox'
     indent?: boolean
     colSpan?: (rowData: object, rowIndex: number) => number

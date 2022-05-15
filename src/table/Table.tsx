@@ -8,7 +8,7 @@ import {
     watch
 } from 'vue'
 
-import { type DataColumn, firstRight, colSpan, childLevel, rowSpan, noBorder, lastLeft } from './typings'
+import { type TableColumn, firstRight, colSpan, childLevel, rowSpan, noBorder, lastLeft } from './typings'
 import { getStyle, getColSpanByColumn, calcFixedPosition, getTextByProp, setNoBorder } from './utils'
 import { addUnit, useNamespace, useAutoControl } from '../utils'
 
@@ -25,7 +25,7 @@ import { ChevronForward } from '@vicons/ionicons5'
 
 export const dataTableProps = {
     columns: {
-        type: Array as PropType<DataColumn[]>
+        type: Array as PropType<TableColumn[]>
     },
     data: {
         type: Array as PropType<any[]>
@@ -64,7 +64,7 @@ export const dataTableProps = {
         type: [String, Function] as PropType<string | ((rowData: object, index: number) => string)>
     },
     cellClassName: {
-        type: [String, Function] as PropType<string | ((rowData: object, index: number, column: DataColumn) => string)>
+        type: [String, Function] as PropType<string | ((rowData: object, index: number, column: TableColumn) => string)>
     },
     virtual: Boolean,
     hideHead: Boolean,
@@ -84,7 +84,7 @@ export default defineComponent({
     props: dataTableProps,
     emits: {
         rowClick: (rowData: object, index: number) => ((void rowData, index, true)),
-        cellClick: (rowData: object, index: number, column: DataColumn) => ((void rowData, index, column, true)),
+        cellClick: (rowData: object, index: number, column: TableColumn) => ((void rowData, index, column, true)),
         'update:selections': (selections: any[]) => ((void selections, true)),
         'update:expands': (expands: any[]) => ((void expands, true)),
         'update:radio': (radio: any) => ((void radio, true))
@@ -160,7 +160,7 @@ export default defineComponent({
             return final
         })
 
-        const deepCopy = (columns?: DataColumn[]) => {
+        const deepCopy = (columns?: TableColumn[]) => {
             if (!columns) return []
             return columns.map(column => {
                 const copyColumn = { ...column }
@@ -173,8 +173,8 @@ export default defineComponent({
 
         const columnsCollect = computed(() => {
             const columns = deepCopy(props.columns)
-            const renderColumns: DataColumn[][] = []
-            const childrenColumns: DataColumn[] = []
+            const renderColumns: TableColumn[][] = []
+            const childrenColumns: TableColumn[] = []
 
             const lastColumnsChildren = columns[columns.length - 1].children
             if (lastColumnsChildren && lastColumnsChildren.length > 0) {
@@ -190,8 +190,8 @@ export default defineComponent({
                 column[rowSpan] = maxLength - (column[childLevel] || 0)
             })
 
-            const fixedLeftColumns: DataColumn[] = []
-            const fixedRightColumns: DataColumn[] = []
+            const fixedLeftColumns: TableColumn[] = []
+            const fixedRightColumns: TableColumn[] = []
             for (const column of childrenColumns) {
                 if (column.fixed === true || column.fixed === 'left') {
                     fixedLeftColumns.push(column)
@@ -213,7 +213,7 @@ export default defineComponent({
 
         const top = ref(0)
 
-        const getClass = (column: DataColumn) => ({
+        const getClass = (column: TableColumn) => ({
             [of('cell--fixed')]: column.fixed,
             [of('cell--fixed--left')]: column.fixed === true || column.fixed === 'left',
             [of('cell--fixed--right')]: column.fixed === 'right',
@@ -246,7 +246,7 @@ export default defineComponent({
             }
         })
 
-        const TdRender = (column: DataColumn, index: number, data: any) => {
+        const TdRender = (column: TableColumn, index: number, data: any) => {
             let insideText: any = ''
             const rowKey = props.rowKey ? data[props.rowKey] : undefined
             const key = rowKey ?? data[origin]
@@ -432,7 +432,7 @@ export default defineComponent({
                 ref: 'virtualRef',
                 itemResizable: true
             }, {
-                default: ({ item: row, index }: { item: DataColumn, index: number }) => (
+                default: ({ item: row, index }: { item: TableColumn, index: number }) => (
                     <tr
                         class={typeof this.rowClassName === 'string' ? this.rowClassName : this.rowClassName?.(row, index)}
                         onClick={() => this.$emit('rowClick', row, index)}
