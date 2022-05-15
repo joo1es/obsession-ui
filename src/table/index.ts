@@ -5,4 +5,4 @@ export const Table = withInstall<typeof _Table>(_Table)
 
 export default Table
 export * from './Table'
-export * from './typings'
+export { DataColumn } from './typings'
