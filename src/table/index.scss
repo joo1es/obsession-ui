@@ -30,7 +30,6 @@
     word-break: break-all;
     box-sizing: border-box;
     background-color: var(--o-table-cell-background);
-    overflow: auto;
 
     &-empty {
         font-size: var(--o-table-font-size);
@@ -62,6 +61,25 @@
         .o-table-outer {
             height: 100%;
         }
+    }
+
+    &.o-table--sticky {
+        display: flex;
+        flex-direction: column;
+
+        .o-table-outerhead， .o-table-outerfoot {
+            position: sticky;
+            z-index: 2;
+        }
+
+        .o-table-outerhead {
+            top: 0;
+        }
+
+        .o-table-outerfoot {
+            bottom: 0;
+        }
+
     }
 
     &-self {

@@ -58,6 +58,7 @@ app.use(Table)
 | height | 表格的最大高度，可以配合 fixed | _number \| string_ | - |
 | totalLine | 合计行 | _object_ | - |
 | fixed | 是否固定表头和合计行 | _boolean_ | false |
+| sticky | 是否对表头及表脚使用 position: sticky 属性 | _boolean_ | false |
 | scrollWidth | 滚动宽度，可以配合列的 fixed | _number \| string_ | - |
 | minScrollWidth | 最小滚动宽度，可以配合列的 fixed | _number \| string_ | '100%' |
 | maxScrollWidth | 最大滚动宽度，可以配合列的 fixed | _number \| string_ | - |
