@@ -740,7 +740,7 @@ export default defineComponent({
                             [this.is('noborder')]: !this.border,
                             [this.is('stripe')]: this.stripe,
                             [this.is('fixed')]: this.fixed,
-                            [this.is('lastborder')]: !this.yShow,
+                            [this.is('lastborder')]: this.fixed && !this.yShow,
                             'dark': this.dark
                         }
                     ]
