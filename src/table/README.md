@@ -66,6 +66,8 @@ app.use(Table)
 | hideHead | 是否隐藏表头 | _boolean_ | false |
 | shadow | 是否为 fixed 的列显示阴影，如果 fixed 列不在两边，建议关闭阴影 | _boolean_ | true |
 | scrollBar | 滚动条组件的 props | _Partial\<ScrollBarProps\> & Record\<string, any\>_ | - |
+| sort `v-model:sort` | 排序 | _Map\<keyof any, 'desc' \| 'asc' \| undefined>_ | - |
+| sortMode | 排序模式 | _'single' \| 'multiple'_ | single |
 
 ### Methods
 
@@ -82,6 +84,7 @@ app.use(Table)
 | head-[prop] | 头部替换插槽 | _column: [TableColumn](#/table#tablecolumn)_ |
 | foot-[prop] | 合计行替换插槽 | _column: [TableColumn](#/table#tablecolumn)_ |
 | empty | 数据为空的替换插槽 | - |
+| sort | 主动触发的 sort 事件 | _(prop: keyof any, way: 'desc' \| 'asc' \| undefined, allSort: Map\<keyof any, 'desc' \| 'asc' \| undefined>) => void_ | - |
 
 ## 类型
 
@@ -102,3 +105,4 @@ app.use(Table)
 | colSpan | 跨列 | _(rowData: object, rowIndex: number) => number_ | - |
 | rowSpan | 跨行 | _(rowData: object, rowIndex: number) => number_ | - |
 | className | 列的类名 | _string_ | - |
+| sortable | 是否可排序 | _boolean \| ((a: unknown, b: unknown) => number) \| 'remote'_ | - |

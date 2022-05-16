@@ -15,13 +15,14 @@ export interface TableColumn {
     width?: string | number
     minWidth?: string | number
     fixed?: boolean | 'left' | 'right'
-    align?: 'left' | 'center' | 'right'
+    align?: 'left' | 'right' | 'center'
     children?: TableColumn[]
     type?: 'index' | 'selection' | 'radio' | 'checkbox'
     indent?: boolean
     colSpan?: (rowData: object, rowIndex: number) => number
     rowSpan?: (rowData: object, rowIndex: number) => number
     className?: string
+    sortable?: boolean | ((a: unknown, b: unknown) => number) | 'remote'
     [fixedWidth]?: string
     [firstRight]?: boolean
     [colSpan]?: number,

@@ -8,7 +8,7 @@ import { TableColumn } from '..'
 const columns = ref<TableColumn[]>([
     {type: 'index', width: 55, fixed: 'left', align: 'center'},
     {type: 'selection', width: 55, fixed: 'left', align: 'center'},
-    {label:'日期', prop:'date'},
+    {label:'日期', prop:'date', sortable: true},
     {label:'姓名', prop:'name'},
     {label:'地址', prop:'address'},
 ])

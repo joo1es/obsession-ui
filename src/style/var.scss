@@ -19,9 +19,13 @@
     --o-color-dark-gray-light: rgb(100, 100, 100);
     --o-text-color-primary: #333;
     --o-text-color-regular: #666;
+    --o-text-color-secondary: #999;
+    --o-color-dark-gray-lighter: rgba(150, 150, 150, .1);
 }
 
 .dark {
     --o-text-color-primary: rgba(255, 255, 255, .9);
     --o-text-color-regular: rgba(255, 255, 255, .82);
+    --o-text-color-secondary: rgba(255, 255, 255, .6);
+    --o-color-dark-gray-lighter: #383838;
 }

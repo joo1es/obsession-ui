@@ -1,10 +1,18 @@
 import { addUnit } from '../utils'
-import { TableColumn, fixedWidth, colSpan, childLevel, noBorder } from './typings'
+import { TableColumn, fixedWidth, colSpan, childLevel, noBorder, firstRight, lastLeft } from './typings'
 
 export const getStyle = (column: TableColumn) => ({
     left: column.fixed === true || column.fixed === 'left' ? `${column[fixedWidth]}` : undefined,
     right: column.fixed === 'right' ? `calc(${column[fixedWidth]})` : undefined,
     textAlign: column.align
+})
+
+export const getClass = (column: TableColumn, of: (of: string, prefix?: string | undefined) => string, arrivedState: { right: boolean, left: boolean }, shadow?: boolean) => ({
+    [of('cell--fixed')]: column.fixed,
+    [of('cell--fixed--left')]: column.fixed === true || column.fixed === 'left',
+    [of('cell--fixed--right')]: column.fixed === 'right',
+    [of('shadow--left')]: shadow && column.fixed === 'right' && column[firstRight] && !arrivedState.right,
+    [of('shadow--right')]: shadow && (column.fixed === 'left' || column.fixed === true) && column[lastLeft] && !arrivedState.left
 })
 
 export const calcFixedPosition = (columns: TableColumn[]) => {

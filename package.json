@@ -83,7 +83,8 @@
             "no-await-in-loop": 0,
             "max-classes-per-file": 0,
             "camelcase": 0,
-            "no-use-before-define": 0
+            "no-use-before-define": 0,
+            "no-case-declarations": 0
         },
         "globals": {
             "Atomics": "readonly",

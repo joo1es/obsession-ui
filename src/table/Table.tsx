@@ -9,7 +9,7 @@ import {
 } from 'vue'
 
 import { type TableColumn, firstRight, colSpan, childLevel, rowSpan, noBorder, lastLeft } from './typings'
-import { getStyle, getColSpanByColumn, calcFixedPosition, getTextByProp, setNoBorder } from './utils'
+import { getStyle, getColSpanByColumn, calcFixedPosition, getTextByProp, setNoBorder, getClass } from './utils'
 import { addUnit, useNamespace, useAutoControl } from '../utils'
 
 import Ellipsis from '../ellipsis'
@@ -21,7 +21,7 @@ import VirtualList from '../virtual-list'
 import DataTableRender from './Render'
 import ScrollBar, { type ScrollBarProps } from '../scroll-bar'
 
-import { ChevronForward } from '@vicons/ionicons5'
+import { ChevronForward, ArrowDownOutline } from '@vicons/ionicons5'
 
 export const dataTableProps = {
     columns: {
@@ -74,6 +74,13 @@ export const dataTableProps = {
     },
     scrollBar: {
         type: Object as PropType<Partial<ScrollBarProps> & Record<string, any>>,
+    },
+    sort: {
+        type: Object as PropType<Map<keyof any, 'desc' | 'asc' | undefined>>
+    },
+    sortMode: {
+        type: String as PropType<'single' | 'multiple'>,
+        default: 'single'
     }
 }
 
@@ -87,7 +94,9 @@ export default defineComponent({
         cellClick: (rowData: object, index: number, column: TableColumn) => ((void rowData, index, column, true)),
         'update:selections': (selections: any[]) => ((void selections, true)),
         'update:expands': (expands: any[]) => ((void expands, true)),
-        'update:radio': (radio: any) => ((void radio, true))
+        'update:radio': (radio: any) => ((void radio, true)),
+        'update:sort': (sort: Map<keyof any, 'desc' | 'asc' | undefined>) => ((void sort, true)),
+        sort: (prop: keyof any, way: 'desc' | 'asc' | undefined, allSort: Map<keyof any, 'desc' | 'asc' | undefined>) => ((void prop, void way, void allSort, true))
     },
     setup(props, { emit, slots }) {
         const { basic, of, is } = useNamespace('table')
@@ -120,6 +129,7 @@ export default defineComponent({
             deep: true,
             passive: true
         })
+        const selectionsSet = computed(() => new Set(selections.value))
         /**
          * Expose method
          */
@@ -140,6 +150,12 @@ export default defineComponent({
             deep: true,
             passive: true
         })
+
+        const sortRef = ref<Map<keyof any, 'desc' | 'asc' | undefined>>(new Map())
+        const sortMap = useAutoControl(sortRef, props, 'sort', emit, {
+            deep: true,
+            passive: true
+        })
         const flatting = (final: any[], childrenField: string, columns: any[], level = 0) => {
             columns?.forEach(item => {
                 final.push({
@@ -156,7 +172,32 @@ export default defineComponent({
         const dataFlat = computed(() => {
             const { data, childrenField } = props
             const final: any[] = []
-            flatting(final, childrenField, data || [])
+            const dataCopy = data ? [...data] : []
+            if (sortMap.value?.size) {
+                const columnsSortWay = new Map<keyof any, boolean | ((a: unknown, b: unknown) => number) | 'remote'>()
+                columnsCollect.value.childrenColumns.forEach(item => {
+                    if (item.prop && item.sortable) columnsSortWay.set(item.prop, item.sortable)
+                })
+                dataCopy.sort((a, b) => {
+                    if (!sortMap.value) return 0
+                    for (const sorting of sortMap.value) {
+                        const sortWay = columnsSortWay.get(sorting[0])
+                        if (sortWay === 'remote') continue
+                        if (typeof sortWay === 'function') {
+                            const result = sortWay(a, b)
+                            if (result !== 0) return result
+                        } else {
+                            const aValue = getTextByProp(a, sorting[0])
+                            const bValue = getTextByProp(b, sorting[0])
+                            if (aValue === bValue) continue
+                            if (sorting[1] === 'desc') return aValue > bValue ? -1 : 1
+                            return aValue < bValue ? -1 : 1
+                        }
+                    }
+                    return 0
+                })
+            }
+            flatting(final, childrenField, dataCopy)
             return final
         })
 
@@ -213,21 +254,12 @@ export default defineComponent({
 
         const top = ref(0)
 
-        const getClass = (column: TableColumn) => ({
-            [of('cell--fixed')]: column.fixed,
-            [of('cell--fixed--left')]: column.fixed === true || column.fixed === 'left',
-            [of('cell--fixed--right')]: column.fixed === 'right',
-            [of('shadow--left')]: props.shadow && column.fixed === 'right' && column[firstRight] && !arrivedState.right,
-            [of('shadow--right')]: props.shadow && (column.fixed === 'left' || column.fixed === true) && column[lastLeft] && !arrivedState.left
-        })
-
         const checkAll = computed({
             get() {
                 if (!props.data || props.data.length === 0) return false
-                const selectionsSet = new Set(selections.value || [])
                 return props.data.every(item => {
                     const key = props.rowKey ? item[props.rowKey] : item
-                    return selectionsSet.has(key)
+                    return selectionsSet.value.has(key)
                 })
             },
             set(value) {
@@ -246,6 +278,7 @@ export default defineComponent({
             }
         })
 
+        const getTrClass = (column: TableColumn) => getClass(column, of, arrivedState, props.shadow)
         const TdRender = (column: TableColumn, index: number, data: any) => {
             let insideText: any = ''
             const rowKey = props.rowKey ? data[props.rowKey] : undefined
@@ -300,9 +333,12 @@ export default defineComponent({
                 <td
                     class={[
                         of('cell'),
-                        getClass(column),
+                        getTrClass(column),
                         typeof props.cellClassName === 'string' ? props.cellClassName : props.cellClassName?.(data, index, column),
-                        column.className
+                        column.className,
+                        {
+                            [is('sort')]: column.prop && sortMap.value?.get(column.prop)
+                        }
                     ]}
                     style={getStyle(column)}
                     key={column.prop}
@@ -348,12 +384,34 @@ export default defineComponent({
 
         const width = computed(() => addUnit(props.scrollWidth))
 
+        const Empty = computed(() => {
+            if (dataFlat.value && dataFlat.value.length > 0) return
+            return (
+                <div
+                    class={of('empty')}
+                    style={{
+                        width: width.value
+                    }}
+                >
+                    {slots.empty?.() ?? '暂无数据'}
+                </div>
+            )
+        })
+
+        const Colgroup = computed(() => (
+            <colgroup>
+                {columnsCollect.value.childrenColumns.map(column => (
+                    <col style={{ width: column.width ? addUnit(column.width) : column.fixed ? '100px' : undefined, minWidth: addUnit(column.minWidth) }} />
+                ))}
+            </colgroup>
+        ))
+
         return {
             basic,
             of,
             is,
             getStyle,
-            getClass,
+            getTrClass,
             columnsCollect,
             tableRef,
             checkAll,
@@ -366,85 +424,186 @@ export default defineComponent({
             headRef,
             footRef,
             width,
-            getSelectionsRows
+            getSelectionsRows,
+            sortMap,
+            Empty,
+            Colgroup
         }
     },
     render() {
-        const Colgroup = (
-            <colgroup>
-                {this.columnsCollect.childrenColumns.map(column => (
-                    <col style={{ width: column.width ? addUnit(column.width) : column.fixed ? '100px' : undefined, minWidth: addUnit(column.minWidth) }} />
-                ))}
-            </colgroup>
-        )
-        const Empty = !this.dataFlat || this.dataFlat.length === 0 && (
-            <div class={this.of('empty')} style={{
+        const TbodyRender = () => {
+            const TbodyTrs = (row: any, index: number) => (
+                <tr
+                    key={this.rowKey ? row[this.rowKey] : index}
+                    class={typeof this.rowClassName === 'string' ? this.rowClassName : this.rowClassName?.(row, index)}
+                    onClick={() => this.$emit('rowClick', row, index)}
+                >
+                    {this.columnsCollect.childrenColumns.map(column => this.TdRender(column, index, row))}
+                </tr>
+            )
+            const style = {
                 width: this.width
-            }}>
-                {this.$slots.empty?.() ?? '暂无数据'}
-            </div>
-        )
-        const Tbody = !this.virtual ? (
-            <div class={this.of('outer')} ref="tableRef">
-                {Empty}
-                {
-                    h(DataTableRender as any, {
-                        childrenColumns: this.columnsCollect.childrenColumns,
-                        style: {
-                            width: this.width
-                        }
-                    }, {
-                        default: () => (
-                            <>
-                                {
-                                    this.dataFlat?.map((row, index) => (
-                                        <tr
-                                            key={this.rowKey ? row[this.rowKey] : index}
-                                            class={typeof this.rowClassName === 'string' ? this.rowClassName : this.rowClassName?.(row, index)}
-                                            onClick={() => this.$emit('rowClick', row, index)}
-                                        >
-                                            {
-                                                this.columnsCollect.childrenColumns.map(column => this.TdRender(column, index, row))
-                                            }
-                                        </tr>
-                                    ))
-                                }
-                            </>
-                        )
-                    })
-                }
-            </div>
-        ) : (
-            h(VirtualList as any, {
-                visibleItemsTag: DataTableRender,
-                itemSize: this.itemHeight,
-                class: [
-                    this.of('outer')
-                ],
-                items: this.dataFlat,
-                keyField: this.rowKey,
-                visibleItemsProps: {
-                    childrenColumns: this.columnsCollect.childrenColumns
-                },
-                itemsStyle: {
-                    width: this.width
-                },
-                ref: 'virtualRef',
-                itemResizable: true
-            }, {
-                default: ({ item: row, index }: { item: TableColumn, index: number }) => (
-                    <tr
-                        class={typeof this.rowClassName === 'string' ? this.rowClassName : this.rowClassName?.(row, index)}
-                        onClick={() => this.$emit('rowClick', row, index)}
-                    >
+            }
+            if (!this.virtual) {
+                return (
+                    <div class={this.of('outer')} ref="tableRef">
+                        {this.Empty}
                         {
-                            this.columnsCollect.childrenColumns.map(column => this.TdRender(column, index, row))
+                            h(DataTableRender as any, {
+                                childrenColumns: this.columnsCollect.childrenColumns,
+                                style
+                            }, {
+                                default: () => this.dataFlat?.map(TbodyTrs)
+                            })
+                        }
+                    </div>
+                )
+            } 
+                return (
+                    h(VirtualList as any, {
+                        visibleItemsTag: DataTableRender,
+                        itemSize: this.itemHeight,
+                        class: [
+                            this.of('outer')
+                        ],
+                        items: this.dataFlat,
+                        keyField: this.rowKey,
+                        visibleItemsProps: {
+                            childrenColumns: this.columnsCollect.childrenColumns
+                        },
+                        itemsStyle: style,
+                        ref: 'virtualRef',
+                        itemResizable: true
+                    }, {
+                        default: ({ item: row, index }: { item: TableColumn, index: number }) => TbodyTrs(row, index),
+                        empty: () => this.Empty
+                    })
+                )
+            
+        }
+        /**
+         * Thead 渲染
+         */
+        const TheadRender = () => {
+            if (this.hideHead) return
+            const ContentRender = (column: TableColumn) => {
+                const sortIs = column.prop ? this.sortMap?.get(column.prop) : undefined
+                switch (column.type) {
+                    case 'selection':
+                        return <Checkbox v-model={this.checkAll} indeterminate={this.selections && this.selections.length !== 0} />
+                    default:
+                        const Text = this.$slots[`head-${String(column.prop) || ''}`]?.({ column }) ?? column.label
+                        const Final: any[] = [Text]
+                        const SortIcon = (
+                            <Icon
+                                class={[
+                                    this.of('head-icon'),
+                                    {
+                                        active: sortIs,
+                                        [this.of('head-icon--asc')]: sortIs === 'asc'
+                                    }
+                                ]}
+                            ><ArrowDownOutline /></Icon>
+                        )
+                        if (column.sortable) {
+                            Final.push(SortIcon)
+                        }
+                        return Final
+                }
+            }
+            /**
+             * 列头渲染
+             */
+            const HeadTrs = (
+                this.columnsCollect.renderColumns.map((columns, index) => (
+                    <tr key={index}>
+                        {
+                            columns.map(column => (
+                                <th
+                                    class={[
+                                        this.of('head'),
+                                        column.className,
+                                        {
+                                            'no-border': column[noBorder],
+                                            [this.of('head--sortable')]: column.sortable,
+                                            [this.is('sort')]: column.prop && this.sortMap?.get(column.prop)
+                                        },
+                                        this.getTrClass(column)
+                                    ]}
+                                    style={this.getStyle(column)}
+                                    key={column.prop}
+                                    colspan={column[colSpan]}
+                                    rowspan={column[rowSpan]}
+                                    onClick={() => {
+                                        if (!column.prop || !column.sortable) return
+                                        if (!this.sortMap) this.sortMap = new Map()
+                                        const sortIs = this.sortMap.get(column.prop)
+                                        if (!sortIs && this.sortMode === 'single') this.sortMap.clear()
+                                        if (!sortIs) this.sortMap.set(column.prop, 'desc')
+                                        if (sortIs === 'desc') this.sortMap.set(column.prop, 'asc')
+                                        if (sortIs === 'asc') this.sortMap.delete(column.prop)
+                                        this.$emit('sort', column.prop, this.sortMap.get(column.prop), this.sortMap)
+                                    }}
+                                >
+                                    {ContentRender(column)}
+                                </th>
+                            ))
                         }
                     </tr>
-                ),
-                empty: () => Empty
-            })
-        )
+                ))
+            )
+            return (
+                <div class={this.of('outerhead')} ref="headRef">
+                    <table cellspacing="0" class={[this.of('self'), this.of('headself')]} style={{ width: this.width }}>
+                        {this.Colgroup}
+                        <thead>
+                            {HeadTrs}
+                        </thead>
+                    </table>
+                </div>
+            )
+        }
+        const TfootRender = () => {
+            if (!this.totalLine) return
+            const ContentRender = (column: TableColumn) => {
+                switch (column.type) {
+                    case 'selection':
+                        return <Checkbox v-model={this.checkAll} indeterminate={this.selections && this.selections.length !== 0} />
+                    default:
+                        return this.$slots[`foot-${String(column.prop) || ''}`]?.({ column }) ?? (column.prop ? this.totalLine?.[column.prop] : '')
+                }
+            }
+            const FootTds = (
+                this.columnsCollect.childrenColumns.map(column => (
+                    <td
+                        class={[
+                            this.of('foot'), column.className,
+                            {
+                                [this.of('foot--fixed')]: this.footFixed,
+                                [this.is('sort')]: column.prop && this.sortMap?.get(column.prop)
+                            },
+                            this.getTrClass(column)
+                        ]}
+                        style={this.getStyle(column)}
+                        key={column.prop}
+                    >
+                        {ContentRender(column)}
+                    </td>
+                ))
+            )
+            return (
+                <div class={this.of('outerfoot')} ref="footRef">
+                    <table cellspacing="0" class={[this.of('self'), this.of('footself')]} style={{ width: this.width }}>
+                        {this.Colgroup}
+                        <tfoot>
+                            <tr>
+                                {FootTds}
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            )
+        }
         return (
             <div
                 class={
@@ -462,84 +621,11 @@ export default defineComponent({
                     height: addUnit(this.height)
                 }}
             >
-                {
-                    !this.hideHead && (
-                        <div class={this.of('outerhead')} ref="headRef">
-                            <table cellspacing="0" class={[this.of('self'), this.of('headself')]} style={{ width: this.width }}>
-                                {Colgroup}
-                                <thead>
-                                    {
-                                        this.columnsCollect.renderColumns.map((columns, index) => (
-                                            <tr key={index}>
-                                                {
-                                                    columns.map(column => (
-                                                        <th
-                                                            class={[this.of('head'), column.className, {
-                                                                'no-border': column[noBorder]
-                                                            }, this.getClass(column)]}
-                                                            style={this.getStyle(column)}
-                                                            key={column.prop}
-                                                            colspan={column[colSpan]}
-                                                            rowspan={column[rowSpan]}
-                                                        >
-                                                            {
-                                                                (() => {
-                                                                    switch (column.type) {
-                                                                        case 'selection':
-                                                                            return <Checkbox v-model={this.checkAll} indeterminate={this.selections && this.selections.length !== 0} />
-                                                                        default:
-                                                                            return this.$slots[`head-${String(column.prop) || ''}`]?.({ column }) ?? column.label
-                                                                    }
-                                                                })()
-                                                            }
-                                                        </th>
-                                                    ))
-                                                }
-                                            </tr>
-                                        ))
-                                    }
-                                </thead>
-                            </table>
-                        </div>
-                    )
-                }
+                {TheadRender()}
                 <ScrollBar {...this.scrollBar}>
-                    {Tbody}
+                    {TbodyRender}
                 </ScrollBar>
-                {
-                    this.totalLine && (
-                        <div class={this.of('outerfoot')} ref="footRef">
-                            <table cellspacing="0" class={[this.of('self'), this.of('footself')]} style={{ width: this.width }}>
-                                <tfoot>
-                                    <tr>
-                                        {
-                                            this.columnsCollect.childrenColumns.map(column => (
-                                                <td
-                                                    class={[this.of('foot'), column.className, {
-                                                        [this.of('foot--fixed')]: this.footFixed,
-                                                    }, this.getClass(column)]}
-                                                    style={this.getStyle(column)}
-                                                    key={column.prop}
-                                                >
-                                                    {
-                                                        (() => {
-                                                            switch (column.type) {
-                                                                case 'selection':
-                                                                    return <Checkbox v-model={this.checkAll} indeterminate={this.selections && this.selections.length !== 0} />
-                                                                default:
-                                                                    return this.$slots[`foot-${String(column.prop) || ''}`]?.({ column }) ?? (column.prop ? this.totalLine?.[column.prop] : '')
-                                                            }
-                                                        })()
-                                                    }
-                                                </td>
-                                            ))
-                                        }
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                    )
-                }
+                {TfootRender()}
             </div>
         )
     }

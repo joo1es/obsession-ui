@@ -39,6 +39,7 @@
         text-align: center;
     }
 
+    .o-table-outer,
     .o-table-outerhead,
     .o-table-outerfoot {
         width: 100%;
@@ -48,23 +49,18 @@
 
     .o-table-outer {
         overflow: auto;
-        height: 100%;
     }
-
-    // &:hover {
-    //     .o-table-outer {
-    //         overflow: auto;
-    //         overflow: overlay;
-    //     }
-    // }
 
     &.o-table--fixed {
         display: flex;
         flex-direction: column;
 
-        >.o-table-outer,
-        >.o-scroll-bar {
+        .o-scroll-bar {
             flex: 1;
+        }
+
+        .o-table-outer {
+            height: 100%;
         }
     }
 
@@ -92,6 +88,33 @@
             top: 0;
             z-index: 1;
         }
+
+        &.o-table-head--sortable {
+            cursor: pointer;
+
+            &:hover {
+                background: var(--o-color-dark-gray-lighter);
+            }
+        }
+
+        .o-table-head-icon {
+            color: var(--o-text-color-secondary);
+            vertical-align: middle;
+            margin-left: 3px;
+            transition: transform .3s;
+
+            &.active {
+                color: var(--primary-color);
+            }
+
+            &.o-table-head-icon--asc {
+                transform: rotate(180deg);
+            }
+        }
+    }
+
+    th.o-table--sort {
+        background: var(--o-color-dark-gray-lighter);
     }
 
     td {
@@ -99,6 +122,10 @@
         padding: var(--o-table-cell-padding);
         background: var(--o-table-cell-background);
         box-sizing: border-box;
+
+        &.o-table--sort {
+            background: var(--o-table-cell-hover-background);
+        }
     }
 
     tfoot td {
@@ -130,6 +157,7 @@
     tr td,
     tr th {
         border-right: var(--o-table-border);
+        transition: background .2s;
     }
 
     tr:not(:last-child) td,
@@ -146,6 +174,28 @@
     &.o-table--noborder tr td,
     &.o-table--noborder tr th {
         border-right: 0;
+    }
+
+    &.o-table--stripe {
+        tbody>tr {
+            background: transparent;
+
+            &:nth-child(even) {
+                td {
+                    background: var(--o-table-cell-stripe-background);
+
+                    &.o-table--sort {
+                        background: var(--o-table-cell-hover-background);
+                    }
+                }
+            }
+
+            &:hover {
+                td {
+                    background: var(--o-table-cell-hover-background);
+                }
+            }
+        }
     }
 
     &-cell-arrow {
@@ -193,22 +243,6 @@
     tbody>tr:hover {
         td {
             background: var(--o-table-cell-hover-background);
-        }
-    }
-
-    &.o-table--stripe {
-        tbody>tr {
-            &:nth-child(even) {
-                td {
-                    background: var(--o-table-cell-stripe-background);
-                }
-            }
-
-            &:hover {
-                td {
-                    background: var(--o-table-cell-hover-background);
-                }
-            }
         }
     }
 }
