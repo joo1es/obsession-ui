@@ -7,7 +7,7 @@ import { ref } from 'vue'
 import { TableColumn } from '..'
 
 const columns = ref<TableColumn[]>([
-    {label:'日期', prop:'date', indent: true, sortable: true, filter: [{ value: '2016-05-01' }, { value: '2016-05-02' }, { value: '2016-05-03' }, { value: '2016-05-04' }]},
+    {label:'日期', prop:'date', align: 'left', indent: true, sortable: true, filter: [{ value: '2016-05-01' }, { value: '2016-05-02' }, { value: '2016-05-03' }, { value: '2016-05-04' }]},
     {label:'姓名', prop:'name', filter: [{ value: '王小虎' }, { value: '王二虎' }, { value: '其他' }], filterBy: 'or'},
     {label:'地址', prop:'address'},
 ])
