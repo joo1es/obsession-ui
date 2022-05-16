@@ -100,8 +100,11 @@
         .o-table-head-icon {
             color: var(--o-text-color-secondary);
             vertical-align: middle;
-            margin-left: 5px;
             transition: transform .3s;
+
+            &:not(:first-child) {
+                margin-left: 5px;
+            }
 
             &.active {
                 color: var(--primary-color);

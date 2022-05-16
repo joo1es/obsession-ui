@@ -557,8 +557,12 @@ export default defineComponent({
                     case 'selection':
                         return <Checkbox v-model={this.checkAll} indeterminate={this.selections && this.selections.length !== 0} />
                     default:
-                        const Text = this.$slots[`head-${String(column.prop) || ''}`]?.({ column }) ?? column.label
-                        const Final: any[] = [Text]
+                        const Text = (
+                            <span>
+                                {this.$slots[`head-${String(column.prop) || ''}`]?.({ column }) ?? column.label}
+                            </span>
+                        )
+                        const Final: JSX.Element[] = [Text]
                         if (column.sortable) {
                             const SortIcon = (
                                 <Icon
