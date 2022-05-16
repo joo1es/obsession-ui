@@ -59,6 +59,8 @@ app.use(Table)
 | totalLine | 合计行 | _object_ | - |
 | fixed | 是否固定表头和合计行 | _boolean_ | false |
 | scrollWidth | 滚动宽度，可以配合列的 fixed | _number \| string_ | - |
+| minScrollWidth | 最小滚动宽度，可以配合列的 fixed | _number \| string_ | '100%' |
+| maxScrollWidth | 最大滚动宽度，可以配合列的 fixed | _number \| string_ | - |
 | childrenField | children 字段 | _string_ | - |
 | rowClassName | 行的 Class | _string \| ((rowData: object, index: number) => string)_ | - |
 | cellClassName | 项的 Class | _string \| ((rowData: object, index: number, column: [TableColumn](#/table#tablecolumn)[]) => string)_ | - |

@@ -46,6 +46,13 @@ export const dataTableProps = {
     scrollWidth: {
         type: [String, Number]
     },
+    minScrollWidth: {
+        type: [String, Number],
+        default: '100%'
+    },
+    maxScrollWidth: {
+        type: [String, Number]
+    },
     dark: Boolean,
     selections: {
         type: Array as PropType<any[]>
@@ -444,16 +451,18 @@ export default defineComponent({
             )
         }
 
-        const width = computed(() => addUnit(props.scrollWidth))
+        const tableStyle = computed(() => ({
+            width: addUnit(props.scrollWidth),
+            minWidth: addUnit(props.minScrollWidth),
+            maxWidth: addUnit(props.maxScrollWidth)
+        }))
 
         const Empty = computed(() => {
             if (dataFlat.value && dataFlat.value.length > 0) return
             return (
                 <div
                     class={of('empty')}
-                    style={{
-                        width: width.value
-                    }}
+                    style={tableStyle.value}
                 >
                     {slots.empty?.() ?? '暂无数据'}
                 </div>
@@ -485,7 +494,7 @@ export default defineComponent({
             virtualRef,
             headRef,
             footRef,
-            width,
+            tableStyle,
             getSelectionsRows,
             sortMap,
             Empty,
@@ -506,9 +515,6 @@ export default defineComponent({
                     {this.columnsCollect.childrenColumns.map(column => this.TdRender(column, index, row))}
                 </tr>
             )
-            const style = {
-                width: this.width
-            }
             if (!this.virtual) {
                 return (
                     <div class={this.of('outer')} ref="tableRef">
@@ -516,7 +522,7 @@ export default defineComponent({
                         {
                             h(DataTableRender as any, {
                                 childrenColumns: this.columnsCollect.childrenColumns,
-                                style
+                                style: this.tableStyle
                             }, {
                                 default: () => this.dataFlat?.map(TbodyTrs)
                             })
@@ -536,7 +542,7 @@ export default defineComponent({
                         visibleItemsProps: {
                             childrenColumns: this.columnsCollect.childrenColumns
                         },
-                        itemsStyle: style,
+                        itemsStyle: this.tableStyle,
                         ref: 'virtualRef',
                         itemResizable: true
                     }, {
@@ -685,7 +691,7 @@ export default defineComponent({
             )
             return (
                 <div class={this.of('outerhead')} ref="headRef">
-                    <table cellspacing="0" class={[this.of('self'), this.of('headself')]} style={{ width: this.width }}>
+                    <table cellspacing="0" class={[this.of('self'), this.of('headself')]} style={this.tableStyle}>
                         {this.Colgroup}
                         <thead>
                             {HeadTrs}
@@ -724,7 +730,7 @@ export default defineComponent({
             )
             return (
                 <div class={this.of('outerfoot')} ref="footRef">
-                    <table cellspacing="0" class={[this.of('self'), this.of('footself')]} style={{ width: this.width }}>
+                    <table cellspacing="0" class={[this.of('self'), this.of('footself')]} style={this.tableStyle}>
                         {this.Colgroup}
                         <tfoot>
                             <tr>
