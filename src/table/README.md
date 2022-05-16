@@ -68,6 +68,7 @@ app.use(Table)
 | scrollBar | 滚动条组件的 props | _Partial\<ScrollBarProps\> & Record\<string, any\>_ | - |
 | sort `v-model:sort` | 排序 | _Map\<keyof any, 'desc' \| 'asc' \| undefined>_ | - |
 | sortMode | 排序模式 | _'single' \| 'multiple'_ | single |
+| filter `v-model:filter` | 过滤 | _Map\<keyof any, string[]>_ | - |
 
 ### Methods
 
@@ -106,3 +107,6 @@ app.use(Table)
 | rowSpan | 跨行 | _(rowData: object, rowIndex: number) => number_ | - |
 | className | 列的类名 | _string_ | - |
 | sortable | 是否可排序 | _boolean \| ((a: unknown, b: unknown) => number) \| 'remote'_ | - |
+| filter | 过滤显示字段 | _{ label?: string, value: any }[]_ | - |
+| filterBy | 过滤条件 | _'or' \| 'and'_ | 'and' |
+| filterMethod | 过滤方法 | _((filters: any[], value: any, row: object) => boolean) \| 'remote'_ | - |

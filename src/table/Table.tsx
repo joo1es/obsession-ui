@@ -20,8 +20,10 @@ import Icon from '../icon'
 import VirtualList from '../virtual-list'
 import DataTableRender from './Render'
 import ScrollBar, { type ScrollBarProps } from '../scroll-bar'
+import PopConfirm from '../pop-confirm'
+import Space from '../space'
 
-import { ChevronForward, ArrowDownOutline } from '@vicons/ionicons5'
+import { ChevronForward, ArrowDownOutline, FilterSharp } from '@vicons/ionicons5'
 
 export const dataTableProps = {
     columns: {
@@ -81,6 +83,9 @@ export const dataTableProps = {
     sortMode: {
         type: String as PropType<'single' | 'multiple'>,
         default: 'single'
+    },
+    filter: {
+        type: Object as PropType<Map<keyof any, any[]>>
     }
 }
 
@@ -96,6 +101,7 @@ export default defineComponent({
         'update:expands': (expands: any[]) => ((void expands, true)),
         'update:radio': (radio: any) => ((void radio, true)),
         'update:sort': (sort: Map<keyof any, 'desc' | 'asc' | undefined>) => ((void sort, true)),
+        'update:filter': (filter: Map<keyof any, any[]>) => ((void filter, true)),
         sort: (prop: keyof any, way: 'desc' | 'asc' | undefined, allSort: Map<keyof any, 'desc' | 'asc' | undefined>) => ((void prop, void way, void allSort, true))
     },
     setup(props, { emit, slots }) {
@@ -104,7 +110,13 @@ export default defineComponent({
         const tableRef = ref<HTMLDivElement>()
         const headRef = ref<HTMLDivElement>()
         const footRef = ref<HTMLDivElement>()
+        const scrollBarRef = ref<InstanceType<typeof ScrollBar>>()
         const virtualRef = ref<InstanceType<typeof VirtualList>>()
+
+        const yShow = ref(false)
+        watch(() => scrollBarRef.value?.yShow, value => {
+            yShow.value = Boolean(value)
+        })
 
         const scrollElement = computed(() => {
             if (props.virtual) {
@@ -151,34 +163,24 @@ export default defineComponent({
             passive: true
         })
 
+        const filterRef = ref<Map<keyof any, any[]>>(new Map())
+        const filterMap = useAutoControl(filterRef, props, 'filter', emit, {
+            deep: true,
+            passive: true
+        })
+
         const sortRef = ref<Map<keyof any, 'desc' | 'asc' | undefined>>(new Map())
         const sortMap = useAutoControl(sortRef, props, 'sort', emit, {
             deep: true,
             passive: true
         })
-        const flatting = (final: any[], childrenField: string, columns: any[], level = 0) => {
-            columns?.forEach(item => {
-                final.push({
-                    ...item,
-                    [childLevel]: level,
-                    [origin]: item
-                })
-                const key = props.rowKey ? item[props.rowKey] : item
-                if (item[childrenField] && Array.isArray(item[childrenField]) && expands.value?.includes(key)) {
-                    flatting(final, childrenField, item[childrenField], level + 1)
-                }
-            })
-        }
-        const dataFlat = computed(() => {
-            const { data, childrenField } = props
-            const final: any[] = []
-            const dataCopy = data ? [...data] : []
+        const dataSort = (data: any[]) => {
             if (sortMap.value?.size) {
                 const columnsSortWay = new Map<keyof any, boolean | ((a: unknown, b: unknown) => number) | 'remote'>()
                 columnsCollect.value.childrenColumns.forEach(item => {
                     if (item.prop && item.sortable) columnsSortWay.set(item.prop, item.sortable)
                 })
-                dataCopy.sort((a, b) => {
+                data.sort((a, b) => {
                     if (!sortMap.value) return 0
                     for (const sorting of sortMap.value) {
                         const sortWay = columnsSortWay.get(sorting[0])
@@ -197,7 +199,67 @@ export default defineComponent({
                     return 0
                 })
             }
-            flatting(final, childrenField, dataCopy)
+        }
+        const flatting = (
+            final: any[],
+            childrenField: string,
+            columns: any[],
+            columnsFilterWay: Map<keyof any, { filters: any[], filterMethod?: (filters: any[], value: any, row: object) => boolean }>,
+            level = 0
+        ) => {
+            columns?.forEach(item => {
+                const push = () => {
+                    final.push({
+                        ...item,
+                        [childLevel]: level,
+                        [origin]: item
+                    })
+                }
+                if (
+                    !columnsFilterWay ||
+                    columnsFilterWay.size === 0
+                ) {
+                    push()
+                } else {
+                    const items = Object.entries(item)
+                    if (items.every(([key, value]) => {
+                        if (!columnsFilterWay.has(key)) return true
+                        const way = columnsFilterWay.get(key)
+                        if (!way) return false
+                        if (way.filterMethod) {
+                            return way.filterMethod(way.filters, value, item)
+                        } 
+                        return way.filters.includes(value)
+                    })) {
+                        push()
+                    } else {
+                        return
+                    }
+                }
+                const key = props.rowKey ? item[props.rowKey] : item
+                if (item[childrenField] && Array.isArray(item[childrenField]) && expands.value?.includes(key)) {
+                    const children = [...item[childrenField]]
+                    dataSort(children)
+                    flatting(final, childrenField, children, columnsFilterWay, level + 1)
+                }
+            })
+        }
+        const dataFlat = computed(() => {
+            const { data, childrenField } = props
+            const final: any[] = []
+            const dataCopy = data ? [...data] : []
+            const columnsFilterWay = new Map<keyof any, { filters: any[], filterMethod?: (filters: any[], value: any, row: object) => boolean }>()
+            columnsCollect.value.childrenColumns.forEach(item => {
+                if (
+                    item.prop &&
+                    item.filter &&
+                    filterMap.value?.has(item.prop) &&
+                    filterMap.value?.get(item.prop)?.length &&
+                    item.filterMethod !== 'remote'
+                ) columnsFilterWay.set(item.prop, { filters: filterMap.value.get(item.prop) || [], filterMethod: item.filterMethod })
+            })
+            dataSort(dataCopy)
+            flatting(final, childrenField, dataCopy, columnsFilterWay)
             return final
         })
 
@@ -427,7 +489,10 @@ export default defineComponent({
             getSelectionsRows,
             sortMap,
             Empty,
-            Colgroup
+            Colgroup,
+            filterMap,
+            scrollBarRef,
+            yShow
         }
     },
     render() {
@@ -494,19 +559,81 @@ export default defineComponent({
                     default:
                         const Text = this.$slots[`head-${String(column.prop) || ''}`]?.({ column }) ?? column.label
                         const Final: any[] = [Text]
-                        const SortIcon = (
-                            <Icon
-                                class={[
-                                    this.of('head-icon'),
-                                    {
-                                        active: sortIs,
-                                        [this.of('head-icon--asc')]: sortIs === 'asc'
-                                    }
-                                ]}
-                            ><ArrowDownOutline /></Icon>
-                        )
                         if (column.sortable) {
+                            const SortIcon = (
+                                <Icon
+                                    class={[
+                                        this.of('head-icon'),
+                                        {
+                                            active: sortIs,
+                                            [this.of('head-icon--asc')]: sortIs === 'asc'
+                                        }
+                                    ]}
+                                ><ArrowDownOutline /></Icon>
+                            )
                             Final.push(SortIcon)
+                        }
+                        if (column.filter && column.prop) {
+                            const filterIs = column.prop && this.filterMap?.get(column.prop)
+                            const FilterIcon = (
+                                <PopConfirm
+                                    confirmText={'全选'}
+                                    cancelText={'重置'}
+                                    showConfirm={column.filterBy !== 'or'}
+                                    popover={{
+                                        class: this.of('pop'),
+                                    }}
+                                    onCancel={() => column.prop && this.filterMap?.delete(column.prop)}
+                                    onConfirm={() => column.prop && this.filterMap?.set(column.prop, column.filter?.map(item => item.value) || [])}
+                                    v-slots={{
+                                        target: () => (
+                                            <Icon
+                                                class={[
+                                                    this.of('head-icon'),
+                                                    {
+                                                        active: filterIs && filterIs.length > 0
+                                                    }
+                                                ]}
+                                                onClick={e => e.stopPropagation()}
+                                            ><FilterSharp /></Icon>
+                                        ),
+                                        default: () => {
+                                            if (!column.prop) return
+                                            const filterIs = this.filterMap?.get(column.prop)
+                                            return (
+                                                <Space class={this.of('filter')} vertical>
+                                                    {
+                                                        column.filter?.map(item => {
+                                                            if (!column.prop) return
+                                                            const Element = column.filterBy === 'or' ? Radio : Checkbox
+                                                            return (
+                                                                <Element
+                                                                    modelValue={filterIs?.includes(item.value)}
+                                                                    onUpdate:modelValue={value => {
+                                                                        if (!column.prop) return
+                                                                        if (!value) {
+                                                                            filterIs?.splice(filterIs.indexOf(item.value), 1)
+                                                                        } else {
+                                                                            if (!filterIs) this.filterMap?.set(column.prop, [])
+                                                                            if (column.filterBy !== 'or') {
+                                                                                this.filterMap?.get(column.prop)?.push(item.value)
+                                                                            } else {
+                                                                                this.filterMap?.set(column.prop, [item.value])
+                                                                            }
+                                                                        }
+                                                                    }}
+                                                                    v-slots={{ default: () => item.label ?? item.value }}
+                                                                />
+                                                            )
+                                                        })
+                                                    }
+                                                </Space>
+                                            )
+                                        }
+                                    }}
+                                />
+                            )
+                            Final.push(FilterIcon)
                         }
                         return Final
                 }
@@ -613,6 +740,7 @@ export default defineComponent({
                             [this.is('noborder')]: !this.border,
                             [this.is('stripe')]: this.stripe,
                             [this.is('fixed')]: this.fixed,
+                            [this.is('lastborder')]: !this.yShow,
                             'dark': this.dark
                         }
                     ]
@@ -622,7 +750,7 @@ export default defineComponent({
                 }}
             >
                 {TheadRender()}
-                <ScrollBar {...this.scrollBar}>
+                <ScrollBar ref="scrollBarRef" {...this.scrollBar}>
                     {TbodyRender}
                 </ScrollBar>
                 {TfootRender()}

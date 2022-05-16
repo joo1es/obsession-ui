@@ -39,6 +39,14 @@ export const popConfirmProps = {
     showFooter: {
         type: Boolean,
         default: true
+    },
+    showConfirm: {
+        type: Boolean,
+        default: true
+    },
+    showCancel: {
+        type: Boolean,
+        default: true
     }
 }
 
@@ -79,14 +87,22 @@ export default defineComponent({
                                 props.showFooter ? (
                                     slots.footer?.() || (
                                         <Space class="o-pop-confirm__footer" justify="end" { ...props.spaceProps }>
-                                            <Button size="small" onClick={() => {
-                                                show.value = false
-                                                emit('cancel')
-                                            }} { ...props.cancelProps }>{ props.cancelText }</Button>
-                                            <Button size="small" onClick={() => {
-                                                show.value = false
-                                                emit('confirm')
-                                            }} type="primary" { ...props.confirmProps }>{ props.confirmText }</Button>
+                                            {
+                                                props.showCancel && (
+                                                    <Button size="small" onClick={() => {
+                                                        show.value = false
+                                                        emit('cancel')
+                                                    }} { ...props.cancelProps }>{ props.cancelText }</Button>
+                                                )
+                                            }
+                                            {
+                                                props.showConfirm && (
+                                                    <Button size="small" onClick={() => {
+                                                        show.value = false
+                                                        emit('confirm')
+                                                    }} type="primary" { ...props.confirmProps }>{ props.confirmText }</Button>
+                                                )
+                                            }
                                         </Space>
                                     )
                                 ) : null

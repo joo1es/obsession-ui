@@ -100,7 +100,7 @@
         .o-table-head-icon {
             color: var(--o-text-color-secondary);
             vertical-align: middle;
-            margin-left: 3px;
+            margin-left: 5px;
             transition: transform .3s;
 
             &.active {
@@ -161,6 +161,7 @@
     }
 
     tr:not(:last-child) td,
+    &--lastborder .o-table-outer tr:last-child td,
     tr th {
         border-bottom: var(--o-table-border);
     }
@@ -245,4 +246,15 @@
             background: var(--o-table-cell-hover-background);
         }
     }
+}
+
+.o-table-pop {
+    .o-pop-confirm__content {
+        padding-top: 0;
+    }
+}
+
+.o-table-filter {
+    max-height: 150px;
+    overflow: auto;
 }

@@ -22,7 +22,10 @@ export interface TableColumn {
     colSpan?: (rowData: object, rowIndex: number) => number
     rowSpan?: (rowData: object, rowIndex: number) => number
     className?: string
-    sortable?: boolean | ((a: unknown, b: unknown) => number) | 'remote'
+    sortable?: boolean | ((a: unknown, b: unknown) => number) | 'remote',
+    filter?: { label?: string, value: any }[],
+    filterBy?: 'or' | 'and',
+    filterMethod?: ((filters: any[], value: any, row: object) => boolean) | 'remote',
     [fixedWidth]?: string
     [firstRight]?: boolean
     [colSpan]?: number,
