@@ -244,128 +244,133 @@ export default defineComponent({
         
         const slotBind = computed(() => ({ ...props.list, expanding: expanding.value, loading: loading.value })) 
 
-        return () => (
-            <div
-                class={{
-                    'o-tree-node': true,
-                    'o-tree-node__selection-disabled': props.disabled,
-                    'o-tree-node__disabled': disabled.value,
-                    'o-tree-node__selecting': props.selectable && props.selection === props.keyIs,
-                    'o-tree-node__ondrag': onDragging.value
-                }}
-                onClick={() => {
-                    if (props.selectable && !props.disabled) {
-                        if (props.selection !== props.keyIs) {
-                            emit('update:selection', props.keyIs)
-                            emit('select', props.keyIs, props.list)
-                            return
-                        }
-                    }
-                    expand()
-                }}
-                draggable={props.draggable}
-                onDragstart={handleDragStart}
-                onDragend={handleDragEnd}
-                onDragover={handleDragover}
-                onDragleave={() => {
-                    onDragging.value = false
-                }}
-                onDrop={handleDrop}
-            >
-                {
-                    props.draggable ? (
-                        <div
-                            class={{
-                                'top': true,
-                                'o-tree-node__dropline': true,
-                                'o-tree-node__ondrag': onDraggingTop.value
-                            }}
-                            onDragover={handleDragoverTop}
-                            onDragleave={() => {
-                                onDraggingTop.value = false
-                            }}
-                            onDrop={handleDropTop}
-                        />
-                    ) : null
-                }
-                <div class='o-tree-node__indent'>
-                    {
-                        levels.value.map(lv => (
-                            <div key={lv} class={{
-                                'o-tree-node__indent-cell': true,
-                                'o-tree-node__indent-cell--link': props.link
-                            }} />
-                        ))
-                    }
-                </div>
-                <div class='o-tree-node__title'>
-                    { props.arrow === true || props.arrow === 'left' ? ( slots.arrow?.(slotBind) || arrow.value ) : null }
-                    { slots.prefix?.(slotBind) }
-                    <div class="o-tree-node__content">
+        return () => {
+            const NodeContent = (
+                [
+                    <div class='o-tree-node__indent'>
                         {
-                            props.checkable ? (
-                                !props.useRadio ?
-                                    <Checkbox
-                                        disabled={disabled.value}
-                                        modelValue={checkedStatus.value === 1}
-                                        indeterminate={checkedStatus.value === 0}
-                                        onClick={(e: Event) => {
-                                            e.stopPropagation()
-                                        }}
-                                        onUpdate:modelValue={value => {
-                                            if (disabled.value) return
-                                            if (!props.children || props.checkStrictly) {
-                                                if (!checkedList.value) return
-                                                const index = checkedList.value.indexOf(props.keyIs)
-                                                if (value) {
-                                                    if (index > -1) return
-                                                    checkedList.value.push(props.keyIs)
-                                                } else {
-                                                    checkedList.value.splice(index, 1)
-                                                }
-                                            } else {
-                                                emit('setChecked', value, props.children)
-                                            }
-                                        }}
-                                    /> :
-                                    <Radio
-                                        disabled={disabled.value || (Boolean(props.children) && !props.checkStrictly)}
-                                        modelValue={checkedStatus.value !== -1}
-                                        onClick={(e: Event) => {
-                                            e.stopPropagation()
-                                        }}
-                                        onUpdate:modelValue={() => {
-                                            if (disabled.value) return
-                                            if (!props.children || props.checkStrictly) {
-                                                if (!checkedList.value) return
-                                                checkedList.value = [props.keyIs]
-                                            }
-                                        }}
-                                    />
-                            ) : null
+                            levels.value.map(lv => (
+                                <div key={lv} class={{
+                                    'o-tree-node__indent-cell': true,
+                                    'o-tree-node__indent-cell--link': props.link
+                                }} />
+                            ))
                         }
-                        { slots.default?.(props.list) ?? props.title ?? props.keyIs }
+                    </div>,
+                    <div class='o-tree-node__title'>
+                        { props.arrow === true || props.arrow === 'left' ? ( slots.arrow?.(slotBind) || arrow.value ) : null }
+                        { slots.prefix?.(slotBind) }
+                        <div class="o-tree-node__content">
+                            {
+                                props.checkable ? (
+                                    !props.useRadio ?
+                                        <Checkbox
+                                            disabled={disabled.value}
+                                            modelValue={checkedStatus.value === 1}
+                                            indeterminate={checkedStatus.value === 0}
+                                            onClick={(e: Event) => {
+                                                e.stopPropagation()
+                                            }}
+                                            onUpdate:modelValue={value => {
+                                                if (disabled.value) return
+                                                if (!props.children || props.checkStrictly) {
+                                                    if (!checkedList.value) return
+                                                    const index = checkedList.value.indexOf(props.keyIs)
+                                                    if (value) {
+                                                        if (index > -1) return
+                                                        checkedList.value.push(props.keyIs)
+                                                    } else {
+                                                        checkedList.value.splice(index, 1)
+                                                    }
+                                                } else {
+                                                    emit('setChecked', value, props.children)
+                                                }
+                                            }}
+                                        /> :
+                                        <Radio
+                                            disabled={disabled.value || (Boolean(props.children) && !props.checkStrictly)}
+                                            modelValue={checkedStatus.value !== -1}
+                                            onClick={(e: Event) => {
+                                                e.stopPropagation()
+                                            }}
+                                            onUpdate:modelValue={() => {
+                                                if (disabled.value) return
+                                                if (!props.children || props.checkStrictly) {
+                                                    if (!checkedList.value) return
+                                                    checkedList.value = [props.keyIs]
+                                                }
+                                            }}
+                                        />
+                                ) : null
+                            }
+                            { slots.default?.(props.list) ?? props.title ?? props.keyIs }
+                        </div>
+                        { slots.suffix?.(slotBind) }
+                        { props.arrow === 'right' ? ( slots.arrow?.(slotBind) || arrow.value ) : null }
                     </div>
-                    { slots.suffix?.(slotBind) }
-                    { props.arrow === 'right' ? ( slots.arrow?.(slotBind) || arrow.value ) : null }
+                ]
+            )
+            if (props.draggable) {
+                NodeContent.unshift(
+                    <div
+                        class={{
+                            'top': true,
+                            'o-tree-node__dropline': true,
+                            'o-tree-node__ondrag': onDraggingTop.value
+                        }}
+                        onDragover={handleDragoverTop}
+                        onDragleave={() => {
+                            onDraggingTop.value = false
+                        }}
+                        onDrop={handleDropTop}
+                    />
+                )
+                NodeContent.push(
+                    <div
+                        class={{
+                            'bottom': true,
+                            'o-tree-node__dropline': true,
+                            'o-tree-node__ondrag': onDraggingBottom.value
+                        }}
+                        onDragover={e => handleDragoverTop(e, false)}
+                        onDragleave={() => {
+                            onDraggingBottom.value = false
+                        }}
+                        onDrop={e => handleDropTop(e, false)}
+                    />
+                )
+            }
+            return (
+                <div
+                    class={{
+                        'o-tree-node': true,
+                        'o-tree-node__selection-disabled': props.disabled,
+                        'o-tree-node__disabled': disabled.value,
+                        'o-tree-node__selecting': props.selectable && props.selection === props.keyIs,
+                        'o-tree-node__ondrag': onDragging.value
+                    }}
+                    onClick={() => {
+                        if (props.selectable && !props.disabled) {
+                            if (props.selection !== props.keyIs) {
+                                emit('update:selection', props.keyIs)
+                                emit('select', props.keyIs, props.list)
+                                return
+                            }
+                        }
+                        expand()
+                    }}
+                    draggable={props.draggable}
+                    onDragstart={handleDragStart}
+                    onDragend={handleDragEnd}
+                    onDragover={handleDragover}
+                    onDragleave={() => {
+                        onDragging.value = false
+                    }}
+                    onDrop={handleDrop}
+                >
+                    {NodeContent}
                 </div>
-                {
-                    props.draggable ? (
-                        <div
-                            class={{
-                                'bottom': true,
-                                'o-tree-node__dropline': true,
-                                'o-tree-node__ondrag': onDraggingBottom.value
-                            }}
-                            onDragover={e => handleDragoverTop(e, false)}
-                            onDragleave={() => {
-                                onDraggingBottom.value = false
-                            }}
-                            onDrop={e => handleDropTop(e, false)}
-                        />
-                    ) : null
-                }
-            </div>
-        )
+            )
+        }
     }
 })

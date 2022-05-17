@@ -232,10 +232,12 @@ export default defineComponent({
         )
         const treeNodeRender = (item: TreeListItemExtra) => {
             const TreeNodeRender = (dom?: VNodeChild) => (
-                <>
-                    { TreeNodeFactory(item) }
-                    { dom }
-                </>
+                !dom ? TreeNodeFactory(item) : (
+                    <>
+                        {TreeNodeFactory(item)}
+                        {dom}
+                    </>
+                )
             )
             const expandsListFind =  this.expandsList.find(expandsItem => expandsItem.keyIs === item.keyIs)
             if (this.animation && expandsListFind && item.children) {
