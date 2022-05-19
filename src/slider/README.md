@@ -68,7 +68,8 @@ app.use(Slider)
 
 | 名称    | 说明     | 参数 |
 | ------- | -------- | --- |
-| mark | 标记插槽 | { percentage: number, content: string } |
+| mark | 标记插槽 | _percentage: number, content: string_ |
+| tip | 提示插槽 | - |
 
 ## 定制
 
