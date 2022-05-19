@@ -47,7 +47,8 @@ app.use(Table)
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
 | selections `v-model:selections`      | 选中项       | _any[]_          | -    |
 | radio `v-model:radio` | 单选中项 | _any_ | - |
-| expands `v-model:expands`      | 展开项       | _any[]_          | -    |
+| expands `v-model:expands`      | 展开子项       | _any[]_          | -    |
+| expandsRow `v-model:expands-row`      | 展开行       | _any[]_          | -    |
 | dark | 是否启用黑暗模式 | _boolean_ | false |
 | columns | 列 | _[TableColumn](#tablecolumn)[]_ | - |
 | data | 表格数据 | _any[]_ | - |
@@ -79,6 +80,7 @@ app.use(Table)
 | --------- | -------------- | ------------------------------------------------------------------- | ------ |
 | rowClick      | 行点击事件       | _(rowData: object, index: number) => void_          | -     |
 | cellClick      | 项的点击事件       | _(rowData: object, index: number, column: [TableColumn](#/table#tablecolumn)[]) => void_          | -     |
+| sort | 主动触发的 sort 事件 | _(prop: keyof any, way: 'desc' \| 'asc' \| undefined, allSort: Map\<keyof any, 'desc' \| 'asc' \| undefined>) => void_ | - |
 
 ### Slots
 
@@ -88,7 +90,7 @@ app.use(Table)
 | head-[prop] | 头部替换插槽 | _column: [TableColumn](#/table#tablecolumn)_ |
 | foot-[prop] | 合计行替换插槽 | _column: [TableColumn](#/table#tablecolumn)_ |
 | empty | 数据为空的替换插槽 | - |
-| sort | 主动触发的 sort 事件 | _(prop: keyof any, way: 'desc' \| 'asc' \| undefined, allSort: Map\<keyof any, 'desc' \| 'asc' \| undefined>) => void_ | - |
+| expand | 展开行插槽 | _row: object, index: number_ |
 
 ## 类型
 
@@ -104,7 +106,8 @@ app.use(Table)
 | fixed | 是否固定 | _boolean \| 'left' \| 'right'_ | - |
 | align | 对齐方式 | _'left' \| 'right' \| 'center'_ | - |
 | children | 子列 | _[TableColumn](#/table#tablecolumn)[]_ | - |
-| type | 类型 | _'index' \| 'selection' \| 'chekcbox' \| 'radio'_ | - |
+| type | 类型 | _'index' \| 'selection' \| 'chekcbox' \| 'radio' \| 'expand'_ | - |
+| expandable | 是否可展开 | _(rowData: object, rowIndex: number) => boolean_ | - |
 | indent | 是否用作缩进列 | _boolean_ | - |
 | colSpan | 跨列 | _(rowData: object, rowIndex: number) => number_ | - |
 | rowSpan | 跨行 | _(rowData: object, rowIndex: number) => number_ | - |

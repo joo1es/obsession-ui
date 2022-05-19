@@ -8,7 +8,7 @@ import {
     watch
 } from 'vue'
 
-import { type TableColumn, firstRight, colSpan, childLevel, rowSpan, noBorder, lastLeft } from './typings'
+import { type TableColumn, firstRight, colSpan, childLevel, rowSpan, noBorder, lastLeft, origin } from './typings'
 import { getStyle, getColSpanByColumn, calcFixedPosition, getTextByProp, setNoBorder, getClass } from './utils'
 import { addUnit, useNamespace, useAutoControl } from '../utils'
 
@@ -61,6 +61,9 @@ export const dataTableProps = {
     expands: {
         type: Array as PropType<any[]>
     },
+    expandsRow: {
+        type: Array as PropType<any[]>
+    },
     childrenField: {
         type: String,
         default: 'children'
@@ -107,6 +110,7 @@ export default defineComponent({
         cellClick: (rowData: object, index: number, column: TableColumn) => ((void rowData, index, column, true)),
         'update:selections': (selections: any[]) => ((void selections, true)),
         'update:expands': (expands: any[]) => ((void expands, true)),
+        'update:expandsRow': (expands: any[]) => ((void expands, true)),
         'update:radio': (radio: any) => ((void radio, true)),
         'update:sort': (sort: Map<keyof any, 'desc' | 'asc' | undefined>) => ((void sort, true)),
         'update:filter': (filter: Map<keyof any, any[]>) => ((void filter, true)),
@@ -167,6 +171,12 @@ export default defineComponent({
 
         const expandsRef = ref<any[]>([])
         const expands = useAutoControl(expandsRef, props, 'expands', emit, {
+            deep: true,
+            passive: true
+        })
+
+        const expandsRowRef = ref<any[]>([])
+        const expandsRow = useAutoControl(expandsRowRef, props, 'expandsRow', emit, {
             deep: true,
             passive: true
         })
@@ -386,6 +396,31 @@ export default defineComponent({
                         />
                     )
                     break
+                    case 'expand':
+                        if (typeof column.expandable === 'undefined' || column.expandable?.(data, index)) {
+                            insideText = (
+                                <Icon
+                                    onClick={() => {
+                                        if (!expandsRow.value) expandsRow.value = []
+                                        if (expandsRow.value.includes(key)) {
+                                            expandsRow.value.splice(expandsRow.value.indexOf(key), 1)
+                                        } else {
+                                            expandsRow.value.push(key)
+                                        }
+                                    }}
+                                    class={[
+                                        of('arrow', of('cell')),
+                                        'no-margin',
+                                        {
+                                            [of('arrow--active', of('cell'))]: expandsRow.value?.includes(key)
+                                        }
+                                    ]}
+                                >
+                                    <ChevronForward />
+                                </Icon>
+                            )
+                        }
+                        break
                 default:
                     insideText = getTextByProp(data, column.prop)
                     insideText = insideText && String(insideText)
@@ -490,6 +525,7 @@ export default defineComponent({
             arrivedState,
             selections,
             TdRender,
+            expandsRow,
             dataFlat,
             top,
             virtualRef,
@@ -507,15 +543,29 @@ export default defineComponent({
     },
     render() {
         const TbodyRender = () => {
-            const TbodyTrs = (row: any, index: number) => (
-                <tr
-                    key={this.rowKey ? row[this.rowKey] : index}
-                    class={typeof this.rowClassName === 'string' ? this.rowClassName : this.rowClassName?.(row, index)}
-                    onClick={() => this.$emit('rowClick', row, index)}
-                >
-                    {this.columnsCollect.childrenColumns.map(column => this.TdRender(column, index, row))}
-                </tr>
-            )
+            const TbodyTrs = (row: any, index: number) => {
+                const Trs = [(
+                    <tr
+                        key={this.rowKey ? row[this.rowKey] : index}
+                        class={[
+                            typeof this.rowClassName === 'string' ? this.rowClassName : this.rowClassName?.(row, index)
+                        ]}
+                        onClick={() => this.$emit('rowClick', row, index)}
+                    >
+                        {this.columnsCollect.childrenColumns.map(column => this.TdRender(column, index, row))}
+                    </tr>
+                )]
+                if (this.expandsRow?.includes(this.rowKey ? row[this.rowKey] : row[origin])) {
+                    Trs.push((
+                        <tr>
+                            <td colspan={this.columnsCollect.childrenColumns.length}>
+                                {this.$slots.expand?.({ row: row[origin], index })}
+                            </td>
+                        </tr>
+                    ))
+                }
+                return Trs
+            }
             if (!this.virtual) {
                 return (
                     <div class={this.of('outer')} ref="tableRef">

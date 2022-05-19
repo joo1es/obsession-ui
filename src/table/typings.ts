@@ -7,6 +7,7 @@ export const colSpan = Symbol('colSpan')
 export const rowSpan = Symbol('rowSpan')
 export const childLevel = Symbol('childLevel')
 export const noBorder = Symbol('noBorder')
+export const origin = Symbol('origin')
 
 export interface TableColumn {
     label?: string
@@ -17,7 +18,8 @@ export interface TableColumn {
     fixed?: boolean | 'left' | 'right'
     align?: 'left' | 'right' | 'center'
     children?: TableColumn[]
-    type?: 'index' | 'selection' | 'radio' | 'checkbox'
+    type?: 'index' | 'selection' | 'radio' | 'checkbox' | 'expand'
+    expandable?: (rowData: object, rowIndex: number) => boolean
     indent?: boolean
     colSpan?: (rowData: object, rowIndex: number) => number
     rowSpan?: (rowData: object, rowIndex: number) => number

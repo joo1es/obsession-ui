@@ -1,5 +1,9 @@
 <template>
-    <o-table :columns="columns" :data="data"></o-table>
+    <o-table :columns="columns" :data="data">
+        <template #expand="scope">
+            <pre style="margin: 0">{{ JSON.stringify(scope, null, 4) }}</pre>
+        </template>
+    </o-table>
 </template>
 <script setup lang="ts">
 import {ref} from 'vue'
@@ -7,6 +11,7 @@ import { TableColumn } from '..'
 
 const columns = ref<TableColumn[]>([
     {type: 'selection', width:55, align: 'center'},
+    {type: 'expand', width:55, align: 'center'},
     {label: '日期', prop: 'date', width: 120, sortable: true},
     {label: '姓名', prop: 'name', align: 'center'},
     {label: '地址', prop: 'address'},

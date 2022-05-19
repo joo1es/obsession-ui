@@ -150,7 +150,7 @@
         }
     }
 
-    tfoot td {
+    tfoot>td {
         border-top: var(--o-table-border);
         background: var(--o-table-foot-background);
         box-sizing: border-box;
@@ -176,15 +176,15 @@
         // transform: translateX(.5px);
     }
 
-    tr td,
-    tr th {
+    tr>td,
+    tr>th {
         border-right: var(--o-table-border);
         transition: background .2s;
     }
 
-    tr:not(:last-child) td,
-    &--lastborder .o-table-outer tr:last-child td,
-    tr th {
+    tr:not(:last-child)>td,
+    &--lastborder .o-table-outer tr:last-child>td,
+    tr>th {
         border-bottom: var(--o-table-border);
     }
 
@@ -194,8 +194,8 @@
         border-right: 0;
     }
 
-    &.o-table--noborder tr td,
-    &.o-table--noborder tr th {
+    &.o-table--noborder tr>td,
+    &.o-table--noborder tr>th {
         border-right: 0;
     }
 
@@ -204,7 +204,7 @@
             background: transparent;
 
             &:nth-child(even) {
-                td {
+                >td {
                     background: var(--o-table-cell-stripe-background);
 
                     &.o-table--sort {
@@ -214,7 +214,7 @@
             }
 
             &:hover {
-                td {
+                >td {
                     background: var(--o-table-cell-hover-background);
                 }
             }
@@ -227,6 +227,10 @@
         transition: .3s;
         cursor: pointer;
         font-size: 13px;
+
+        &.no-margin {
+            margin-right: 0;
+        }
 
         &--active {
             transform: rotate(90deg);
@@ -264,7 +268,7 @@
     }
 
     tbody>tr:hover {
-        td {
+        >td {
             background: var(--o-table-cell-hover-background);
         }
     }
