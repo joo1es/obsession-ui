@@ -1,4 +1,4 @@
-import { computed, defineComponent, ExtractPropTypes, PropType, ref, toRef, VNodeChild, provide } from 'vue'
+import { computed, defineComponent, ExtractPropTypes, PropType, ref, VNodeChild, provide } from 'vue'
 
 import type { TreeListItemCustom, TreeListItemExtra, TreeListItem, ExpandsList } from './interface'
 
@@ -61,7 +61,11 @@ export const treeProps = {
     onRemote: Function as PropType<(item: TreeListItemCustom) => Promise<TreeListItemCustom[]>>,
     draggable: Boolean,
     checkStrictly: Boolean,
-    autoExpands: Boolean
+    autoExpands: {
+        type: Boolean,
+        default: true
+    },
+    filterCall: Function as PropType<(item: TreeListItemCustom, text?: string) => boolean>,
 }
 
 export type TreeProps = ExtractPropTypes<typeof treeProps>
@@ -120,8 +124,13 @@ export default defineComponent({
         /**
          * 过滤
          */
-        const filterText = toRef(props, 'filter')
-        const filterItems = computed(() => itemsFilter(props, filterText.value, expands))
+        const filterRecord = ref(props.filter)
+        const filterItems = computed(() => {
+            const needAutoExpand = filterRecord.value !== props.filter
+            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+            filterRecord.value = props.filter
+            return itemsFilter(props, props.filter, expands, needAutoExpand)
+        })
         const treeListFlatten = computed(() => {
             const finalList: TreeListItemExtra[] = []
             filterItems.value.forEach(item => {

@@ -61,7 +61,9 @@ app.use(Tree)
 | animation | 是否使用动画 | _boolean_ | true |
 | animationMax | 动画中包含最多的子元素数量 | _number_ | 80 |
 | filter | 过滤关键词 | _string_ | - |
+| filterCall | 
 | filterable | 是否可过滤 | _boolean_ | false |
+| filterCall | 自定义过滤方法，true 为符合条件 | _(list: TreeListItemCustom, text?: string) => boolean_ | - |
 | itemHeight | 项目高度，仅供虚拟列表使用 | _number_ | 30 |
 | selectable | 是否可选择 | _boolean_ | - |
 | selection `v-model` | 选择项 | _string \| number \| symbol_ | - |
@@ -72,7 +74,7 @@ app.use(Tree)
 | onRemote `ref` | 远程加载回调 | _(list: TreeListItemCustom) => Promise\<TreeListItemCustom[]\>_ | - |
 | draggable `ref` | 是否可拖动 | _boolean_ | false |
 | checkStrictly | 是否可任意选择 | _boolean_ | false |
-| autoExpands | 是否自动展开 | _boolean_ | false |
+| autoExpands | 是否自动展开 | _boolean_ | true |
 
 ### Methods
 

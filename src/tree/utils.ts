@@ -6,13 +6,14 @@ const getListByText = (text: string | undefined, props: TreeProps, list: TreeLis
     if (!text) return list
     return list.forEach(item => {
         const key = props.getKey?.(item) || item[props.props.key]
+        const keyValue = String(item[key]) || ''
         /**
          * 1. 标题内容符合条件
          */
-        if (
+         if (props.filterCall ? props.filterCall(item, text) : (
             item[props.props.title]?.includes(text) ||
-            item[key]?.includes(text)
-        ) {
+            keyValue?.includes(text)
+        )) {
             return finalList.push(item)
         }
         /**
@@ -53,14 +54,17 @@ const getListByExclude = (excludeSet: Set<string | number | symbol>, props: Tree
     })
 }
 
-export const itemsFilter = (props: TreeProps, text?: string, expandsRef?: Ref<(string | number | symbol)[] | undefined>) => {
-    let { list } = props
-    if (props.autoExpands && expandsRef) expandsRef.value = []
+export const itemsFilter = (props: TreeProps, text?: string, expandsRef?: Ref<(string | number | symbol)[] | undefined>, needAutoExpand?: boolean) => {
+    let {list} = props
+    const autoExpanding = expandsRef && needAutoExpand && props.autoExpands
+    if (autoExpanding) {
+        expandsRef.value = []
+    }
     if (props.filterable && text) {
         const expands: (string | number | symbol)[] = []
         const final: TreeListItemCustom[] = []
-        getListByText(text, props, props.list, final, expands)
-        if (props.autoExpands && expandsRef) expandsRef.value = expands as (string | number | symbol)[]
+        getListByText(text, props, props.list, final, autoExpanding ? expands : undefined)
+        if (autoExpanding) expandsRef.value = expands as (string | number | symbol)[]
         list = final
     }
     const excludeSet = props.exclude ? new Set<string | number | symbol>(props.exclude) : undefined
