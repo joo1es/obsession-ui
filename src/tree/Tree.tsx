@@ -1,4 +1,4 @@
-import { computed, defineComponent, ExtractPropTypes, PropType, ref, VNodeChild, provide } from 'vue'
+import { computed, defineComponent, ExtractPropTypes, PropType, ref, VNodeChild, provide, unref } from 'vue'
 
 import type { TreeListItemCustom, TreeListItemExtra, TreeListItem, ExpandsList } from './interface'
 
@@ -124,11 +124,10 @@ export default defineComponent({
         /**
          * 过滤
          */
-        const filterRecord = ref(props.filter)
+        let filterRecord = unref(props.filter)
         const filterItems = computed(() => {
-            const needAutoExpand = filterRecord.value !== props.filter
-            // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-            filterRecord.value = props.filter
+            const needAutoExpand = filterRecord !== props.filter
+            filterRecord = props.filter
             return itemsFilter(props, props.filter, expands, needAutoExpand)
         })
         const treeListFlatten = computed(() => {
