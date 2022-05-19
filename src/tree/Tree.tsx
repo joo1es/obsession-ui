@@ -1,4 +1,4 @@
-import { computed, defineComponent, ExtractPropTypes, PropType, ref, VNodeChild, provide, unref } from 'vue'
+import { computed, defineComponent, ExtractPropTypes, PropType, ref, VNodeChild, provide } from 'vue'
 
 import type { TreeListItemCustom, TreeListItemExtra, TreeListItem, ExpandsList } from './interface'
 
@@ -124,7 +124,7 @@ export default defineComponent({
         /**
          * 过滤
          */
-        let filterRecord = unref(props.filter)
+        let filterRecord: string | symbol | undefined = Symbol('filter')
         const filterItems = computed(() => {
             const needAutoExpand = filterRecord !== props.filter
             filterRecord = props.filter
