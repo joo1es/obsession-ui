@@ -1,6 +1,7 @@
 .o-scroll-list {
     overflow: hidden;
     position: relative;
+
     &.o-scroll-list-reverse {
         display: flex;
         flex-direction: column-reverse;
@@ -11,7 +12,7 @@
     transition: all var(--duration, 2s) ease;
 }
 
-.wp-scroll-list__cell.linear {
+.o-scroll-list__cell.linear {
     transition: all var(--duration, 2s) linear;
 }
 
