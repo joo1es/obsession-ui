@@ -1,3 +1,7 @@
 .o-grid {
-  display: grid;
+    display: grid;
+
+    >.o-grid-item {
+        overflow: var(--o-grid--overflow);
+    }
 }

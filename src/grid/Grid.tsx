@@ -1,4 +1,4 @@
-import { computed, defineComponent, PropType, provide, toRef } from 'vue'
+import { computed, CSSProperties, defineComponent, PropType, provide, toRef } from 'vue'
 
 import type { ExtractPropTypes } from 'vue'
 
@@ -20,7 +20,11 @@ export const gridProps = {
     placeItems: String,
     placeContent: String,
     dense: Boolean,
-    autoRows: [Boolean, String]
+    autoRows: [Boolean, String],
+    overflow: {
+        type: String,
+        default: 'initial'
+    }
 }
 
 export type GridProps = ExtractPropTypes<typeof gridProps>;
@@ -58,7 +62,8 @@ export default defineComponent({
                     placeItems: props.placeItems,
                     placeContent: props.placeContent,
                     gridAutoFlow: props.dense ? 'row dense' : '',
-                }}
+                    '--o-grid--overflow': props.overflow
+                } as CSSProperties}
             >
                 {slots.default?.()}
             </div>
