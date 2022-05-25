@@ -150,7 +150,7 @@
         }
     }
 
-    tfoot>td {
+    tfoot>tr>td {
         border-top: var(--o-table-border);
         background: var(--o-table-foot-background);
         box-sizing: border-box;
