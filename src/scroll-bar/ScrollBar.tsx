@@ -74,9 +74,8 @@ export default defineComponent({
         const ySize = computed(() => yShow.value ? props.ySize : 0)
 
         function update() {
-            const clientRect = scrollRef.value?.getBoundingClientRect()
-            height.value = clientRect?.height || 0
-            width.value = clientRect?.width || 0
+            height.value = scrollRef.value?.offsetHeight || 0
+            width.value = scrollRef.value?.offsetWidth || 0
             scrollHeight.value = scrollInnerRefExtra.value?.scrollHeight || 0
             scrollWidth.value = scrollInnerRefExtra.value?.scrollWidth || 0
         }
