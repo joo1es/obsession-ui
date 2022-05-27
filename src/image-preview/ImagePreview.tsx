@@ -255,13 +255,13 @@ export default defineComponent({
             )
         }
 
-        const hidePrevNext = ref(false)
-        const setHidePrevNextTrue = () => {
-            hidePrevNext.value = true
-        }
-        const setHidePrevNextFalse = () => {
-            hidePrevNext.value = false
-        }
+        // const hidePrevNext = ref(false)
+        // const setHidePrevNextTrue = () => {
+        //     hidePrevNext.value = true
+        // }
+        // const setHidePrevNextFalse = () => {
+        //     hidePrevNext.value = false
+        // }
 
         const open = (index?: number) => {
             indexDefine.value = index || 0
@@ -321,13 +321,13 @@ export default defineComponent({
             goIndex,
             next,
             prev,
-            hidePrevNext,
+            // hidePrevNext,
             goIndexRaw,
             willBeIndex,
             showReplace,
             replace,
-            setHidePrevNextTrue,
-            setHidePrevNextFalse,
+            // setHidePrevNextTrue,
+            // setHidePrevNextFalse,
             open,
             size,
             longPictureSet,
@@ -354,13 +354,13 @@ export default defineComponent({
                 <Transition
                     name="o-image-preview--transition"
                     onEnter={() => {
-                        this.setHidePrevNextTrue()
+                        // this.setHidePrevNextTrue()
                         this.core?.focus({ preventScroll: true })
                     }}
-                    onAfterEnter={this.setHidePrevNextFalse}
-                    onEnterCancelled={this.setHidePrevNextTrue}
-                    onLeave={this.setHidePrevNextTrue}
-                    onLeaveCancelled={this.setHidePrevNextFalse}
+                    // onAfterEnter={this.setHidePrevNextFalse}
+                    // onEnterCancelled={this.setHidePrevNextTrue}
+                    // onLeave={this.setHidePrevNextTrue}
+                    // onLeaveCancelled={this.setHidePrevNextFalse}
                     // onAfterLeave={() => {
                     //     this.showOverlay = false
                     // }}
@@ -505,7 +505,7 @@ export default defineComponent({
                                             transform: this.transform
                                         }}
                                     >
-                                        { this.previewRender('prev', !this.hidePrevNext) }
+                                        { this.previewRender('prev', true) }
                                         { this.previewRender('replace', this.showReplace) }
                                         <ImageWrapper
                                             image={this.imagesShowing.current}
@@ -540,7 +540,7 @@ export default defineComponent({
                                             ref="ImageWrapperRef"
                                             v-slots={this.$slots}
                                         />
-                                        { this.previewRender('next', !this.hidePrevNext) }
+                                        { this.previewRender('next', true) }
                                     </div>
                                 { this.$slots.default?.() }
                             </div>
