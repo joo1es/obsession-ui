@@ -62,11 +62,11 @@ export default defineComponent({
                     }
                 ]}
                 style={{
-                    '--o-switch-active-color': this.activeColor || '',
-                    '--o-switch-inactive-color': this.inactiveColor || '',
-                    '--o-switch-width': addUnit(this.width) || '',
-                    '--o-switch-height': addUnit(this.height) || '',
-                    '--o-switch-border-radius': addUnit(this.borderRadius) || ''
+                    '--o-switch-active-color': this.activeColor || undefined,
+                    '--o-switch-inactive-color': this.inactiveColor || undefined,
+                    '--o-switch-width': addUnit(this.width) || undefined,
+                    '--o-switch-height': addUnit(this.height) || undefined,
+                    '--o-switch-border-radius': addUnit(this.borderRadius) || undefined
                 } as CSSProperties}
                 onClick={() => {
                     if (this.disabled) return
