@@ -7,6 +7,7 @@
   color: var(--o-popover-color, #666);
   border-radius: 4px;
   font-size: 14px;
+  transform: translateX(var(--o-popover-offset-x, 0)) translateY(var(--o-popover-offset-y, 0));
   &.o-popover__dark {
     --o-popover-bg-color: #000;
     --o-popover-color: #fff;
@@ -99,7 +100,7 @@
 .popover-transition-leave-to {
   transition: transform 0.2s, opacity 0.2s;
   opacity: 0;
-  transform: scale(0.6);
+  transform: translateX(var(--o-popover-offset-x, 0)) translateY(var(--o-popover-offset-y, 0)) scale(.6);
 }
 
 .popover-transition-leave-from,
