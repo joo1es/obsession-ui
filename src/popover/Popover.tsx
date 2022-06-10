@@ -255,11 +255,9 @@ export default defineComponent({
                                         handleMouseLeave()
                                     }}
                                     style={{
-                                        width:
-                      typeof props.width === 'number' ? `${props.width}px` : '',
-                                        transform: props.offset
-                                            ? `translateX(${props.offset[0]}px) translateY(${props.offset[1]}px)`
-                                            : '',
+                                        width: typeof props.width === 'number' ? `${props.width}px` : '',
+                                        '--o-popover-offset-x': props.offset ? `${props.offset[0]}px` : '0',
+                                        '--o-popover-offset-y': props.offset ? `${props.offset[0]}px` : '0'
                                     }}
                                     v-show={!props.useVShow ? true : show.value}
                                     { ...attrs }
@@ -285,7 +283,8 @@ export default defineComponent({
                                     {...mergeProps({
                                         style: {
                                             width: typeof props.width === 'number' ? `${props.width}px`: '',
-                                            transform: props.offset ? `translateX(${props.offset[0]}px) translateY(${props.offset[1]}px)` : ''
+                                            '--o-popover-offset-x': props.offset ? `${props.offset[0]}px` : '0',
+                                            '--o-popover-offset-y': props.offset ? `${props.offset[0]}px` : '0',
                                         }
                                     }, { style: props.popoverStyle })}
                                     v-show={!props.useVShow ? true : show.value}
