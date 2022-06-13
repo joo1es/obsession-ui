@@ -258,7 +258,7 @@ export default defineComponent({
                                         width: typeof props.width === 'number' ? `${props.width}px` : '',
                                         '--o-popover-offset-x': props.offset ? `${props.offset[0]}px` : '0',
                                         '--o-popover-offset-y': props.offset ? `${props.offset[0]}px` : '0'
-                                    }}
+                                    } as CSSProperties}
                                     v-show={!props.useVShow ? true : show.value}
                                     { ...attrs }
                                 >
@@ -285,7 +285,7 @@ export default defineComponent({
                                             width: typeof props.width === 'number' ? `${props.width}px`: '',
                                             '--o-popover-offset-x': props.offset ? `${props.offset[0]}px` : '0',
                                             '--o-popover-offset-y': props.offset ? `${props.offset[0]}px` : '0',
-                                        }
+                                        } as CSSProperties
                                     }, { style: props.popoverStyle })}
                                     v-show={!props.useVShow ? true : show.value}
                                     { ...attrs }

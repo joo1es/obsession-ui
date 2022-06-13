@@ -2,7 +2,7 @@ import {
     defineComponent,
     ExtractPropTypes,
     PropType,
-    TransitionGroup,
+    // TransitionGroup,
     ref,
     StyleValue,
     h,
@@ -10,6 +10,7 @@ import {
     watch
 } from 'vue'
 import { flatten } from '../utils'
+import { TransitionGroup } from './Transition/TransitionGroup'
 
 export const scrollListProps = {
     height: {
@@ -159,21 +160,19 @@ export default defineComponent({
                     },
                     ref: scrollListRef,
                     onMouseenter: () => props.play && props.hoverToStop && end(),
-                    onMouseleave: () => props.play && props.hoverToStop && start()
+                    onMouseleave: () => props.play && props.hoverToStop && start(),
                 }, {
-                    default: () => (
-                        slotsElements.value.map((element, index) => (
-                            <div class={{
-                                'o-scroll-list__cell': true,
-                                'linear': props.linear
-                            }} style={{
-                                '--duration': props.animationDuration / 1000 + 's',
-                                paddingBottom: index !== slotsElements.value.length - 1 ? (!isNaN(Number(props.space)) ? `${props.space}px` : props.space) : ''
-                            } as StyleValue} key={element.id}>
-                                { element }
-                            </div>
-                        ))
-                    )
+                    default: () => slotsElements.value.map((element, index) => (
+                        <div class={{
+                            'o-scroll-list__cell': true,
+                            'linear': props.linear
+                        }} style={{
+                            '--duration': props.animationDuration / 1000 + 's',
+                            paddingBottom: index !== slotsElements.value.length - 1 ? (!isNaN(Number(props.space)) ? `${props.space}px` : props.space) : ''
+                        } as StyleValue} key={element.id}>
+                            { element }
+                        </div>
+                    ))
                 })
             )
         }
