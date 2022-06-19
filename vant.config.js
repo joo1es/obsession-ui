@@ -281,7 +281,11 @@ module.exports = {
                     {
                         path: 'comment',
                         title: 'Comment 评论',
-                    }
+                    },
+                    {
+                        path: 'masonry',
+                        title: 'Masonry 瀑布流',
+                    },
                 ]
             }
         ],

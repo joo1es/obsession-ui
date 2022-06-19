@@ -65,6 +65,7 @@ import oContain from './contain'
 import oBackTop from './back-top'
 import oAspectRatio from './aspect-ratio'
 import oScrollBar from './scroll-bar'
+import oMasonry from './masonry'
 import $dialog from './dialog'
 import $toast from './toast'
 
@@ -139,6 +140,7 @@ declare module 'vue' {
         oBackTop: typeof oBackTop;
         oAspectRatio: typeof oAspectRatio;
         oScrollBar: typeof oScrollBar;
+        oMasonry: typeof oMasonry;
     }
     interface Vue {
         $dialog: typeof $dialog,
