@@ -31,3 +31,12 @@
 .o-scroll-flip-reverse-leave-active {
     position: absolute;
 }
+
+.o-scroll-fade-leave-to {
+    opacity: .5;
+    transition: 0s;
+}
+
+.o-scroll-fade-enter-from {
+    opacity: .5;
+}
