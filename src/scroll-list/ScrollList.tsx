@@ -81,8 +81,13 @@ export default defineComponent({
             return flattenElements
         }
         const slotsElements = ref(getSlotsElements())
+        const updating = ref(false)
         const update = () => {
+            updating.value = true
             slotsElements.value = getSlotsElements()
+            nextTick(() => {
+                updating.value = false
+            })
         }
         watch([() => props.base, () => props.reverse], () => {
             if (props.autoUpdate) update()
@@ -153,7 +158,7 @@ export default defineComponent({
                         'o-scroll-list': true,
                         'o-scroll-list-reverse': props.reverse
                     },
-                    name: props.reverse ? 'o-scroll-flip-reverse' : 'o-scroll-flip',
+                    name: updating.value ? 'o-scroll-fade' : props.reverse ? 'o-scroll-flip-reverse' : 'o-scroll-flip',
                     tag: props.tag,
                     style: {
                         height: !isNaN(Number(props.height)) ? `${props.height}px` : props.height
