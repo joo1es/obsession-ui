@@ -82,12 +82,18 @@ export default defineComponent({
         }
         const slotsElements = ref(getSlotsElements())
         const updating = ref(false)
-        const update = () => {
+        const update = async () => {
             updating.value = true
-            slotsElements.value = getSlotsElements()
-            nextTick(() => {
-                updating.value = false
+            slotsElements.value = []
+            await nextTick()
+            await new Promise<void>(resolve => {
+                setTimeout(() => {
+                    slotsElements.value = getSlotsElements()
+                    resolve()
+                }, 16)
             })
+            await nextTick()
+            updating.value = false
         }
         watch([() => props.base, () => props.reverse], () => {
             if (props.autoUpdate) update()
