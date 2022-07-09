@@ -7,7 +7,8 @@ import {
     StyleValue,
     h,
     onBeforeUnmount,
-    watch
+    watch,
+    nextTick
 } from 'vue'
 import { flatten } from '../utils'
 import { TransitionGroup } from './Transition/TransitionGroup'
@@ -82,7 +83,7 @@ export default defineComponent({
         }
         const slotsElements = ref(getSlotsElements())
         const updating = ref(false)
-        const update = async () => {
+        const update = async() => {
             updating.value = true
             slotsElements.value = []
             await nextTick()
