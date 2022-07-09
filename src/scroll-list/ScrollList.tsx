@@ -2,7 +2,7 @@ import {
     defineComponent,
     ExtractPropTypes,
     PropType,
-    TransitionGroup,
+    // TransitionGroup,
     ref,
     StyleValue,
     h,
@@ -11,7 +11,7 @@ import {
     nextTick
 } from 'vue'
 import { flatten } from '../utils'
-// import { TransitionGroup } from './Transition/TransitionGroup'
+import { TransitionGroup } from './Transition/TransitionGroup'
 
 export const scrollListProps = {
     height: {

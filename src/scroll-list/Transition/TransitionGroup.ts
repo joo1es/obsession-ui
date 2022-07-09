@@ -21,7 +21,7 @@ import {
     SetupContext,
     toRaw,
     ComponentOptions
-} from '@vue/runtime-core'
+} from 'vue'
 import { extend } from '@vue/shared'
 
 const positionMap = new WeakMap<VNode, { left: number, top: number }>()
@@ -47,50 +47,50 @@ const TransitionGroupImpl: ComponentOptions = {
         let children: VNode[]
 
         onUpdated(() => {
-        // children is guaranteed to exist after initial render
-        if (!prevChildren.length) {
-            return
-        }
-        const moveClass = props.moveClass || `${props.name || 'v'}-move`
-
-        if (
-            !hasCSSTransform(
-            prevChildren[0].el as ElementWithTransition,
-            instance.vnode.el as Node,
-            moveClass
-            )
-        ) {
-            return
-        }
-
-        // we divide the work into three loops to avoid mixing DOM reads and writes
-        // in each iteration - which helps prevent layout thrashing.
-        prevChildren.forEach(callPendingCbs)
-        prevChildren.forEach(recordPosition)
-        const movedChildren = prevChildren.filter(applyTranslation)
-
-        // force reflow to put everything in position
-        forceReflow()
-
-        movedChildren.forEach(c => {
-            const el = c.el as ElementWithTransition
-            const {style} = el
-            addTransitionClass(el, moveClass)
-            style.transform = ''
-            style.transitionDuration = ''
-            const cb = (e: TransitionEvent) => {
-                if (e && e.target !== el) {
-                    return
-                }
-                if (!e || /transform$/.test(e.propertyName)) {
-                    el.removeEventListener('transitionend', cb)
-                    ;(el as any)._moveCb = null
-                    removeTransitionClass(el, moveClass)
-                }
+            // children is guaranteed to exist after initial render
+            if (!prevChildren.length) {
+                return
             }
-            (el as any)._moveCb = cb
-            el.addEventListener('transitionend', cb)
-        })
+            const moveClass = props.moveClass || `${props.name || 'v'}-move`
+
+            if (
+                !hasCSSTransform(
+                prevChildren[0].el as ElementWithTransition,
+                instance.vnode.el as Node,
+                moveClass
+                )
+            ) {
+                return
+            }
+
+            // we divide the work into three loops to avoid mixing DOM reads and writes
+            // in each iteration - which helps prevent layout thrashing.
+            prevChildren.forEach(callPendingCbs)
+            prevChildren.forEach(recordPosition)
+            const movedChildren = prevChildren.filter(applyTranslation)
+
+            // force reflow to put everything in position
+            forceReflow()
+
+            movedChildren.forEach(c => {
+                const el = c.el as ElementWithTransition
+                const {style} = el
+                addTransitionClass(el, moveClass)
+                style.transform = ''
+                style.transitionDuration = ''
+                const cb = (e: TransitionEvent) => {
+                    if (e && e.target !== el) {
+                        return
+                    }
+                    if (!e || /transform$/.test(e.propertyName)) {
+                        el.removeEventListener('transitionend', cb)
+                        ;(el as any)._moveCb = null
+                        removeTransitionClass(el, moveClass)
+                    }
+                }
+                (el as any)._moveCb = cb
+                el.addEventListener('transitionend', cb)
+            })
         })
 
         return () => {
