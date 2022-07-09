@@ -168,19 +168,19 @@ export default defineComponent({
                     name: updating.value ? 'o-scroll-fade' : props.reverse ? 'o-scroll-flip-reverse' : 'o-scroll-flip',
                     tag: props.tag,
                     style: {
-                        height: !isNaN(Number(props.height)) ? `${props.height}px` : props.height
+                        height: !isNaN(Number(props.height)) ? `${props.height}px` : props.height,
+                        '--duration': props.animationDuration / 1000 + 's'
                     },
                     ref: scrollListRef,
                     onMouseenter: () => props.play && props.hoverToStop && end(),
                     onMouseleave: () => props.play && props.hoverToStop && start(),
                 }, {
-                    default: () => slotsElements.value.map((element, index) => (
+                    default: () => slotsElements.value.map(element => (
                         <div class={{
                             'o-scroll-list__cell': true,
                             'linear': props.linear
                         }} style={{
-                            '--duration': props.animationDuration / 1000 + 's',
-                            paddingBottom: index !== slotsElements.value.length - 1 ? (!isNaN(Number(props.space)) ? `${props.space}px` : props.space) : ''
+                            paddingBottom: !isNaN(Number(props.space)) ? `${props.space}px` : props.space
                         } as StyleValue} key={element.id}>
                             { element }
                         </div>
