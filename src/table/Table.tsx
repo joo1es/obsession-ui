@@ -425,7 +425,7 @@ export default defineComponent({
                     insideText = getTextByProp(data, column.prop)
                     insideText = insideText && String(insideText)
             }
-            insideText = slots[`table-${String(column.prop) || ''}`]?.({ column, row: data, index }) ?? insideText
+            insideText = slots[`table-${String(column.prop) || ''}`]?.({ column, row: data[origin], index }) ?? insideText
             const ellipsisProps = typeof column.ellipsis === 'boolean' ? {} : column.ellipsis
             const content = (
                 column.ellipsis ? (
