@@ -305,7 +305,7 @@ export default defineComponent({
                                     <div key={index} class={[
                                         'o-image-preview--point',
                                         {
-                                            left: point.position[1] / this.currentSize[1] * 100 < 50
+                                            left: point.position[1] / this.currentSize[1] * 100 > 50
                                         }
                                     ]} style={{
                                         top: `${point.position[0] / this.currentSize[0] * 100}%`,
