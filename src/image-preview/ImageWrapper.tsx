@@ -160,7 +160,7 @@ export default defineComponent({
                     newImage.onload = () => {
                         if (props.image !== currentImage) return
                         currentSrc.value = newImage.src
-                        currentSize.value = [newImage.width, newImage.height]
+                        currentSize.value = [newImage.height, newImage.width]
                         resolve()
                     }
                 })
