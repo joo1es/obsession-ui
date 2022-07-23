@@ -3,13 +3,16 @@
     width: 100%;
     overflow: hidden;
     will-change: transform;
+
     &--core {
         height: 100%;
         width: 100%;
+
         &__transition {
             transition: .2s;
         }
     }
+
     &--wrapper,
     &--prev,
     &--next,
@@ -20,6 +23,7 @@
         justify-content: center;
         align-items: center;
     }
+
     &--live {
         position: absolute;
         top: 0;
@@ -27,6 +31,7 @@
         height: 100%;
         width: 100%;
         z-index: 1;
+
         &__tool {
             position: absolute;
             top: 10px;
@@ -39,74 +44,90 @@
             line-height: 13px;
             cursor: pointer;
             letter-spacing: 1px;
-            > .o-badge-value {
+
+            >.o-badge-value {
                 margin-right: 6px;
             }
-            > b {
+
+            >b {
                 color: #ccc;
                 margin-right: 6px;
                 font-weight: normal;
             }
+
             &.playing {
                 animation: o-image-preview--live-animation 1s infinite;
             }
         }
     }
+
     &--image,
     &--live {
         height: calc(100% * var(--o-image-preview--scale, 1));
         vertical-align: middle;
         user-select: none;
         will-change: transform;
+
         @media (max-width: 800px) {
             width: calc(100% * var(--o-image-preview--scale, 1));
             height: auto;
         }
     }
+
     &--prev,
     &--next {
         position: absolute;
         top: 0;
     }
+
     &--replace {
         position: absolute;
         top: 0;
         left: 0;
     }
+
     &--prev {
         left: -100%;
     }
+
     &--next {
         right: -100%;
     }
+
     &:hover {
         .o-image-preview--cover {
             opacity: 1;
         }
+
         .o-image-preview--playing {
             bottom: 35px;
         }
     }
+
     &--playing {
         position: absolute;
         bottom: 15px;
         left: 15px;
         z-index: 10;
         transition: .2s;
-        > img {
+
+        >img {
             height: 200px;
             width: 100px;
             border-radius: 4px 4px 0 0;
             object-fit: cover;
             vertical-align: middle;
         }
+
         .o-progress {
             --o-progress-duration: 0;
         }
+
         @media (max-width: 800px) {
             bottom: 35px;
         }
     }
+
     &--cover {
         position: absolute;
         top: 0;
@@ -117,9 +138,11 @@
         pointer-events: none;
         opacity: 0;
         transition: opacity .2s;
+
         @media (max-width: 800px) {
             opacity: 1;
         }
+
         &__prev,
         &__next {
             position: absolute;
@@ -127,7 +150,8 @@
             height: 100%;
             display: flex;
             align-items: center;
-            > .o-icon {
+
+            >.o-icon {
                 height: 50px;
                 width: 35px;
                 display: flex;
@@ -137,17 +161,21 @@
                 color: #fff;
                 cursor: pointer;
                 background-color: rgb(0 0 0 / 31%);
+
                 &:hover {
                     background-color: rgb(0 0 0 / 80%);
                 }
             }
         }
+
         &__prev {
             left: 5px;
         }
+
         &__next {
             right: 5px;
         }
+
         &__index {
             position: absolute;
             left: 15px;
@@ -155,6 +183,7 @@
             color: #ccc;
             font-size: 13px;
         }
+
         &__size {
             position: absolute;
             left: 15px;
@@ -162,20 +191,24 @@
             color: #fff;
             font-size: 12px;
         }
+
         &__tool {
             position: absolute;
             right: 15px;
             top: 10px;
             font-size: 20px;
             color: #ccc;
+
             .o-icon {
                 pointer-events: all;
                 cursor: pointer;
+
                 &:hover {
                     color: #fff;
                 }
             }
         }
+
         &__long-tool {
             position: absolute;
             left: 0;
@@ -186,21 +219,25 @@
             align-items: center;
             justify-content: center;
             font-size: 12px;
-            > span {
+
+            >span {
                 border-radius: 10px;
                 padding: 5px 8px;
                 background-color: rgba(0, 0, 0, .6);
                 pointer-events: all;
                 cursor: default;
+
                 &:hover {
                     color: #fff;
                 }
             }
+
             @media (max-width: 800px) {
                 display: none;
             }
         }
     }
+
     &--box {
         height: 100%;
         max-height: 100%;
@@ -210,16 +247,20 @@
         scrollbar-width: none;
         scroll-behavior: smooth;
         position: relative;
+
         @media (max-width: 800px) {
             height: auto;
             width: 100%;
         }
+
         &::-webkit-scrollbar {
             display: none;
         }
     }
+
     &--longpicture-box {
         @media (min-width: 800px) {
+
             .o-image-preview--image,
             .o-image-preview--live {
                 width: calc(800px * var(--o-image-preview--scale, 1));
@@ -227,6 +268,7 @@
             }
         }
     }
+
     &--points {
         position: absolute;
         height: 100%;
@@ -238,6 +280,7 @@
         font-size: 12px;
         pointer-events: none;
     }
+
     &--point {
         position: absolute;
         height: 5px;
@@ -245,6 +288,7 @@
         background-color: #fff;
         filter: drop-shadow(.5px 1px 2px #333);
         border-radius: 50%;
+
         &::after {
             content: '';
             position: absolute;
@@ -254,7 +298,8 @@
             height: 2px;
             background-color: #fff;
         }
-        > div {
+
+        >div {
             position: absolute;
             max-width: 200px;
             min-width: 50px;
@@ -262,6 +307,7 @@
             padding: 5px 10px;
             top: -13.5px;
             height: 16px;
+            box-sizing: content-box;
             display: flex;
             align-items: center;
             white-space: nowrap;
@@ -269,17 +315,20 @@
             border-radius: 15px;
             border: 2px solid #fff;
         }
+
         &.left {
             &::after {
                 left: initial;
                 right: 0;
             }
-            > div {
+
+            >div {
                 left: initial;
                 right: 20px
             }
         }
     }
+
     &--point--box {
         border: 1px solid #fff;
         filter: drop-shadow(.5px 1px 2px #333);
@@ -316,9 +365,11 @@
     0% {
         opacity: 1;
     }
+
     50% {
         opacity: .3;
     }
+
     100% {
         opacity: 1;
     }
