@@ -64,15 +64,16 @@ export default defineComponent({
         }
 
         let startY = 0
+        let deltaY = 0
         const onTouchStart = (event: TouchEvent) => {
             pullingTransition.value = 0
+            deltaY = 0
             if (isTouchable.value) {
                 checkPosition()
                 startY = event.touches[0].clientY
             }
         }
 
-        let deltaY = 0
         const onTouchMove = (event: TouchEvent) => {
             if (isTouchable.value) {
                 if (!reachTop) {
