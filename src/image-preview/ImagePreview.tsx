@@ -271,7 +271,7 @@ export default defineComponent({
         const size = ref([0, 0])
         watch(size, () => {
             if (size.value[0]) {
-                if (size.value[1] / size.value[0] >= props.longPictureScale && imagesShowing.value.current && ImageWrapperRef.value) {
+                if (size.value[0] / size.value[1] >= props.longPictureScale && imagesShowing.value.current && ImageWrapperRef.value) {
                     if (!longPictureSet.value.has(imagesShowing.value.current)) {
                         longPictureSet.value.add(imagesShowing.value.current)
                     }
