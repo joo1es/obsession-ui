@@ -431,7 +431,7 @@ export default defineComponent({
                                     }
                                     <Transition name="o-image-preview--fade">
                                         {
-                                            this.showImageSize && this.size[0] && (
+                                            this.showImageSize && this.size[0] > 0 && (
                                                 <div
                                                     class="o-image-preview--cover__size"
                                                 >{ this.size[0] }×{this.size[1]}</div>
