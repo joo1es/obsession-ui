@@ -49,6 +49,7 @@ app.use(List)
 | virtualListProps `virtual` | 虚拟列表的 Props，仅虚拟列表可用 | _Partial\<VirtualListProps> & Record\<string, any>_ | - |
 | load | 加载函数 | _(isPullRefresh: boolean) => Promise\<void>_ | - |
 | pullRefresh | 是否开启下拉刷新 | _boolean_ | false |
+| keepScroll | 在 keep-alive 的情况下是否保持滚动位置 | _boolean_ | false |
 
 ### Slots
 

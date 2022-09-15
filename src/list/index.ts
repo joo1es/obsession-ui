@@ -5,3 +5,4 @@ export const List = withInstall<typeof _List>(_List)
 
 export default List
 export * from './List'
+export * from './utils'

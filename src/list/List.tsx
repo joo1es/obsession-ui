@@ -4,6 +4,7 @@ import VirtualList, { VirtualListProps } from '../virtual-list'
 import ListTip from './ListTip'
 import PullRefresh from '../pull-refresh'
 import { useAutoControl, useScrollParent } from '../utils'
+import { useKeepScroll } from './utils'
 
 export const listProps = {
     virtual: Boolean,
@@ -48,7 +49,8 @@ export const listProps = {
     virtualListProps: {
         type: Object as PropType<Partial<VirtualListProps> & Record<string, any>>
     },
-    pullRefresh: Boolean
+    pullRefresh: Boolean,
+    keepScroll: Boolean
 }
 
 export type ListProps = ExtractPropTypes<typeof listProps>
@@ -124,11 +126,13 @@ export default defineComponent({
 
         const rootElement = computed(() => {
             if (props.virtual) {
-                return virtualListRef.value?.listElRef
-            } 
+                return virtualListRef.value?.listElRef as any
+            }
                 return scrollParent.value
-            
-        })
+            }
+        )
+
+        if (props.keepScroll) useKeepScroll(rootElement)
 
         return {
             loadingSync,
