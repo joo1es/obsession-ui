@@ -154,6 +154,10 @@ module.exports = {
                         title: 'Tabs 标签页'
                     },
                     {
+                        path: 'segmented',
+                        title: 'Segmented 分段控制器'
+                    },
+                    {
                         path: 'back-top',
                         title: 'BackTop 返回顶部'
                     },
