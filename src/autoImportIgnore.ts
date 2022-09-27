@@ -68,5 +68,6 @@ export default [
     'upload-file-status',
     'scroll-bar-props',
     'masonry-props',
-    'use-keep-scroll'
+    'use-keep-scroll',
+    'segmented-props'
 ]
