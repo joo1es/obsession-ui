@@ -64,7 +64,7 @@ export default defineComponent({
                         value: item
                     } as SegmentedOption
                 
-            }) ?? [] as SegmentedOption[])
+            }) ?? [] )
 
         const thumbRef = ref<HTMLDivElement>()
         const itemsRef = useTemplateRefsList<HTMLDivElement>()
@@ -96,7 +96,8 @@ export default defineComponent({
                 if (standardOptions.value.length === 1) return
                 let currentIndex = index
                 // To find the most closest item that which is not disabled.
-                while(true) {
+                // eslint-disable-next-line no-constant-condition
+                while (true) {
                     if (currentIndex === standardOptions.value.length - 1) {
                         currentIndex = 0
                     } else {
@@ -136,7 +137,7 @@ export default defineComponent({
                 <div class={ this.of('content') }>
                     <div class={ this.of('items') }>
                         {
-                            this.standardOptions.map(item => (
+                            this.standardOptions.map((item, index) => (
                                 this.$slots.item?.(item) ?? (
                                     <div
                                         class={[

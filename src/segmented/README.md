@@ -24,6 +24,10 @@ app.use(Segmented)
 
 <demo-code transform>./demo/Size.vue</demo-code>
 
+#### 开关模式
+
+<demo-code transform>./demo/Switch.vue</demo-code>
+
 #### 禁用
 
 <demo-code transform>./demo/Disabled.vue</demo-code>
@@ -39,6 +43,7 @@ app.use(Segmented)
 | block   | 是否按整行布局 | _boolean_ | false      |
 | size  | 尺寸       | _'small' \| 'default' \| 'large_                                                           | 'default'  |
 | disabled      | 是否整体禁用       | _boolean_                                                           | false   |
+| switch | 是否启用开关模式，启用后点击已激活项，会自动跳转到下一项 | _boolean_ |
 
 ### Methods
 
@@ -62,7 +67,6 @@ app.use(Segmented)
 | className | 菜单绑定的 class | _string_ |
 | icon | 菜单的图标 | _Component_ |
 | disabled | 是否禁用 | _boolean_ |
-| switch | 是否启用开关模式，启用后点击已激活项，会自动跳转到下一项 | _boolean_ |
 
 ## 定制
 
