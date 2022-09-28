@@ -66,6 +66,7 @@ app.use(Segmented)
 | className | 菜单绑定的 class | _string_ |
 | icon | 菜单的图标 | _Component_ |
 | disabled | 是否禁用 | _boolean_ |
+| switch | 是否启用开关模式，启用后点击已激活项，会自动跳转到下一项 | _boolean_ |
 
 ## 定制
 
