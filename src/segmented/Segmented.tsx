@@ -120,7 +120,8 @@ export default defineComponent({
                                         ref={this.itemsRef.set}
                                         onClick={() => {
                                             if (this.disabled || item.disabled) return
-                                            if (this.switch && this.active === item.value) {
+                                            if (this.active === item.value) return
+                                            if (this.switch) {
                                                 if (this.standardOptions.length === 1) return
                                                 let currentIndex = index
                                                 while(true) {
