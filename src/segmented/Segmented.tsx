@@ -35,7 +35,8 @@ export const segmentedProps = {
         type: String as PropType<'small' | 'default' | 'large'>,
         default: 'default'
     },
-    disabled: Boolean
+    disabled: Boolean,
+    switch: Boolean
 }
 
 export type SegmentedProps = ExtractPropTypes<typeof segmentedProps>
@@ -119,8 +120,26 @@ export default defineComponent({
                                         ref={this.itemsRef.set}
                                         onClick={() => {
                                             if (this.disabled || item.disabled) return
-                                            this.active = item.value
-                                            this.$emit('change', this.active)
+                                            if (this.switch && this.active === item.value) {
+                                                if (this.standardOptions.length === 1) return
+                                                let currentIndex = index
+                                                while(true) {
+                                                    if (currentIndex === this.standardOptions.length - 1) {
+                                                        currentIndex = 0
+                                                    } else {
+                                                        currentIndex += 1
+                                                    }
+                                                    if (!this.standardOptions[currentIndex].disabled) {
+                                                        this.active = this.standardOptions[currentIndex].value
+                                                        this.$emit('change', this.active)
+                                                        break
+                                                    }
+                                                    if (currentIndex === index) break
+                                                }
+                                            } else {
+                                                this.active = item.value
+                                                this.$emit('change', this.active)
+                                            }
                                         }}
                                     >
                                         {
