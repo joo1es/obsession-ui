@@ -87,6 +87,35 @@ export default defineComponent({
 
         onMounted(setThumbPosition)
         onUpdated(setThumbPosition)
+        
+        function handleClick(item: SegmentedOption, index: number) {
+            if (props.disabled || item.disabled) return
+            if (props.switch && active.value === item.value) {
+                // Switch mode, trigger only when active is current item.
+                // If items' length is 1, it's impossible to find another item.
+                if (standardOptions.value.length === 1) return
+                let currentIndex = index
+                // To find the most closest item that which is not disabled.
+                while(true) {
+                    if (currentIndex === standardOptions.value.length - 1) {
+                        currentIndex = 0
+                    } else {
+                        currentIndex += 1
+                    }
+                    if (!standardOptions.value[currentIndex].disabled) {
+                        active.value = standardOptions.value[currentIndex].value
+                        emit('change', active.value)
+                        break
+                    }
+                    // It's like loop back to currentIndex, task fail.
+                    if (currentIndex === index) break
+                }
+            } else {
+                if (active.value === item.value) return
+                active.value = item.value
+                emit('change', active.value)
+            }
+        }
 
         return {
             basic,
@@ -97,7 +126,8 @@ export default defineComponent({
             thumbRef,
             itemsRef,
             position,
-            navRef
+            navRef,
+            handleClick
         }
     },
     render() {
@@ -118,30 +148,7 @@ export default defineComponent({
                                             }
                                         ]}
                                         ref={this.itemsRef.set}
-                                        onClick={() => {
-                                            if (this.disabled || item.disabled) return
-                                            if (this.switch && this.active === item.value) {
-                                                if (this.standardOptions.length === 1) return
-                                                let currentIndex = index
-                                                while(true) {
-                                                    if (currentIndex === this.standardOptions.length - 1) {
-                                                        currentIndex = 0
-                                                    } else {
-                                                        currentIndex += 1
-                                                    }
-                                                    if (!this.standardOptions[currentIndex].disabled) {
-                                                        this.active = this.standardOptions[currentIndex].value
-                                                        this.$emit('change', this.active)
-                                                        break
-                                                    }
-                                                    if (currentIndex === index) break
-                                                }
-                                            } else {
-                                                if (this.active === item.value) return
-                                                this.active = item.value
-                                                this.$emit('change', this.active)
-                                            }
-                                        }}
+                                        onClick={() => this.handleClick(item, index)}
                                     >
                                         {
                                             item.icon && (
