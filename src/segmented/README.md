@@ -1,7 +1,3 @@
-<script lang="ts" setup>
-import { ShareAltOutlined } from '@vicons/antd'
-</script>
-
 ## Segmented 分段控制器
 
 ### 介绍
