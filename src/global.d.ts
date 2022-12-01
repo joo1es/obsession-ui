@@ -67,6 +67,8 @@ import type oAspectRatio from './aspect-ratio'
 import type oScrollBar from './scroll-bar'
 import type oMasonry from './masonry'
 import type oSegmented from './segmented'
+import type oRotateAlbum from './rotate-album'
+import type oRotateAlbum3d from './rotate-album-3d'
 import type $dialog from './dialog'
 import type $toast from './toast'
 
@@ -143,6 +145,8 @@ declare module 'vue' {
         oScrollBar: typeof oScrollBar;
         oMasonry: typeof oMasonry;
         oSegmented: typeof oSegmented;
+        oRotateAlbum: typeof oRotateAlbum;
+        oRotateAlbum3d: typeof oRotateAlbum3d;
     }
     interface Vue {
         $dialog: typeof $dialog,

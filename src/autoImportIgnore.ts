@@ -69,5 +69,7 @@ export default [
     'scroll-bar-props',
     'masonry-props',
     'use-keep-scroll',
-    'segmented-props'
+    'segmented-props',
+    'rotate-album-props',
+    'rotate-album-3d-props'
 ]

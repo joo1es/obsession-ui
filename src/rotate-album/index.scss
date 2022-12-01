@@ -1,0 +1,40 @@
+.o-rotate-album {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    pointer-events: none;
+    position: relative;
+
+    &-path {
+        position: absolute;
+    }
+
+    &.o-rotate-album--hover-to-stop:hover {
+        .o-rotate-album-cell {
+            animation-play-state: paused;
+        }
+    }
+
+    .o-rotate-album-cell {
+        position: absolute;
+        animation: o-rotate-album var(--duration) linear infinite;
+        offset-rotate: 0deg;
+        offset-path: var(--offset-path);
+        pointer-events: all;
+    }
+}
+
+@keyframes o-rotate-album {
+    0% {
+        offset-distance: 0%;
+        z-index: 1;
+    }
+
+    50% {
+        offset-distance: 50%;
+    }
+
+    100% {
+        offset-distance: 100%;
+    }
+}

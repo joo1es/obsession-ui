@@ -1,0 +1,27 @@
+.o-rotate-album-3d {
+    transform-style: preserve-3d;
+    animation: o-rotate-album-3d var(--duration) linear infinite;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+
+    &.o-rotate-album-3d--hover-to-stop:hover {
+        animation-play-state: paused;
+    }
+}
+
+.o-rotate-album-3d-cell {
+    position: absolute;
+}
+
+@keyframes o-rotate-album-3d {
+    from {
+        transform: rotateX(var(--x-deg, -5deg)) rotateY(0deg);
+    }
+
+    to {
+        transform: rotateX(var(--x-deg, -5deg)) rotateY(360deg);
+    }
+}

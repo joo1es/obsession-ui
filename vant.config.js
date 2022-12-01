@@ -290,6 +290,10 @@ module.exports = {
                         path: 'masonry',
                         title: 'Masonry 瀑布流',
                     },
+                    {
+                        path: 'rotate-album',
+                        title: 'RotateAlbum 旋转相册',
+                    },
                 ]
             }
         ],
