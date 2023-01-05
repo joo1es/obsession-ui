@@ -344,11 +344,6 @@ export default defineComponent({
                 onUpdate:modelValue={show => {
                     this.showDefine = show
                 }}
-                onEnter={() => {
-                    this.$nextTick(() => {
-                        this.init = true
-                    })
-                }}
                 { ...this.overlay }
             >
                 <Transition
@@ -356,6 +351,9 @@ export default defineComponent({
                     onEnter={() => {
                         // this.setHidePrevNextTrue()
                         this.core?.focus({ preventScroll: true })
+                    }}
+                    onAfterEnter={() => {
+                        this.init = true
                     }}
                     // onAfterEnter={this.setHidePrevNextFalse}
                     // onEnterCancelled={this.setHidePrevNextTrue}
