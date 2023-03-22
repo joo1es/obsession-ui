@@ -8,7 +8,8 @@ import {
     h,
     onBeforeUnmount,
     watch,
-    nextTick
+    nextTick,
+    shallowRef
 } from 'vue'
 import { flatten } from '../utils'
 import { TransitionGroup } from './Transition/TransitionGroup'
@@ -66,7 +67,19 @@ export default defineComponent({
     name: 'OScrollList',
     props: scrollListProps,
     setup(props, { slots, expose }) {
-        let slotBackup = JSON.stringify(slots.default?.())
+        const slotBackup = shallowRef(getStringifySlot())
+
+        function getStringifySlot() {
+            const elements = flatten(slots.default?.() || [])
+            const newElements = elements.map(element => {
+                const newElement = { ...element }
+                // @ts-ignore
+                delete newElement.ctx
+                return newElement
+            })
+            return JSON.stringify(newElements)
+        }
+
         /**
          * update elements
          */
@@ -151,14 +164,15 @@ export default defineComponent({
         expose({ update })
         return () => {
             if (props.autoUpdate) {
-                const slotBackupMap = JSON.stringify(slots.default?.())
-                if (slotBackupMap !== slotBackup) {
+                const slotBackupMap = getStringifySlot()
+                if (slotBackupMap !== slotBackup.value) {
                     end()
-                    slotBackup = slotBackupMap
+                    slotBackup.value = slotBackupMap
                     update()
                     start()
                 }
             }
+    
             return (
                 h(TransitionGroup, {
                     class: {
