@@ -71,13 +71,10 @@ export default defineComponent({
 
         function getStringifySlot() {
             const elements = flatten(slots.default?.() || [])
-            const newElements = elements.map(element => {
-                const newElement = { ...element }
-                // @ts-ignore
-                delete newElement.ctx
-                return newElement
+            return JSON.stringify(elements, (key, value) => {
+                if (key === 'ctx') return ''
+                return value
             })
-            return JSON.stringify(newElements)
         }
 
         /**
