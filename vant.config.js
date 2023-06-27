@@ -267,6 +267,10 @@ module.exports = {
                         title: 'ScrollList 滚动列表',
                     },
                     {
+                        path: 'infinite-scroll',
+                        title: 'InfiniteScroll 无限滚动',
+                    },
+                    {
                         path: 'count-to',
                         title: 'CountTo 数值动画'
                     },

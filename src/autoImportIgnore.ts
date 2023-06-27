@@ -71,5 +71,6 @@ export default [
     'use-keep-scroll',
     'segmented-props',
     'rotate-album-props',
-    'rotate-album-3d-props'
+    'rotate-album-3d-props',
+    'infinite-scroll-props'
 ]

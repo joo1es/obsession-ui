@@ -69,6 +69,7 @@ import type oMasonry from './masonry'
 import type oSegmented from './segmented'
 import type oRotateAlbum from './rotate-album'
 import type oRotateAlbum3d from './rotate-album-3d'
+import type oInfiniteScroll from './infinite-scroll'
 import type $dialog from './dialog'
 import type $toast from './toast'
 
@@ -147,6 +148,7 @@ declare module 'vue' {
         oSegmented: typeof oSegmented;
         oRotateAlbum: typeof oRotateAlbum;
         oRotateAlbum3d: typeof oRotateAlbum3d;
+        oInfiniteScroll: typeof oInfiniteScroll;
     }
     interface Vue {
         $dialog: typeof $dialog,
