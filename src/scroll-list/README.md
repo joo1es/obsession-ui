@@ -4,6 +4,18 @@
 
 一切不过是障眼法
 
+### Vue 版本要求
+
+本组件的滚动动画依赖 `TransitionGroup` 对子元素的位移测量，因此对 Vue 版本有要求：
+
+- **Vue `>= 3.5.23`**：推荐。位移测量不受祖先 `transform: scale()` 干扰，动画正确。
+- **Vue `3.0.0 ~ 3.5.22`**：组件可正常使用。但若本组件的祖先元素带有 `transform: scale()`（如整体缩放的自适应布局、大屏适配、播放器横竖屏缩放等），列表滚动时元素会出现「跳一下」的现象。祖先容器没有缩放时不会有任何差异。
+- **Vue `< 3.0.0`**：不支持。
+
+如果你的项目暂时无法升级 Vue，请继续使用 `obsession-ui@1.1.15` 及更早版本 —— 这些版本内置了一份打过补丁的 `TransitionGroup`，在旧版 Vue 上动画同样正确。
+
+补丁的上游来源是 [vuejs/core PR #6108](https://github.com/vuejs/core/pull/6108)（`fix(TransitionGroup): use offsetLeft and offsetTop instead of getBoundingClientRect to avoid transform scale affect animation`，2022-06-14 提交，2025-11-05 合入 `main`，随 **Vue 3.5.23** 发布）。既然修复已进入 Vue 本体，本组件已改为直接使用 Vue 内置的 `TransitionGroup`，不再自带副本。
+
 ### 引入
 
 ```js

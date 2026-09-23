@@ -2,7 +2,6 @@ import { useScroll } from '@vueuse/core'
 import { addUnit, useNamespace, useScrollParent } from '../utils'
 import {
     computed,
-    CSSProperties,
     defineComponent,
     PropType,
     ref,
@@ -27,7 +26,11 @@ export const backTopProps = {
         default: 80
     },
     position: {
-        type: String as PropType<CSSProperties['justify-content']>,
+        // 这里刻意用 string，而不是 CSSProperties['justify-content']。
+        // 后者指向 csstype 的 Property.JustifyContent，当 csstype 在依赖树里存在
+        // 嵌套副本（@vue/runtime-dom 需要 ^3.2.3，css-render 需要 ~3.0.5）时，
+        // 声明文件无法命名该类型，会报 TS2742；同时公开类型与历史版本保持一致。
+        type: String as PropType<string | undefined>,
         default: 'center'
     },
     parent: {
