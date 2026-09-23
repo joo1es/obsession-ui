@@ -1,6 +1,6 @@
 {
     "name": "obsession-ui",
-    "version": "1.1.15",
+    "version": "1.2.0",
     "description": "",
     "main": "lib/obsession-ui.js",
     "style": "lib/index.css",
@@ -27,13 +27,14 @@
         "*.{vue,css,less,scss}": "stylelint --fix"
     },
     "peerDependencies": {
-        "vue": "^3.0.0"
+        "vue": "^3.0.0",
+        "vue-router": "^4.0.0"
     },
     "devDependencies": {
         "@vant/cli": "^3.9.0",
         "@vicons/ionicons5": "^0.11.0",
-        "@vue/compiler-sfc": "^3.0.0",
-        "vue": "^3.2.45"
+        "@vue/compiler-sfc": "^3.5.43",
+        "vue": "^3.5.43"
     },
     "eslintConfig": {
         "root": true,

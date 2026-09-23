@@ -297,7 +297,7 @@ export default defineComponent({
                                                 if (disabled.value) return
                                                 if (!props.children || props.checkStrictly) {
                                                     if (!checkedList.value) return
-                                                    checkedList.value = [props.keyIs]
+                                                    checkedList.value = [props.keyIs] as any
                                                 }
                                             }}
                                         />

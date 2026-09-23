@@ -25,6 +25,10 @@ module.exports = {
                         path: 'quickstart',
                         title: '快速上手',
                     },
+                    {
+                        path: 'vue-compat',
+                        title: 'Vue 版本兼容',
+                    },
                 ],
             },
             {
