@@ -1,8 +1,8 @@
 name: release
 
-# 推送 v* tag 时发布到 npm。
+# 推送 v* tag 时：发布到 npm + 部署文档站。
 #
-# 认证走 Trusted Publishing（OIDC），不需要任何 token，也不需要 2FA ——
+# npm 认证走 Trusted Publishing（OIDC），不需要任何 token，也不需要 2FA ——
 # 发布凭证由 GitHub Actions 现场签发，用完即失效。
 #
 # 前置：先在 npmjs.com → 包页面 → Settings → Trusted Publisher 注册一个 GitHub Actions 发布者，
@@ -18,8 +18,8 @@ on:
       - 'v*'
 
 permissions:
-  id-token: write # OIDC 必需，缺了拿不到发布凭证
-  contents: read
+  id-token: write # OIDC 必需，缺了拿不到 npm 发布凭证
+  contents: write # 部署文档站要推 gh-pages 分支，必须是 write
 
 jobs:
   publish:
@@ -30,10 +30,11 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          node-version: '24'
+          # Trusted Publishing 要求 Node >= 22.14（npm CLI >= 11.5.1 的前置），
+          # 但也别拉太高：vant-cli 3.9 是老工具链，24 上不保证能跑。
+          node-version: '22'
           # 刻意不传 registry-url：它会往 .npmrc 写一个占位的 NODE_AUTH_TOKEN，
           # 而默认源本来就是 registry.npmjs.org，不需要它。
-          # 发布构建也不开缓存（package-manager-cache 默认就是关的）。
 
       # Trusted Publishing 要求 npm CLI >= 11.5.1，显式升一次，免得 runner 自带的版本太老
       - name: 升级 npm CLI
@@ -43,7 +44,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       # lib / es 是构建产物且被 .gitignore 忽略，必须在 CI 里现构建
-      - name: 构建
+      - name: 构建组件库
         run: yarn build
 
       # 版本号对不上就早点报错，别等 npm 用「版本已存在」的方式拒绝
@@ -57,5 +58,22 @@ jobs:
           fi
 
       # 有 OIDC 环境时 npm CLI 会自动走 OIDC，再回落到传统 token
-      - name: 发布
+      - name: 发布到 npm
         run: npm publish
+
+      # 文档站与 npm 包是两条独立链路：
+      #   docs/*.md + 各组件 README → vant-cli build-site → site/ → gh-pages 分支 → GitHub Pages
+      # 刻意放在 publish 之后 —— npm 失败就不要再推文档站，
+      # 免得出现「文档已经更新了、包却没发出去」的错位。
+      #
+      # gh-pages 3.x 只认「当前仓库的 remote.origin.url」或 -r 参数，**不读任何 token 环境变量**，
+      # 而且它会把那个 URL clone 到自己的缓存目录再 push。
+      # 所以必须先把 origin 换成带 token 的地址，否则 push 那步会因无凭据失败。
+      - name: 部署文档站到 gh-pages 分支
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          yarn build:site
