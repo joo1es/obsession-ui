@@ -2,6 +2,10 @@
     "name": "obsession-ui",
     "version": "1.2.0",
     "description": "",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/joo1es/obsession-ui.git"
+    },
     "main": "lib/obsession-ui.js",
     "style": "lib/index.css",
     "typings": "lib/index.d.ts",

@@ -1,0 +1,61 @@
+name: release
+
+# 推送 v* tag 时发布到 npm。
+#
+# 认证走 Trusted Publishing（OIDC），不需要任何 token，也不需要 2FA ——
+# 发布凭证由 GitHub Actions 现场签发，用完即失效。
+#
+# 前置：先在 npmjs.com → 包页面 → Settings → Trusted Publisher 注册一个 GitHub Actions 发布者，
+# 下面四处必须与这里**逐字一致**（大小写敏感，错了只会在 publish 时报 ENEEDAUTH）：
+#   Organization or user : joo1es
+#   Repository           : obsession-ui
+#   Workflow filename    : release.yml      （只填文件名，不填路径，必须带 .yml）
+#   Allowed actions      : 勾上允许 npm publish（默认只放行 stage publish）
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  id-token: write # OIDC 必需，缺了拿不到发布凭证
+  contents: read
+
+jobs:
+  publish:
+    # 必须是 GitHub 托管的 runner，自建 runner 目前不支持 OIDC
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+          # 刻意不传 registry-url：它会往 .npmrc 写一个占位的 NODE_AUTH_TOKEN，
+          # 而默认源本来就是 registry.npmjs.org，不需要它。
+          # 发布构建也不开缓存（package-manager-cache 默认就是关的）。
+
+      # Trusted Publishing 要求 npm CLI >= 11.5.1，显式升一次，免得 runner 自带的版本太老
+      - name: 升级 npm CLI
+        run: npm install -g npm@latest
+
+      - name: 安装依赖
+        run: yarn install --frozen-lockfile
+
+      # lib / es 是构建产物且被 .gitignore 忽略，必须在 CI 里现构建
+      - name: 构建
+        run: yarn build
+
+      # 版本号对不上就早点报错，别等 npm 用「版本已存在」的方式拒绝
+      - name: 校验 tag 与 package.json 版本一致
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG="$(node -p "require('./package.json').version")"
+          if [ "$TAG" != "$PKG" ]; then
+            echo "::error::tag v$TAG 与 package.json 的 $PKG 不一致，请先改 package.json 的 version"
+            exit 1
+          fi
+
+      # 有 OIDC 环境时 npm CLI 会自动走 OIDC，再回落到传统 token
+      - name: 发布
+        run: npm publish
