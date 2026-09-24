@@ -8,6 +8,7 @@ import { useAutoControl } from '../utils'
 
 import ImageWrapper from './ImageWrapper'
 import Progress from '../progress'
+import { isImageLoaded, preloadImage } from './preload'
 
 export const imagePreviewProps = {
     images: {
@@ -71,9 +72,6 @@ export default defineComponent({
 
         const showOverlay = ref(showDefine.value)
         const showCore = ref(showDefine.value)
-
-        const replace = ref<PreviewImage>()
-        const showReplace = ref(false)
 
         const imagesShowing = computed(() => {
             const showing: {
@@ -169,11 +167,9 @@ export default defineComponent({
         })
 
         const next = () => {
-            replace.value = props.images[(indexDefine.value || 0) + 1] || props.images[0]
             goIndex((indexDefine.value || 0) + 1, true)
         }
         const prev = () => {
-            replace.value = props.images[(indexDefine.value || 0) - 1] || props.images[props.images.length - 1]
             goIndex((indexDefine.value || 0) - 1, true)
         }
 
@@ -244,16 +240,43 @@ export default defineComponent({
             return thumb && image.thumb ? image.thumb : image.src
         }
 
-        const previewRender = (position: 'prev' | 'next' | 'replace' = 'prev', show = true) => {
-            const image = position === 'replace' ? replace.value : imagesShowing.value[ position]
+        /**
+         * 相邻页用哪张图：原图已经预载好就直接上原图，否则先用缩略图顶上 ——
+         * 避免「滑进来是糊的，停下了才变清晰」的画质跳变。
+         */
+        const getRenderSrc = (image?: PreviewImage) => {
+            if (!image) return undefined
+            const fullSrc = getSrc(image)
+            if (fullSrc && isImageLoaded(fullSrc)) return fullSrc
+            return getSrc(image, true)
+        }
+
+        const previewRender = (position: 'prev' | 'next' = 'prev', show = true) => {
+            const image = imagesShowing.value[ position]
             return (
                 <div class={`o-image-preview--${position}`}>
                     <div class={'o-image-preview--box'}>
-                        <img class="o-image-preview--image" src={image && getSrc(image, true)} v-show={image && show} />
+                        <img class="o-image-preview--image" src={image && getRenderSrc(image)} v-show={image && show} />
                     </div>
                 </div>
             )
         }
+
+        /**
+         * 提前把当前页和相邻页的原图载好，翻页时目标图已经在解码缓存里，
+         * 可以直接换上，不会再有「先糊后清晰」
+         */
+        const preloadNeighbors = () => {
+            if (!showDefine.value) return
+            const { prev, current, next } = imagesShowing.value
+            const neighbors = [prev, current, next]
+            neighbors.forEach(image => {
+                if (image) preloadImage(getSrc(image))
+            })
+        }
+        watch([imagesShowing, showDefine], preloadNeighbors, {
+            immediate: true
+        })
 
         // const hidePrevNext = ref(false)
         // const setHidePrevNextTrue = () => {
@@ -324,8 +347,6 @@ export default defineComponent({
             // hidePrevNext,
             goIndexRaw,
             willBeIndex,
-            showReplace,
-            replace,
             // setHidePrevNextTrue,
             // setHidePrevNextFalse,
             open,
@@ -488,9 +509,6 @@ export default defineComponent({
                                                 this.transition = false
                                                 this.transform = ''
                                                 if (this.willBeIndex !== undefined) this.goIndexRaw(this.willBeIndex)
-                                                if (this.replace && this.indexDefine === this.images.indexOf(this.replace)) {
-                                                    this.showReplace = true
-                                                }
                                             }
                                         }}
                                         class={[
@@ -504,7 +522,6 @@ export default defineComponent({
                                         }}
                                     >
                                         { this.previewRender('prev', true) }
-                                        { this.previewRender('replace', this.showReplace) }
                                         <ImageWrapper
                                             image={this.imagesShowing.current}
                                             playing={!this.draging && this.dragingDoing}
@@ -519,17 +536,6 @@ export default defineComponent({
                                                 if (!this.ImageWrapperRef?.checkSwipe?.()) return
                                                 this.translateX = -x
                                                 this.transform = `translateX(${this.translateX}px)`
-                                                const indexIs = this.indexDefine || 0
-                                                if (this.translateX > this.swipeDistance) {
-                                                    this.replace = this.images[indexIs - 1] || this.images[this.images.length - 1]
-                                                } else if (this.translateX < -this.swipeDistance) {
-                                                    this.replace = this.images[indexIs + 1] || this.images[0]
-                                                } else {
-                                                    this.replace = this.images[indexIs] || this.images[0]
-                                                }
-                                            }}
-                                            onHideReplace={() => {
-                                                this.showReplace = false
                                             }}
                                             onSize={size => {
                                                 this.size = size

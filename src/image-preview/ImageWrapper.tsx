@@ -2,6 +2,7 @@ import { defineComponent, PropType, ref, CSSProperties, computed, Transition, wa
 import type { PreviewImage } from './interface'
 import Badge from '../badge'
 import { useSwipe } from '@vueuse/core'
+import { getLoadedImageSize, preloadImage } from './preload'
 
 export default defineComponent({
     props: {
@@ -24,7 +25,7 @@ export default defineComponent({
         show: Boolean
     },
     expose: ['reset', 'canBeWheelPrev', 'canBeWheelNext', 'checkSwipe', 'isLongPicture'],
-    emits: ['hideReplace', 'size'],
+    emits: ['size'],
     setup(props, { emit }) {
         const imgEl = ref<HTMLImageElement | null>(null)
         const wrapper = ref<HTMLDivElement | null>(null)
@@ -135,36 +136,55 @@ export default defineComponent({
             }
         })
 
+        const srcOf = (image: PreviewImage | undefined, thumb?: boolean) => props.getSrc(image || '', thumb)
+
         const currentSrc = ref<string>()
         const currentSize = ref([0, 0])
-        const hideImage = ref(false)
+        /** 当前正在展示的图片，用来丢弃已经过期（已经翻页）的异步结果 */
+        let showingImage: PreviewImage | undefined
+
+        /**
+         * 切换主图。
+         *
+         * 旧实现是靠 v-if 把 <img> 摘掉再挂回来「避免闪烁」的：那次摘除和复位虽然落在同一帧里、
+         * 通常不会被真正画出来，但重新挂回去的 <img> 需要重新解码，只要解码或调度稍有偏差就会露出空帧。
+         * 现在 <img> 常驻 DOM，换图 = 「后台把目标图解好 → 再换 src」，
+         * 替换落在两次绘制之间，不依赖任何时序运气。
+         */
+        const showImage = async(image: PreviewImage | undefined) => {
+            showingImage = image
+            showLive.value = true
+            const thumbSrc = srcOf(image, true)
+            const fullSrc = srcOf(image)
+            // 进入正式展示（init）之后才上原图，之前先用缩略图占位
+            const fullFirst = !!props.init && !!fullSrc
+            const primarySrc = fullFirst ? fullSrc : (thumbSrc || fullSrc)
+
+            // 目标图已经预载好（相邻页预载会走到这里）→ 同步换上，一帧都不用等
+            const readySize = getLoadedImageSize(primarySrc)
+            if (readySize) {
+                currentSrc.value = primarySrc
+                currentSize.value = primarySrc === fullSrc ? readySize : [0, 0]
+                return
+            }
+
+            // 还没准备好：先用缩略图顶上，别停在上一张
+            if (currentSrc.value !== (thumbSrc || primarySrc)) {
+                currentSrc.value = thumbSrc || primarySrc
+                currentSize.value = [0, 0]
+            }
+
+            const loaded = await preloadImage(primarySrc)
+            // 期间已经翻到别的图了，这次结果作废
+            if (showingImage !== image || !loaded) return
+            currentSrc.value = primarySrc
+            // 只有原图才更新尺寸，避免用缩略图尺寸去算长图比例
+            if (primarySrc === fullSrc) currentSize.value = loaded
+        }
+
         watch(() => [props.image, props.init, props.show], () => {
             if (!props.show) return
-            currentSrc.value = props.getSrc(props.image || '', true)
-            /**
-             * 为了避免闪烁
-             */
-            hideImage.value = true
-            requestAnimationFrame(() => {
-                hideImage.value = false
-                emit('hideReplace')
-                showLive.value = true
-            })
-            const src = props.getSrc(props.image || '')
-            currentSize.value = [0, 0]
-            if (props.init) {
-                new Promise<void>(resolve => {
-                    const newImage = new Image()
-                    newImage.src = src || ''
-                    const currentImage = props.image
-                    newImage.onload = () => {
-                        if (props.image !== currentImage) return
-                        currentSrc.value = newImage.src
-                        currentSize.value = [newImage.height, newImage.width]
-                        resolve()
-                    }
-                })
-            }
+            showImage(props.image)
         }, {
             immediate: true
         })
@@ -190,7 +210,6 @@ export default defineComponent({
             src,
             showLive,
             muted,
-            hideImage,
             currentSrc,
             currentSize,
             isLongPicture,
@@ -273,22 +292,18 @@ export default defineComponent({
                             )
                         }
                     </Transition>
-                    {
-                        !this.hideImage && (
-                            <img
-                                class="o-image-preview--image"
-                                src={this.currentSrc}
-                                ref="imgEl"
-                                style={{
-                                    '--o-image-preview--scale': this.scale,
-                                    transition: this.transition
-                                } as CSSProperties}
-                                onClick={e => {
-                                    e.stopPropagation()
-                                }}
-                            />
-                        )
-                    }
+                    <img
+                        class="o-image-preview--image"
+                        src={this.currentSrc}
+                        ref="imgEl"
+                        style={{
+                            '--o-image-preview--scale': this.scale,
+                            transition: this.transition
+                        } as CSSProperties}
+                        onClick={e => {
+                            e.stopPropagation()
+                        }}
+                    />
                     <Transition name="o-image-preview--fade">
                         <div class="o-image-preview--points" v-show={this.points.length > 0 && this.currentSize[0] && !this.playing}>
                             { this.showPoints && this.points.map((point, index) => (
