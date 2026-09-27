@@ -55,7 +55,10 @@ export type ButtonProps = ExtractPropTypes<typeof buttonProps>;
 export default defineComponent({
     name: 'OButton',
     props: buttonProps,
-    emits: ['click', 'dblclick'],
+    emits: {
+        click: (e: MouseEvent) => !!e,
+        dblclick: (e: MouseEvent) => !!e,
+    },
     setup(props, { slots, emit }) {
         const disabled = computed(() => props.loading || props.disabled)
 
@@ -128,8 +131,8 @@ export default defineComponent({
                         [`o-button__${props.type}`]: true
                     },
                     style: buttonStyleComputed.value,
-                    onClick: () => !disabled.value && emit('click'),
-                    onDblclick: () => !disabled.value && emit('dblclick'),
+                    onClick: (e: MouseEvent) => !disabled.value && emit('click', e),
+                    onDblclick: (e: MouseEvent) => !disabled.value && emit('dblclick', e),
                     type: props.buttonType,
                     ref: el
                 },
