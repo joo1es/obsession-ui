@@ -47,7 +47,10 @@ export const buttonProps = {
         type: String as PropType<'left' | 'right'>,
         default: 'left',
     },
-    buttonType: String
+    buttonType: {
+        type: String,
+        default: 'button'
+    }
 }
 
 export type ButtonProps = ExtractPropTypes<typeof buttonProps>;
