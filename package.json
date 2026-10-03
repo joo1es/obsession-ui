@@ -1,6 +1,6 @@
 {
     "name": "obsession-ui",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "",
     "repository": {
         "type": "git",
@@ -126,7 +126,6 @@
     ],
     "dependencies": {
         "@css-render/vue3-ssr": "^0.15.6",
-        "@ctrl/tinycolor": "^3.4.0",
         "@use-gesture/vanilla": "^10.2.6",
         "@vicons/ionicons5": "^0.11.0",
         "@vicons/utils": "^0.1.4",

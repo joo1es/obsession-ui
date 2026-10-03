@@ -11,7 +11,7 @@ import OIcon from '../icon'
 
 import { buttonTypes, buttonSize } from './Attrs'
 import { useCssVar } from '@vueuse/core'
-import { TinyColor } from '@ctrl/tinycolor'
+import { TinyColor } from '../utils/color'
 import Spin from '../spin'
 import CollapseTransition from '../collapse-transition'
 
