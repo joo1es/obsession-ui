@@ -133,7 +133,7 @@ function hue2rgb(p: number, q: number, t: number): number {
     return p
 }
 
-function hslToRgb(h: number, s: number, l: number) {
+function hslToRgb(h: number | string, s: number | string, l: number | string) {
     h = bound01(h, 360)
     s = bound01(s, 100)
     l = bound01(l, 100)
@@ -154,7 +154,7 @@ function hslToRgb(h: number, s: number, l: number) {
     return { r: r * 255, g: g * 255, b: b * 255 }
 }
 
-function hsvToRgb(h: number, s: number, v: number) {
+function hsvToRgb(h: number | string, s: number | string, v: number | string) {
     h = bound01(h, 360) * 6
     s = bound01(s, 100)
     v = bound01(v, 100)
